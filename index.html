@@ -279,6 +279,9 @@
     .ev-ye-item { background: #1A2030; border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
     .ev-ye-item .lab { color: var(--muted); font-size: 12px; }
     .ev-ye-item .pct { font-weight: 720; font-variant-numeric: tabular-nums; font-size: 18px; margin: 2px 0 8px; }
+    .ev-tl-head { margin: 4px 0 8px; }
+    .ev-tabs { margin: 8px 0 0; }
+    .ev-tl-sub { color: var(--muted); font-size: 12px; margin: 0 0 4px; }
     .ev-tl { margin-top: 4px; }
     .ev-tl-row {
       display: grid; grid-template-columns: 7.2em 1fr; gap: 8px 10px;
@@ -1876,7 +1879,8 @@
 
 
   const EVENTS_BOARD_URL = "./events-board.json";
-  const eventsState = { bundled: null, data: null, status: "正在加载事件看板…", refreshing: false };
+  const EV_MONTH_KEY = "crypto-live-events-month";
+  const eventsState = { bundled: null, data: null, status: "正在加载事件看板…", refreshing: false, month: "" };
   function evNum(v) {
     if (v == null || v === "") return null;
     const n = +v;
@@ -2044,17 +2048,70 @@
       <div class="ev-ye">${items}</div>
     </div>`;
   }
+  function evMonthKey(date) {
+    const s = String(date || "");
+    return s.length >= 7 ? s.slice(0, 7) : "";
+  }
+  function evMonthTitle(key) {
+    const p = String(key || "").split("-");
+    if (p.length < 2) return key || "—";
+    return p[0] + "年" + String(+p[1]) + "月";
+  }
+  function evTabLabel(key, keys) {
+    const p = String(key || "").split("-");
+    if (p.length < 2) return key || "—";
+    const mon = String(+p[1]) + "月";
+    const clash = (keys || []).some((k) => k !== key && String(k).slice(5, 7) === p[1]);
+    return clash ? p[0] + "年" + mon : mon;
+  }
+  function evTimelineMonths(events) {
+    const set = new Set();
+    for (const e of events || []) {
+      const k = evMonthKey(e && e.date);
+      if (k) set.add(k);
+    }
+    return [...set].sort();
+  }
+  function evHkMonthToday() {
+    const s = new Date().toLocaleString("sv-SE", { timeZone: "Asia/Hong_Kong" });
+    return s.slice(0, 7);
+  }
+  function evEnsureMonth(events) {
+    const months = evTimelineMonths(events);
+    if (!months.length) { eventsState.month = ""; return ""; }
+    let saved = eventsState.month;
+    if (!saved) {
+      try { saved = localStorage.getItem(EV_MONTH_KEY) || ""; } catch (e) { saved = ""; }
+    }
+    if (saved && months.includes(saved)) { eventsState.month = saved; return saved; }
+    const today = evHkMonthToday();
+    const pick = months.includes(today) ? today : (months.find((m) => m >= today) || months[0]);
+    eventsState.month = pick;
+    return pick;
+  }
   function evRenderTimeline(events) {
     const rows = (events || []).slice().sort((a, b) => String(a.date) < String(b.date) ? -1 : String(a.date) > String(b.date) ? 1 : 0);
-    return `<div class="ev-kicker" style="margin:4px 0 2px">窗口内日程</div>
-      <div class="ev-tl">${rows.map((e) => {
-        const cat = e.cat || "";
-        const fomc = cat === "fomc";
-        return `<div class="ev-tl-row${fomc ? " fomc" : ""}">
+    const months = evTimelineMonths(rows);
+    const month = evEnsureMonth(rows);
+    const view = rows.filter((e) => evMonthKey(e.date) === month);
+    const tabs = months.map((k) => {
+      const on = k === month;
+      return `<button type="button" class="tf-tab${on ? " on" : ""}" role="tab" data-ev-month="${escapeHtml(k)}" aria-selected="${on ? "true" : "false"}">${escapeHtml(evTabLabel(k, months))}</button>`;
+    }).join("");
+    const body = view.length ? view.map((e) => {
+      const cat = e.cat || "";
+      const fomc = cat === "fomc";
+      return `<div class="ev-tl-row${fomc ? " fomc" : ""}">
           <div><span class="ev-tl-date">${escapeHtml(evDateText(e))}</span><span class="ev-tl-time">${escapeHtml(e.time || "")}</span></div>
           <div class="ev-tl-main"><span class="ev-cat ${escapeHtml(cat)}">${escapeHtml(e.catLabel || "")}</span><span class="ev-tl-title">${escapeHtml(e.title || "")}</span></div>
         </div>`;
-      }).join("")}</div>`;
+    }).join("") : `<div class="ev-tl-row"><div class="ev-tl-title">该月暂无已排期事件</div></div>`;
+    return `<div class="ev-tl-head">
+      <div class="ev-kicker">窗口内日程</div>
+      <div class="tf-tabs ev-tabs" role="tablist" id="ev-tabs">${tabs}</div>
+    </div>
+      <p class="ev-tl-sub">${escapeHtml(evMonthTitle(month))}，${view.length}项</p>
+      <div class="ev-tl">${body}</div>`;
   }
   function renderEventsBoard(data, statusText) {
     const root = $("events");
@@ -2220,8 +2277,14 @@
     if (root) {
       root.addEventListener("click", (ev) => {
         const btn = ev.target.closest("#events-refresh");
-        if (!btn || !root.contains(btn)) return;
-        refreshEventsOdds();
+        if (btn && root.contains(btn)) { refreshEventsOdds(); return; }
+        const tab = ev.target.closest("[data-ev-month]");
+        if (!tab || !root.contains(tab)) return;
+        const id = tab.getAttribute("data-ev-month");
+        if (!id || id === eventsState.month) return;
+        eventsState.month = id;
+        try { localStorage.setItem(EV_MONTH_KEY, id); } catch (e) {}
+        if (eventsState.data) renderEventsBoard(eventsState.data);
       });
     }
     try {
