@@ -84,13 +84,49 @@
     .kv .lab { color: var(--muted); flex: 0 1 42%; }
     .kv .val { text-align: right; font-variant-numeric: tabular-nums; }
     .note { color: var(--muted); font-size: 13px; margin-top: 8px; }
-    .cycle-sum { margin: 0 0 4px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
-    .cycle-sum h3 { margin: 0 0 4px; font-size: 18px; font-weight: 700; }
-    .cycle-sum p { margin: 0; color: var(--muted); font-size: 13px; }
-    .ind { padding: 0; }
-    .ind .kv { border-top: 1px solid var(--line); }
-    .ind:first-of-type .kv { border-top: 0; padding-top: 10px; }
-    .hint { color: var(--muted); font-size: 12px; margin: -2px 0 2px; line-height: 1.45; }
+    .tf-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+    .tf-tab {
+      flex: 1 1 calc(20% - 6px);
+      min-width: 4.4em;
+      min-height: 36px;
+      padding: 6px 8px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #1A2030;
+      color: var(--muted);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 650;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    .tf-tab.on {
+      background: color-mix(in srgb, var(--caution) 20%, var(--card));
+      border-color: color-mix(in srgb, var(--caution) 55%, var(--line));
+      color: var(--text);
+    }
+    .prob-kicker { color: var(--muted); font-size: 12px; font-weight: 650; margin: 0 0 8px; letter-spacing: .02em; }
+    .prob-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 4px; }
+    .prob-card { background: #1A2030; border: 1px solid var(--line); border-radius: 14px; padding: 12px; }
+    .prob-lab { color: var(--muted); font-size: 12px; font-weight: 650; }
+    .prob-val {
+      font-size: 32px; font-weight: 720; font-variant-numeric: tabular-nums;
+      letter-spacing: -0.03em; line-height: 1.15; margin: 4px 0 10px; color: var(--text);
+    }
+    .prob-card.top .prob-val { color: var(--caution); }
+    .prob-card.bot .prob-val { color: var(--up); }
+    .prob-bar { height: 8px; border-radius: 999px; background: #0B0E14; overflow: hidden; }
+    .prob-bar > span { display: block; height: 100%; width: 0; border-radius: 999px; }
+    .prob-card.top .prob-bar > span { background: var(--caution); }
+    .prob-card.bot .prob-bar > span { background: var(--up); }
+    .prob-grid.eth { margin-top: 8px; }
+    .prob-grid.eth .prob-val { font-size: 22px; margin: 2px 0 8px; }
+    .prob-grid.eth .prob-card { padding: 10px 12px; }
+    .cycle-reads { margin-top: 8px; }
+    .cycle-note { color: var(--muted); font-size: 12px; margin: 10px 0 0; line-height: 1.55; }
+    @media (max-width: 360px) {
+      .prob-grid { grid-template-columns: 1fr; }
+    }
     .subhead { color: var(--muted); font-size: 12px; font-weight: 650; margin: 14px 0 0; padding-top: 10px; border-top: 1px solid var(--line); letter-spacing: .02em; }
     footer { margin-top: 18px; color: var(--muted); font-size: 12px; text-align: center; line-height: 1.6; }
   </style>
@@ -137,19 +173,35 @@
     ["TRX", "TRXUSDT"],
   ];
   const SPARK = "▁▂▃▄▅▆▇█";
+  const CYCLE_TFS = [
+    { id: "4h", label: "4小时" },
+    { id: "6h", label: "6小时" },
+    { id: "12h", label: "12小时" },
+    { id: "1d", label: "1天" },
+    { id: "3d", label: "3天" },
+  ];
+  const CYCLE_TF_KEY = "crypto-live-cycle-tf";
   const state = {
     tickers: {},
     daily: { BTC: [], ETH: [] },
     dailyTime: { BTC: [], ETH: [] },
     weekly: { BTC: [], ETH: [] },
     lastCross: { BTC: null, ETH: null },
+    tfCloses: { "4h": { BTC: [], ETH: [] }, "6h": { BTC: [], ETH: [] }, "12h": { BTC: [], ETH: [] }, "1d": { BTC: [], ETH: [] }, "3d": { BTC: [], ETH: [] } },
+    tfTimes: { "4h": { BTC: [], ETH: [] }, "6h": { BTC: [], ETH: [] }, "12h": { BTC: [], ETH: [] }, "1d": { BTC: [], ETH: [] }, "3d": { BTC: [], ETH: [] } },
     market: {},
     fng: { value: null, label: "" },
     funding: { BTC: null, ETH: null },
+    cycleTf: "1d",
+    cycleTfLoading: false,
     live: false,
     status: "正在连接行情…",
   };
   COINS.forEach(([s]) => { state.tickers[s] = {}; });
+  try {
+    const saved = localStorage.getItem(CYCLE_TF_KEY);
+    if (CYCLE_TFS.some((t) => t.id === saved)) state.cycleTf = saved;
+  } catch (e) {}
   let lastPrices = {};
   let renderTimer = 0;
 
@@ -305,6 +357,106 @@
     const t = times && idx >= 0 ? times[idx] : null;
     return { price: Number.isFinite(hi) ? hi : null, time: t, n: closes.length };
   }
+  function clamp(x, a, b) { return Math.max(a, Math.min(b, x)); }
+  function ramp(x, x0, x1) {
+    if (x0 === x1 || x == null || !Number.isFinite(x)) return null;
+    return clamp((x - x0) / (x1 - x0) * 100, 0, 100);
+  }
+  function weightedScore(parts) {
+    let acc = 0, wsum = 0, n = 0;
+    for (const p of parts) {
+      if (p.score == null || !Number.isFinite(p.score)) continue;
+      acc += p.score * p.weight;
+      wsum += p.weight;
+      n++;
+    }
+    if (n < 2 || wsum <= 0) return null;
+    return clamp(Math.round(acc / wsum), 0, 100);
+  }
+  function tfClosesOf(interval, symbol) {
+    const tf = state.tfCloses[interval] && state.tfCloses[interval][symbol];
+    if (tf && tf.length) return tf;
+    if (interval === "1d") return state.daily[symbol] || [];
+    return [];
+  }
+  function tfTimesOf(interval, symbol) {
+    const tf = state.tfTimes[interval] && state.tfTimes[interval][symbol];
+    if (tf && tf.length) return tf;
+    if (interval === "1d") return state.dailyTime[symbol] || [];
+    return [];
+  }
+  function hasTfData(interval) {
+    return tfClosesOf(interval, "BTC").length > 0 && tfClosesOf(interval, "ETH").length > 0;
+  }
+  function piCycleTopScore(dailySrc, livePrice) {
+    const daily = (dailySrc || []).slice();
+    if (!daily.length) return { score: null, sma111: null, twox350: null, gapPct: null };
+    if (livePrice != null) daily[daily.length - 1] = livePrice;
+    const s111 = sma(daily, 111);
+    const s350 = sma(daily, 350);
+    if (s111 == null || s350 == null || s350 === 0) {
+      return { score: null, sma111: s111, twox350: s350 != null ? s350 * 2 : null, gapPct: null };
+    }
+    const twox350 = s350 * 2;
+    const gapPct = (s111 - twox350) / twox350 * 100;
+    const score = s111 >= twox350 ? 100 : ramp(gapPct, -5, 0);
+    return { score, sma111: s111, twox350, gapPct };
+  }
+  function cycleWeights(symbol, interval) {
+    const shortTf = interval === "4h" || interval === "6h" || interval === "12h";
+    if (symbol === "BTC") {
+      return shortTf
+        ? { rsi: 0.30, ma: 0.26, dd: 0.22, fund: 0.12, fng: 0.10 }
+        : { rsi: 0.24, ma: 0.22, dd: 0.18, fng: 0.14, fund: 0.12, pi: 0.10 };
+    }
+    return shortTf
+      ? { rsi: 0.32, ma: 0.28, dd: 0.22, fund: 0.10, fng: 0.08 }
+      : { rsi: 0.26, ma: 0.24, dd: 0.20, fng: 0.16, fund: 0.14 };
+  }
+  function cycleMetrics(symbol, interval, livePrice) {
+    const closes = tfClosesOf(interval, symbol).slice();
+    const times = tfTimesOf(interval, symbol).slice();
+    if (!closes.length) return { ready: false };
+    if (livePrice != null) closes[closes.length - 1] = livePrice;
+    const rsi = rsiWilder(closes, 14);
+    const s200 = sma(closes, 200);
+    const price = livePrice != null ? livePrice : closes[closes.length - 1];
+    const mayer = (price != null && s200) ? price / s200 : null;
+    const wh = windowHigh(closes, times);
+    const drawdown = (price != null && wh.price) ? (price - wh.price) / wh.price * 100 : null;
+    const fng = state.fng && state.fng.value != null && Number.isFinite(state.fng.value) ? state.fng.value : null;
+    const fund = state.funding[symbol];
+    const fundPct = fund != null && Number.isFinite(fund) ? fund * 100 : null;
+    const w = cycleWeights(symbol, interval);
+    const includePi = symbol === "BTC" && (interval === "1d" || interval === "3d") && !!w.pi;
+    const dailySrc = tfClosesOf("1d", "BTC");
+    const pi = symbol === "BTC"
+      ? piCycleTopScore(dailySrc, livePrice)
+      : { score: null, sma111: null, twox350: null, gapPct: null };
+    const topParts = [
+      { score: ramp(rsi, 55, 85), weight: w.rsi },
+      { score: ramp(mayer, 1.6, 2.8), weight: w.ma },
+      { score: ramp(drawdown, -20, 0), weight: w.dd },
+      { score: ramp(fng, 60, 90), weight: w.fng },
+      { score: ramp(fundPct, 0.05, 0.20), weight: w.fund },
+    ];
+    const botParts = [
+      { score: ramp(rsi, 45, 15), weight: w.rsi },
+      { score: ramp(mayer, 1.0, 0.6), weight: w.ma },
+      { score: ramp(drawdown, -20, -55), weight: w.dd },
+      { score: ramp(fng, 40, 10), weight: w.fng },
+      { score: ramp(fundPct, -0.05, -0.20), weight: w.fund },
+    ];
+    if (includePi) topParts.push({ score: pi.score, weight: w.pi });
+    return {
+      ready: true,
+      rsi, mayer, s200, drawdown,
+      window_high: wh.price, window_high_time: wh.time, window_n: wh.n,
+      fund, fundPct, fng, pi,
+      top: weightedScore(topParts),
+      bot: weightedScore(botParts),
+    };
+  }
   function indicators(symbol, livePrice) {
     const daily = (state.daily[symbol] || []).slice();
     const weekly = (state.weekly[symbol] || []).slice();
@@ -360,47 +512,6 @@
       return { title: "偏多", detail: "比特币站上 50 日与 200 日均线，并守住 200 周均线。", tone: "up" };
     }
     return { title: "过渡 · 偏防守", detail: "尚未形成明确的牛市主升或深度熊市结构。", tone: "caution" };
-  }
-  function cycleSummary(btc, fng, fundingBtc) {
-    if (!btc || btc.sma200 == null || btc.price == null) {
-      return { title: "加载中", detail: "顶底指标将在均线与价格就绪后显示。", tone: "neutral" };
-    }
-    const tops = [], bottoms = [];
-    if (btc.mayer != null) {
-      if (btc.mayer > 2.4) tops.push("Mayer 处在过热观察区");
-      else if (btc.mayer < 0.8) bottoms.push("Mayer 处在底部观察区");
-    }
-    if (btc.pi_lean > 0) {
-      tops.push(btc.pi_short === "已上穿" ? "派循环 111 日均线已上穿 2×350 日" : "派循环接近交叉");
-    }
-    const rsiTop = (btc.rsi_d != null && btc.rsi_d >= 70) || (btc.rsi_w != null && btc.rsi_w >= 70);
-    const rsiBot = (btc.rsi_d != null && btc.rsi_d <= 30) || (btc.rsi_w != null && btc.rsi_w <= 30);
-    if (rsiTop) tops.push("RSI 进入超买观察");
-    if (rsiBot) bottoms.push("RSI 进入超卖观察");
-    if (fng && fng.value != null) {
-      if (fng.value >= 75) tops.push("恐惧贪婪偏顶部观察");
-      else if (fng.value <= 24) bottoms.push("恐惧贪婪偏底部观察");
-    }
-    if (btc.drawdown != null && btc.drawdown <= -40) bottoms.push("窗口内回撤较深");
-    if (fundingBtc != null) {
-      const p = fundingBtc * 100;
-      if (p >= 0.10) tops.push("资金费率显示多头拥挤");
-      else if (p <= -0.10) bottoms.push("资金费率显示空头拥挤");
-    }
-    const tc = tops.length, bc = bottoms.length;
-    let title, tone;
-    if (tc >= 2 && bc === 0) { title = "偏顶部观察"; tone = "caution"; }
-    else if (bc >= 2 && tc === 0) { title = "偏底部观察"; tone = "caution"; }
-    else if (tc >= 1 && bc >= 1) { title = "混合"; tone = "neutral"; }
-    else if (tc === 1) { title = "中性（个别指标偏上）"; tone = "neutral"; }
-    else if (bc === 1) { title = "中性（个别指标偏下）"; tone = "neutral"; }
-    else { title = "中性"; tone = "neutral"; }
-    const bits = [...bottoms, ...tops];
-    const rule = "多项同向才会标成偏顶部或偏底部观察，信号不一致时保持中性或混合。";
-    const detail = bits.length
-      ? "比特币：" + bits.join("；") + "。" + rule
-      : "比特币各顶底指标暂未落到极端区域，综合保持中性。" + rule;
-    return { title, detail, tone };
   }
   function snapshot() {
     const coins = COINS.map(([symbol]) => {
@@ -527,107 +638,68 @@
       return `<div class="kv"><span class="lab">${lab}</span><span class="val">${escapeHtml(mid)}${right ? ` <span class="${extra}">${escapeHtml(right)}</span>` : ""}</span></div>`;
     }).join("");
   }
-  function indRow(lab, val, hint) {
-    return `<div class="ind"><div class="kv"><span class="lab">${escapeHtml(lab)}</span><span class="val">${val}</span></div><p class="hint">${hint}</p></div>`;
+  function probCards(metrics, size) {
+    const cls = size === "eth" ? "prob-grid eth" : "prob-grid";
+    const top = metrics && metrics.ready ? metrics.top : null;
+    const bot = metrics && metrics.ready ? metrics.bot : null;
+    const topW = top == null ? "0%" : clamp(top, 0, 100) + "%";
+    const botW = bot == null ? "0%" : clamp(bot, 0, 100) + "%";
+    const topTxt = top == null ? "—" : (top + "%");
+    const botTxt = bot == null ? "—" : (bot + "%");
+    return `<div class="${cls}">
+      <div class="prob-card top">
+        <div class="prob-lab">顶部概率</div>
+        <div class="prob-val">${escapeHtml(topTxt)}</div>
+        <div class="prob-bar" aria-hidden="true"><span style="width:${topW}"></span></div>
+      </div>
+      <div class="prob-card bot">
+        <div class="prob-lab">底部概率</div>
+        <div class="prob-val">${escapeHtml(botTxt)}</div>
+        <div class="prob-bar" aria-hidden="true"><span style="width:${botW}"></span></div>
+      </div>
+    </div>`;
+  }
+  function cycleReads(symbol, interval, m, fundRate) {
+    if (!m || !m.ready) return `<div class="cycle-reads"><p class="cycle-note">该周期数据不足</p></div>`;
+    const maLab = interval === "1d" ? "Mayer 倍数" : "该周期 200均线倍数";
+    const tfLabel = (CYCLE_TFS.find((t) => t.id === interval) || {}).label || interval;
+    const win = m.window_n ? `近 ${m.window_n} 根 ${tfLabel} K 线` : "";
+    const fngLabel = (state.fng && state.fng.label) ? "  " + state.fng.label : "";
+    const rows = [
+      ["RSI(14)", m.rsi == null ? "—" : m.rsi.toFixed(1)],
+      [maLab, m.mayer == null ? "—" : m.mayer.toFixed(2)],
+      ["窗口内最高价回撤", m.drawdown == null ? "—" : (fmtPct(m.drawdown) + (win ? " · " + win : ""))],
+      ["资金费率", fundRate == null ? "—" : fmtFunding(fundRate)],
+      ["恐惧贪婪", m.fng == null ? "—" : (String(m.fng) + fngLabel)],
+    ];
+    if (symbol === "BTC" && m.pi && m.pi.sma111 != null && m.pi.twox350 != null) {
+      const st = piCycleStatus(m.pi.sma111, m.pi.twox350);
+      rows.push(["派循环（日线）", `${fmtPct(m.pi.gapPct)} ${st.short || st.status || "—"}`]);
+    }
+    return `<div class="cycle-reads">${rows.map(([lab, val]) =>
+      `<div class="kv"><span class="lab">${escapeHtml(lab)}</span><span class="val">${escapeHtml(val)}</span></div>`
+    ).join("")}</div>`;
   }
   function cycleBlock(data) {
-    const btc = coinBy(data, "BTC"), eth = coinBy(data, "ETH");
-    const fng = fngCycle(data.fng || {});
-    const fund = data.funding || {};
-    const sum = cycleSummary(btc, data.fng || {}, fund.BTC);
-    const winLabel = btc && btc.window_n
-      ? (btc.window_n >= 900 ? "约 1000 根日线" : `近 ${btc.window_n} 根日线`)
-      : "已加载日线";
-    const ddLbl = (btc && btc.drawdown != null && btc.drawdown >= -5 && btc.drawdown <= 0)
-      ? "接近窗口高点"
-      : (btc && btc.drawdown != null && btc.drawdown <= -40 ? "回撤较深" : "窗口回撤");
-    const ddCls = btc && btc.drawdown != null
-      ? (btc.drawdown <= -40 ? "down" : btc.drawdown >= -5 ? "tone-caution" : "")
-      : "flat";
-    const fb = fundingBand(fund.BTC);
-    const fe = fundingBand(fund.ETH);
-    const rb = rsiBand(btc && btc.rsi_d), rbw = rsiBand(btc && btc.rsi_w);
-    const re = rsiBand(eth && eth.rsi_d), rew = rsiBand(eth && eth.rsi_w);
-    const mayerHint = "现价 ÷ 200 日均线。门槛：&lt;0.8 偏低/底部观察区，0.8–1.2 偏低附近，1.2–2.4 中性偏上，&gt;2.4 偏高/过热观察区。";
-    const rows = [];
-    rows.push(indRow(
-      "Mayer 倍数",
-      btc && btc.mayer != null
-        ? `${btc.mayer.toFixed(2)} <span class="${toneClass(btc.mayer_tone)}">${escapeHtml(btc.mayer_label)}</span>`
-        : "—",
-      mayerHint
-    ));
-    const piReady = btc && btc.sma111 != null && btc.sma350x2 != null;
-    rows.push(indRow(
-      "派循环顶部观察",
-      piReady
-        ? `${escapeHtml(fmtPrice(btc.sma111))} / ${escapeHtml(fmtPrice(btc.sma350x2))}<br><span class="${btc.pi_lean > 0 ? "tone-caution" : "flat"}">${fmtPct(btc.pi_gap)} ${escapeHtml(btc.pi_status || "—")}</span>`
-        : "—",
-      piReady
-        ? "111 日均线对比 2×350 日均线，需至少 350 根日线。差距为 111 日相对 2×350 日的百分比；小于 5% 视为接近，上穿则标记已上穿。这是均线关系观察，只反映两条均线的相对位置，不是顶部判断。"
-        : "日线数量不足 350，暂无法计算派循环。"
-    ));
-    rows.push(indRow(
-      "窗口内最高价回撤",
-      btc && btc.window_high != null
-        ? `${escapeHtml(fmtPrice(btc.window_high))} · ${escapeHtml(fmtDateHK(btc.window_high_time))}<br><span class="${ddCls}">${fmtPct(btc.drawdown)} ${escapeHtml(ddLbl)}</span>`
-        : "—",
-      `以已加载的${escapeHtml(winLabel)}收盘价计算窗口内最高价及回撤，不是全历史最高点（若更早高点不在窗口内则不会计入）。`
-    ));
-    rows.push(indRow(
-      "RSI(14) 日 / 周",
-      btc
-        ? `<span class="${toneClass(rb.tone)}">${escapeHtml(rsiText(btc.rsi_d))}</span> · <span class="${toneClass(rbw.tone)}">周线 ${escapeHtml(rsiText(btc.rsi_w))}</span>`
-        : "—",
-      "≥70 超买观察，≤30 超卖观察；其间仍保留偏强、偏弱、中性。"
-    ));
-    rows.push(indRow(
-      "恐惧贪婪指数",
-      fng.value == null ? "—" : `${fng.value}  <span class="${toneClass(fng.tone)}">${escapeHtml(fng.label)}</span>`,
-      "≤24 极度恐惧（偏底部观察），≥75 贪婪/极度贪婪（偏顶部观察）。作为情绪背景，不单独构成方向判断。"
-    ));
-    rows.push(indRow(
-      "BTC 资金费率",
-      fund.BTC == null ? "—" : `${fmtFunding(fund.BTC)} <span class="${toneClass(fb.tone)}">${escapeHtml(fb.label)}</span>`,
-      "Binance U 本位合约当前资金费率，正值表示多头向空头支付。门槛 ±0.10% 才视为拥挤观察，±0.05%–0.10% 仅提示偏离，常规水平视为中性。"
-    ));
-    const ethMayer = eth && eth.mayer != null
-      ? `${eth.mayer.toFixed(2)} <span class="${toneClass(eth.mayer_tone)}">${escapeHtml(eth.mayer_label)}</span>`
-      : "—";
-    const ethWin = eth && eth.window_n
-      ? (eth.window_n >= 900 ? "约 1000 根日线" : `近 ${eth.window_n} 根日线`)
-      : "已加载日线";
-    const ethDdCls = eth && eth.drawdown != null
-      ? (eth.drawdown <= -40 ? "down" : eth.drawdown >= -5 ? "tone-caution" : "")
-      : "flat";
-    const ethRows = [];
-    ethRows.push(indRow("ETH Mayer 倍数", ethMayer, mayerHint));
-    ethRows.push(indRow(
-      "ETH 窗口内最高价回撤",
-      eth && eth.window_high != null
-        ? `${escapeHtml(fmtPrice(eth.window_high))} · ${escapeHtml(fmtDateHK(eth.window_high_time))}<br><span class="${ethDdCls}">${fmtPct(eth.drawdown)}</span>`
-        : "—",
-      `以已加载的${escapeHtml(ethWin)}收盘价计算窗口内最高价及回撤，不是全历史最高点。`
-    ));
-    ethRows.push(indRow(
-      "ETH RSI(14) 日 / 周",
-      eth
-        ? `<span class="${toneClass(re.tone)}">${escapeHtml(rsiText(eth.rsi_d))}</span> · <span class="${toneClass(rew.tone)}">周线 ${escapeHtml(rsiText(eth.rsi_w))}</span>`
-        : "—",
-      "≥70 超买观察，≤30 超卖观察。"
-    ));
-    ethRows.push(indRow(
-      "ETH 资金费率",
-      fund.ETH == null ? "—" : `${fmtFunding(fund.ETH)} <span class="${toneClass(fe.tone)}">${escapeHtml(fe.label)}</span>`,
-      "同样采用 ±0.10% 的拥挤观察门槛，不计入上方比特币综合观察。"
-    ));
-    return `<div class="cycle-sum">
-      <h3 class="tone-${escapeHtml(sum.tone)}">比特币综合：${escapeHtml(sum.title)}</h3>
-      <p>${escapeHtml(sum.detail)}</p>
-    </div>
-    ${rows.join("")}
-    <div class="subhead">以太坊（补充）</div>
-    ${ethRows.join("")}`;
+    const interval = state.cycleTf || "1d";
+    const tabs = CYCLE_TFS.map((t) =>
+      `<button type="button" class="tf-tab${t.id === interval ? " on" : ""}" data-tf="${t.id}" aria-pressed="${t.id === interval ? "true" : "false"}">${t.label}</button>`
+    ).join("");
+    const btcReady = tfClosesOf(interval, "BTC").length > 0;
+    if (!btcReady) {
+      return `<div class="tf-tabs" role="tablist">${tabs}</div><p class="cycle-note">正在加载该周期 K 线…</p>`;
+    }
+    const btcCoin = coinBy(data, "BTC"), ethCoin = coinBy(data, "ETH");
+    const btc = cycleMetrics("BTC", interval, btcCoin && btcCoin.price);
+    const eth = cycleMetrics("ETH", interval, ethCoin && ethCoin.price);
+    const fund = data.funding || state.funding || {};
+    return `<div class="tf-tabs" role="tablist">${tabs}</div>
+    <div class="prob-kicker">比特币</div>
+    ${probCards(btc, "btc")}
+    ${cycleReads("BTC", interval, btc, fund.BTC)}
+    <div class="subhead">以太坊</div>
+    ${eth.ready ? probCards(eth, "eth") + cycleReads("ETH", interval, eth, fund.ETH) : `<p class="cycle-note">正在加载以太坊该周期 K 线…</p>`}
+    <p class="cycle-note">以上观察概率由所选周期的技术指标与市场背景合成，不是走势预测。窗口回撤基于已加载 K 线，若更高点不在窗口内则不会计入。</p>`;
   }
   function render(data) {
     $("clock").textContent = (data.time || "") + " 香港时间";
@@ -690,15 +762,47 @@
       };
     });
   }
+  function storeTf(interval, symbol, rows) {
+    if (!state.tfCloses[interval]) state.tfCloses[interval] = { BTC: [], ETH: [] };
+    if (!state.tfTimes[interval]) state.tfTimes[interval] = { BTC: [], ETH: [] };
+    state.tfCloses[interval][symbol] = rows.map((r) => +r[4]);
+    state.tfTimes[interval][symbol] = rows.map((r) => +r[0]);
+  }
   async function refreshKlines() {
+    const jobs = [];
     for (const [symbol, pair] of [["BTC", "BTCUSDT"], ["ETH", "ETHUSDT"]]) {
-      const daily = await fetchJson(`https://api.binance.com/api/v3/klines?symbol=${pair}&interval=1d&limit=1000`);
-      const weekly = await fetchJson(`https://api.binance.com/api/v3/klines?symbol=${pair}&interval=1w&limit=250`);
-      state.daily[symbol] = daily.map((r) => +r[4]);
-      state.dailyTime[symbol] = daily.map((r) => +r[0]);
-      state.weekly[symbol] = weekly.map((r) => +r[4]);
-      state.lastCross[symbol] = lastCross(state.daily[symbol], 50, 200);
+      jobs.push((async () => {
+        const daily = await fetchJson(`https://api.binance.com/api/v3/klines?symbol=${pair}&interval=1d&limit=1000`);
+        state.daily[symbol] = daily.map((r) => +r[4]);
+        state.dailyTime[symbol] = daily.map((r) => +r[0]);
+        storeTf("1d", symbol, daily);
+        state.lastCross[symbol] = lastCross(state.daily[symbol], 50, 200);
+      })());
+      jobs.push((async () => {
+        const weekly = await fetchJson(`https://api.binance.com/api/v3/klines?symbol=${pair}&interval=1w&limit=250`);
+        state.weekly[symbol] = weekly.map((r) => +r[4]);
+      })());
+      for (const iv of ["4h", "6h", "12h", "3d"]) {
+        jobs.push((async () => {
+          const rows = await fetchJson(`https://api.binance.com/api/v3/klines?symbol=${pair}&interval=${iv}&limit=1000`);
+          storeTf(iv, symbol, rows);
+        })());
+      }
     }
+    await Promise.all(jobs);
+  }
+  async function ensureTf(interval) {
+    if (hasTfData(interval)) return;
+    await Promise.all([["BTC", "BTCUSDT"], ["ETH", "ETHUSDT"]].map(async ([symbol, pair]) => {
+      if (tfClosesOf(interval, symbol).length) return;
+      const rows = await fetchJson(`https://api.binance.com/api/v3/klines?symbol=${pair}&interval=${interval}&limit=1000`);
+      storeTf(interval, symbol, rows);
+      if (interval === "1d") {
+        state.daily[symbol] = state.tfCloses["1d"][symbol].slice();
+        state.dailyTime[symbol] = state.tfTimes["1d"][symbol].slice();
+        state.lastCross[symbol] = lastCross(state.daily[symbol], 50, 200);
+      }
+    }));
   }
   async function refreshMarket() {
     const g = (await fetchJson("https://api.coingecko.com/api/v3/global")).data;
@@ -769,6 +873,31 @@
       if (!state.live) refreshTickers().then(paint).catch(() => {});
     }, 3000);
   }
+  $("cycle").addEventListener("click", (ev) => {
+    const btn = ev.target.closest("[data-tf]");
+    if (!btn || !$("cycle").contains(btn)) return;
+    const tf = btn.getAttribute("data-tf");
+    if (!CYCLE_TFS.some((t) => t.id === tf)) return;
+    if (tf === state.cycleTf && !state.cycleTfLoading) return;
+    state.cycleTf = tf;
+    try { localStorage.setItem(CYCLE_TF_KEY, tf); } catch (e) {}
+    if (hasTfData(tf) || tfClosesOf(tf, "BTC").length) {
+      state.cycleTfLoading = false;
+      paint();
+      if (!hasTfData(tf)) ensureTf(tf).then(paint).catch((e) => console.warn(e));
+      return;
+    }
+    state.cycleTfLoading = true;
+    paint();
+    ensureTf(tf).then(() => {
+      if (state.cycleTf === tf) state.cycleTfLoading = false;
+      paint();
+    }).catch((e) => {
+      console.warn(e);
+      if (state.cycleTf === tf) state.cycleTfLoading = false;
+      paint();
+    });
+  });
   initialLoad().finally(() => { startSocket(); startPolling(); });
   </script>
 </body>
