@@ -175,6 +175,50 @@
     }
     .sth-readout b { color: var(--text); font-weight: 650; }
     .sth-status { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+    .sth-heading { display: block; }
+    .sth-heading h2 { margin: 18px 2px 8px; font-size: 14px; color: var(--muted); font-weight: 650; }
+    .sth-fs-exit {
+      display: none; min-height: 36px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 10px;
+      background: #1A2030; color: var(--text); font: inherit; font-size: 13px; font-weight: 650;
+      cursor: pointer; touch-action: manipulation; white-space: nowrap; flex: 0 0 auto;
+    }
+    html.sth-fs-on, html.sth-fs-on body {
+      overflow: hidden; height: 100%; overscroll-behavior: none;
+    }
+    html.sth-fs-on body { padding: 0; }
+    html.sth-fs-on body > *:not(#sth-stage) { display: none; }
+    #sth-stage.sth-full {
+      position: fixed; z-index: 80; inset: 0;
+      width: 100dvw; height: 100dvh; max-width: none;
+      background: var(--bg);
+      padding: max(8px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+      display: flex; flex-direction: column; overflow: hidden; box-sizing: border-box;
+      touch-action: none;
+    }
+    #sth-stage.sth-full .sth-heading {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      flex: 0 0 auto; margin: 0 0 6px;
+    }
+    #sth-stage.sth-full .sth-heading h2 { margin: 0; font-size: 14px; color: var(--text); }
+    #sth-stage.sth-full .sth-fs-exit { display: inline-flex; align-items: center; }
+    #sth-stage.sth-full #sth {
+      flex: 1 1 auto; min-height: 0; margin: 0;
+      display: flex; flex-direction: column; border-radius: 12px;
+    }
+    #sth-stage.sth-full .sth-toolbar { margin-bottom: 6px; flex: 0 0 auto; }
+    #sth-stage.sth-full .sth-legend { flex: 0 0 auto; margin-bottom: 6px; }
+    #sth-stage.sth-full .sth-chart-wrap { flex: 1 1 auto; height: auto; min-height: 0; }
+    #sth-stage.sth-full .sth-readout, #sth-stage.sth-full .sth-status { flex: 0 0 auto; }
+    #sth-stage.sth-full .cycle-note, #sth-stage.sth-full #sth-fs { display: none; }
+    @media (orientation: portrait) {
+      html.sth-fs-on #sth-stage.sth-full {
+        top: 0; left: 100dvw; right: auto; bottom: auto;
+        width: 100dvh; height: 100dvw;
+        transform: rotate(90deg);
+        transform-origin: top left;
+        padding: max(8px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left)) max(12px, env(safe-area-inset-top));
+      }
+    }
     .ev-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin: 0 0 10px; }
     .ev-kicker { color: var(--muted); font-size: 12px; font-weight: 650; letter-spacing: .02em; }
     .ev-refresh {
@@ -287,8 +331,12 @@
   <section id="heroes"></section>
   <h2>顶底指标</h2>
   <section class="block" id="cycle"></section>
-  <h2>短期持有者盈利供应占比与BTC价格</h2>
-  <section class="block" id="sth">
+  <div id="sth-stage">
+    <div class="sth-heading">
+      <h2>短期持有者盈利供应占比与BTC价格</h2>
+      <button type="button" class="sth-fs-exit" id="sth-fs-exit" hidden>退出横屏</button>
+    </div>
+    <section class="block" id="sth">
     <div class="sth-toolbar">
       <div class="tf-tabs sth-tabs" role="tablist" id="sth-tabs">
         <button type="button" class="tf-tab" role="tab" data-sth-range="1y">1年</button>
@@ -298,6 +346,7 @@
         <button type="button" class="tf-tab" role="tab" data-sth-range="all">全部</button>
       </div>
       <button type="button" class="sth-refresh" id="sth-refresh">刷新</button>
+      <button type="button" class="sth-refresh" id="sth-fs" aria-expanded="false" aria-controls="sth-stage">横屏</button>
     </div>
     <div class="sth-legend">
       <span><i class="sth-swatch sth-swatch-price"></i>BTC价格</span>
@@ -311,7 +360,8 @@
     <div class="sth-readout" id="sth-readout"></div>
     <p class="sth-status" id="sth-status">正在加载图表…</p>
     <p class="cycle-note">短期持有者（STH）通常指持有约 155 天以内的比特币。盈利供应占比是处于盈利的 STH 供应量占全部 STH 供应量的比例。成本线是 STH 实现价格（该群体的平均链上成本）。数据来自 BGeometrics（bitcoin-data.com）与 Binance；成本线的免费数据大约覆盖近四年，末值可能延迟数日。仅供观察，不构成投资建议。</p>
-  </section>
+    </section>
+  </div>
   <h2>未来 3 个月内可能影响 BTC 价格的重要事件</h2>
   <section class="block" id="events">
     <p class="ev-status" id="events-status">正在加载事件看板…</p>
@@ -331,6 +381,7 @@
     事件日程另参考美联储 FOMC 日历、美国劳工统计局（BLS）、经济分析局（BEA）与 Polymarket，事件观察不构成投资建议。<br>
     仅供参考，不构成投资建议。<br>
     右上角「刷新」会重新加载本页最新内容，不必关掉再打开。<br>
+    短期持有者图表可点「横屏」，单独满屏查看。<br>
     可在浏览器菜单里选择「添加到主屏幕」。
   </footer>
   <script>
@@ -1173,6 +1224,7 @@
     ready: false,
     refreshing: false,
     plot: null,
+    fs: false,
   };
   try {
     const saved = localStorage.getItem(STH_RANGE_KEY);
@@ -1344,22 +1396,73 @@
     if (tip) tip.hidden = true;
     if (sthState.ready) drawSthChart();
   }
-  function placeSthTip(clientX, clientY) {
+  function sthFsRotated() {
+    return !!(sthState.fs && window.matchMedia && window.matchMedia("(orientation: portrait)").matches);
+  }
+  function sthEventLocal(el, ev) {
+    const r = el.getBoundingClientRect();
+    if (sthFsRotated() && r.width > 0 && r.height > 0) {
+      return {
+        x: (ev.clientY - r.top) * (el.clientWidth / r.height),
+        y: (r.right - ev.clientX) * (el.clientHeight / r.width)
+      };
+    }
+    return { x: ev.clientX - r.left, y: ev.clientY - r.top };
+  }
+  async function enterSthFullscreen() {
+    if (sthState.fs) return;
+    sthState.fs = true;
+    const stage = $("sth-stage");
+    const exitBtn = $("sth-fs-exit");
+    const openBtn = $("sth-fs");
+    document.documentElement.classList.add("sth-fs-on");
+    if (stage) stage.classList.add("sth-full");
+    if (exitBtn) exitBtn.hidden = false;
+    if (openBtn) openBtn.setAttribute("aria-expanded", "true");
+    try {
+      const root = document.documentElement;
+      if (root.requestFullscreen) await root.requestFullscreen();
+      else if (root.webkitRequestFullscreen) root.webkitRequestFullscreen();
+    } catch (e) {}
+    try {
+      if (screen.orientation && screen.orientation.lock) await screen.orientation.lock("landscape");
+    } catch (e) {}
+    hideSthTip();
+    requestAnimationFrame(() => drawSthChart());
+    setTimeout(() => { if (sthState.fs) drawSthChart(); }, 350);
+  }
+  async function exitSthFullscreen() {
+    if (!sthState.fs) return;
+    sthState.fs = false;
+    const stage = $("sth-stage");
+    const exitBtn = $("sth-fs-exit");
+    const openBtn = $("sth-fs");
+    document.documentElement.classList.remove("sth-fs-on");
+    if (stage) stage.classList.remove("sth-full");
+    if (exitBtn) exitBtn.hidden = true;
+    if (openBtn) openBtn.setAttribute("aria-expanded", "false");
+    try { if (document.fullscreenElement || document.webkitFullscreenElement) await (document.exitFullscreen ? document.exitFullscreen() : document.webkitExitFullscreen()); } catch (e) {}
+    try { if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock(); } catch (e) {}
+    hideSthTip();
+    requestAnimationFrame(() => drawSthChart());
+  }
+  function placeSthTip(ev) {
     const wrap = $("sth-wrap"), tip = $("sth-tip");
-    if (!wrap || !tip || tip.hidden) return;
-    const wr = wrap.getBoundingClientRect();
-    const x = clientX - wr.left, y = clientY - wr.top;
+    if (!wrap || !tip || tip.hidden || !ev) return;
+    const loc = sthEventLocal(wrap, ev);
+    const x = loc.x, y = loc.y;
+    const wrW = wrap.clientWidth, wrH = wrap.clientHeight;
     const tw = tip.offsetWidth, th = tip.offsetHeight;
     let left = x + 12;
-    if (left + tw > wr.width - 4) left = x - tw - 12;
-    left = Math.max(4, Math.min(left, wr.width - tw - 4));
+    if (left + tw > wrW - 4) left = x - tw - 12;
+    left = Math.max(4, Math.min(left, wrW - tw - 4));
     let top = y - th - 10;
     if (top < 4) top = y + 14;
-    top = Math.max(4, Math.min(top, wr.height - th - 4));
+    top = Math.max(4, Math.min(top, wrH - th - 4));
     tip.style.left = left + "px";
     tip.style.top = top + "px";
   }
-  function showSthTip(row, clientX, clientY) {
+  function showSthTip(row, ev) {
     const tip = $("sth-tip");
     if (!tip || !row) return;
     tip.innerHTML = `<div class="d">${escapeHtml(row.d)}</div>
@@ -1367,20 +1470,19 @@
       <div class="r"><span class="k">STH成本线</span><span>${escapeHtml(fmtSthPrice(row.cost))}</span></div>
       <div class="r"><span class="k">STH盈利供应占比</span><span>${escapeHtml(fmtSthPct(row.profit))}</span></div>`;
     tip.hidden = false;
-    placeSthTip(clientX, clientY);
+    placeSthTip(ev);
   }
   function sthHoverAt(ev) {
     const plot = sthState.plot;
     const canvas = $("sth-canvas");
     if (!plot || !canvas || !plot.rows.length) return;
-    const rect = canvas.getBoundingClientRect();
-    const x = ev.clientX - rect.left;
+    const x = sthEventLocal(canvas, ev).x;
     const n = plot.rows.length;
     const t = n <= 1 ? 0 : (x - plot.x) / plot.w;
     const i = clamp(Math.round(t * (n - 1)), 0, n - 1);
     sthState.hover = i;
     drawSthChart();
-    showSthTip(plot.rows[i], ev.clientX, ev.clientY);
+    showSthTip(plot.rows[i], ev);
   }
   function strokeSthSeries(ctx, rows, key, xAt, yAt, color, width) {
     ctx.beginPath();
@@ -1704,6 +1806,16 @@
     }
     const refresh = $("sth-refresh");
     if (refresh) refresh.addEventListener("click", () => { refreshSthChart(); });
+    const fsBtn = $("sth-fs");
+    if (fsBtn) fsBtn.addEventListener("click", () => { enterSthFullscreen(); });
+    const fsExit = $("sth-fs-exit");
+    if (fsExit) fsExit.addEventListener("click", () => { exitSthFullscreen(); });
+    document.addEventListener("keydown", (ev) => {
+      if (ev.key === "Escape" && sthState.fs) exitSthFullscreen();
+    });
+    window.addEventListener("orientationchange", () => {
+      if (sthState.fs) requestAnimationFrame(() => drawSthChart());
+    });
     const canvas = $("sth-canvas");
     if (canvas) {
       canvas.addEventListener("pointerdown", (ev) => {
@@ -1718,8 +1830,8 @@
         }
       });
       canvas.addEventListener("pointerup", (ev) => {
-        const r = canvas.getBoundingClientRect();
-        const outside = ev.clientX < r.left || ev.clientX > r.right || ev.clientY < r.top || ev.clientY > r.bottom;
+        const loc = sthEventLocal(canvas, ev);
+        const outside = loc.x < 0 || loc.x > canvas.clientWidth || loc.y < 0 || loc.y > canvas.clientHeight;
         if (outside) hideSthTip();
       });
       canvas.addEventListener("pointercancel", hideSthTip);
