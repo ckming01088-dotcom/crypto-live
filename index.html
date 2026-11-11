@@ -488,7 +488,7 @@
     }
     const gap = (sma111 - twox350) / twox350 * 100;
     if (sma111 >= twox350) return { gap, status: "111日已上穿2×350日", short: "已上穿", lean: 1 };
-    if (Math.abs(gap) < 5) return { gap, status: "接近（差距小于 5%）", short: "接近", lean: 1 };
+    if (Math.abs(gap) < 5) return { gap, status: "接近（差距小于 5%）", short: "接近", lean: 0 };
     return { gap, status: "未交叉", short: "未交叉", lean: 0 };
   }
   function fundingBand(rate) {
@@ -692,7 +692,7 @@
     const twox350 = s350 != null ? s350 * 2 : null;
     const price = livePrice != null ? livePrice : daily[daily.length - 1];
     const mayer = (price != null && s200) ? price / s200 : null;
-    const mb = mayerBand(mayer);
+    const mb = symbol === "BTC" ? mayerBand(mayer) : { label: "", tone: "neutral", lean: 0 };
     const pi = symbol === "BTC" ? piCycleStatus(s111, twox350) : { gap: null, status: null, short: null, lean: 0 };
     const wh = windowHigh(highs, times, livePrice);
     const drawdown = (price != null && wh.price) ? (price - wh.price) / wh.price * 100 : null;
@@ -810,12 +810,15 @@
     const flash = lastPrices[c.symbol] != null && c.price != null && c.price !== lastPrices[c.symbol]
       ? (c.price > lastPrices[c.symbol] ? " flash-up" : " flash-down") : "";
     const name = c.symbol === "BTC" ? "比特币 Bitcoin" : "以太坊 Ethereum";
-    const mayerVal = c.mayer != null ? `${c.mayer.toFixed(2)} ${escapeHtml(c.mayer_label || "")}` : "—";
     const ddCls = c.drawdown == null ? "" : (c.drawdown <= -40 ? "down" : c.drawdown >= -5 ? "tone-caution" : "");
-    const extra = [
-      `<span class="pill">Mayer <b class="${toneClass(c.mayer_tone)}">${mayerVal}</b></span>`,
-      `<span class="pill">回撤 <b class="${ddCls}">${fmtPct(c.drawdown)}</b></span>`,
-    ];
+    const extra = [];
+    if (c.symbol === "BTC") {
+      const mayerVal = c.mayer != null ? `${c.mayer.toFixed(2)} ${escapeHtml(c.mayer_label || "")}` : "—";
+      extra.push(`<span class="pill">Mayer <b class="${toneClass(c.mayer_tone)}">${mayerVal}</b></span>`);
+    } else if (c.mayer != null) {
+      extra.push(`<span class="pill">200日均线倍数 <b>${c.mayer.toFixed(2)}</b></span>`);
+    }
+    extra.push(`<span class="pill">回撤 <b class="${ddCls}">${fmtPct(c.drawdown)}</b></span>`);
     if (c.symbol === "BTC") {
       extra.push(`<span class="pill">派循环 <b class="${c.pi_lean > 0 ? "tone-caution" : ""}">${escapeHtml(c.pi_short || "—")}</b></span>`);
     }
@@ -905,10 +908,10 @@
     ];
     if (symbol === "BTC" && m.pi && m.pi.sma111 != null && m.pi.twox350 != null) {
       const st = piCycleStatus(m.pi.sma111, m.pi.twox350);
-      rows.push(["派循环（日线）", `${fmtPct(m.pi.gapPct)} ${st.short || st.status || "—"}`]);
+      rows.push(["派循环（日线）", `${fmtPct(m.pi.gapPct)} ${st.short || st.status || "—"}`, st.lean > 0 ? "tone-caution" : ""]);
     }
-    return `<div class="cycle-reads">${rows.map(([lab, val]) =>
-      `<div class="kv"><span class="lab">${escapeHtml(lab)}</span><span class="val">${escapeHtml(val)}</span></div>`
+    return `<div class="cycle-reads">${rows.map(([lab, val, cls]) =>
+      `<div class="kv"><span class="lab">${escapeHtml(lab)}</span><span class="val${cls ? " " + cls : ""}">${escapeHtml(val)}</span></div>`
     ).join("")}</div>`;
   }
   function cycleBlock(data) {
@@ -1864,6 +1867,16 @@
     </div>
     <p class="ev-hint">下列为预测市场隐含概率，已按 Yes 中间价归一化；不是本页对利率或比特币价格的判断。</p>`;
   }
+  function evStatementNote(m) {
+    const dates = (m && m.dates) || [];
+    const last = dates.length ? dates[dates.length - 1] : "";
+    const parts = last ? last.split("-") : [];
+    if (parts.length === 3) {
+      const label = Number(parts[1]) + "月" + Number(parts[2]) + "日";
+      return "声明通常在会议最后一日（" + label + "）14:00 ET";
+    }
+    return "声明通常在会议最后一日 14:00 ET";
+  }
   function evRenderMeeting(view) {
     const m = view.meeting || {};
     const year = m.year ? m.year + "年" : "";
@@ -1877,7 +1890,7 @@
     const lean = view.lean;
     return `<article class="ev-card">
       <div class="ev-card-top"><span class="ev-card-title">${escapeHtml(year + (m.dateLabel || m.title || ""))}</span>${badge}</div>
-      <p class="ev-card-note">声明通常次日 14:00 ET</p>
+      <p class="ev-card-note">${escapeHtml(evStatementNote(m))}</p>
       <div class="ev-lean ${escapeHtml(lean.tone)}">${escapeHtml(lean.arrow)} ${escapeHtml(lean.text)}</div>
       ${rows}
       <div class="ev-groups">
