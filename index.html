@@ -39,6 +39,14 @@
     }
     .top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
     .brand { font-weight: 700; font-size: 15px; letter-spacing: .02em; }
+    .top-meta { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+    .top-meta-text { text-align: right; }
+    .page-refresh {
+      min-height: 36px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 10px;
+      background: #1A2030; color: var(--text); font: inherit; font-size: 13px; font-weight: 650;
+      cursor: pointer; touch-action: manipulation; white-space: nowrap; flex: 0 0 auto;
+    }
+    .page-refresh:disabled { opacity: .6; cursor: default; }
     .clock { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 13px; }
     .live { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 12px; }
     .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); }
@@ -262,9 +270,12 @@
   <header>
     <div class="top">
       <div class="brand">加密实时行情</div>
-      <div>
-        <span class="live"><span id="dot" class="dot"></span><span id="status">连接中</span></span>
-        <div class="clock" id="clock"></div>
+      <div class="top-meta">
+        <div class="top-meta-text">
+          <span class="live"><span id="dot" class="dot"></span><span id="status">连接中</span></span>
+          <div class="clock" id="clock"></div>
+        </div>
+        <button type="button" class="page-refresh" id="page-refresh">刷新</button>
       </div>
     </div>
     <div class="regime" id="regime">
@@ -319,6 +330,7 @@
     短期持有者图表另参考 BGeometrics（bitcoin-data.com）与 Binance。<br>
     事件日程另参考美联储 FOMC 日历、美国劳工统计局（BLS）、经济分析局（BEA）与 Polymarket，事件观察不构成投资建议。<br>
     仅供参考，不构成投资建议。<br>
+    右上角「刷新」会重新加载本页最新内容，不必关掉再打开。<br>
     可在浏览器菜单里选择「添加到主屏幕」。
   </footer>
   <script>
@@ -2112,6 +2124,24 @@
       if ($("events-status")) $("events-status").textContent = "事件看板加载失败";
     }
   }
+
+
+  function hardReloadPage() {
+    const btn = $("page-refresh");
+    if (btn) { btn.disabled = true; btn.textContent = "刷新中…"; }
+    const url = new URL(location.href);
+    url.searchParams.set("r", String(Date.now()));
+    const go = () => { location.replace(url.pathname + url.search + url.hash); };
+    const bust = (path) => fetch(path, { cache: "reload" }).catch(() => {});
+    Promise.all([
+      bust(location.pathname || "./"),
+      bust("./index.html"),
+      bust("./sth-chart.json"),
+      bust("./events-board.json"),
+    ]).finally(go);
+  }
+  const pageRefreshBtn = $("page-refresh");
+  if (pageRefreshBtn) pageRefreshBtn.addEventListener("click", hardReloadPage);
 
   initSthChart();
   initEventsBoard();
