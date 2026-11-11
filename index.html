@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="加密行情">
+  <meta name="theme-color" content="#0B0E14">
+  <meta name="format-detection" content="telephone=no">
+  <title>加密实时行情</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%230B0E14'/%3E%3Ccircle cx='256' cy='256' r='148' fill='none' stroke='%23F5C542' stroke-width='28'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --bg: #0B0E14;
+      --card: #141924;
+      --line: #232A38;
+      --text: #E8EEF5;
+      --muted: #8B95A5;
+      --up: #2EC9B3;
+      --down: #F0615A;
+      --caution: #F5C542;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body {
+      margin: 0; padding: 0; background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      font-size: 16px; line-height: 1.45;
+    }
+    body { min-height: 100dvh; padding: calc(12px + var(--safe-top)) 16px calc(28px + var(--safe-bottom)); }
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      margin: -12px -16px 12px; padding: 12px 16px 10px;
+    }
+    .top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .brand { font-weight: 700; font-size: 15px; letter-spacing: .02em; }
+    .clock { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 13px; }
+    .live { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 12px; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); }
+    .dot.on { background: var(--up); box-shadow: 0 0 0 4px color-mix(in srgb, var(--up) 25%, transparent); }
+    .dot.warn { background: var(--caution); }
+    .regime { margin-top: 10px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); }
+    .regime h1 { margin: 0 0 4px; font-size: 20px; font-weight: 700; }
+    .regime p { margin: 0; color: var(--muted); font-size: 13px; }
+    .tone-caution { color: var(--caution); }
+    .tone-up { color: var(--up); }
+    .tone-down { color: var(--down); }
+    .tone-neutral { color: var(--muted); }
+    .chips { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
+    .chip { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; }
+    .chip .k { display: block; color: var(--muted); font-size: 11px; margin-bottom: 2px; }
+    .chip .v { font-weight: 650; font-variant-numeric: tabular-nums; }
+    .hero, .card, .list, .block {
+      background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 14px; margin-bottom: 10px;
+    }
+    .hero .sym { color: var(--muted); font-size: 13px; font-weight: 600; }
+    .price { font-size: 36px; font-weight: 720; font-variant-numeric: tabular-nums; letter-spacing: -0.03em; line-height: 1.15; margin: 2px 0 6px; }
+    .row { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: baseline; }
+    .pct { font-variant-numeric: tabular-nums; font-weight: 650; }
+    .up { color: var(--up); }
+    .down { color: var(--down); }
+    .flat { color: var(--muted); }
+    .pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 4px 8px; border-radius: 999px; background: #1A2030; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .pill b { font-weight: 650; color: var(--text); }
+    .spark { color: #7FB4C9; letter-spacing: -1px; font-size: 13px; margin-top: 8px; }
+    .flash-up { animation: flashUp .6s ease; }
+    .flash-down { animation: flashDown .6s ease; }
+    @keyframes flashUp { from { color: var(--up); } to { color: var(--text); } }
+    @keyframes flashDown { from { color: var(--down); } to { color: var(--text); } }
+    .coin { display: grid; grid-template-columns: 52px 1fr auto; gap: 8px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
+    .list .coin:first-child { border-top: 0; padding-top: 0; }
+    .list .coin:last-child { padding-bottom: 0; }
+    .coin .name { font-weight: 700; }
+    .coin .px { text-align: right; font-variant-numeric: tabular-nums; font-weight: 650; }
+    .coin .chg { text-align: right; font-size: 13px; }
+    h2 { margin: 18px 2px 8px; font-size: 14px; color: var(--muted); font-weight: 650; }
+    .kv { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 14px; }
+    .block .kv:first-of-type { border-top: 0; padding-top: 0; }
+    .kv .lab { color: var(--muted); }
+    .kv .val { text-align: right; font-variant-numeric: tabular-nums; }
+    .note { color: var(--muted); font-size: 13px; margin-top: 8px; }
+    footer { margin-top: 18px; color: var(--muted); font-size: 12px; text-align: center; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top">
+      <div class="brand">加密实时行情</div>
+      <div>
+        <span class="live"><span id="dot" class="dot"></span><span id="status">连接中</span></span>
+        <div class="clock" id="clock"></div>
+      </div>
+    </div>
+    <div class="regime" id="regime">
+      <h1 class="tone-neutral">正在加载</h1>
+      <p>正在拉取价格、均线与情绪指数…</p>
+    </div>
+  </header>
+  <section class="chips" id="chips"></section>
+  <section id="heroes"></section>
+  <h2>其他币种</h2>
+  <section class="list" id="others"></section>
+  <h2>比特币技术</h2>
+  <section class="block" id="btc-tech"></section>
+  <h2>以太坊技术</h2>
+  <section class="block" id="eth-tech"></section>
+  <h2>牛熊分界</h2>
+  <section class="block" id="lines"></section>
+  <footer>
+    数据来自 Binance、CoinGecko、Alternative.me，时间为香港时间。<br>
+    仅供参考，不构成投资建议。<br>
+    可在浏览器菜单里选择「添加到主屏幕」。
+  </footer>
+  <script>
+  const COINS = [
+    ["BTC", "BTCUSDT"],
+    ["ETH", "ETHUSDT"],
+    ["BNB", "BNBUSDT"],
+    ["XRP", "XRPUSDT"],
+    ["SOL", "SOLUSDT"],
+    ["TRX", "TRXUSDT"],
+  ];
+  const SPARK = "▁▂▃▄▅▆▇█";
+  const state = {
+    tickers: {},
+    daily: { BTC: [], ETH: [] },
+    weekly: { BTC: [], ETH: [] },
+    lastCross: { BTC: null, ETH: null },
+    market: {},
+    fng: { value: null, label: "" },
+    live: false,
+    status: "正在连接行情…",
+  };
+  COINS.forEach(([s]) => { state.tickers[s] = {}; });
+  let lastPrices = {};
+  let renderTimer = 0;
+
+  const $ = (id) => document.getElementById(id);
+  function nowHK() {
+    return new Date().toLocaleString("sv-SE", { timeZone: "Asia/Hong_Kong" }).replace("T", " ");
+  }
+  function sma(values, period) {
+    if (!values || values.length < period) return null;
+    let sum = 0;
+    for (let i = values.length - period; i < values.length; i++) sum += values[i];
+    return sum / period;
+  }
+  function emaSeries(values, period) {
+    if (values.length < period) return values.map(() => null);
+    const k = 2 / (period + 1);
+    let ema = 0;
+    for (let i = 0; i < period; i++) ema += values[i];
+    ema /= period;
+    const out = Array(period - 1).fill(null);
+    out.push(ema);
+    for (let i = period; i < values.length; i++) {
+      ema = values[i] * k + ema * (1 - k);
+      out.push(ema);
+    }
+    return out;
+  }
+  function rsiWilder(closes, period = 14) {
+    if (closes.length < period + 1) return null;
+    const gains = [], losses = [];
+    for (let i = 1; i < closes.length; i++) {
+      const d = closes[i] - closes[i - 1];
+      gains.push(Math.max(d, 0));
+      losses.push(Math.max(-d, 0));
+    }
+    let avgGain = 0, avgLoss = 0;
+    for (let i = 0; i < period; i++) { avgGain += gains[i]; avgLoss += losses[i]; }
+    avgGain /= period; avgLoss /= period;
+    for (let i = period; i < gains.length; i++) {
+      avgGain = (avgGain * (period - 1) + gains[i]) / period;
+      avgLoss = (avgLoss * (period - 1) + losses[i]) / period;
+    }
+    if (avgLoss === 0) return 100;
+    const rs = avgGain / avgLoss;
+    return 100 - 100 / (1 + rs);
+  }
+  function macdLast(closes) {
+    if (closes.length < 35) return { macd: null, signal: null, hist: null };
+    const e12 = emaSeries(closes, 12);
+    const e26 = emaSeries(closes, 26);
+    const line = [];
+    for (let i = 0; i < closes.length; i++) {
+      if (e12[i] == null || e26[i] == null) continue;
+      line.push(e12[i] - e26[i]);
+    }
+    if (line.length < 9) return { macd: null, signal: null, hist: null };
+    const sig = emaSeries(line, 9);
+    const macd = line[line.length - 1];
+    const signal = sig[sig.length - 1];
+    if (signal == null) return { macd, signal: null, hist: null };
+    return { macd, signal, hist: macd - signal };
+  }
+  function lastCross(closes, fast = 50, slow = 200) {
+    if (closes.length < slow + 2) return null;
+    let prev = null, last = null;
+    for (let i = slow; i <= closes.length; i++) {
+      const a = sma(closes.slice(0, i), fast);
+      const b = sma(closes.slice(0, i), slow);
+      if (a == null || b == null) continue;
+      const cur = a >= b ? "金叉" : "死叉";
+      if (prev && cur !== prev) last = cur;
+      prev = cur;
+    }
+    return last;
+  }
+  function sparkline(values, width = 24) {
+    if (!values || values.length < 2) return "";
+    let data = values.slice();
+    if (data.length > width) {
+      const step = data.length / width;
+      data = Array.from({ length: width }, (_, i) => data[Math.floor(i * step)]);
+    }
+    const lo = Math.min(...data), hi = Math.max(...data);
+    const span = hi - lo || 1;
+    return data.map((v) => SPARK[Math.min(SPARK.length - 1, Math.floor((v - lo) / span * (SPARK.length - 1)))]).join("");
+  }
+  function pct(now, then) {
+    if (now == null || then == null || then === 0) return null;
+    return (now - then) / then * 100;
+  }
+  function maStatus(price, ma) {
+    const d = pct(price, ma);
+    if (d == null) return "—";
+    if (Math.abs(d) <= 1.5) return "测试中";
+    return d > 0 ? "守住" : "跌破";
+  }
+  function fngZh(label, value) {
+    const map = { "Extreme Fear": "极度恐惧", Fear: "恐惧", Neutral: "中性", Greed: "贪婪", "Extreme Greed": "极度贪婪" };
+    if (map[label]) return map[label];
+    if (value == null) return "—";
+    if (value <= 24) return "极度恐惧";
+    if (value <= 49) return "恐惧";
+    if (value <= 74) return "贪婪";
+    return "极度贪婪";
+  }
+  function indicators(symbol, livePrice) {
+    const daily = (state.daily[symbol] || []).slice();
+    const weekly = (state.weekly[symbol] || []).slice();
+    if (!daily.length) return {};
+    if (livePrice != null) {
+      daily[daily.length - 1] = livePrice;
+      if (weekly.length) weekly[weekly.length - 1] = livePrice;
+    }
+    const macd = macdLast(daily);
+    const s50 = sma(daily, 50), s200 = sma(daily, 200);
+    const s50w = sma(weekly, 50), s200w = sma(weekly, 200);
+    const price = livePrice != null ? livePrice : daily[daily.length - 1];
+    return {
+      sma50: s50, sma200: s200, sma50w: s50w, sma200w: s200w,
+      d50: pct(price, s50), d200: pct(price, s200), d50w: pct(price, s50w), d200w: pct(price, s200w),
+      st50: maStatus(price, s50), st200: maStatus(price, s200),
+      st50w: maStatus(price, s50w), st200w: maStatus(price, s200w),
+      rsi_d: rsiWilder(daily, 14), rsi_w: weekly.length ? rsiWilder(weekly, 14) : null,
+      macd: macd.macd, macd_signal: macd.signal, macd_hist: macd.hist,
+      cross_daily: s50 != null && s200 != null ? (s50 >= s200 ? "金叉" : "死叉") : null,
+      last_daily_cross: state.lastCross[symbol],
+      change_7d: daily.length >= 8 ? pct(daily[daily.length - 1], daily[daily.length - 8]) : null,
+      change_30d: daily.length >= 31 ? pct(daily[daily.length - 1], daily[daily.length - 31]) : null,
+      spark_30: sparkline(daily.slice(-30), 24),
+    };
+  }
+  function regime(btc, eth) {
+    if (!btc || btc.sma200 == null || btc.sma200w == null || btc.price == null) {
+      return { title: "数据加载中", detail: "正在拉取均线与价格…", tone: "neutral" };
+    }
+    const d200 = btc.d200 || 0, d200w = btc.d200w || 0;
+    const ethBroken = !!(eth && eth.sma200 != null && eth.sma200w != null && eth.price != null && eth.price < eth.sma200 && eth.price < eth.sma200w);
+    if (d200w < -0.3) return { title: "偏空 · 接近熊市结构", detail: "比特币已落到 200 周均线下方，长期地板失守。", tone: "down" };
+    if (d200 < -1.5 && d200w > 0) return { title: "过渡 · 偏防守", detail: "比特币已跌破 200 日均线，但仍在 200 周均线之上。", tone: "caution" };
+    if (Math.abs(d200) <= 1.5 && d200w > 0) {
+      const extra = ethBroken ? "以太坊已跌破两条长期均线，结构更弱。" : "正在考验中期牛熊分界。";
+      return { title: "过渡 · 偏防守", detail: "比特币正在测试 200 日均线，周线仍高于 200 周均线。" + extra, tone: "caution" };
+    }
+    if (btc.sma50 && btc.price > btc.sma50 && d200 > 1.5 && d200w > 0) {
+      return { title: "偏多", detail: "比特币站上 50 日与 200 日均线，并守住 200 周均线。", tone: "up" };
+    }
+    return { title: "过渡 · 偏防守", detail: "尚未形成明确的牛市主升或深度熊市结构。", tone: "caution" };
+  }
+  function snapshot() {
+    const coins = COINS.map(([symbol]) => {
+      const t = state.tickers[symbol] || {};
+      const ind = (symbol === "BTC" || symbol === "ETH") ? indicators(symbol, t.price) : {};
+      return { symbol, price: t.price, change_24h: t.change_24h, high_24h: t.high_24h, low_24h: t.low_24h, ...ind };
+    });
+    const btc = coins.find((c) => c.symbol === "BTC");
+    return {
+      time: nowHK(),
+      status: state.status,
+      live: state.live,
+      regime: regime(coins.find((c) => c.symbol === "BTC"), coins.find((c) => c.symbol === "ETH")),
+      market: state.market,
+      fng: state.fng,
+      coins,
+      flip: { sma200: btc && btc.sma200, sma200w: btc && btc.sma200w },
+    };
+  }
+
+  function fmtPrice(x) {
+    if (x == null) return "—";
+    const ax = Math.abs(x);
+    if (ax >= 100) return x.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (ax >= 1) return String(Number(x.toFixed(4)));
+    return String(Number(x.toFixed(6)));
+  }
+  function fmtPct(x, signed = true) {
+    if (x == null) return "—";
+    const n = x.toFixed(2) + "%";
+    return signed ? (x > 0 ? "+" + n : n) : n;
+  }
+  function pctClass(x) { if (x == null || x === 0) return "flat"; return x > 0 ? "up" : "down"; }
+  function stClass(st) {
+    if (st === "守住") return "up";
+    if (st === "跌破") return "down";
+    if (st === "测试中") return "tone-caution";
+    return "flat";
+  }
+  function fmtUsd(x) {
+    if (x == null) return "—";
+    if (Math.abs(x) >= 1e12) return (x / 1e12).toFixed(2) + " 万亿";
+    if (Math.abs(x) >= 1e8) return (x / 1e8).toFixed(1) + " 亿";
+    return Math.round(x).toLocaleString("en-US");
+  }
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+  function coinBy(data, sym) { return (data.coins || []).find((c) => c.symbol === sym); }
+
+  function heroCard(c) {
+    if (!c) return "";
+    const flash = lastPrices[c.symbol] != null && c.price != null && c.price !== lastPrices[c.symbol]
+      ? (c.price > lastPrices[c.symbol] ? " flash-up" : " flash-down") : "";
+    const name = c.symbol === "BTC" ? "比特币 Bitcoin" : "以太坊 Ethereum";
+    return `<article class="hero">
+      <div class="sym">${name}</div>
+      <div class="price${flash}" data-sym="${c.symbol}">${fmtPrice(c.price)}</div>
+      <div class="row">
+        <span class="pct ${pctClass(c.change_24h)}">${fmtPct(c.change_24h)} 24h</span>
+        <span class="pct ${pctClass(c.change_7d)}">${fmtPct(c.change_7d)} 7d</span>
+        <span class="pct ${pctClass(c.change_30d)}">${fmtPct(c.change_30d)} 30d</span>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <span class="pill">200日 <b class="${stClass(c.st200)}">${fmtPct(c.d200)} ${escapeHtml(c.st200 || "—")}</b></span>
+        <span class="pill">200周 <b class="${stClass(c.st200w)}">${fmtPct(c.d200w)} ${escapeHtml(c.st200w || "—")}</b></span>
+      </div>
+      <div class="spark">${escapeHtml(c.spark_30 || "")}</div>
+    </article>`;
+  }
+  function techBlock(c) {
+    if (!c) return `<div class="note">暂无数据</div>`;
+    const macd = c.macd == null || c.macd_signal == null ? "—"
+      : (c.macd >= c.macd_signal ? "在信号线上方" : "在信号线下方") + (c.macd_hist != null ? `  柱 ${c.macd_hist.toFixed(2)}` : "");
+    const macdCls = c.macd != null && c.macd_signal != null ? (c.macd >= c.macd_signal ? "up" : "down") : "flat";
+    let rsi = c.rsi_d == null ? "—" : c.rsi_d.toFixed(1);
+    if (c.rsi_d != null) {
+      if (c.rsi_d < 30) rsi += "  超卖";
+      else if (c.rsi_d > 70) rsi += "  超买";
+      else if (c.rsi_d < 40) rsi += "  偏弱";
+      else if (c.rsi_d > 60) rsi += "  偏强";
+      else rsi += "  中性";
+    }
+    if (c.rsi_w != null) rsi += ` · 周线 ${c.rsi_w.toFixed(1)}`;
+    const cross = c.cross_daily ? `${c.cross_daily}仍有效` : "—";
+    const rows = [
+      ["50 日均线", `${fmtPrice(c.sma50)}`, `${fmtPct(c.d50)} ${c.st50 || ""}`, c.st50],
+      ["200 日均线", `${fmtPrice(c.sma200)}`, `${fmtPct(c.d200)} ${c.st200 || ""}`, c.st200],
+      ["50 周均线", `${fmtPrice(c.sma50w)}`, `${fmtPct(c.d50w)} ${c.st50w || ""}`, c.st50w],
+      ["200 周均线", `${fmtPrice(c.sma200w)}`, `${fmtPct(c.d200w)} ${c.st200w || ""}`, c.st200w],
+      ["RSI(14)", rsi, "", null],
+      ["MACD", macd, "", null],
+      ["50/200 日", cross, "", c.cross_daily === "金叉" ? "守住" : c.cross_daily === "死叉" ? "跌破" : null],
+    ];
+    return rows.map(([lab, mid, right, st]) => {
+      const extra = lab === "MACD" ? macdCls : stClass(st);
+      return `<div class="kv"><span class="lab">${lab}</span><span class="val">${escapeHtml(mid)}${right ? ` <span class="${extra}">${escapeHtml(right)}</span>` : ""}</span></div>`;
+    }).join("");
+  }
+  function render(data) {
+    $("clock").textContent = (data.time || "") + " 香港时间";
+    $("status").textContent = data.live ? "实时推送中" : (data.status || "更新中");
+    $("dot").className = "dot " + (data.live ? "on" : "warn");
+    const r = data.regime || {};
+    $("regime").innerHTML = `<h1 class="tone-${escapeHtml(r.tone || "neutral")}">${escapeHtml(r.title || "—")}</h1><p>${escapeHtml(r.detail || "")}</p>`;
+    const m = data.market || {}, f = data.fng || {};
+    $("chips").innerHTML = [
+      ["总市值", `${fmtUsd(m.total_mcap)} <span class="pct ${pctClass(m.mcap_change_24h)}">${fmtPct(m.mcap_change_24h)}</span>`],
+      ["24h 成交", fmtUsd(m.volume_24h)],
+      ["BTC / ETH 占比", `${fmtPct(m.btc_dom, false)} / ${fmtPct(m.eth_dom, false)}`],
+      ["恐惧贪婪", f.value == null ? "—" : `${f.value}  ${escapeHtml(f.label || "")}`],
+    ].map(([k, v]) => `<div class="chip"><span class="k">${k}</span><span class="v">${v}</span></div>`).join("");
+    const btc = coinBy(data, "BTC"), eth = coinBy(data, "ETH");
+    $("heroes").innerHTML = heroCard(btc) + heroCard(eth);
+    $("others").innerHTML = (data.coins || []).filter((c) => c.symbol !== "BTC" && c.symbol !== "ETH").map((c) => `
+      <div class="coin">
+        <div class="name">${escapeHtml(c.symbol)}</div>
+        <div class="px">${fmtPrice(c.price)}</div>
+        <div class="chg pct ${pctClass(c.change_24h)}">${fmtPct(c.change_24h)}</div>
+      </div>`).join("");
+    $("btc-tech").innerHTML = techBlock(btc);
+    $("eth-tech").innerHTML = techBlock(eth);
+    const lines = [
+      ["BTC 200 日", btc && btc.st200, btc && fmtPrice(btc.sma200), "中期分界"],
+      ["BTC 200 周", btc && btc.st200w, btc && fmtPrice(btc.sma200w), "长期地板"],
+      ["ETH 200 日", eth && eth.st200, eth && fmtPrice(eth.sma200), "中期分界"],
+      ["ETH 200 周", eth && eth.st200w, eth && fmtPrice(eth.sma200w), "长期地板"],
+    ];
+    const flip = data.flip || {};
+    const tip = (flip.sma200w && flip.sma200)
+      ? `比特币周收跌破约 ${fmtPrice(flip.sma200w)} 的 200 周均线，长期解读会明显转空；重新站稳约 ${fmtPrice(flip.sma200)} 的 200 日均线并收复 50 日均线，中期偏空才会松动。`
+      : "均线加载后将显示翻转条件。";
+    $("lines").innerHTML = lines.map(([n, st, ma, lab]) =>
+      `<div class="kv"><span class="lab">${n}</span><span class="val ${stClass(st)}">${escapeHtml(st || "—")} · ${escapeHtml(lab)} ${escapeHtml(ma || "")}</span></div>`
+    ).join("") + `<p class="note">${escapeHtml(tip)}</p>`;
+    (data.coins || []).forEach((c) => { if (c.price != null) lastPrices[c.symbol] = c.price; });
+  }
+  function paint() { render(snapshot()); }
+
+  async function fetchJson(url) {
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) throw new Error(url + " " + res.status);
+    return res.json();
+  }
+  async function refreshTickers() {
+    const symbols = encodeURIComponent(JSON.stringify(COINS.map(([, p]) => p)));
+    const rows = await fetchJson("https://api.binance.com/api/v3/ticker/24hr?symbols=" + symbols);
+    rows.forEach((row) => {
+      const name = COINS.find(([, p]) => p === row.symbol)?.[0];
+      if (!name) return;
+      state.tickers[name] = {
+        price: +row.lastPrice,
+        change_24h: +row.priceChangePercent,
+        high_24h: +row.highPrice,
+        low_24h: +row.lowPrice,
+      };
+    });
+  }
+  async function refreshKlines() {
+    for (const [symbol, pair] of [["BTC", "BTCUSDT"], ["ETH", "ETHUSDT"]]) {
+      const daily = await fetchJson(`https://api.binance.com/api/v3/klines?symbol=${pair}&interval=1d&limit=400`);
+      const weekly = await fetchJson(`https://api.binance.com/api/v3/klines?symbol=${pair}&interval=1w&limit=250`);
+      state.daily[symbol] = daily.map((r) => +r[4]);
+      state.weekly[symbol] = weekly.map((r) => +r[4]);
+      state.lastCross[symbol] = lastCross(state.daily[symbol], 50, 200);
+    }
+  }
+  async function refreshMarket() {
+    const g = (await fetchJson("https://api.coingecko.com/api/v3/global")).data;
+    state.market = {
+      total_mcap: +g.total_market_cap.usd,
+      mcap_change_24h: +g.market_cap_change_percentage_24h_usd,
+      volume_24h: +g.total_volume.usd,
+      btc_dom: +g.market_cap_percentage.btc,
+      eth_dom: +(g.market_cap_percentage.eth || 0),
+    };
+  }
+  async function refreshFng() {
+    const row = (await fetchJson("https://api.alternative.me/fng/?limit=1")).data[0];
+    state.fng = { value: +row.value, label: fngZh(row.value_classification, +row.value) };
+  }
+  async function initialLoad() {
+    const errors = [];
+    for (const [name, fn] of [["价格", refreshTickers], ["指标", refreshKlines], ["市值", refreshMarket], ["情绪", refreshFng]]) {
+      try { await fn(); } catch (e) { errors.push(name); console.warn(e); }
+    }
+    state.status = errors.length ? "部分数据加载失败，将自动重试" : "数据已就绪";
+    paint();
+  }
+  function startSocket() {
+    const streams = COINS.map(([, p]) => p.toLowerCase() + "@ticker").join("/");
+    const ws = new WebSocket("wss://stream.binance.com:443/stream?streams=" + streams);
+    ws.onopen = () => { state.live = true; state.status = "实时推送中"; paint(); };
+    ws.onmessage = (ev) => {
+      try {
+        const payload = JSON.parse(ev.data);
+        const data = payload.data || payload;
+        const name = COINS.find(([, p]) => p === data.s)?.[0];
+        if (!name) return;
+        state.tickers[name] = {
+          price: +data.c,
+          change_24h: +data.P,
+          high_24h: +data.h,
+          low_24h: +data.l,
+        };
+        state.live = true;
+        if (!renderTimer) renderTimer = setTimeout(() => { renderTimer = 0; paint(); }, 250);
+      } catch (e) {}
+    };
+    ws.onclose = () => {
+      state.live = false;
+      state.status = "重新连接中";
+      paint();
+      setTimeout(startSocket, 1500);
+    };
+    ws.onerror = () => { try { ws.close(); } catch (e) {} };
+  }
+  function startPolling() {
+    setInterval(() => { refreshKlines().then(paint).catch(() => {}); }, 60000);
+    setInterval(() => { refreshMarket().then(paint).catch(() => {}); }, 60000);
+    setInterval(() => { refreshFng().then(paint).catch(() => {}); }, 180000);
+    setInterval(() => {
+      if (!state.live) refreshTickers().then(paint).catch(() => {});
+    }, 3000);
+  }
+  initialLoad().finally(() => { startSocket(); startPolling(); });
+  </script>
+</body>
+</html>
