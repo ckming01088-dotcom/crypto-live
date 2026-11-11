@@ -124,10 +124,137 @@
     .prob-grid.eth .prob-card { padding: 10px 12px; }
     .cycle-reads { margin-top: 8px; }
     .cycle-note { color: var(--muted); font-size: 12px; margin: 10px 0 0; line-height: 1.55; }
+    .cycle-judge { margin: 4px 0 2px; font-size: 14px; color: var(--muted); }
+    .cycle-judge b { font-weight: 700; }
+    .cycle-judge.eth { font-size: 13px; margin-top: 6px; }
     @media (max-width: 360px) {
       .prob-grid { grid-template-columns: 1fr; }
     }
     .subhead { color: var(--muted); font-size: 12px; font-weight: 650; margin: 14px 0 0; padding-top: 10px; border-top: 1px solid var(--line); letter-spacing: .02em; }
+    .sth-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 10px; }
+    .sth-tabs { flex: 1 1 16em; margin: 0; }
+    .sth-refresh {
+      min-height: 36px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 10px;
+      background: #1A2030; color: var(--text); font: inherit; font-size: 13px; font-weight: 650;
+      cursor: pointer; touch-action: manipulation; white-space: nowrap;
+    }
+    .sth-refresh:disabled { opacity: .6; cursor: default; }
+    .sth-legend {
+      display: flex; flex-wrap: wrap; gap: 8px 14px; margin: 0 0 8px;
+      font-size: 12px; color: var(--muted);
+    }
+    .sth-legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .sth-swatch { width: 14px; height: 3px; border-radius: 2px; display: inline-block; }
+    .sth-swatch-price { background: #E8EEF5; }
+    .sth-swatch-profit { background: var(--up); }
+    .sth-swatch-cost { background: #E08A86; }
+    .sth-chart-wrap { position: relative; height: 260px; }
+    .sth-chart-wrap canvas { width: 100%; height: 100%; display: block; touch-action: none; }
+    .sth-tip {
+      position: absolute; z-index: 2; pointer-events: none;
+      min-width: 11em; max-width: calc(100% - 16px);
+      background: color-mix(in srgb, var(--card) 94%, #000);
+      border: 1px solid var(--line); border-radius: 10px;
+      padding: 8px 10px; font-size: 12px; line-height: 1.45;
+      box-shadow: 0 8px 24px rgba(0,0,0,.35);
+    }
+    .sth-tip .d { color: var(--text); font-weight: 650; margin-bottom: 4px; }
+    .sth-tip .r { display: flex; justify-content: space-between; gap: 12px; font-variant-numeric: tabular-nums; }
+    .sth-tip .r .k { color: var(--muted); }
+    .sth-readout {
+      margin-top: 8px; font-size: 12px; color: var(--muted);
+      font-variant-numeric: tabular-nums; line-height: 1.5;
+    }
+    .sth-readout b { color: var(--text); font-weight: 650; }
+    .sth-status { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+    .ev-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin: 0 0 10px; }
+    .ev-kicker { color: var(--muted); font-size: 12px; font-weight: 650; letter-spacing: .02em; }
+    .ev-refresh {
+      min-height: 36px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 10px;
+      background: #1A2030; color: var(--text); font: inherit; font-size: 13px; font-weight: 650;
+      cursor: pointer; touch-action: manipulation; white-space: nowrap;
+    }
+    .ev-refresh:disabled { opacity: .6; cursor: default; }
+    .ev-strip { display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 12px; }
+    .ev-cell { background: #1A2030; border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; }
+    .ev-cell .k { display: block; color: var(--muted); font-size: 11px; margin-bottom: 2px; }
+    .ev-cell .v { font-weight: 650; font-variant-numeric: tabular-nums; }
+    .ev-cell .sub { display: block; color: var(--muted); font-size: 11px; margin-top: 2px; }
+    .ev-dir { font-weight: 720; font-size: 16px; }
+    .ev-dir.hike { color: var(--down); }
+    .ev-dir.cut { color: var(--up); }
+    .ev-dir.hold { color: var(--muted); }
+    .ev-hint { color: var(--muted); font-size: 12px; margin: 0 0 12px; }
+    .ev-meetings { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 12px; }
+    .ev-card { background: #1A2030; border: 1px solid var(--line); border-radius: 14px; padding: 12px; }
+    .ev-card-top { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin-bottom: 2px; }
+    .ev-card-title { font-weight: 700; font-size: 15px; }
+    .ev-badge {
+      display: inline-flex; align-items: center; padding: 2px 7px; border-radius: 999px;
+      font-size: 11px; font-weight: 650; background: color-mix(in srgb, var(--caution) 18%, #1A2030);
+      color: var(--caution); border: 1px solid color-mix(in srgb, var(--caution) 45%, var(--line));
+    }
+    .ev-badge.off { background: #0B0E14; color: var(--muted); border-color: var(--line); }
+    .ev-card-note { color: var(--muted); font-size: 12px; margin: 0 0 8px; }
+    .ev-lean { font-size: 12px; font-weight: 650; margin: 0 0 8px; }
+    .ev-lean.hike { color: var(--down); }
+    .ev-lean.cut { color: var(--up); }
+    .ev-lean.hold { color: var(--muted); }
+    .ev-out {
+      display: grid; grid-template-columns: 6.8em 1fr 3.4em; gap: 6px 8px; align-items: center;
+      margin: 5px 0; font-size: 12px;
+    }
+    .ev-out .lab { color: var(--text); }
+    .ev-out .pct { text-align: right; font-variant-numeric: tabular-nums; font-weight: 650; }
+    .ev-bar { height: 8px; border-radius: 999px; background: #0B0E14; overflow: hidden; }
+    .ev-bar > span { display: block; height: 100%; width: 0; border-radius: 999px; }
+    .ev-out.cut .ev-bar > span, .ev-seg.cut { background: var(--up); }
+    .ev-out.hold .ev-bar > span, .ev-seg.hold { background: #8B95A5; }
+    .ev-out.hike .ev-bar > span, .ev-seg.hike { background: var(--down); }
+    .ev-out.down .ev-bar > span, .ev-seg.down { background: var(--down); }
+    .ev-out.up .ev-bar > span, .ev-seg.up { background: var(--up); }
+    .ev-out.mid .ev-bar > span, .ev-seg.mid { background: #8B95A5; }
+    .ev-groups { margin-top: 10px; }
+    .ev-stack { display: flex; height: 8px; border-radius: 999px; overflow: hidden; background: #0B0E14; }
+    .ev-seg { display: block; height: 100%; min-width: 0; }
+    .ev-chips { display: flex; flex-wrap: wrap; gap: 6px 10px; margin-top: 6px; font-size: 12px; font-variant-numeric: tabular-nums; color: var(--muted); }
+    .ev-chips b { font-weight: 650; }
+    .ev-chips .cut b { color: var(--up); }
+    .ev-chips .hold b { color: var(--text); }
+    .ev-chips .hike b { color: var(--down); }
+    .ev-ye-wrap { margin: 0 0 14px; }
+    .ev-ye { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .ev-ye-item { background: #1A2030; border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
+    .ev-ye-item .lab { color: var(--muted); font-size: 12px; }
+    .ev-ye-item .pct { font-weight: 720; font-variant-numeric: tabular-nums; font-size: 18px; margin: 2px 0 8px; }
+    .ev-tl { margin-top: 4px; }
+    .ev-tl-row {
+      display: grid; grid-template-columns: 7.2em 1fr; gap: 8px 10px;
+      padding: 8px 0; border-top: 1px solid var(--line); align-items: start;
+    }
+    .ev-tl-row:first-of-type { border-top: 0; }
+    .ev-tl-row.fomc {
+      background: color-mix(in srgb, var(--caution) 8%, var(--card));
+      margin: 0 -8px; padding: 8px; border-radius: 10px; border-top-color: transparent;
+    }
+    .ev-tl-date { font-variant-numeric: tabular-nums; font-size: 12px; font-weight: 650; }
+    .ev-tl-time { display: block; color: var(--muted); font-size: 11px; font-weight: 400; margin-top: 2px; }
+    .ev-tl-main { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 8px; }
+    .ev-cat {
+      display: inline-flex; align-items: center; padding: 1px 7px; border-radius: 999px;
+      font-size: 11px; font-weight: 650; border: 1px solid var(--line); background: #0B0E14; color: var(--muted);
+    }
+    .ev-cat.fomc { color: var(--caution); border-color: color-mix(in srgb, var(--caution) 45%, var(--line)); }
+    .ev-cat.nfp { color: #7FB4C9; border-color: color-mix(in srgb, #7FB4C9 45%, var(--line)); }
+    .ev-cat.cpi, .ev-cat.ppi, .ev-cat.pce { color: var(--caution); border-color: color-mix(in srgb, var(--caution) 40%, var(--line)); }
+    .ev-cat.gdp { color: var(--up); border-color: color-mix(in srgb, var(--up) 40%, var(--line)); }
+    .ev-tl-title { font-size: 13px; }
+    .ev-status { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
+    @media (min-width: 560px) {
+      .ev-strip { grid-template-columns: 1fr 1fr 1.15fr; }
+      .ev-meetings { grid-template-columns: 1fr 1fr; }
+      .ev-ye { grid-template-columns: repeat(4, 1fr); }
+    }
     footer { margin-top: 18px; color: var(--muted); font-size: 12px; text-align: center; line-height: 1.6; }
   </style>
 </head>
@@ -149,6 +276,35 @@
   <section id="heroes"></section>
   <h2>顶底指标</h2>
   <section class="block" id="cycle"></section>
+  <h2>短期持有者盈利供应占比与BTC价格</h2>
+  <section class="block" id="sth">
+    <div class="sth-toolbar">
+      <div class="tf-tabs sth-tabs" role="tablist" id="sth-tabs">
+        <button type="button" class="tf-tab" role="tab" data-sth-range="1y">1年</button>
+        <button type="button" class="tf-tab" role="tab" data-sth-range="3y">3年</button>
+        <button type="button" class="tf-tab on" role="tab" data-sth-range="5y" aria-selected="true">5年</button>
+        <button type="button" class="tf-tab" role="tab" data-sth-range="10y">10年</button>
+        <button type="button" class="tf-tab" role="tab" data-sth-range="all">全部</button>
+      </div>
+      <button type="button" class="sth-refresh" id="sth-refresh">刷新</button>
+    </div>
+    <div class="sth-legend">
+      <span><i class="sth-swatch sth-swatch-price"></i>BTC价格</span>
+      <span><i class="sth-swatch sth-swatch-profit"></i>STH盈利供应占比</span>
+      <span><i class="sth-swatch sth-swatch-cost"></i>STH成本线</span>
+    </div>
+    <div class="sth-chart-wrap" id="sth-wrap">
+      <canvas id="sth-canvas" width="600" height="260"></canvas>
+      <div class="sth-tip" id="sth-tip" hidden></div>
+    </div>
+    <div class="sth-readout" id="sth-readout"></div>
+    <p class="sth-status" id="sth-status">正在加载图表…</p>
+    <p class="cycle-note">短期持有者（STH）通常指持有约 155 天以内的比特币。盈利供应占比是处于盈利的 STH 供应量占全部 STH 供应量的比例。成本线是 STH 实现价格（该群体的平均链上成本）。数据来自 BGeometrics（bitcoin-data.com）与 Binance；成本线的免费数据大约覆盖近四年，末值可能延迟数日。仅供观察，不构成投资建议。</p>
+  </section>
+  <h2>未来 3 个月内可能影响 BTC 价格的重要事件</h2>
+  <section class="block" id="events">
+    <p class="ev-status" id="events-status">正在加载事件看板…</p>
+  </section>
   <h2>其他币种</h2>
   <section class="list" id="others"></section>
   <h2>比特币技术</h2>
@@ -160,6 +316,8 @@
   <footer>
     数据来自 Binance、CoinGecko、Alternative.me，时间为香港时间。<br>
     顶底指标为常用技术观察、不是买卖建议。<br>
+    短期持有者图表另参考 BGeometrics（bitcoin-data.com）与 Binance。<br>
+    事件日程另参考美联储 FOMC 日历、美国劳工统计局（BLS）、经济分析局（BEA）与 Polymarket，事件观察不构成投资建议。<br>
     仅供参考，不构成投资建议。<br>
     可在浏览器菜单里选择「添加到主屏幕」。
   </footer>
@@ -185,10 +343,12 @@
     tickers: {},
     daily: { BTC: [], ETH: [] },
     dailyTime: { BTC: [], ETH: [] },
+    dailyHigh: { BTC: [], ETH: [] },
     weekly: { BTC: [], ETH: [] },
     lastCross: { BTC: null, ETH: null },
     tfCloses: { "4h": { BTC: [], ETH: [] }, "6h": { BTC: [], ETH: [] }, "12h": { BTC: [], ETH: [] }, "1d": { BTC: [], ETH: [] }, "3d": { BTC: [], ETH: [] } },
     tfTimes: { "4h": { BTC: [], ETH: [] }, "6h": { BTC: [], ETH: [] }, "12h": { BTC: [], ETH: [] }, "1d": { BTC: [], ETH: [] }, "3d": { BTC: [], ETH: [] } },
+    tfHighs: { "4h": { BTC: [], ETH: [] }, "6h": { BTC: [], ETH: [] }, "12h": { BTC: [], ETH: [] }, "1d": { BTC: [], ETH: [] }, "3d": { BTC: [], ETH: [] } },
     market: {},
     fng: { value: null, label: "" },
     funding: { BTC: null, ETH: null },
@@ -348,14 +508,52 @@
     if (v >= 75) return { value: v, label: "贪婪/极度贪婪（偏顶部观察）", lean: 1, tone: "caution" };
     return { value: v, label: base, lean: 0, tone: "neutral" };
   }
-  function windowHigh(closes, times) {
-    if (!closes || !closes.length) return { price: null, time: null, n: 0 };
+  function windowHigh(highs, times, livePrice) {
+    // Max candle high in the loaded window (Binance kline index 2), not max close.
+    if (!highs || !highs.length) return { price: null, time: null, n: 0 };
+    const hs = highs.slice();
+    if (livePrice != null && hs.length) hs[hs.length - 1] = Math.max(hs[hs.length - 1], livePrice);
     let hi = -Infinity, idx = -1;
-    for (let i = 0; i < closes.length; i++) {
-      if (closes[i] > hi) { hi = closes[i]; idx = i; }
+    for (let i = 0; i < hs.length; i++) {
+      if (hs[i] > hi) { hi = hs[i]; idx = i; }
     }
     const t = times && idx >= 0 ? times[idx] : null;
-    return { price: Number.isFinite(hi) ? hi : null, time: t, n: closes.length };
+    return { price: Number.isFinite(hi) ? hi : null, time: t, n: hs.length };
+  }
+  function sma200Multiples(closes) {
+    // Running-sum SMA(200), then close / SMA200 for every bar where the average exists.
+    if (!closes || closes.length < 200) return [];
+    const out = [];
+    let sum = 0;
+    for (let i = 0; i < closes.length; i++) {
+      sum += closes[i];
+      if (i >= 200) sum -= closes[i - 200];
+      if (i >= 199) {
+        const s = sum / 200;
+        if (s) out.push(closes[i] / s);
+      }
+    }
+    return out;
+  }
+  function percentileRank(current, series) {
+    // Midrank percentile: 100 * (#{x < v} + 0.5 * #{x === v}) / n.
+    // Ties share the average rank, which is more stable than a raw z-score on right-skewed MA multiples.
+    if (current == null || !Number.isFinite(current) || !series || !series.length) return null;
+    const n = series.length;
+    let less = 0, equal = 0;
+    for (let i = 0; i < n; i++) {
+      const v = series[i];
+      if (v < current) less++;
+      else if (v === current) equal++;
+    }
+    return 100 * (less + 0.5 * equal) / n;
+  }
+  function compositeLean(top, bot) {
+    if (top == null || bot == null) return { text: "—", tone: "neutral" };
+    if (top >= 40 && bot >= 40) return { text: "混合", tone: "caution" };
+    if (top >= 50 && top - bot >= 20) return { text: "偏顶部观察", tone: "caution" };
+    if (bot >= 50 && bot - top >= 20) return { text: "偏底部观察", tone: "down" };
+    return { text: "中性", tone: "neutral" };
   }
   function clamp(x, a, b) { return Math.max(a, Math.min(b, x)); }
   function ramp(x, x0, x1) {
@@ -385,6 +583,12 @@
     if (interval === "1d") return state.dailyTime[symbol] || [];
     return [];
   }
+  function tfHighsOf(interval, symbol) {
+    const tf = state.tfHighs[interval] && state.tfHighs[interval][symbol];
+    if (tf && tf.length) return tf;
+    if (interval === "1d") return state.dailyHigh[symbol] || [];
+    return [];
+  }
   function hasTfData(interval) {
     return tfClosesOf(interval, "BTC").length > 0 && tfClosesOf(interval, "ETH").length > 0;
   }
@@ -399,7 +603,7 @@
     }
     const twox350 = s350 * 2;
     const gapPct = (s111 - twox350) / twox350 * 100;
-    const score = s111 >= twox350 ? 100 : ramp(gapPct, -5, 0);
+    const score = s111 >= twox350 ? 100 : 0;
     return { score, sma111: s111, twox350, gapPct };
   }
   function cycleWeights(symbol, interval) {
@@ -416,13 +620,27 @@
   function cycleMetrics(symbol, interval, livePrice) {
     const closes = tfClosesOf(interval, symbol).slice();
     const times = tfTimesOf(interval, symbol).slice();
+    const highs = tfHighsOf(interval, symbol).slice();
     if (!closes.length) return { ready: false };
     if (livePrice != null) closes[closes.length - 1] = livePrice;
     const rsi = rsiWilder(closes, 14);
     const s200 = sma(closes, 200);
     const price = livePrice != null ? livePrice : closes[closes.length - 1];
     const mayer = (price != null && s200) ? price / s200 : null;
-    const wh = windowHigh(closes, times);
+    const useMayer = symbol === "BTC" && interval === "1d";
+    let maTop = null, maBot = null, maPct = null;
+    if (useMayer) {
+      maTop = ramp(mayer, 1.6, 2.8);
+      maBot = ramp(mayer, 1.0, 0.6);
+    } else {
+      const series = sma200Multiples(closes);
+      if (series.length >= 30) {
+        maPct = percentileRank(mayer, series);
+        maTop = ramp(maPct, 80, 98);
+        maBot = ramp(maPct, 20, 2);
+      }
+    }
+    const wh = windowHigh(highs, times, livePrice);
     const drawdown = (price != null && wh.price) ? (price - wh.price) / wh.price * 100 : null;
     const fng = state.fng && state.fng.value != null && Number.isFinite(state.fng.value) ? state.fng.value : null;
     const fund = state.funding[symbol];
@@ -435,14 +653,14 @@
       : { score: null, sma111: null, twox350: null, gapPct: null };
     const topParts = [
       { score: ramp(rsi, 55, 85), weight: w.rsi },
-      { score: ramp(mayer, 1.6, 2.8), weight: w.ma },
+      { score: maTop, weight: w.ma },
       { score: ramp(drawdown, -20, 0), weight: w.dd },
       { score: ramp(fng, 60, 90), weight: w.fng },
       { score: ramp(fundPct, 0.05, 0.20), weight: w.fund },
     ];
     const botParts = [
       { score: ramp(rsi, 45, 15), weight: w.rsi },
-      { score: ramp(mayer, 1.0, 0.6), weight: w.ma },
+      { score: maBot, weight: w.ma },
       { score: ramp(drawdown, -20, -55), weight: w.dd },
       { score: ramp(fng, 40, 10), weight: w.fng },
       { score: ramp(fundPct, -0.05, -0.20), weight: w.fund },
@@ -450,7 +668,7 @@
     if (includePi) topParts.push({ score: pi.score, weight: w.pi });
     return {
       ready: true,
-      rsi, mayer, s200, drawdown,
+      rsi, mayer, maPct, s200, drawdown,
       window_high: wh.price, window_high_time: wh.time, window_n: wh.n,
       fund, fundPct, fng, pi,
       top: weightedScore(topParts),
@@ -461,6 +679,7 @@
     const daily = (state.daily[symbol] || []).slice();
     const weekly = (state.weekly[symbol] || []).slice();
     const times = (state.dailyTime[symbol] || []).slice();
+    const highs = (state.dailyHigh[symbol] || []).slice();
     if (!daily.length) return {};
     if (livePrice != null) {
       daily[daily.length - 1] = livePrice;
@@ -475,7 +694,7 @@
     const mayer = (price != null && s200) ? price / s200 : null;
     const mb = mayerBand(mayer);
     const pi = symbol === "BTC" ? piCycleStatus(s111, twox350) : { gap: null, status: null, short: null, lean: 0 };
-    const wh = windowHigh(daily, times);
+    const wh = windowHigh(highs, times, livePrice);
     const drawdown = (price != null && wh.price) ? (price - wh.price) / wh.price * 100 : null;
     return {
       sma50: s50, sma200: s200, sma50w: s50w, sma200w: s200w,
@@ -644,30 +863,42 @@
     const bot = metrics && metrics.ready ? metrics.bot : null;
     const topW = top == null ? "0%" : clamp(top, 0, 100) + "%";
     const botW = bot == null ? "0%" : clamp(bot, 0, 100) + "%";
-    const topTxt = top == null ? "—" : (top + "%");
-    const botTxt = bot == null ? "—" : (bot + "%");
+    const topTxt = top == null ? "—" : (top + "分");
+    const botTxt = bot == null ? "—" : (bot + "分");
     return `<div class="${cls}">
-      <div class="prob-card top">
-        <div class="prob-lab">顶部概率</div>
+      <div class="prob-card top" aria-label="顶部倾向 ${escapeHtml(topTxt)}">
+        <div class="prob-lab">顶部倾向</div>
         <div class="prob-val">${escapeHtml(topTxt)}</div>
         <div class="prob-bar" aria-hidden="true"><span style="width:${topW}"></span></div>
       </div>
-      <div class="prob-card bot">
-        <div class="prob-lab">底部概率</div>
+      <div class="prob-card bot" aria-label="底部倾向 ${escapeHtml(botTxt)}">
+        <div class="prob-lab">底部倾向</div>
         <div class="prob-val">${escapeHtml(botTxt)}</div>
         <div class="prob-bar" aria-hidden="true"><span style="width:${botW}"></span></div>
       </div>
     </div>`;
   }
+  function judgeLine(metrics, size) {
+    const ready = !!(metrics && metrics.ready);
+    const j = ready ? compositeLean(metrics.top, metrics.bot) : { text: "加载中", tone: "neutral" };
+    const cls = size === "eth" ? "cycle-judge eth" : "cycle-judge";
+    return `<div class="${cls}">综合判断：<b class="tone-${j.tone}">${escapeHtml(j.text)}</b></div>`;
+  }
   function cycleReads(symbol, interval, m, fundRate) {
     if (!m || !m.ready) return `<div class="cycle-reads"><p class="cycle-note">该周期数据不足</p></div>`;
-    const maLab = interval === "1d" ? "Mayer 倍数" : "该周期 200均线倍数";
+    const useMayer = symbol === "BTC" && interval === "1d";
+    const maLab = useMayer ? "Mayer 倍数" : "该周期 200均线倍数";
+    let maVal = "—";
+    if (m.mayer != null) {
+      maVal = m.mayer.toFixed(2);
+      if (!useMayer && m.maPct != null) maVal += ` · 窗口分位 ${Math.round(m.maPct)}%`;
+    }
     const tfLabel = (CYCLE_TFS.find((t) => t.id === interval) || {}).label || interval;
     const win = m.window_n ? `近 ${m.window_n} 根 ${tfLabel} K 线` : "";
     const fngLabel = (state.fng && state.fng.label) ? "  " + state.fng.label : "";
     const rows = [
       ["RSI(14)", m.rsi == null ? "—" : m.rsi.toFixed(1)],
-      [maLab, m.mayer == null ? "—" : m.mayer.toFixed(2)],
+      [maLab, maVal],
       ["窗口内最高价回撤", m.drawdown == null ? "—" : (fmtPct(m.drawdown) + (win ? " · " + win : ""))],
       ["资金费率", fundRate == null ? "—" : fmtFunding(fundRate)],
       ["恐惧贪婪", m.fng == null ? "—" : (String(m.fng) + fngLabel)],
@@ -696,10 +927,11 @@
     return `<div class="tf-tabs" role="tablist">${tabs}</div>
     <div class="prob-kicker">比特币</div>
     ${probCards(btc, "btc")}
+    ${judgeLine(btc, "btc")}
     ${cycleReads("BTC", interval, btc, fund.BTC)}
     <div class="subhead">以太坊</div>
-    ${eth.ready ? probCards(eth, "eth") + cycleReads("ETH", interval, eth, fund.ETH) : `<p class="cycle-note">正在加载以太坊该周期 K 线…</p>`}
-    <p class="cycle-note">以上观察概率由所选周期的技术指标与市场背景合成，不是走势预测。窗口回撤基于已加载 K 线，若更高点不在窗口内则不会计入。</p>`;
+    ${eth.ready ? probCards(eth, "eth") + judgeLine(eth, "eth") + cycleReads("ETH", interval, eth, fund.ETH) : `<p class="cycle-note">正在加载以太坊该周期 K 线…</p>`}
+    <p class="cycle-note">顶部倾向、底部倾向是按权重合成的 0–100 观察分数，不是统计概率，也不是价格预测；两者互不排斥，不必相加为 100。综合判断：任一项分数缺失则暂不给出；两项都达到 40 为「混合」；顶部倾向达到 50 且至少高出底部倾向 20 为「偏顶部观察」；底部倾向达到 50 且至少高出顶部倾向 20 为「偏底部观察」；其余为「中性」。仅供观察，不构成投资建议。窗口回撤取已加载 K 线的最高价，并非历史最高，若更高点不在窗口内则不会计入。</p>`;
   }
   function render(data) {
     $("clock").textContent = (data.time || "") + " 香港时间";
@@ -765,8 +997,10 @@
   function storeTf(interval, symbol, rows) {
     if (!state.tfCloses[interval]) state.tfCloses[interval] = { BTC: [], ETH: [] };
     if (!state.tfTimes[interval]) state.tfTimes[interval] = { BTC: [], ETH: [] };
+    if (!state.tfHighs[interval]) state.tfHighs[interval] = { BTC: [], ETH: [] };
     state.tfCloses[interval][symbol] = rows.map((r) => +r[4]);
     state.tfTimes[interval][symbol] = rows.map((r) => +r[0]);
+    state.tfHighs[interval][symbol] = rows.map((r) => +r[2]);
   }
   async function refreshKlines() {
     const jobs = [];
@@ -775,6 +1009,7 @@
         const daily = await fetchJson(`https://api.binance.com/api/v3/klines?symbol=${pair}&interval=1d&limit=1000`);
         state.daily[symbol] = daily.map((r) => +r[4]);
         state.dailyTime[symbol] = daily.map((r) => +r[0]);
+        state.dailyHigh[symbol] = daily.map((r) => +r[2]);
         storeTf("1d", symbol, daily);
         state.lastCross[symbol] = lastCross(state.daily[symbol], 50, 200);
       })());
@@ -800,6 +1035,7 @@
       if (interval === "1d") {
         state.daily[symbol] = state.tfCloses["1d"][symbol].slice();
         state.dailyTime[symbol] = state.tfTimes["1d"][symbol].slice();
+        state.dailyHigh[symbol] = state.tfHighs["1d"][symbol].slice();
         state.lastCross[symbol] = lastCross(state.daily[symbol], 50, 200);
       }
     }));
@@ -898,6 +1134,974 @@
       paint();
     });
   });
+
+  const STH_RANGES = [
+    { id: "1y", label: "1年", years: 1 },
+    { id: "3y", label: "3年", years: 3 },
+    { id: "5y", label: "5年", years: 5 },
+    { id: "10y", label: "10年", years: 10 },
+    { id: "all", label: "全部", years: null },
+  ];
+  const STH_RANGE_KEY = "crypto-live-sth-range";
+  const STH_ONCHAIN_KEY = "crypto-live-sth-onchain-at";
+  const STH_CACHE_KEY = "crypto-live-sth-cache";
+  const STH_ONCHAIN_MIN_MS = 12 * 60 * 60 * 1000;
+  const STH_COLORS = { price: "#E8EEF5", profit: "#2EC9B3", cost: "#E08A86", grid: "#232A38", axis: "#8B95A5", hair: "rgba(232,238,245,.45)" };
+  const sthState = {
+    rows: [],
+    asOf: {},
+    source: "",
+    fetchedAt: "",
+    range: "5y",
+    hover: null,
+    status: "正在加载图表…",
+    ready: false,
+    refreshing: false,
+    plot: null,
+  };
+  try {
+    const saved = localStorage.getItem(STH_RANGE_KEY);
+    if (STH_RANGES.some((t) => t.id === saved)) sthState.range = saved;
+  } catch (e) {}
+
+  function sthNum(v) {
+    if (v == null || v === "") return null;
+    const n = +v;
+    return Number.isFinite(n) ? n : null;
+  }
+  function parseSthPayload(data) {
+    if (!data || !Array.isArray(data.rows)) return { rows: [], asOf: {}, source: "", fetchedAt: "" };
+    const rows = [];
+    for (const r of data.rows) {
+      if (!r || !r[0]) continue;
+      rows.push({ d: r[0], price: sthNum(r[1]), cost: sthNum(r[2]), profit: sthNum(r[3]) });
+    }
+    rows.sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : 0);
+    return {
+      rows,
+      asOf: data.asOf || sthAsOf(rows),
+      source: data.source || "",
+      fetchedAt: data.fetchedAt || "",
+    };
+  }
+  function sthAsOf(rows) {
+    const asOf = { price: null, sthCost: null, sthProfitPct: null };
+    for (const r of rows) {
+      if (r.price != null) asOf.price = r.d;
+      if (r.cost != null) asOf.sthCost = r.d;
+      if (r.profit != null) asOf.sthProfitPct = r.d;
+    }
+    return asOf;
+  }
+  function sthRowsToTuples(rows) {
+    return rows.map((r) => [r.d, r.price, r.cost, r.profit]);
+  }
+  function sthApplyPayload(parsed) {
+    sthState.rows = parsed.rows;
+    sthState.asOf = parsed.asOf || sthAsOf(parsed.rows);
+    sthState.source = parsed.source || sthState.source;
+    sthState.fetchedAt = parsed.fetchedAt || sthState.fetchedAt;
+    sthState.ready = parsed.rows.length > 0;
+  }
+  function sthSerialize() {
+    return {
+      source: sthState.source,
+      asOf: sthState.asOf,
+      fetchedAt: sthState.fetchedAt,
+      rows: sthRowsToTuples(sthState.rows),
+    };
+  }
+  function sthSaveCache() {
+    try { localStorage.setItem(STH_CACHE_KEY, JSON.stringify(sthSerialize())); } catch (e) {}
+  }
+  function sthLoadCache() {
+    try {
+      const raw = localStorage.getItem(STH_CACHE_KEY);
+      if (!raw) return null;
+      const data = JSON.parse(raw);
+      const parsed = parseSthPayload(data);
+      return parsed.rows.length ? parsed : null;
+    } catch (e) { return null; }
+  }
+  function sthCacheNewer(cache, bundled) {
+    if (!cache || !bundled) return false;
+    const fields = ["price", "sthCost", "sthProfitPct"];
+    const ca = cache.asOf || {}, ba = bundled.asOf || {};
+    if (fields.some((k) => (ca[k] || "") > (ba[k] || ""))) return true;
+    const ct = Date.parse(cache.fetchedAt || "");
+    const bt = Date.parse(bundled.fetchedAt || "");
+    return Number.isFinite(ct) && Number.isFinite(bt) && ct > bt;
+  }
+  function addYearsISO(iso, years) {
+    const parts = String(iso || "").split("-");
+    if (parts.length < 3) return iso;
+    const dt = new Date(Date.UTC(+parts[0] + years, +parts[1] - 1, +parts[2]));
+    return Number.isFinite(dt.getTime()) ? dt.toISOString().slice(0, 10) : iso;
+  }
+  function utcDateFromMs(ms) {
+    return new Date(ms).toISOString().slice(0, 10);
+  }
+  function sthRangeSpec() {
+    return STH_RANGES.find((t) => t.id === sthState.range) || STH_RANGES[2];
+  }
+  function sthVisibleRows() {
+    const rows = sthState.rows;
+    if (!rows.length) return [];
+    const spec = sthRangeSpec();
+    if (!spec.years) return rows;
+    const end = rows[rows.length - 1].d;
+    const start = addYearsISO(end, -spec.years);
+    let i = 0;
+    while (i < rows.length && rows[i].d < start) i++;
+    return rows.slice(i);
+  }
+  function sthLast(rows, key) {
+    for (let i = rows.length - 1; i >= 0; i--) {
+      if (rows[i][key] != null) return rows[i];
+    }
+    return null;
+  }
+  function fmtSthPrice(x) {
+    if (x == null) return "—";
+    return (+x).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+  function fmtSthPct(x) {
+    if (x == null) return "—";
+    return (+x).toFixed(2) + "%";
+  }
+  function fmtSthAxisPrice(v) {
+    if (!(v > 0)) return "";
+    const k = v / 1000;
+    if (k >= 100) return "$" + Math.round(k) + "k";
+    if (k >= 1) {
+      const r = Math.round(k * 10) / 10;
+      return "$" + (Math.abs(r - Math.round(r)) < 0.05 ? Math.round(r) : r.toFixed(1)) + "k";
+    }
+    return "$" + Math.round(v);
+  }
+  function fmtSthAxisDate(iso) {
+    if (!iso) return "";
+    const [y, m] = iso.split("-");
+    return y + "/" + m;
+  }
+  function sthStatusBase() {
+    const a = sthState.asOf || {};
+    const bits = [];
+    if (a.price) bits.push("价格截至 " + a.price);
+    if (a.sthCost) bits.push("成本截至 " + a.sthCost);
+    if (a.sthProfitPct) bits.push("盈利供应截至 " + a.sthProfitPct);
+    return bits.length ? bits.join("，") : "等待数据";
+  }
+  function setSthStatus(extra) {
+    const base = sthState.ready ? sthStatusBase() : (sthState.status || "正在加载图表…");
+    sthState.status = extra ? extra + (base && sthState.ready ? "。" + base : "") : base;
+    const el = $("sth-status");
+    if (el) el.textContent = sthState.status;
+  }
+  function syncSthTabs() {
+    document.querySelectorAll("#sth-tabs [data-sth-range]").forEach((btn) => {
+      const on = btn.getAttribute("data-sth-range") === sthState.range;
+      btn.classList.toggle("on", on);
+      btn.setAttribute("aria-selected", on ? "true" : "false");
+    });
+  }
+  function updateSthReadout(view) {
+    const el = $("sth-readout");
+    if (!el) return;
+    const src = view && view.length ? view : sthState.rows;
+    const p = sthLast(src, "price");
+    const c = sthLast(src, "cost");
+    const g = sthLast(src, "profit");
+    el.innerHTML = `BTC价格 <b>${escapeHtml(fmtSthPrice(p && p.price))}</b>　成本 <b>${escapeHtml(fmtSthPrice(c && c.cost))}</b>　盈利供应 <b>${escapeHtml(fmtSthPct(g && g.profit))}</b>`;
+  }
+  function sthLogRange(vals) {
+    const pos = vals.filter((v) => v != null && v > 0);
+    if (!pos.length) return null;
+    let lo = Math.min(...pos), hi = Math.max(...pos);
+    if (lo === hi) { lo *= 0.8; hi *= 1.25; }
+    if (!(lo > 0 && hi > lo)) return null;
+    const pad = Math.pow(hi / lo, 0.06);
+    return { min: lo / pad, max: hi * pad };
+  }
+  function hideSthTip() {
+    sthState.hover = null;
+    const tip = $("sth-tip");
+    if (tip) tip.hidden = true;
+    if (sthState.ready) drawSthChart();
+  }
+  function placeSthTip(clientX, clientY) {
+    const wrap = $("sth-wrap"), tip = $("sth-tip");
+    if (!wrap || !tip || tip.hidden) return;
+    const wr = wrap.getBoundingClientRect();
+    const x = clientX - wr.left, y = clientY - wr.top;
+    const tw = tip.offsetWidth, th = tip.offsetHeight;
+    let left = x + 12;
+    if (left + tw > wr.width - 4) left = x - tw - 12;
+    left = Math.max(4, Math.min(left, wr.width - tw - 4));
+    let top = y - th - 10;
+    if (top < 4) top = y + 14;
+    top = Math.max(4, Math.min(top, wr.height - th - 4));
+    tip.style.left = left + "px";
+    tip.style.top = top + "px";
+  }
+  function showSthTip(row, clientX, clientY) {
+    const tip = $("sth-tip");
+    if (!tip || !row) return;
+    tip.innerHTML = `<div class="d">${escapeHtml(row.d)}</div>
+      <div class="r"><span class="k">BTC价格</span><span>${escapeHtml(fmtSthPrice(row.price))}</span></div>
+      <div class="r"><span class="k">STH成本线</span><span>${escapeHtml(fmtSthPrice(row.cost))}</span></div>
+      <div class="r"><span class="k">STH盈利供应占比</span><span>${escapeHtml(fmtSthPct(row.profit))}</span></div>`;
+    tip.hidden = false;
+    placeSthTip(clientX, clientY);
+  }
+  function sthHoverAt(ev) {
+    const plot = sthState.plot;
+    const canvas = $("sth-canvas");
+    if (!plot || !canvas || !plot.rows.length) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = ev.clientX - rect.left;
+    const n = plot.rows.length;
+    const t = n <= 1 ? 0 : (x - plot.x) / plot.w;
+    const i = clamp(Math.round(t * (n - 1)), 0, n - 1);
+    sthState.hover = i;
+    drawSthChart();
+    showSthTip(plot.rows[i], ev.clientX, ev.clientY);
+  }
+  function strokeSthSeries(ctx, rows, key, xAt, yAt, color, width) {
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+    let drawing = false;
+    for (let i = 0; i < rows.length; i++) {
+      const v = rows[i][key];
+      if (v == null || !Number.isFinite(v)) { drawing = false; continue; }
+      const x = xAt(i), y = yAt(v);
+      if (!drawing) { ctx.moveTo(x, y); drawing = true; }
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+  function drawSthChart() {
+    const canvas = $("sth-canvas");
+    if (!canvas) return;
+    const wrap = $("sth-wrap");
+    const cssW = Math.max(1, (wrap && wrap.clientWidth) || canvas.clientWidth || 300);
+    const cssH = Math.max(1, (wrap && wrap.clientHeight) || 260);
+    const dpr = Math.max(1, window.devicePixelRatio || 1);
+    const bw = Math.round(cssW * dpr), bh = Math.round(cssH * dpr);
+    if (canvas.width !== bw || canvas.height !== bh) {
+      canvas.width = bw;
+      canvas.height = bh;
+    }
+    const ctx = canvas.getContext("2d");
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, cssW, cssH);
+
+    const view = sthVisibleRows();
+    updateSthReadout(view);
+    if (!view.length) {
+      sthState.plot = { x: 0, y: 0, w: cssW, h: cssH, rows: [] };
+      ctx.fillStyle = STH_COLORS.axis;
+      ctx.font = "12px -apple-system, BlinkMacSystemFont, sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(sthState.ready ? "该区间暂无数据" : "正在加载图表…", cssW / 2, cssH / 2);
+      return;
+    }
+
+    const left = 38, right = 44, top = 10, bottom = 22;
+    const plot = { x: left, y: top, w: Math.max(10, cssW - left - right), h: Math.max(10, cssH - top - bottom), rows: view };
+    sthState.plot = plot;
+    const n = view.length;
+    const xAt = (i) => plot.x + (n <= 1 ? plot.w / 2 : i * plot.w / (n - 1));
+    const yPct = (p) => plot.y + plot.h * (1 - p / 100);
+    const pxVals = [];
+    for (const r of view) {
+      if (r.price != null && r.price > 0) pxVals.push(r.price);
+      if (r.cost != null && r.cost > 0) pxVals.push(r.cost);
+    }
+    const yr = sthLogRange(pxVals);
+    const yPx = (p) => {
+      if (!yr) return plot.y + plot.h;
+      const t = (Math.log(p) - Math.log(yr.min)) / (Math.log(yr.max) - Math.log(yr.min));
+      return plot.y + plot.h * (1 - t);
+    };
+
+    ctx.font = "11px -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif";
+    ctx.lineWidth = 1;
+    for (let i = 0; i <= 5; i++) {
+      const pct = i * 20;
+      const y = Math.round(yPct(pct)) + 0.5;
+      ctx.strokeStyle = STH_COLORS.grid;
+      ctx.beginPath();
+      ctx.moveTo(plot.x, y);
+      ctx.lineTo(plot.x + plot.w, y);
+      ctx.stroke();
+      ctx.fillStyle = STH_COLORS.axis;
+      ctx.textAlign = "right";
+      ctx.textBaseline = "middle";
+      ctx.fillText(pct + "%", plot.x - 6, y);
+    }
+    if (yr) {
+      ctx.textAlign = "left";
+      ctx.textBaseline = "middle";
+      for (let i = 0; i <= 4; i++) {
+        const t = i / 4;
+        const v = Math.exp(Math.log(yr.min) + t * (Math.log(yr.max) - Math.log(yr.min)));
+        const y = Math.round(yPx(v)) + 0.5;
+        ctx.fillStyle = STH_COLORS.axis;
+        ctx.fillText(fmtSthAxisPrice(v), plot.x + plot.w + 6, y);
+      }
+    }
+    const labelN = Math.max(3, Math.min(6, Math.floor(plot.w / 56)));
+    ctx.textAlign = "center";
+    ctx.textBaseline = "top";
+    ctx.fillStyle = STH_COLORS.axis;
+    let lastLabel = "";
+    for (let i = 0; i < labelN; i++) {
+      const idx = labelN === 1 ? 0 : Math.round(i * (n - 1) / (labelN - 1));
+      const label = fmtSthAxisDate(view[idx].d);
+      if (label === lastLabel) continue;
+      lastLabel = label;
+      const x = xAt(idx);
+      const align = i === 0 ? "left" : i === labelN - 1 ? "right" : "center";
+      ctx.textAlign = align;
+      ctx.fillText(label, x, plot.y + plot.h + 6);
+    }
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(plot.x, plot.y, plot.w, plot.h);
+    ctx.clip();
+    strokeSthSeries(ctx, view, "profit", xAt, yPct, STH_COLORS.profit, 1.55);
+    if (yr) {
+      strokeSthSeries(ctx, view, "cost", xAt, yPx, STH_COLORS.cost, 1.4);
+      strokeSthSeries(ctx, view, "price", xAt, yPx, STH_COLORS.price, 1.65);
+    }
+    const markLast = (key, yAt, color) => {
+      const last = sthLast(view, key);
+      if (!last) return;
+      const i = view.lastIndexOf(last);
+      const v = last[key];
+      if (v == null || (key !== "profit" && !(v > 0))) return;
+      ctx.beginPath();
+      ctx.fillStyle = color;
+      ctx.arc(xAt(i), yAt(v), 2.4, 0, Math.PI * 2);
+      ctx.fill();
+    };
+    markLast("profit", yPct, STH_COLORS.profit);
+    if (yr) {
+      markLast("cost", yPx, STH_COLORS.cost);
+      markLast("price", yPx, STH_COLORS.price);
+    }
+    if (sthState.hover != null && sthState.hover >= 0 && sthState.hover < n) {
+      const i = sthState.hover;
+      const row = view[i];
+      const x = Math.round(xAt(i)) + 0.5;
+      ctx.strokeStyle = STH_COLORS.hair;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(x, plot.y);
+      ctx.lineTo(x, plot.y + plot.h);
+      ctx.stroke();
+      const dot = (v, yAt, color) => {
+        if (v == null || !Number.isFinite(v) || (yAt === yPx && !(v > 0))) return;
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.arc(xAt(i), yAt(v), 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.strokeStyle = "#0B0E14";
+        ctx.lineWidth = 1;
+        ctx.arc(xAt(i), yAt(v), 3, 0, Math.PI * 2);
+        ctx.stroke();
+      };
+      dot(row.profit, yPct, STH_COLORS.profit);
+      if (yr) {
+        dot(row.cost, yPx, STH_COLORS.cost);
+        dot(row.price, yPx, STH_COLORS.price);
+      }
+    }
+    ctx.restore();
+  }
+  function mergeSthField(map, dates, values, field, minDate) {
+    for (let i = 0; i < dates.length; i++) {
+      const d = dates[i], v = values[i];
+      if (!d || v == null) continue;
+      if (minDate && d < minDate) continue;
+      let row = map.get(d);
+      if (!row) { row = { d, price: null, cost: null, profit: null }; map.set(d, row); }
+      row[field] = v;
+    }
+  }
+  function sthRowsMap() {
+    const map = new Map();
+    for (const r of sthState.rows) map.set(r.d, { d: r.d, price: r.price, cost: r.cost, profit: r.profit });
+    return map;
+  }
+  function sthCommitMap(map) {
+    const rows = [...map.values()].sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : 0);
+    sthState.rows = rows;
+    sthState.asOf = sthAsOf(rows);
+    sthState.fetchedAt = new Date().toISOString();
+    sthState.ready = rows.length > 0;
+  }
+  async function fetchText(url) {
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) throw new Error(url + " " + res.status);
+    return res.text();
+  }
+  function parseCsvCol(text, colName) {
+    const lines = String(text || "").trim().split(/\r?\n/);
+    const out = {};
+    if (lines.length < 2) return out;
+    const header = lines[0].split(",");
+    let di = header.indexOf("d");
+    let vi = header.indexOf(colName);
+    if (di < 0) di = 0;
+    if (vi < 0) vi = Math.min(2, header.length - 1);
+    for (let i = 1; i < lines.length; i++) {
+      if (!lines[i]) continue;
+      const parts = lines[i].split(",");
+      const d = parts[di];
+      const v = sthNum(parts[vi]);
+      if (d && v != null) out[d] = v;
+    }
+    return out;
+  }
+  async function fetchBinanceDailyForRange() {
+    const spec = sthRangeSpec();
+    const end = sthState.rows.length ? sthState.rows[sthState.rows.length - 1].d : utcDateFromMs(Date.now());
+    const needStart = spec.years ? addYearsISO(end, -spec.years) : (sthState.rows[0] && sthState.rows[0].d) || end;
+    const all = [];
+    let endTime = null;
+    for (let page = 0; page < 8; page++) {
+      const url = "https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=1000" + (endTime != null ? "&endTime=" + endTime : "");
+      const batch = await fetchJson(url);
+      if (!batch || !batch.length) break;
+      all.unshift(...batch);
+      const first = utcDateFromMs(+batch[0][0]);
+      const haveOlder = sthState.rows.some((r) => r.d <= needStart && r.price != null);
+      if (first <= needStart || haveOlder || batch.length < 1000) break;
+      endTime = +batch[0][0] - 1;
+    }
+    const dates = [], prices = [];
+    const seen = new Set();
+    for (const k of all) {
+      const d = utcDateFromMs(+k[0]);
+      const p = sthNum(k[4]);
+      if (!d || p == null || seen.has(d)) continue;
+      seen.add(d);
+      dates.push(d);
+      prices.push(p);
+    }
+    return { dates, prices };
+  }
+  async function fetchSthOnchain() {
+    const [cost, profitCsv, lossCsv] = await Promise.all([
+      fetchJson("https://bitcoin-data.com/v1/sth-realized-price"),
+      fetchText("https://bitcoin-data.com/v1/supply-profit-sth/csv"),
+      fetchText("https://bitcoin-data.com/v1/supply-loss-sth/csv"),
+    ]);
+    const costDates = [], costVals = [];
+    if (Array.isArray(cost)) {
+      for (const row of cost) {
+        if (!row || !row.d) continue;
+        const v = sthNum(row.sthRealizedPrice);
+        if (v == null) continue;
+        costDates.push(row.d);
+        costVals.push(v);
+      }
+    }
+    const profitMap = parseCsvCol(profitCsv, "supplyProfitSthBtc");
+    const lossMap = parseCsvCol(lossCsv, "supplyLossSthBtc");
+    const profitDates = [], profitVals = [];
+    const keys = new Set([...Object.keys(profitMap), ...Object.keys(lossMap)]);
+    for (const d of keys) {
+      const p = profitMap[d], l = lossMap[d];
+      if (p == null || l == null) continue;
+      const den = p + l;
+      if (!(den > 0)) continue;
+      profitDates.push(d);
+      profitVals.push(100 * p / den);
+    }
+    return { costDates, costVals, profitDates, profitVals };
+  }
+  async function refreshSthChart() {
+    if (sthState.refreshing) return;
+    sthState.refreshing = true;
+    const btn = $("sth-refresh");
+    if (btn) btn.disabled = true;
+    setSthStatus("正在刷新");
+    let priceOk = false, onchainOk = false, onchainSkip = false;
+    try {
+      const px = await fetchBinanceDailyForRange();
+      if (px.dates.length) {
+        const map = sthRowsMap();
+        mergeSthField(map, px.dates, px.prices, "price");
+        sthCommitMap(map);
+        priceOk = true;
+      }
+    } catch (e) { console.warn(e); }
+    let lastAttempt = 0;
+    try { lastAttempt = +localStorage.getItem(STH_ONCHAIN_KEY) || 0; } catch (e) {}
+    if (Date.now() - lastAttempt < STH_ONCHAIN_MIN_MS) {
+      onchainSkip = true;
+    } else {
+      try { localStorage.setItem(STH_ONCHAIN_KEY, String(Date.now())); } catch (e) {}
+      try {
+        const oc = await fetchSthOnchain();
+        const map = sthRowsMap();
+        const minDate = sthState.rows[0] && sthState.rows[0].d;
+        mergeSthField(map, oc.costDates, oc.costVals, "cost", minDate);
+        mergeSthField(map, oc.profitDates, oc.profitVals, "profit", minDate);
+        sthCommitMap(map);
+        onchainOk = true;
+      } catch (e) { console.warn(e); }
+    }
+    if (priceOk || onchainOk) sthSaveCache();
+    drawSthChart();
+    if (priceOk && onchainOk) setSthStatus("数据已刷新");
+    else if (priceOk && (onchainSkip || !onchainOk)) setSthStatus("价格已更新，链上数据沿用本地快照");
+    else if (!priceOk && onchainOk) setSthStatus("链上数据已刷新，价格仍用本地快照");
+    else setSthStatus("刷新失败，仍显示本地数据");
+    sthState.refreshing = false;
+    if (btn) btn.disabled = false;
+  }
+  async function initSthChart() {
+    syncSthTabs();
+    const tabs = $("sth-tabs");
+    if (tabs) {
+      tabs.addEventListener("click", (ev) => {
+        const btn = ev.target.closest("[data-sth-range]");
+        if (!btn || !tabs.contains(btn)) return;
+        const id = btn.getAttribute("data-sth-range");
+        if (!STH_RANGES.some((t) => t.id === id) || id === sthState.range) return;
+        sthState.range = id;
+        sthState.hover = null;
+        const tip = $("sth-tip");
+        if (tip) tip.hidden = true;
+        try { localStorage.setItem(STH_RANGE_KEY, id); } catch (e) {}
+        syncSthTabs();
+        drawSthChart();
+      });
+    }
+    const refresh = $("sth-refresh");
+    if (refresh) refresh.addEventListener("click", () => { refreshSthChart(); });
+    const canvas = $("sth-canvas");
+    if (canvas) {
+      canvas.addEventListener("pointerdown", (ev) => {
+        try { canvas.setPointerCapture(ev.pointerId); } catch (e) {}
+        sthHoverAt(ev);
+      });
+      canvas.addEventListener("pointermove", (ev) => {
+        if (ev.pointerType === "mouse" || ev.buttons || (typeof ev.pressure === "number" && ev.pressure > 0) || canvas.hasPointerCapture(ev.pointerId)) {
+          sthHoverAt(ev);
+        } else if (ev.pointerType === "mouse") {
+          sthHoverAt(ev);
+        }
+      });
+      canvas.addEventListener("pointerup", (ev) => {
+        const r = canvas.getBoundingClientRect();
+        const outside = ev.clientX < r.left || ev.clientX > r.right || ev.clientY < r.top || ev.clientY > r.bottom;
+        if (outside) hideSthTip();
+      });
+      canvas.addEventListener("pointercancel", hideSthTip);
+      canvas.addEventListener("pointerleave", (ev) => {
+        if (ev.pointerType === "mouse") hideSthTip();
+      });
+    }
+    const wrap = $("sth-wrap");
+    if (wrap && typeof ResizeObserver !== "undefined") {
+      const ro = new ResizeObserver(() => { if (sthState.ready || $("sth-canvas")) drawSthChart(); });
+      ro.observe(wrap);
+    } else {
+      window.addEventListener("resize", () => drawSthChart());
+    }
+
+    try {
+      const bundled = parseSthPayload(await fetchJson("./sth-chart.json"));
+      if (!bundled.rows.length) throw new Error("empty sth-chart.json");
+      sthApplyPayload(bundled);
+      setSthStatus("");
+      drawSthChart();
+      const cache = sthLoadCache();
+      if (sthCacheNewer(cache, bundled)) {
+        sthApplyPayload(cache);
+        setSthStatus("");
+        drawSthChart();
+      }
+    } catch (e) {
+      console.warn(e);
+      const cache = sthLoadCache();
+      if (cache) {
+        sthApplyPayload(cache);
+        setSthStatus("本地快照加载失败，已改用上次缓存");
+        drawSthChart();
+      } else {
+        sthState.status = "图表数据加载失败";
+        setSthStatus("图表数据加载失败");
+        drawSthChart();
+      }
+    }
+  }
+
+
+  const EVENTS_BOARD_URL = "./events-board.json";
+  const eventsState = { bundled: null, data: null, status: "正在加载事件看板…", refreshing: false };
+  function evNum(v) {
+    if (v == null || v === "") return null;
+    const n = +v;
+    return Number.isFinite(n) ? n : null;
+  }
+  function evClone(x) {
+    return JSON.parse(JSON.stringify(x));
+  }
+  function evRate(x) {
+    const n = evNum(x);
+    return n == null ? "—" : n.toFixed(2) + "%";
+  }
+  function evPctText(p) {
+    if (p == null || !Number.isFinite(p)) return "—";
+    return p.toFixed(1) + "%";
+  }
+  function evNormPcts(raws) {
+    const xs = raws.map((r) => Math.max(0, evNum(r) || 0));
+    const sum = xs.reduce((a, b) => a + b, 0);
+    if (!(sum > 0)) return xs.map(() => 0);
+    const exact = xs.map((x) => 100 * x / sum);
+    const tenths = exact.map((x) => Math.round(x * 10));
+    let tot = tenths.reduce((a, b) => a + b, 0);
+    let i = 0;
+    for (let k = 1; k < exact.length; k++) if (exact[k] > exact[i]) i = k;
+    tenths[i] += 1000 - tot;
+    if (tenths[i] < 0) tenths[i] = 0;
+    return tenths.map((t) => t / 10);
+  }
+  function evOutcomeTone(o) {
+    const bp = evNum(o && o.bp);
+    if (bp == null) return "mid";
+    if (bp < 0) return "cut";
+    if (bp > 0) return "hike";
+    return "hold";
+  }
+  function evGroupPcts(outcomes, pcts) {
+    let hike = 0, hold = 0, cut = 0;
+    outcomes.forEach((o, i) => {
+      const t = evOutcomeTone(o);
+      const p = pcts[i] || 0;
+      if (t === "hike") hike += p;
+      else if (t === "cut") cut += p;
+      else hold += p;
+    });
+    return { hike: Math.round(hike * 10) / 10, hold: Math.round(hold * 10) / 10, cut: Math.round(cut * 10) / 10 };
+  }
+  function evLean(hike, hold, cut) {
+    const items = [
+      { key: "hike", v: hike, strong: "偏加息", mild: "略偏加息", tone: "hike", arrow: "↑" },
+      { key: "hold", v: hold, strong: "偏维持", mild: "略偏维持", tone: "hold", arrow: "→" },
+      { key: "cut", v: cut, strong: "偏降息", mild: "略偏降息", tone: "cut", arrow: "↓" },
+    ];
+    items.sort((a, b) => b.v - a.v);
+    const top = items[0], second = items[1];
+    if (!top || top.v <= 0) return { text: "—", tone: "hold", arrow: "→" };
+    if (top.v - (second && second.v || 0) < 2) return { text: "加息与维持接近", tone: "hold", arrow: "→" };
+    if (top.v - (second && second.v || 0) >= 15) return { text: top.strong, tone: top.tone, arrow: top.arrow };
+    return { text: top.mild, tone: top.tone, arrow: top.arrow };
+  }
+  function evMeetingView(m) {
+    const outcomes = (m && m.outcomes) || [];
+    const pcts = evNormPcts(outcomes.map((o) => o.raw));
+    const g = evGroupPcts(outcomes, pcts);
+    return { meeting: m, outcomes, pcts, groups: g, lean: evLean(g.hike, g.hold, g.cut) };
+  }
+  function evBucketTone(label) {
+    if (String(label).indexOf("低于") >= 0) return "up";
+    if (String(label).indexOf("≥") >= 0 || String(label).indexOf("4.25") >= 0 || String(label).indexOf("4.50") >= 0) return "down";
+    return "mid";
+  }
+  function evAsOfText(iso) {
+    const m = String(iso || "").match(/^(\d{4}-\d{2}-\d{2})[T ](\d{2}:\d{2})/);
+    return m ? (m[1] + " " + m[2] + " 香港时间") : (iso || "—");
+  }
+  function evDateText(e) {
+    const fmt = (iso) => {
+      const p = String(iso || "").split("-");
+      if (p.length < 3) return iso || "—";
+      return p[0] + "-" + p[1] + "-" + p[2];
+    };
+    if (!e) return "—";
+    if (!e.endDate) return fmt(e.date);
+    const a = String(e.date || "").split("-"), b = String(e.endDate || "").split("-");
+    if (a.length >= 3 && b.length >= 3 && a[0] === b[0] && a[1] === b[1]) {
+      return a[0] + "-" + a[1] + "-" + String(+a[2]) + "–" + String(+b[2]);
+    }
+    return fmt(e.date) + "–" + fmt(e.endDate);
+  }
+  function evNowISO() {
+    const s = new Date().toLocaleString("sv-SE", { timeZone: "Asia/Hong_Kong" }).replace(" ", "T");
+    return s + "+08:00";
+  }
+  function setEventsStatus(text) {
+    eventsState.status = text || "";
+    const el = $("events-status");
+    if (el) el.textContent = eventsState.status;
+  }
+  function evFootnote(data) {
+    const w = (data && data.window) || {};
+    const asOf = evAsOfText(data && data.asOf);
+    const cal = ((data && data.meetings) || []).map((m) => m.calendarUpdatedAt).find(Boolean) || "2026-10-28";
+    return `观察窗口为 ${escapeHtml(w.from || "2026-11-12")} 至 ${escapeHtml(w.to || "2027-02-12")}，本板块为事件观察，不构成投资建议。利率数字为公开 Polymarket 预测市场中间价得出的隐含概率，不是芝加哥商业交易所 FedWatch 官方概率，亦非美联储立场；隐含概率不是保证。官方日程来自美联储 FOMC 日历（最后更新 ${escapeHtml(cal)}）、美国劳工统计局 CPI / 非农 / PPI，以及经济分析局 GDP / PCE。数据快照时间为 ${escapeHtml(asOf)}。当前窗口内没有可核验的已排期比特币 ETF 或监管日期，故未编造。2026 年 11 月 PCE 因经济分析局尚未公布日期，暂未列入。`;
+  }
+  function evRenderPolicy(data, nextLean) {
+    const p = (data && data.policy) || {};
+    const lean = nextLean || { text: "—", tone: "hold", arrow: "→" };
+    return `<div class="ev-strip">
+      <div class="ev-cell"><span class="k">当前目标区间</span><span class="v">${escapeHtml(evRate(p.targetFrom))}–${escapeHtml(evRate(p.targetTo).replace("%", ""))}%</span></div>
+      <div class="ev-cell"><span class="k">有效利率</span><span class="v">${escapeHtml(evRate(p.effective))}</span><span class="sub">${escapeHtml(p.effectiveDate || p.updatedAt || "")}</span></div>
+      <div class="ev-cell"><span class="k">下次议息隐含方向</span><span class="v ev-dir ${escapeHtml(lean.tone)}">${escapeHtml(lean.arrow)} 下次议息：${escapeHtml(lean.text)}</span><span class="sub">观察预测市场隐含概率，并非本页预测</span></div>
+    </div>
+    <p class="ev-hint">下列为预测市场隐含概率，已按 Yes 中间价归一化；不是本页对利率或比特币价格的判断。</p>`;
+  }
+  function evRenderMeeting(view) {
+    const m = view.meeting || {};
+    const year = m.year ? m.year + "年" : "";
+    const badge = m.hasSEP ? `<span class="ev-badge">含 SEP</span>` : `<span class="ev-badge off">不含 SEP</span>`;
+    const rows = view.outcomes.map((o, i) => {
+      const tone = evOutcomeTone(o);
+      const pct = view.pcts[i] || 0;
+      return `<div class="ev-out ${tone}"><span class="lab">${escapeHtml(o.label || "")}</span><span class="ev-bar"><span style="width:${pct}%"></span></span><span class="pct">${escapeHtml(evPctText(pct))}</span></div>`;
+    }).join("");
+    const g = view.groups;
+    const lean = view.lean;
+    return `<article class="ev-card">
+      <div class="ev-card-top"><span class="ev-card-title">${escapeHtml(year + (m.dateLabel || m.title || ""))}</span>${badge}</div>
+      <p class="ev-card-note">声明通常次日 14:00 ET</p>
+      <div class="ev-lean ${escapeHtml(lean.tone)}">${escapeHtml(lean.arrow)} ${escapeHtml(lean.text)}</div>
+      ${rows}
+      <div class="ev-groups">
+        <div class="ev-stack" aria-hidden="true">
+          <i class="ev-seg hike" style="width:${g.hike}%"></i>
+          <i class="ev-seg hold" style="width:${g.hold}%"></i>
+          <i class="ev-seg cut" style="width:${g.cut}%"></i>
+        </div>
+        <div class="ev-chips">
+          <span class="hike">加息 <b>${escapeHtml(evPctText(g.hike))}</b></span>
+          <span class="hold">维持 <b>${escapeHtml(evPctText(g.hold))}</b></span>
+          <span class="cut">降息 <b>${escapeHtml(evPctText(g.cut))}</b></span>
+        </div>
+      </div>
+    </article>`;
+  }
+  function evRenderYearEnd(ye) {
+    const buckets = (ye && ye.buckets) || [];
+    const pcts = evNormPcts(buckets.map((b) => b.raw));
+    const items = buckets.map((b, i) => {
+      const tone = evBucketTone(b.label);
+      const pct = pcts[i] || 0;
+      return `<div class="ev-ye-item"><div class="lab">${escapeHtml(b.label)}</div><div class="pct">${escapeHtml(evPctText(pct))}</div><div class="ev-bar"><span class="ev-seg ${tone}" style="width:${pct}%"></span></div></div>`;
+    }).join("");
+    return `<div class="ev-ye-wrap">
+      <div class="ev-kicker" style="margin-bottom:8px">${escapeHtml((ye && ye.title) || "2026 年底目标利率上限")}</div>
+      <div class="ev-ye">${items}</div>
+    </div>`;
+  }
+  function evRenderTimeline(events) {
+    const rows = (events || []).slice().sort((a, b) => String(a.date) < String(b.date) ? -1 : String(a.date) > String(b.date) ? 1 : 0);
+    return `<div class="ev-kicker" style="margin:4px 0 2px">窗口内日程</div>
+      <div class="ev-tl">${rows.map((e) => {
+        const cat = e.cat || "";
+        const fomc = cat === "fomc";
+        return `<div class="ev-tl-row${fomc ? " fomc" : ""}">
+          <div><span class="ev-tl-date">${escapeHtml(evDateText(e))}</span><span class="ev-tl-time">${escapeHtml(e.time || "")}</span></div>
+          <div class="ev-tl-main"><span class="ev-cat ${escapeHtml(cat)}">${escapeHtml(e.catLabel || "")}</span><span class="ev-tl-title">${escapeHtml(e.title || "")}</span></div>
+        </div>`;
+      }).join("")}</div>`;
+  }
+  function renderEventsBoard(data, statusText) {
+    const root = $("events");
+    if (!root || !data) return;
+    const meetings = (data.meetings || []).map(evMeetingView);
+    const nextLean = meetings[0] ? meetings[0].lean : { text: "—", tone: "hold", arrow: "→" };
+    const status = statusText == null ? eventsState.status : statusText;
+    eventsState.status = status || "";
+    root.innerHTML = `
+      <div class="ev-toolbar">
+        <div class="ev-kicker">预测市场隐含概率 · 官方经济日程</div>
+        <button type="button" class="ev-refresh" id="events-refresh">刷新隐含概率</button>
+      </div>
+      ${evRenderPolicy(data, nextLean)}
+      <div class="ev-meetings">${meetings.map(evRenderMeeting).join("")}</div>
+      ${evRenderYearEnd(data.yearEndRate)}
+      ${evRenderTimeline(data.events)}
+      <p class="ev-status" id="events-status">${escapeHtml(eventsState.status)}</p>
+      <p class="cycle-note">${evFootnote(data)}</p>`;
+    const btn = $("events-refresh");
+    if (btn && eventsState.refreshing) btn.disabled = true;
+  }
+  function evParseList(v) {
+    if (Array.isArray(v)) return v;
+    if (typeof v === "string") {
+      try { return JSON.parse(v); } catch (e) { return []; }
+    }
+    return [];
+  }
+  function evYesPrice(market) {
+    const outcomes = evParseList(market && market.outcomes);
+    const prices = evParseList(market && market.outcomePrices);
+    let i = outcomes.findIndex((o) => String(o).toLowerCase() === "yes");
+    if (i < 0) i = 0;
+    return evNum(prices[i]);
+  }
+  function evOutcomeKey(market) {
+    const t = (((market && market.groupItemTitle) || "") + " " + ((market && market.question) || "")).toLowerCase();
+    const dec = /decrease|cut|降息/.test(t);
+    const inc = /increase|hike|加息/.test(t);
+    const hold = /no change|unchanged|hold|维持|不变/.test(t);
+    const fifty = /50\s*\+|50\+|50\s*bps|50bp/.test(t);
+    const twenty = /25\s*bps|25bp/.test(t);
+    if (hold && !dec && !inc) return "hold";
+    if (dec && fifty) return "cut50";
+    if (dec && twenty) return "cut25";
+    if (inc && fifty) return "hike50";
+    if (inc && twenty) return "hike25";
+    return null;
+  }
+  function evSlugFromUrl(url) {
+    const s = String(url || "");
+    const m = s.match(/\/event\/([^/?#]+)/);
+    return m ? decodeURIComponent(m[1]) : "";
+  }
+  function evParseRateTitle(title) {
+    const s = String(title || "").replace(/\s+/g, "");
+    let m = s.match(/[≥>=]{1,2}(\d+(?:\.\d+)?)/);
+    if (m) return { op: "ge", v: +m[1] };
+    m = s.match(/[≤<=]{1,2}(\d+(?:\.\d+)?)/);
+    if (m) return { op: "le", v: +m[1] };
+    m = s.match(/(\d+(?:\.\d+)?)/);
+    if (m) return { op: "eq", v: +m[1] };
+    return null;
+  }
+  function evYearBucket(parsed) {
+    if (!parsed || !Number.isFinite(parsed.v)) return null;
+    const v = parsed.v, op = parsed.op;
+    if (op === "ge") return v >= 4.5 ? "≥ 4.50%" : null;
+    if (op === "le") return v < 4 ? "低于 4.00%" : null;
+    if (v < 4) return "低于 4.00%";
+    if (Math.abs(v - 4) < 0.001) return "4.00%";
+    if (Math.abs(v - 4.25) < 0.001) return "4.25%";
+    if (v >= 4.5) return "≥ 4.50%";
+    return null;
+  }
+  async function evFetchEvent(slug) {
+    if (!slug) throw new Error("missing slug");
+    const rows = await fetchJson("https://gamma-api.polymarket.com/events?slug=" + encodeURIComponent(slug));
+    const ev = Array.isArray(rows) ? rows[0] : rows;
+    if (!ev || !Array.isArray(ev.markets)) throw new Error("no markets " + slug);
+    return ev;
+  }
+  function evApplyMeetingOdds(meeting, event) {
+    const found = {};
+    for (const mk of event.markets || []) {
+      const key = evOutcomeKey(mk);
+      const px = evYesPrice(mk);
+      if (key && px != null) found[key] = px;
+    }
+    const keys = (meeting.outcomes || []).map((o) => o.key);
+    if (!keys.length || keys.some((k) => found[k] == null)) return false;
+    for (const o of meeting.outcomes) o.raw = found[o.key];
+    meeting.probAsOf = evNowISO();
+    return true;
+  }
+  function evApplyYearEndOdds(ye, event) {
+    if (!ye || !Array.isArray(ye.buckets) || !ye.buckets.length) return false;
+    const acc = {};
+    const seen = {};
+    for (const mk of event.markets || []) {
+      const parsed = evParseRateTitle(mk.groupItemTitle || mk.question || "");
+      const lab = evYearBucket(parsed);
+      const px = evYesPrice(mk);
+      if (!lab || px == null) continue;
+      acc[lab] = (acc[lab] || 0) + px;
+      seen[lab] = true;
+    }
+    const need = ye.buckets.map((b) => b.label);
+    if (need.some((lab) => lab !== "低于 4.00%" && !seen[lab])) return false;
+    if (need.indexOf("低于 4.00%") >= 0 && acc["低于 4.00%"] == null) acc["低于 4.00%"] = 0;
+    for (const b of ye.buckets) {
+      if (acc[b.label] == null) return false;
+      b.raw = acc[b.label];
+    }
+    ye.asOf = evNowISO();
+    return true;
+  }
+  async function refreshEventsOdds() {
+    if (eventsState.refreshing) return;
+    if (!eventsState.data) return;
+    eventsState.refreshing = true;
+    const btn = $("events-refresh");
+    if (btn) btn.disabled = true;
+    setEventsStatus("正在刷新隐含概率…");
+    let okMeet = 0, wantMeet = 0, okYe = false, failed = false;
+    try {
+      const next = evClone(eventsState.data);
+      const jobs = [];
+      for (const m of next.meetings || []) {
+        const slug = evSlugFromUrl(m.probUrl);
+        if (!slug) continue;
+        wantMeet++;
+        jobs.push(evFetchEvent(slug).then((ev) => { if (evApplyMeetingOdds(m, ev)) okMeet++; }).catch((e) => { console.warn(e); failed = true; }));
+      }
+      if (next.yearEndRate && next.yearEndRate.sourceUrl) {
+        jobs.push(evFetchEvent(evSlugFromUrl(next.yearEndRate.sourceUrl)).then((ev) => { okYe = evApplyYearEndOdds(next.yearEndRate, ev); }).catch((e) => { console.warn(e); failed = true; }));
+      }
+      await Promise.all(jobs);
+      const any = (wantMeet && okMeet) || okYe;
+      if (any) {
+        if (okMeet === wantMeet && (okYe || !next.yearEndRate)) next.asOf = evNowISO();
+        eventsState.data = next;
+        const parts = [];
+        if (okMeet === wantMeet && wantMeet) parts.push("议息隐含概率已更新");
+        else if (okMeet) parts.push("部分议息隐含概率已更新");
+        if (okYe) parts.push("年底目标利率已更新");
+        const miss = failed || okMeet < wantMeet || (next.yearEndRate && !okYe);
+        renderEventsBoard(eventsState.data, parts.join("，") + (miss ? "；其余仍用本地快照" : "") + "。" + "日程未改。");
+      } else {
+        renderEventsBoard(eventsState.data, "隐含概率刷新失败，仍用本地快照");
+      }
+    } catch (e) {
+      console.warn(e);
+      renderEventsBoard(eventsState.data, "隐含概率刷新失败，仍用本地快照");
+    }
+    eventsState.refreshing = false;
+    const btn2 = $("events-refresh");
+    if (btn2) btn2.disabled = false;
+  }
+  async function initEventsBoard() {
+    const root = $("events");
+    if (root) {
+      root.addEventListener("click", (ev) => {
+        const btn = ev.target.closest("#events-refresh");
+        if (!btn || !root.contains(btn)) return;
+        refreshEventsOdds();
+      });
+    }
+    try {
+      const bundled = evClone(await fetchJson(EVENTS_BOARD_URL));
+      if (!bundled || !Array.isArray(bundled.events)) throw new Error("bad events-board.json");
+      eventsState.bundled = evClone(bundled);
+      eventsState.data = bundled;
+      renderEventsBoard(bundled, "已加载本地快照（" + evAsOfText(bundled.asOf) + "）");
+    } catch (e) {
+      console.warn(e);
+      eventsState.status = "事件看板加载失败";
+      if ($("events-status")) $("events-status").textContent = "事件看板加载失败";
+    }
+  }
+
+  initSthChart();
+  initEventsBoard();
   initialLoad().finally(() => { startSocket(); startPolling(); });
   </script>
 </body>

@@ -1,0 +1,310 @@
+{
+  "asOf": "2026-11-12T01:03:00+08:00",
+  "window": {
+    "from": "2026-11-12",
+    "to": "2027-02-12"
+  },
+  "disclaimer": "本板块为事件观察与公开数据整理，不是买卖建议，也不构成对未来利率或价格的预测保证。预测市场隐含概率不等于官方概率，亦不必相加后精确等于 100%。",
+  "policy": {
+    "label": "当前联邦基金目标利率",
+    "targetFrom": 3.75,
+    "targetTo": 4.0,
+    "effective": 3.88,
+    "effectiveDate": "2026-11-09",
+    "sourceName": "纽约联储有效联邦基金利率（EFFR）",
+    "sourceUrl": "https://www.newyorkfed.org/markets/reference-rates/effr",
+    "updatedAt": "2026-11-09"
+  },
+  "meetings": [
+    {
+      "id": "fomc-2026-12",
+      "title": "FOMC 议息会议",
+      "dates": [
+        "2026-12-08",
+        "2026-12-09"
+      ],
+      "dateLabel": "12月8–9日",
+      "year": 2026,
+      "hasSEP": true,
+      "statementNote": "政策声明通常在会议次日约 14:00 ET 发布，随后约 14:30 ET 举行主席新闻发布会。",
+      "calendarSource": "美联储 FOMC 日历",
+      "calendarUrl": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+      "calendarUpdatedAt": "2026-10-28",
+      "probSource": "Polymarket「Fed Decision in December?」预测市场中间价",
+      "probUrl": "https://polymarket.com/event/fed-decision-in-december-20260729232808632",
+      "probAsOf": "2026-11-12T01:03:00+08:00",
+      "probNote": "相对此次会议前的目标利率上限变动；已按市场 Yes 价格归一化以便展示。",
+      "outcomes": [
+        {
+          "key": "cut50",
+          "label": "降息 50bp+",
+          "bp": -50,
+          "raw": 0.0025
+        },
+        {
+          "key": "cut25",
+          "label": "降息 25bp",
+          "bp": -25,
+          "raw": 0.0035
+        },
+        {
+          "key": "hold",
+          "label": "维持不变",
+          "bp": 0,
+          "raw": 0.0305
+        },
+        {
+          "key": "hike25",
+          "label": "加息 25bp",
+          "bp": 25,
+          "raw": 0.855
+        },
+        {
+          "key": "hike50",
+          "label": "加息 50bp+",
+          "bp": 50,
+          "raw": 0.1065
+        }
+      ]
+    },
+    {
+      "id": "fomc-2027-01",
+      "title": "FOMC 议息会议",
+      "dates": [
+        "2027-01-26",
+        "2027-01-27"
+      ],
+      "dateLabel": "1月26–27日",
+      "year": 2027,
+      "hasSEP": false,
+      "statementNote": "政策声明通常在会议次日约 14:00 ET 发布，随后约 14:30 ET 举行主席新闻发布会。",
+      "calendarSource": "美联储 FOMC 日历",
+      "calendarUrl": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+      "calendarUpdatedAt": "2026-10-28",
+      "probSource": "Polymarket「Fed Decision in January?」预测市场中间价",
+      "probUrl": "https://polymarket.com/event/fed-decision-in-january-20260729233815502",
+      "probAsOf": "2026-11-12T01:03:00+08:00",
+      "probNote": "相对此次会议前的目标利率上限变动（已计入市场对 12 月会议的预期）；已按市场 Yes 价格归一化以便展示。",
+      "outcomes": [
+        {
+          "key": "cut50",
+          "label": "降息 50bp+",
+          "bp": -50,
+          "raw": 0.0045
+        },
+        {
+          "key": "cut25",
+          "label": "降息 25bp",
+          "bp": -25,
+          "raw": 0.0045
+        },
+        {
+          "key": "hold",
+          "label": "维持不变",
+          "bp": 0,
+          "raw": 0.455
+        },
+        {
+          "key": "hike25",
+          "label": "加息 25bp",
+          "bp": 25,
+          "raw": 0.545
+        },
+        {
+          "key": "hike50",
+          "label": "加息 50bp+",
+          "bp": 50,
+          "raw": 0.0055
+        }
+      ]
+    }
+  ],
+  "yearEndRate": {
+    "title": "2026 年底目标利率上限",
+    "sourceName": "Polymarket「What will the Fed rate be at the end of 2026?」",
+    "sourceUrl": "https://polymarket.com/event/what-will-the-fed-rate-be-at-the-end-of-2026",
+    "asOf": "2026-11-12T01:03:00+08:00",
+    "note": "当前目标利率上限为 4.00%。下列为预测市场中间价，已归一化。",
+    "buckets": [
+      {
+        "label": "低于 4.00%",
+        "raw": 0.0345
+      },
+      {
+        "label": "4.00%",
+        "raw": 0.044
+      },
+      {
+        "label": "4.25%",
+        "raw": 0.8455
+      },
+      {
+        "label": "≥ 4.50%",
+        "raw": 0.1025
+      }
+    ]
+  },
+  "events": [
+    {
+      "date": "2026-11-13",
+      "time": "08:30 ET",
+      "title": "美国 PPI（10月）",
+      "cat": "ppi",
+      "catLabel": "物价",
+      "sourceName": "美国劳工统计局 PPI 发布日程",
+      "sourceUrl": "https://www.bls.gov/schedule/news_release/ppi.htm"
+    },
+    {
+      "date": "2026-11-25",
+      "time": "08:30 ET",
+      "title": "美国三季度 GDP 第二次估值与企业利润",
+      "cat": "gdp",
+      "catLabel": "增长",
+      "sourceName": "美国经济分析局发布日程",
+      "sourceUrl": "https://www.bea.gov/news/schedule"
+    },
+    {
+      "date": "2026-12-02",
+      "time": "08:30 ET",
+      "title": "个人收入与支出 / PCE（10月）",
+      "cat": "pce",
+      "catLabel": "物价",
+      "sourceName": "美国经济分析局发布日程",
+      "sourceUrl": "https://www.bea.gov/news/schedule"
+    },
+    {
+      "date": "2026-12-04",
+      "time": "08:30 ET",
+      "title": "非农就业报告（11月）",
+      "cat": "nfp",
+      "catLabel": "就业",
+      "sourceName": "美国劳工统计局就业形势发布日程",
+      "sourceUrl": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    {
+      "date": "2026-12-08",
+      "endDate": "2026-12-09",
+      "time": "声明通常 14:00 ET",
+      "title": "FOMC 议息（含经济预测摘要 SEP）",
+      "cat": "fomc",
+      "catLabel": "议息",
+      "sourceName": "美联储 FOMC 日历（最后更新 2026-10-28）",
+      "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+    },
+    {
+      "date": "2026-12-10",
+      "time": "08:30 ET",
+      "title": "美国 CPI（11月）",
+      "cat": "cpi",
+      "catLabel": "物价",
+      "sourceName": "美国劳工统计局 CPI 发布日程",
+      "sourceUrl": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    {
+      "date": "2026-12-15",
+      "time": "08:30 ET",
+      "title": "美国 PPI（11月）",
+      "cat": "ppi",
+      "catLabel": "物价",
+      "sourceName": "美国劳工统计局 PPI 发布日程",
+      "sourceUrl": "https://www.bls.gov/schedule/news_release/ppi.htm"
+    },
+    {
+      "date": "2026-12-23",
+      "time": "08:30 ET",
+      "title": "美国三季度 GDP 第三次估值",
+      "cat": "gdp",
+      "catLabel": "增长",
+      "sourceName": "美国经济分析局发布日程",
+      "sourceUrl": "https://www.bea.gov/news/schedule"
+    },
+    {
+      "date": "2027-01-08",
+      "time": "08:30 ET",
+      "title": "非农就业报告（12月）",
+      "cat": "nfp",
+      "catLabel": "就业",
+      "sourceName": "美国劳工统计局就业形势发布日程",
+      "sourceUrl": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    {
+      "date": "2027-01-13",
+      "time": "08:30 ET",
+      "title": "美国 CPI（12月）",
+      "cat": "cpi",
+      "catLabel": "物价",
+      "sourceName": "美国劳工统计局 CPI 发布日程",
+      "sourceUrl": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    {
+      "date": "2027-01-14",
+      "time": "08:30 ET",
+      "title": "美国 PPI（12月）",
+      "cat": "ppi",
+      "catLabel": "物价",
+      "sourceName": "美国劳工统计局 PPI 发布日程",
+      "sourceUrl": "https://www.bls.gov/schedule/news_release/ppi.htm"
+    },
+    {
+      "date": "2027-01-26",
+      "endDate": "2027-01-27",
+      "time": "声明通常 14:00 ET",
+      "title": "FOMC 议息会议",
+      "cat": "fomc",
+      "catLabel": "议息",
+      "sourceName": "美联储 FOMC 日历（最后更新 2026-10-28）",
+      "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+    },
+    {
+      "date": "2027-01-28",
+      "time": "08:30 ET",
+      "title": "美国四季度及全年 GDP 初值",
+      "cat": "gdp",
+      "catLabel": "增长",
+      "sourceName": "美国经济分析局 2027 年发布日程",
+      "sourceUrl": "https://www.bea.gov/news/schedule/next-year"
+    },
+    {
+      "date": "2027-02-04",
+      "time": "08:30 ET",
+      "title": "个人收入与支出 / PCE（12月）",
+      "cat": "pce",
+      "catLabel": "物价",
+      "sourceName": "美国经济分析局 2027 年发布日程",
+      "sourceUrl": "https://www.bea.gov/news/schedule/next-year"
+    },
+    {
+      "date": "2027-02-05",
+      "time": "08:30 ET",
+      "title": "非农就业报告（1月）",
+      "cat": "nfp",
+      "catLabel": "就业",
+      "sourceName": "美国劳工统计局就业形势发布日程",
+      "sourceUrl": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    {
+      "date": "2027-02-11",
+      "time": "08:30 ET",
+      "title": "美国 CPI（1月）",
+      "cat": "cpi",
+      "catLabel": "物价",
+      "sourceName": "美国劳工统计局 CPI 发布日程",
+      "sourceUrl": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    {
+      "date": "2027-02-12",
+      "time": "08:30 ET",
+      "title": "美国 PPI（1月）",
+      "cat": "ppi",
+      "catLabel": "物价",
+      "sourceName": "美国劳工统计局 PPI 发布日程",
+      "sourceUrl": "https://www.bls.gov/schedule/news_release/ppi.htm"
+    }
+  ],
+  "notes": [
+    "窗口为 2026-11-12 至 2027-02-12。已过去的数据发布未列入。",
+    "11 月个人收入与支出（PCE）在经济分析局日程中尚未公布具体日期，故暂不列入。",
+    "当前窗口内未检索到已排期、可核验的比特币 ETF 或监管节点，故未编造此类条目。",
+    "加息/降息概率来自公开预测市场，不是芝加哥商业交易所 FedWatch 官方概率，亦非美联储立场。"
+  ]
+}
