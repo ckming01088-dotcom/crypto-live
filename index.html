@@ -97,12 +97,12 @@
     .mkt-tabs .tf-tab,
     .tf-tabs.tf-two .tf-tab { flex: 1 1 calc(50% - 6px); }
     .stock-quote { color: var(--muted); font-size: 12px; margin: -2px 0 8px; font-variant-numeric: tabular-nums; }
-    .cycle-stock + .cycle-stock { margin-top: 16px; }
+    .cycle-stock + .cycle-stock { margin-top: 12px; }
     .tf-tab {
       flex: 1 1 calc((100% - 30px) / 6);
-      min-width: 3.2em;
+      min-width: 0;
       min-height: 36px;
-      padding: 6px 8px;
+      padding: 6px 4px;
       border: 1px solid var(--line);
       border-radius: 10px;
       background: #1A2030;
@@ -112,82 +112,88 @@
       font-weight: 650;
       cursor: pointer;
       touch-action: manipulation;
+      white-space: nowrap;
     }
     .tf-tab.on {
       background: color-mix(in srgb, var(--caution) 20%, var(--card));
       border-color: color-mix(in srgb, var(--caution) 55%, var(--line));
       color: var(--text);
     }
-    .prob-kicker { color: var(--muted); font-size: 12px; font-weight: 650; margin: 0 0 8px; letter-spacing: .02em; }
-    .prob-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 4px; }
-    .prob-card { background: #1A2030; border: 1px solid var(--line); border-radius: 14px; padding: 12px; }
-    .prob-lab { color: var(--muted); font-size: 12px; font-weight: 650; }
+    .prob-kicker { color: var(--muted); font-size: 11px; font-weight: 650; margin: 0 0 6px; letter-spacing: .02em; }
+    .prob-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 4px; }
+    .prob-card { background: #1A2030; border: 1px solid var(--line); border-radius: 10px; padding: 7px 9px 8px; }
+    .prob-lab { color: var(--muted); font-size: 11px; font-weight: 650; }
     .prob-val {
-      font-size: 32px; font-weight: 720; font-variant-numeric: tabular-nums;
-      letter-spacing: -0.03em; line-height: 1.15; margin: 4px 0 10px; color: var(--text);
+      font-size: 22px; font-weight: 720; font-variant-numeric: tabular-nums;
+      letter-spacing: -0.03em; line-height: 1.1; margin: 1px 0 6px; color: var(--text);
     }
     .prob-card.top .prob-val { color: var(--caution); }
     .prob-card.bot .prob-val { color: var(--up); }
-    .prob-bar { height: 8px; border-radius: 999px; background: #0B0E14; overflow: hidden; }
+    .prob-bar { height: 5px; border-radius: 999px; background: #0B0E14; overflow: hidden; }
     .prob-bar > span { display: block; height: 100%; width: 0; border-radius: 999px; }
     .prob-card.top .prob-bar > span { background: var(--caution); }
     .prob-card.bot .prob-bar > span { background: var(--up); }
-    .prob-grid.eth { margin-top: 8px; }
-    .prob-grid.eth .prob-val { font-size: 22px; margin: 2px 0 8px; }
-    .prob-grid.eth .prob-card { padding: 10px 12px; }
+    .prob-grid.eth { margin-top: 6px; }
+    .prob-grid.eth .prob-val { font-size: 18px; margin: 1px 0 5px; }
+    .prob-grid.eth .prob-card { padding: 6px 8px 7px; }
     .cycle-reads { margin-top: 8px; }
     .cycle-note { color: var(--muted); font-size: 12px; margin: 10px 0 0; line-height: 1.55; }
     .cycle-judge { margin: 4px 0 2px; font-size: 14px; color: var(--muted); }
     .cycle-judge b { font-weight: 700; }
     .cycle-judge.eth { font-size: 13px; margin-top: 6px; }
-    .cycle-board { margin-top: 8px; }
+    .cycle-board { margin-top: 6px; }
     .cycle-board.eth { margin-top: 6px; }
     .cyc-spectrum {
-      background: #1A2030; border: 1px solid var(--line); border-radius: 14px;
-      padding: 12px 14px 12px; margin-bottom: 8px;
+      background: #1A2030; border: 1px solid var(--line); border-radius: 10px;
+      padding: 8px 10px 8px; margin-bottom: 6px;
     }
-    .cyc-spectrum.eth .cyc-jud { font-size: 18px; }
-    .cyc-k { color: var(--muted); font-size: 11px; font-weight: 650; letter-spacing: .02em; }
+    .cyc-spectrum.eth .cyc-jud { font-size: 15px; }
+    .cyc-k { color: var(--muted); font-size: 11px; font-weight: 650; letter-spacing: .02em; min-width: 0; }
+    .cyc-head {
+      display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+      gap: 4px 8px; margin: 0 0 5px;
+    }
     .cyc-jud {
-      font-size: 22px; font-weight: 720; letter-spacing: -0.02em;
-      line-height: 1.2; margin: 2px 0 12px;
+      font-size: 16px; font-weight: 720; letter-spacing: -0.02em;
+      line-height: 1.2; margin: 0; text-align: right;
     }
     .cyc-spec-track {
-      position: relative; height: 10px; border-radius: 999px;
+      position: relative; height: 8px; border-radius: 999px;
       background: linear-gradient(90deg, var(--up) 0%, #6b9aa0 28%, #8B95A5 50%, #c9b56a 72%, var(--caution) 100%);
     }
     .cyc-needle {
-      position: absolute; top: 50%; width: 16px; height: 16px; border-radius: 50%;
+      position: absolute; top: 50%; width: 12px; height: 12px; border-radius: 50%;
       background: var(--text); border: 2px solid var(--bg);
       transform: translate(-50%, -50%);
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--text) 35%, transparent);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--text) 35%, transparent);
     }
     .cyc-needle.tone-caution {
       background: var(--caution);
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--caution) 35%, transparent);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--caution) 35%, transparent);
     }
     .cyc-needle.tone-down {
       background: var(--up);
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--up) 35%, transparent);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--up) 35%, transparent);
     }
     .cyc-needle.tone-neutral { background: var(--text); }
     .cyc-spec-axis {
       display: flex; justify-content: space-between; gap: 8px;
-      margin-top: 8px; font-size: 11px; color: var(--muted);
+      margin-top: 5px; font-size: 10px; color: var(--muted);
     }
-    .cyc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .cyc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
     .cyc-tile {
-      background: #1A2030; border: 1px solid var(--line); border-radius: 14px;
-      padding: 10px 11px 11px; min-width: 0;
+      background: #1A2030; border: 1px solid var(--line); border-radius: 10px;
+      padding: 6px 8px 7px; min-width: 0;
     }
     .cyc-tile.wide { grid-column: 1 / -1; }
     .cyc-v {
-      font-weight: 720; font-variant-numeric: tabular-nums; font-size: 16px;
-      letter-spacing: -0.02em; line-height: 1.25; margin: 2px 0 8px; word-break: break-word;
+      font-weight: 720; font-variant-numeric: tabular-nums; font-size: 14px;
+      letter-spacing: -0.02em; line-height: 1.2; margin: 0; text-align: right;
+      white-space: nowrap;
     }
-    .cyc-sub { color: var(--muted); font-size: 11px; line-height: 1.4; margin-top: 6px; }
+    .cyc-sub { color: var(--muted); font-size: 11px; line-height: 1.35; margin-top: 4px; }
     .cyc-meter {
-      position: relative; height: 8px; border-radius: 999px; background: #0B0E14;
+      position: relative; height: 6px; border-radius: 999px; background: #0B0E14;
     }
     .cyc-meter .cyc-hist {
       position: absolute; top: 0; height: 100%; border-radius: 999px;
@@ -195,23 +201,23 @@
     .cyc-meter .cyc-hist.pos { background: color-mix(in srgb, var(--up) 70%, #0B0E14); }
     .cyc-meter .cyc-hist.neg { background: color-mix(in srgb, var(--down) 70%, #0B0E14); }
     .cyc-meter .cyc-mid {
-      position: absolute; top: -2px; width: 1px; height: 12px;
+      position: absolute; top: -2px; width: 1px; height: 10px;
       background: color-mix(in srgb, var(--muted) 70%, transparent);
       transform: translateX(-50%);
     }
     .cyc-meter .cyc-dot {
-      position: absolute; top: 50%; width: 10px; height: 10px; border-radius: 50%;
+      position: absolute; top: 50%; width: 8px; height: 8px; border-radius: 50%;
       background: var(--text); border: 2px solid #1A2030;
       transform: translate(-50%, -50%); z-index: 1;
     }
-    .cyc-ticks { position: relative; height: 14px; margin-top: 4px; }
+    .cyc-ticks { position: relative; height: 12px; margin-top: 2px; }
     .cyc-ticks span {
       position: absolute; transform: translateX(-50%);
       font-size: 10px; color: var(--muted); white-space: nowrap; line-height: 1.2;
     }
     .cyc-chip {
-      display: inline-flex; align-items: center; margin-top: 2px;
-      padding: 4px 8px; border-radius: 999px; font-size: 12px; font-weight: 650;
+      display: inline-flex; align-items: center; margin-top: 0;
+      padding: 2px 6px; border-radius: 999px; font-size: 11px; font-weight: 650;
       background: #0B0E14; border: 1px solid var(--line); color: var(--text);
     }
     .cyc-chip.tone-caution { border-color: color-mix(in srgb, var(--caution) 55%, var(--line)); color: var(--caution); }
@@ -481,19 +487,19 @@
   ];
   const SPARK = "▁▂▃▄▅▆▇█";
   const CYCLE_TFS = [
-    { id: "2h", label: "2小时" },
-    { id: "4h", label: "4小时" },
-    { id: "6h", label: "6小时" },
-    { id: "12h", label: "12小时" },
-    { id: "1d", label: "1天" },
-    { id: "3d", label: "3天" },
+    { id: "2h", label: "2H" },
+    { id: "4h", label: "4H" },
+    { id: "6h", label: "6H" },
+    { id: "12h", label: "12H" },
+    { id: "1d", label: "1D" },
+    { id: "3d", label: "3D" },
   ];
   const CYCLE_TF_KEY = "crypto-live-cycle-tf";
   const CYCLE_MKT_KEY = "crypto-live-cycle-mkt";
   const CYCLE_US_TF_KEY = "crypto-live-cycle-us-tf";
   const US_STOCK_TFS = [
-    { id: "1d", label: "1天" },
-    { id: "1w", label: "1周" },
+    { id: "1d", label: "1D" },
+    { id: "1w", label: "1W" },
   ];
   const US_STOCKS = [
     { id: "QQQ", title: "QQQ", fallbackSub: "纳斯达克100 ETF" },
@@ -1344,8 +1350,10 @@
     const meter = opts.meter || "";
     const aria = (opts.label || "") + " " + (opts.aria || opts.value || "");
     return `<div class="cyc-tile${wide}" aria-label="${escapeHtml(aria)}">
-      <div class="cyc-k">${escapeHtml(opts.label)}</div>
-      <div class="cyc-v${vcls}">${valueHtml}</div>
+      <div class="cyc-head">
+        <div class="cyc-k">${escapeHtml(opts.label)}</div>
+        <div class="cyc-v${vcls}">${valueHtml}</div>
+      </div>
       ${meter}${sub}
     </div>`;
   }
@@ -1359,8 +1367,10 @@
     const needle = pos == null ? "" : `<span class="cyc-needle tone-${j.tone}" style="left:${pos}%"></span>`;
     const cls = size === "eth" ? "cyc-spectrum eth" : "cyc-spectrum";
     return `<div class="${cls}" aria-label="综合判断 ${escapeHtml(j.text)}">
-      <div class="cyc-k">综合判断</div>
-      <div class="cyc-jud tone-${j.tone}">${escapeHtml(j.text)}</div>
+      <div class="cyc-head">
+        <div class="cyc-k">综合判断</div>
+        <div class="cyc-jud tone-${j.tone}">${escapeHtml(j.text)}</div>
+      </div>
       <div class="cyc-spec-track" aria-hidden="true">${needle}</div>
       <div class="cyc-spec-axis"><span>偏底部观察</span><span>中性</span><span>偏顶部观察</span></div>
     </div>`;
@@ -1723,7 +1733,7 @@
         ${m.ready ? probCards(m, "btc") + cycleBoard(s.id, interval, m, null, "btc") : `<p class="cycle-note">该周期数据不足</p>`}
       </div>`;
     }).join("");
-    const extra = "QQQ、VOO 日线来自 Nasdaq 公开历史行情；标普500 日线来自华尔街日报公开历史行情，当日未收盘报价来自 CNBC。数据为页面发布时的快照，不是盘中持续更新，可能不是最新成交价。美股按交易日计算，周期仅提供 1 天和 1 周。观察分数使用该周期 RSI、200均线倍数窗口分位和回撤，不套用加密恐惧贪婪、资金费率、比特币 Mayer 阈值、派循环或 AHR999。";
+    const extra = "QQQ、VOO 日线来自 Nasdaq 公开历史行情；标普500 日线来自华尔街日报公开历史行情，当日未收盘报价来自 CNBC。数据为页面发布时的快照，不是盘中持续更新，可能不是最新成交价。美股按交易日计算，周期仅提供 1D 和 1W。观察分数使用该周期 RSI、200均线倍数窗口分位和回撤，不套用加密恐惧贪婪、资金费率、比特币 Mayer 阈值、派循环或 AHR999。";
     return head + body + cycleDisclaimer(extra);
   }
   function cycleBlock(data) {
