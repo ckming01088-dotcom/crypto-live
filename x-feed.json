@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-12T18:17:52+08:00",
+  "asOf": "2026-11-12T19:19:52+08:00",
   "source": "X 公开帖快照（含中文译文）",
   "accounts": [
     {
@@ -66,6 +66,66 @@
   ],
   "posts": [
     {
+      "id": "2120831898159386892",
+      "accountId": "justinsuntron",
+      "name": "Justin Sun",
+      "zh": "孙宇晨",
+      "username": "justinsuntron",
+      "text": "火币HTX将在11月10日上线 $INTC、 $AMD 及 $GOOGL\n\n✅充币业务已开启\n\n⏰ INTC 币币交易：11月12日17:00 PM (UTC+8)\n⏰ AMD 币币交易：11月12日17:30 PM (UTC+8)\n⏰ GOOGL 币币交易：11月12日18:00 PM (UTC+8) https://t.co/u1LFFFIwzs",
+      "createdAt": "2026-11-12T10:51:42.000Z",
+      "url": "https://x.com/justinsuntron/status/2120831898159386892",
+      "kind": "repost",
+      "repostOf": "HuobiGlobal",
+      "likes": 0,
+      "reposts": 3,
+      "textZh": "火币HTX将在11月10日上线 $INTC、 $AMD 及 $GOOGL\n\n✅充币业务已开启\n\n⏰ INTC 币币交易：11月12日17:00 PM (UTC+8)\n⏰ AMD 币币交易：11月12日17:30 PM (UTC+8)\n⏰ GOOGL 币币交易：11月12日18:00 PM (UTC+8)\nhttps://t.co/u1LFFFIwzs"
+    },
+    {
+      "id": "2120829628239728766",
+      "accountId": "justinsuntron",
+      "name": "Justin Sun",
+      "zh": "孙宇晨",
+      "username": "justinsuntron",
+      "text": "假如和 Tron Inc一起定投 TRX\n同一时间段的价格对比\nBTC跌了17.6%、ETH跌了30.3% 而TRX涨了3.9%\n\n这么看的话 TRX非常适合定投\n不光价格回报能跑赢\n而且还有质押收益或者能量租赁收益\n\n其实孙学不光是赢 还是让坚定相信的人赢\nTRX就是最好的证明 相信的人赢麻了\n\n@justinsuntron #TRONEcoStar https://t.co/MI8QaO5MgC",
+      "createdAt": "2026-11-12T10:42:41.000Z",
+      "url": "https://x.com/justinsuntron/status/2120829628239728766",
+      "kind": "repost",
+      "repostOf": "0xMoon",
+      "likes": 0,
+      "reposts": 2,
+      "textZh": "假如和 Tron Inc一起定投 TRX\n同一时间段的价格对比\nBTC跌了17.6%、ETH跌了30.3% 而TRX涨了3.9%\n\n这么看的话 TRX非常适合定投\n不光价格回报能跑赢\n而且还有质押收益或者能量租赁收益\n\n其实孙学不光是赢 还是让坚定相信的人赢\nTRX就是最好的证明 相信的人赢麻了\n\n@justinsuntron #TRONEcoStar\nhttps://t.co/MI8QaO5MgC"
+    },
+    {
+      "id": "2120828701390852552",
+      "accountId": "justinsuntron",
+      "name": "Justin Sun",
+      "zh": "孙宇晨",
+      "username": "justinsuntron",
+      "text": "稳步发展 https://t.co/e1Ul1lHEp9",
+      "createdAt": "2026-11-12T10:39:00.000Z",
+      "url": "https://x.com/justinsuntron/status/2120828701390852552",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 18,
+      "reposts": 2,
+      "textZh": "稳步发展\nhttps://t.co/e1Ul1lHEp9"
+    },
+    {
+      "id": "2120828673783923175",
+      "accountId": "justinsuntron",
+      "name": "Justin Sun",
+      "zh": "孙宇晨",
+      "username": "justinsuntron",
+      "text": "CoinDesk最新的报告 \nHTX的现货份额稳居华语前五\n\n有人说孙哥和HTX不行了\n我看这还是挺稳的 甚至还有进取之势\n说不定哪天不声不响又往前挪一名\n\n@justinsuntron @HTX_Molly #TRONEcoStar https://t.co/JzGLm1sQZL",
+      "createdAt": "2026-11-12T10:38:53.000Z",
+      "url": "https://x.com/justinsuntron/status/2120828673783923175",
+      "kind": "repost",
+      "repostOf": "0xMoon",
+      "likes": 0,
+      "reposts": 5,
+      "textZh": "CoinDesk最新的报告 \nHTX的现货份额稳居华语前五\n\n有人说孙哥和HTX不行了\n我看这还是挺稳的 甚至还有进取之势\n说不定哪天不声不响又往前挪一名\n\n@justinsuntron @HTX_Molly #TRONEcoStar\nhttps://t.co/JzGLm1sQZL"
+    },
+    {
       "id": "2120798842451058773",
       "accountId": "elonmusk",
       "name": "Elon Musk",
@@ -77,7 +137,7 @@
       "kind": "repost",
       "repostOf": "NarutoNolimits",
       "likes": 0,
-      "reposts": 128,
+      "reposts": 151,
       "textZh": "为什么马斯克认为，我们可能在一百万年内殖民整个银河系\n\n对马斯克来说，这甚至不是个难题。\n\n一百万年足够扩散到整个银河系。\n\n那其他人在哪里？\n\n似乎还没有谁做到过。\n\n有某种力量会在……之前阻止文明……"
     },
     {
@@ -86,13 +146,13 @@
       "name": "Elon Musk",
       "zh": "马斯克",
       "username": "elonmusk",
-      "text": "A lot of nerds are in Austin for a big robotics/AI event.\n\nWith every ride @elonmusk gets free advertising.\n\nPeople say Elon should advertise.\n\nHe picks unique designs instead. \n\nMakes everyone talk.",
+      "text": "A lot of nerds are in Austin for a big robotics/AI event.\n\nWith every ride @elonmusk gets free advertising.\n\nPeople say Elon should advertise.\n\nHe picks unique designs instead. \n\nMakes everyone talk. https://t.co/QepwjQanP2",
       "createdAt": "2026-11-12T08:28:18.000Z",
       "url": "https://x.com/elonmusk/status/2120795813123129831",
       "kind": "repost",
       "repostOf": "Scobleizer",
       "likes": 0,
-      "reposts": 118,
+      "reposts": 134,
       "textZh": "不少极客聚集在奥斯汀，参加一场大型机器人/人工智能活动。\n\n每一次出行，@elonmusk 都能获得免费曝光。\n\n有人说马斯克应该打广告。\n\n他却选择独特的设计。\n\n让大家都在谈论。"
     },
     {
@@ -106,7 +166,7 @@
       "url": "https://x.com/justinsuntron/status/2120771071800430608",
       "kind": "quote",
       "repostOf": null,
-      "likes": 44,
+      "likes": 47,
       "reposts": 5,
       "textZh": "正确的证明，正确的表述，两者都重要。\nhttps://t.co/2QLhHAfuE2"
     },
@@ -121,8 +181,8 @@
       "url": "https://x.com/elonmusk/status/2120761225529168312",
       "kind": "quote",
       "repostOf": null,
-      "likes": 7742,
-      "reposts": 747,
+      "likes": 9161,
+      "reposts": 860,
       "textZh": "11年前\nhttps://t.co/Qf4oKo4xap"
     },
     {
@@ -136,8 +196,8 @@
       "url": "https://x.com/elonmusk/status/2120760435813306525",
       "kind": "quote",
       "repostOf": null,
-      "likes": 5895,
-      "reposts": 571,
+      "likes": 6531,
+      "reposts": 642,
       "textZh": "很松弛的氛围\nhttps://t.co/Cv4VOzPN0x"
     },
     {
@@ -151,8 +211,8 @@
       "url": "https://x.com/elonmusk/status/2120758305047904548",
       "kind": "quote",
       "repostOf": null,
-      "likes": 2240,
-      "reposts": 269,
+      "likes": 2463,
+      "reposts": 303,
       "textZh": "试试 Grok @Bot\nhttps://t.co/7tZnZbhCiP"
     },
     {
@@ -167,7 +227,7 @@
       "kind": "repost",
       "repostOf": "BinanceFutures",
       "likes": 0,
-      "reposts": 19,
+      "reposts": 21,
       "textZh": "盘后，币安上的 $NVDAUSDT 下跌 8.39%。价格发现正在实时进行。\n\n聪明钱持仓：\n\n🔶 空头头寸 2 亿美元，平均开仓价 172.5 美元\n🔶 多头头寸 2200 万美元，平均开仓价 164.9 美元\n🔶 该合约持仓量已累积至 3.47 亿\n\n请关注 https://t.co/x1IdEveysB"
     },
     {
@@ -181,8 +241,8 @@
       "url": "https://x.com/elonmusk/status/2120746428720988408",
       "kind": "quote",
       "repostOf": null,
-      "likes": 14845,
-      "reposts": 1454,
+      "likes": 16665,
+      "reposts": 1620,
       "textZh": "Robotaxi 一周工作 168 小时\nhttps://t.co/C9s5Puk2m5"
     },
     {
@@ -196,39 +256,9 @@
       "url": "https://x.com/justinsuntron/status/2120745058853154974",
       "kind": "quote",
       "repostOf": null,
-      "likes": 79,
+      "likes": 84,
       "reposts": 8,
       "textZh": "币安（@binance）上线 TRX USDC 期货\nhttps://t.co/NZc1PgKtNQ"
-    },
-    {
-      "id": "2120744870507839665",
-      "accountId": "justinsuntron",
-      "name": "Justin Sun",
-      "zh": "孙宇晨",
-      "username": "justinsuntron",
-      "text": "Tron is leading https://t.co/H2nT0bv8YE",
-      "createdAt": "2026-11-12T05:05:53.000Z",
-      "url": "https://x.com/justinsuntron/status/2120744870507839665",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 105,
-      "reposts": 15,
-      "textZh": "Tron 处于领先\nhttps://t.co/H2nT0bv8YE"
-    },
-    {
-      "id": "2120740445961822536",
-      "accountId": "justinsuntron",
-      "name": "Justin Sun",
-      "zh": "孙宇晨",
-      "username": "justinsuntron",
-      "text": "8 years in. Good to see it 🔻 https://t.co/AJxDsev9CM",
-      "createdAt": "2026-11-12T04:48:18.000Z",
-      "url": "https://x.com/justinsuntron/status/2120740445961822536",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 47,
-      "reposts": 8,
-      "textZh": "已经八年了。很高兴看到这个 🔻\nhttps://t.co/AJxDsev9CM"
     },
     {
       "id": "2120580771928842563",
@@ -256,24 +286,9 @@
       "url": "https://x.com/saylor/status/2120580116963004755",
       "kind": "post",
       "repostOf": null,
-      "likes": 2384,
-      "reposts": 226,
+      "likes": 2426,
+      "reposts": 229,
       "textZh": "比特币是数字资本。Strategy 把它转化为数字信贷和数字股权。把 $STRC 和 $MSTR 带到链上，是迈向永不关闭的资本市场的又一步。\nhttps://t.co/nWVyRfRGjU"
-    },
-    {
-      "id": "2120550619345752493",
-      "accountId": "justinsuntron",
-      "name": "Justin Sun",
-      "zh": "孙宇晨",
-      "username": "justinsuntron",
-      "text": "Stablecoins are here to stay. 🔻 https://t.co/eDjArE1Ovo",
-      "createdAt": "2026-11-11T16:14:00.000Z",
-      "url": "https://x.com/justinsuntron/status/2120550619345752493",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 245,
-      "reposts": 23,
-      "textZh": "稳定币会长期存在。🔻\nhttps://t.co/eDjArE1Ovo"
     },
     {
       "id": "2120525843558781180",
@@ -286,24 +301,9 @@
       "url": "https://x.com/saylor/status/2120525843558781180",
       "kind": "post",
       "repostOf": null,
-      "likes": 5103,
-      "reposts": 531,
+      "likes": 5147,
+      "reposts": 537,
       "textZh": "德意志₿银行。\nhttps://t.co/k0gKuWaW4U"
-    },
-    {
-      "id": "2120508124763414687",
-      "accountId": "justinsuntron",
-      "name": "Justin Sun",
-      "zh": "孙宇晨",
-      "username": "justinsuntron",
-      "text": "一步一个脚印 https://t.co/HJT5cXCltd",
-      "createdAt": "2026-11-11T13:25:08.000Z",
-      "url": "https://x.com/justinsuntron/status/2120508124763414687",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 101,
-      "reposts": 9,
-      "textZh": "一步一个脚印\nhttps://t.co/HJT5cXCltd"
     },
     {
       "id": "2120306289117122888",
@@ -376,7 +376,7 @@
       "url": "https://x.com/saylor/status/2120158698278682752",
       "kind": "post",
       "repostOf": null,
-      "likes": 3280,
+      "likes": 3285,
       "reposts": 313,
       "textZh": "₿aby Bear 也懂。\nhttps://t.co/LUe0u6VvVp"
     },
@@ -421,7 +421,7 @@
       "url": "https://x.com/saylor/status/2119864764167798873",
       "kind": "post",
       "repostOf": null,
-      "likes": 4943,
+      "likes": 4945,
       "reposts": 470,
       "textZh": "两边都要看。\nhttps://t.co/43KfTIRr9o"
     },
@@ -436,7 +436,7 @@
       "url": "https://x.com/cz_binance/status/2119841907140673816",
       "kind": "quote",
       "repostOf": null,
-      "likes": 2602,
+      "likes": 2603,
       "reposts": 208,
       "textZh": "这个帖串读起来有点扎心。我懂这种痛苦。想避开同类问题的话，值得一读。\nhttps://t.co/VGqYpdenFF"
     },
