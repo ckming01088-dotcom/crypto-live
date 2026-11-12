@@ -624,6 +624,7 @@
   const CYCLE_MKT_KEY = "crypto-live-cycle-mkt";
   const CYCLE_US_TF_KEY = "crypto-live-cycle-us-tf";
   const CYCLE_COIN_KEY = "crypto-live-cycle-coin";
+  const CYCLE_US_STOCK_KEY = "crypto-live-cycle-us-stock";
   function emptyByCoin(fill) {
     const o = {};
     CYCLE_COINS.forEach((c) => { o[c.id] = fill(); });
@@ -658,6 +659,7 @@
     cycleTf: "1d",
     cycleUsTf: "1d",
     cycleCoin: "BTC",
+    cycleUsStock: "QQQ",
     cycleMkt: "crypto",
     cycleTfLoading: false,
     usStocks: null,
@@ -680,6 +682,8 @@
     if (US_STOCK_TFS.some((t) => t.id === savedUsTf)) state.cycleUsTf = savedUsTf;
     const savedCoin = localStorage.getItem(CYCLE_COIN_KEY);
     if (CYCLE_COINS.some((c) => c.id === savedCoin)) state.cycleCoin = savedCoin;
+    const savedUsStock = localStorage.getItem(CYCLE_US_STOCK_KEY);
+    if (US_STOCKS.some((s) => s.id === savedUsStock)) state.cycleUsStock = savedUsStock;
     const savedXTab = localStorage.getItem("crypto-live-x-feed-tab");
     if (savedXTab) state.xFeedTab = savedXTab;
     const savedMain = localStorage.getItem("crypto-live-main-tab");
@@ -1088,6 +1092,9 @@
   }
   function cycleCoinId() {
     return CYCLE_COINS.some((c) => c.id === state.cycleCoin) ? state.cycleCoin : "BTC";
+  }
+  function cycleUsStockId() {
+    return US_STOCKS.some((s) => s.id === state.cycleUsStock) ? state.cycleUsStock : "QQQ";
   }
   function piCycleTopScore(dailySrc, livePrice) {
     const daily = (dailySrc || []).slice();
@@ -1845,6 +1852,13 @@
     ).join("");
     return `<div class="tf-tabs coin-tabs" role="tablist">${tabs}</div>`;
   }
+  function usStockTabs() {
+    const cur = cycleUsStockId();
+    const tabs = US_STOCKS.map((s) =>
+      `<button type="button" class="tf-tab${s.id === cur ? " on" : ""}" data-cycle-us-stock="${s.id}" aria-pressed="${s.id === cur ? "true" : "false"}">${s.title}</button>`
+    ).join("");
+    return `<div class="tf-tabs coin-tabs" role="tablist">${tabs}</div>`;
+  }
   function tfTabsFor(list, current) {
     const two = list.length <= 2 ? " tf-two" : "";
     const tabs = list.map((t) =>
@@ -1894,26 +1908,26 @@
   }
   function usCycleBlock() {
     const interval = state.cycleUsTf || "1d";
-    const head = marketTabs() + tfTabsFor(US_STOCK_TFS, interval);
+    const symbol = cycleUsStockId();
+    const head = marketTabs() + usStockTabs() + tfTabsFor(US_STOCK_TFS, interval);
     if (state.usStocksLoading && !state.usStocks) {
       return head + `<p class="cycle-note">正在加载美股数据…</p>`;
     }
-    if (!state.usStocks || !US_STOCKS.every((s) => tfClosesOf(interval, s.id).length)) {
+    if (!state.usStocks || !tfClosesOf(interval, symbol).length) {
       const err = state.usStocksError ? escapeHtml(state.usStocksError) : "正在加载美股数据…";
       return head + `<p class="cycle-note">${err}</p>`;
     }
-    const body = US_STOCKS.map((s) => {
-      const meta = (state.usStocks.symbols || {})[s.id] || {};
-      const live = meta.quote && meta.quote.price != null ? meta.quote.price : null;
-      const m = cycleMetrics(s.id, interval, live);
-      const title = escapeHtml(meta.title || s.title);
-      const sub = escapeHtml(meta.subtitle || s.fallbackSub || "");
-      return `<div class="cycle-stock">
+    const s = US_STOCKS.find((x) => x.id === symbol) || US_STOCKS[0];
+    const meta = (state.usStocks.symbols || {})[s.id] || {};
+    const live = meta.quote && meta.quote.price != null ? meta.quote.price : null;
+    const m = cycleMetrics(s.id, interval, live);
+    const title = escapeHtml(meta.title || s.title);
+    const sub = escapeHtml(meta.subtitle || s.fallbackSub || "");
+    const body = `<div class="cycle-stock">
         <div class="prob-kicker">${title}${sub ? " · " + sub : ""}</div>
         ${usStockQuoteLine(meta)}
         ${m.ready ? probCards(m, "btc", s.id, interval) + cycleBoard(s.id, interval, m, null, "btc") : `<p class="cycle-note">该周期数据不足</p>`}
       </div>`;
-    }).join("");
     const extra = "QQQ、VOO 日线来自 Nasdaq 公开历史行情；标普500 日线来自华尔街日报公开历史行情，当日未收盘报价来自 CNBC。数据为页面发布时的快照，不是盘中持续更新，可能不是最新成交价。美股按交易日计算，周期仅提供 1D 和 1W。观察分数使用该周期 RSI、200均线倍数窗口分位和回撤，不套用加密恐惧贪婪、资金费率、比特币 Mayer 阈值、派循环或 AHR999。";
     return head + body + cycleDisclaimer(extra);
   }
@@ -2279,6 +2293,7 @@
     state.cycleHighlight = ch;
     if (ch.mkt === "us") {
       state.cycleMkt = "us";
+      if (US_STOCKS.some((s) => s.id === ch.symbol)) state.cycleUsStock = ch.symbol;
       if (US_STOCK_TFS.some((t) => t.id === ch.interval)) state.cycleUsTf = ch.interval;
     } else {
       state.cycleMkt = "crypto";
@@ -2291,6 +2306,7 @@
         localStorage.setItem(CYCLE_COIN_KEY, state.cycleCoin);
         localStorage.setItem(CYCLE_TF_KEY, state.cycleTf);
       } else {
+        localStorage.setItem(CYCLE_US_STOCK_KEY, state.cycleUsStock);
         localStorage.setItem(CYCLE_US_TF_KEY, state.cycleUsTf);
       }
     } catch (e) {}
@@ -2722,6 +2738,16 @@
         paint();
         const tf = state.cycleTf || "1d";
         if (!hasTfSymbol(tf, coin)) ensureTf(tf).then(paint).catch((e) => console.warn(e));
+      }
+      return;
+    }
+    const usBtn = ev.target.closest("[data-cycle-us-stock]");
+    if (usBtn && $("cycle").contains(usBtn)) {
+      const id = usBtn.getAttribute("data-cycle-us-stock");
+      if (US_STOCKS.some((s) => s.id === id) && id !== state.cycleUsStock) {
+        state.cycleUsStock = id;
+        try { localStorage.setItem(CYCLE_US_STOCK_KEY, id); } catch (e) {}
+        paint();
       }
       return;
     }
