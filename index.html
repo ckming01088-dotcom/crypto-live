@@ -341,7 +341,7 @@
     }
     html.sth-fs-on body { padding: 0; }
     html.sth-fs-on body > *:not(#sth-stage) { display: none; }
-    #sth-stage.sth-full {
+    html.sth-fs-on #sth-stage.sth-full {
       position: fixed; z-index: 80; inset: 0;
       width: 100dvw; height: 100dvh; max-width: none;
       background: var(--bg);
@@ -2194,7 +2194,7 @@
       return String(d.asOf || "") + "|" + (d.posts || []).map((p) => String(p.id)).join(",");
     }
     if (id === "events") {
-      const d = eventsState.data || eventsState.bundled;
+      const d = eventsState.bundled || eventsState.data;
       if (!d) return "";
       const ev = (d.events || []).map((e) => String((e && (e.date || e.title)) || "")).join(",");
       return String(d.asOf || "") + "|" + ev;
@@ -3341,6 +3341,7 @@
     else setSthStatus("刷新失败，仍显示本地数据");
     sthState.refreshing = false;
     if (btn) btn.disabled = false;
+    reviewTabStamp("sth");
   }
   async function initSthChart() {
     syncSthTabs();
