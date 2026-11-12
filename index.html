@@ -59,6 +59,18 @@
     .tone-up { color: var(--up); }
     .tone-down { color: var(--down); }
     .tone-neutral { color: var(--muted); }
+    .main-tabs {
+      display: flex; flex-wrap: nowrap; gap: 6px;
+      margin: 10px 0 0; overflow-x: auto; -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .main-tabs::-webkit-scrollbar { display: none; }
+    .main-tabs .tf-tab {
+      flex: 1 1 0; min-width: 0; font-size: 13px; padding: 7px 4px; white-space: nowrap;
+    }
+    .main-panel { display: none; }
+    .main-panel.on { display: block; }
+    #sth-stage.main-panel.on { display: block; }
     .chips { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
     .chip { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; }
     .chip .k { display: block; color: var(--muted); font-size: 11px; margin-bottom: 2px; }
@@ -481,20 +493,41 @@
         <button type="button" class="page-refresh" id="page-refresh">刷新</button>
       </div>
     </div>
-    <div class="regime" id="regime">
-      <h1 class="tone-neutral">正在加载</h1>
-      <p>正在拉取价格、均线与情绪指数…</p>
-    </div>
+    <nav class="main-tabs tf-tabs" id="main-tabs" role="tablist" aria-label="主要栏目">
+      <button type="button" class="tf-tab on" data-main-tab="market" aria-pressed="true">行情</button>
+      <button type="button" class="tf-tab" data-main-tab="cycle" aria-pressed="false">顶底</button>
+      <button type="button" class="tf-tab" data-main-tab="xfeed" aria-pressed="false">X关注</button>
+      <button type="button" class="tf-tab" data-main-tab="sth" aria-pressed="false">持有者</button>
+      <button type="button" class="tf-tab" data-main-tab="events" aria-pressed="false">事件</button>
+    </nav>
   </header>
+  <div class="regime" id="regime">
+    <h1 class="tone-neutral">正在加载</h1>
+    <p>正在拉取价格、均线与情绪指数…</p>
+  </div>
   <section class="chips" id="chips"></section>
+  <div id="panel-market" class="main-panel on" data-main-panel="market">
   <section id="heroes"></section>
+  <h2>其他币种</h2>
+  <section class="list" id="others"></section>
+  <h2>比特币技术</h2>
+  <section class="block" id="btc-tech"></section>
+  <h2>以太坊技术</h2>
+  <section class="block" id="eth-tech"></section>
+  <h2>牛熊分界</h2>
+  <section class="block" id="lines"></section>
+  </div>
+  <div id="panel-cycle" class="main-panel" data-main-panel="cycle">
   <h2>顶底指标</h2>
   <section class="block" id="cycle"></section>
+  </div>
+  <div id="panel-xfeed" class="main-panel" data-main-panel="xfeed">
   <h2>X 关注</h2>
   <section class="block" id="x-feed">
     <p class="cycle-note">正在加载关注账号的公开帖…</p>
   </section>
-  <div id="sth-stage">
+  </div>
+  <div id="sth-stage" class="main-panel" data-main-panel="sth">
     <div class="sth-heading">
       <h2>短期持有者盈利供应占比与BTC价格</h2>
       <button type="button" class="sth-fs-exit" id="sth-fs-exit" hidden>退出横屏</button>
@@ -525,18 +558,12 @@
     <p class="cycle-note">短期持有者（STH）通常指持有约 155 天以内的比特币。盈利供应占比是处于盈利的 STH 供应量占全部 STH 供应量的比例。成本线是 STH 实现价格（该群体的平均链上成本）。数据来自 BGeometrics（bitcoin-data.com）与 Binance；成本线的免费数据大约覆盖近四年，末值可能延迟数日。仅供观察，不构成投资建议。</p>
     </section>
   </div>
+  <div id="panel-events" class="main-panel" data-main-panel="events">
   <h2>未来 3 个月内可能影响 BTC 价格的重要事件</h2>
   <section class="block" id="events">
     <p class="ev-status" id="events-status">正在加载事件看板…</p>
   </section>
-  <h2>其他币种</h2>
-  <section class="list" id="others"></section>
-  <h2>比特币技术</h2>
-  <section class="block" id="btc-tech"></section>
-  <h2>以太坊技术</h2>
-  <section class="block" id="eth-tech"></section>
-  <h2>牛熊分界</h2>
-  <section class="block" id="lines"></section>
+  </div>
   <footer>
     数据来自 Binance、CoinGecko、Alternative.me，时间为香港时间。<br>
     顶底指标为常用技术观察、不是买卖建议；不含自动交易。<br>
@@ -545,6 +572,7 @@
     事件日程另参考美联储 FOMC 日历、美国劳工统计局（BLS）、经济分析局（BEA）与 Polymarket，事件观察不构成投资建议。<br>
     X 关注栏为所列账号的公开帖快照，正文为中文译文，点开可查看原文；内容由发帖人发布，可能有延迟，不是投资建议。<br>
     仅供参考，不构成投资建议。<br>
+    顶部选项卡可切换主要栏目。<br>
     右上角「刷新」会重新加载本页最新内容，不必关掉再打开。<br>
     短期持有者图表可点「横屏」，单独满屏查看。<br>
     顶底观察状态变化时会弹窗提示，点开可跳到对应指标并标出变化；仅供观察，不是买卖或逃顶抄底建议。<br>
@@ -630,6 +658,7 @@
     xFeed: null,
     xFeedError: "",
     xFeedTab: "all",
+    mainTab: "market",
     live: false,
     status: "正在连接行情…",
   };
@@ -645,6 +674,8 @@
     if (CYCLE_COINS.some((c) => c.id === savedCoin)) state.cycleCoin = savedCoin;
     const savedXTab = localStorage.getItem("crypto-live-x-feed-tab");
     if (savedXTab) state.xFeedTab = savedXTab;
+    const savedMain = localStorage.getItem("crypto-live-main-tab");
+    if (savedMain === "market" || savedMain === "cycle" || savedMain === "xfeed" || savedMain === "sth" || savedMain === "events") state.mainTab = savedMain;
   } catch (e) {}
   let lastPrices = {};
   let renderTimer = 0;
@@ -2139,9 +2170,29 @@
       };
     } catch (e) {}
   }
+  const MAIN_TAB_KEY = "crypto-live-main-tab";
+  const MAIN_TABS = ["market", "cycle", "xfeed", "sth", "events"];
+  function showMainTab(id) {
+    if (MAIN_TABS.indexOf(id) < 0) id = "market";
+    state.mainTab = id;
+    try { localStorage.setItem(MAIN_TAB_KEY, id); } catch (e) {}
+    const nav = $("main-tabs");
+    if (nav) {
+      nav.querySelectorAll("[data-main-tab]").forEach((btn) => {
+        const on = btn.getAttribute("data-main-tab") === id;
+        btn.classList.toggle("on", on);
+        btn.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+    }
+    document.querySelectorAll("[data-main-panel]").forEach((el) => {
+      el.classList.toggle("on", el.getAttribute("data-main-panel") === id);
+    });
+    if (id === "sth") requestAnimationFrame(() => { try { drawSthChart(); } catch (e) {} });
+  }
   function applyCycleChange(ch) {
     if (!ch) return;
     hideCycleAlert();
+    showMainTab("cycle");
     state.cycleHighlight = ch;
     if (ch.mkt === "us") {
       state.cycleMkt = "us";
@@ -3787,6 +3838,17 @@
     }
   });
   state.cycleHashPending = parseCycleHash();
+  if (state.cycleHashPending) state.mainTab = "cycle";
+  showMainTab(state.mainTab || "market");
+  const mainTabs = $("main-tabs");
+  if (mainTabs) {
+    mainTabs.addEventListener("click", (ev) => {
+      const btn = ev.target.closest("[data-main-tab]");
+      if (!btn || !mainTabs.contains(btn)) return;
+      ev.preventDefault();
+      showMainTab(btn.getAttribute("data-main-tab") || "market");
+    });
+  }
 
   initSthChart();
   initEventsBoard();
