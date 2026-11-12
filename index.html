@@ -384,7 +384,8 @@
   <section class="block" id="lines"></section>
   <footer>
     数据来自 Binance、CoinGecko、Alternative.me，时间为香港时间。<br>
-    顶底指标为常用技术观察、不是买卖建议。<br>
+    顶底指标为常用技术观察、不是买卖建议；不含自动交易。<br>
+    合约持仓量来自币安 U 本位合约。MVRV Z-Score 来自 BGeometrics，免费数据末值可能延迟约一周。<br>
     短期持有者图表另参考 BGeometrics（bitcoin-data.com）与 Binance。<br>
     事件日程另参考美联储 FOMC 日历、美国劳工统计局（BLS）、经济分析局（BEA）与 Polymarket，事件观察不构成投资建议。<br>
     仅供参考，不构成投资建议。<br>
@@ -426,14 +427,18 @@
     daily: { BTC: [], ETH: [] },
     dailyTime: { BTC: [], ETH: [] },
     dailyHigh: { BTC: [], ETH: [] },
+    dailyLow: { BTC: [], ETH: [] },
     weekly: { BTC: [], ETH: [] },
     lastCross: { BTC: null, ETH: null },
     tfCloses: { "4h": { BTC: [], ETH: [] }, "6h": { BTC: [], ETH: [] }, "12h": { BTC: [], ETH: [] }, "1d": { BTC: [], ETH: [] }, "3d": { BTC: [], ETH: [] } },
     tfTimes: { "4h": { BTC: [], ETH: [] }, "6h": { BTC: [], ETH: [] }, "12h": { BTC: [], ETH: [] }, "1d": { BTC: [], ETH: [] }, "3d": { BTC: [], ETH: [] } },
     tfHighs: { "4h": { BTC: [], ETH: [] }, "6h": { BTC: [], ETH: [] }, "12h": { BTC: [], ETH: [] }, "1d": { BTC: [], ETH: [] }, "3d": { BTC: [], ETH: [] } },
+    tfLows: { "4h": { BTC: [], ETH: [] }, "6h": { BTC: [], ETH: [] }, "12h": { BTC: [], ETH: [] }, "1d": { BTC: [], ETH: [] }, "3d": { BTC: [], ETH: [] } },
     market: {},
     fng: { value: null, label: "" },
     funding: { BTC: null, ETH: null },
+    openInterest: { BTC: null, ETH: null },
+    mvrv: null,
     cycleTf: "1d",
     cycleUsTf: "1d",
     cycleMkt: "crypto",
@@ -498,6 +503,118 @@
     if (avgLoss === 0) return 100;
     const rs = avgGain / avgLoss;
     return 100 - 100 / (1 + rs);
+  }
+  function rsiSeries(closes, period = 14) {
+    const out = new Array(closes.length).fill(null);
+    if (!closes || closes.length < period + 1) return out;
+    let avgGain = 0, avgLoss = 0;
+    for (let i = 1; i <= period; i++) {
+      const d = closes[i] - closes[i - 1];
+      avgGain += Math.max(d, 0);
+      avgLoss += Math.max(-d, 0);
+    }
+    avgGain /= period; avgLoss /= period;
+    out[period] = avgLoss === 0 ? 100 : 100 - 100 / (1 + avgGain / avgLoss);
+    for (let i = period + 1; i < closes.length; i++) {
+      const d = closes[i] - closes[i - 1];
+      avgGain = (avgGain * (period - 1) + Math.max(d, 0)) / period;
+      avgLoss = (avgLoss * (period - 1) + Math.max(-d, 0)) / period;
+      out[i] = avgLoss === 0 ? 100 : 100 - 100 / (1 + avgGain / avgLoss);
+    }
+    return out;
+  }
+  function findSwingIndexes(values, mode, left = 5, right = 5) {
+    const idx = [];
+    if (!values || values.length < left + right + 1) return idx;
+    for (let i = left; i < values.length - right; i++) {
+      const v = values[i];
+      if (v == null || !Number.isFinite(v)) continue;
+      let ok = true;
+      for (let j = i - left; j <= i + right; j++) {
+        if (j === i || values[j] == null) continue;
+        if (mode === "high" && values[j] >= v) { ok = false; break; }
+        if (mode === "low" && values[j] <= v) { ok = false; break; }
+      }
+      if (ok) idx.push(i);
+    }
+    return idx;
+  }
+  function rsiDivergence(closes, highs, lows) {
+    if (!closes || closes.length < 40) return { kind: null, label: "数据不足" };
+    const rsi = rsiSeries(closes, 14);
+    const pxH = (highs && highs.length === closes.length) ? highs : closes;
+    const pxL = (lows && lows.length === closes.length) ? lows : closes;
+    const sh = findSwingIndexes(pxH, "high");
+    const sl = findSwingIndexes(pxL, "low");
+    const recentLimit = Math.max(0, closes.length - 30);
+    const lookback = Math.max(0, closes.length - 80);
+    let top = null, bot = null;
+    if (sh.length >= 2) {
+      const a = sh[sh.length - 2], b = sh[sh.length - 1];
+      if (b >= recentLimit && a >= lookback && rsi[a] != null && rsi[b] != null
+          && pxH[b] > pxH[a] && rsi[b] < rsi[a] - 1) {
+        top = { kind: "top", label: "顶背离观察" };
+      }
+    }
+    if (sl.length >= 2) {
+      const a = sl[sl.length - 2], b = sl[sl.length - 1];
+      if (b >= recentLimit && a >= lookback && rsi[a] != null && rsi[b] != null
+          && pxL[b] < pxL[a] && rsi[b] > rsi[a] + 1) {
+        bot = { kind: "bottom", label: "底背离观察" };
+      }
+    }
+    if (top && bot) return b_pick_more_recent(sh, sl, top, bot, closes.length);
+    if (top) return top;
+    if (bot) return bot;
+    return { kind: null, label: "未见明显背离" };
+  }
+  function b_pick_more_recent(sh, sl, top, bot, n) {
+    const hb = sh[sh.length - 1], lb = sl[sl.length - 1];
+    return hb >= lb ? top : bot;
+  }
+  function bollinger(closes, period = 20, k = 2) {
+    if (!closes || closes.length < period) return null;
+    const slice = closes.slice(-period);
+    const mid = slice.reduce((a, b) => a + b, 0) / period;
+    let varSum = 0;
+    for (const x of slice) varSum += (x - mid) * (x - mid);
+    const sd = Math.sqrt(varSum / (period - 1));
+    const upper = mid + k * sd, lower = mid - k * sd;
+    const price = closes[closes.length - 1];
+    const pctB = (upper === lower) ? null : (price - lower) / (upper - lower);
+    let pos = "轨内";
+    if (pctB != null && pctB >= 1) pos = "触及或升破上轨";
+    else if (pctB != null && pctB <= 0) pos = "触及或跌破下轨";
+    return { mid, upper, lower, pctB, pos };
+  }
+  function macdDetail(closes) {
+    if (!closes || closes.length < 35) return { macd: null, signal: null, hist: null, prevHist: null, note: null };
+    const e12 = emaSeries(closes, 12);
+    const e26 = emaSeries(closes, 26);
+    const line = [];
+    for (let i = 0; i < closes.length; i++) {
+      if (e12[i] == null || e26[i] == null) continue;
+      line.push(e12[i] - e26[i]);
+    }
+    if (line.length < 9) return { macd: null, signal: null, hist: null, prevHist: null, note: null };
+    const sig = emaSeries(line, 9);
+    const hists = [];
+    for (let i = 0; i < line.length; i++) hists.push(sig[i] == null ? null : line[i] - sig[i]);
+    const macd = line[line.length - 1];
+    const signal = sig[sig.length - 1];
+    const hist = hists[hists.length - 1];
+    let prevHist = null;
+    for (let i = hists.length - 2; i >= 0; i--) {
+      if (hists[i] != null) { prevHist = hists[i]; break; }
+    }
+    let note = null;
+    if (hist != null && prevHist != null) {
+      if (prevHist > 0 && hist <= 0) note = "由正转负";
+      else if (prevHist < 0 && hist >= 0) note = "由负转正";
+      else if (Math.abs(hist) < Math.abs(prevHist)) note = "柱缩短";
+      else if (Math.abs(hist) > Math.abs(prevHist)) note = "柱放大";
+    }
+    return { macd, signal, hist, prevHist, note };
   }
   function macdLast(closes) {
     if (closes.length < 35) return { macd: null, signal: null, hist: null };
@@ -680,6 +797,12 @@
     if (interval === "1d") return state.dailyHigh[symbol] || [];
     return [];
   }
+  function tfLowsOf(interval, symbol) {
+    const tf = state.tfLows[interval] && state.tfLows[interval][symbol];
+    if (tf && tf.length) return tf;
+    if (interval === "1d") return state.dailyLow[symbol] || [];
+    return [];
+  }
   function hasTfData(interval) {
     return tfClosesOf(interval, "BTC").length > 0 && tfClosesOf(interval, "ETH").length > 0;
   }
@@ -716,9 +839,17 @@
     const closes = tfClosesOf(interval, symbol).slice();
     const times = tfTimesOf(interval, symbol).slice();
     const highs = tfHighsOf(interval, symbol).slice();
+    const lows = tfLowsOf(interval, symbol).slice();
     if (!closes.length) return { ready: false };
-    if (livePrice != null) closes[closes.length - 1] = livePrice;
+    if (livePrice != null) {
+      closes[closes.length - 1] = livePrice;
+      if (highs.length) highs[highs.length - 1] = Math.max(highs[highs.length - 1], livePrice);
+      if (lows.length) lows[lows.length - 1] = Math.min(lows[lows.length - 1], livePrice);
+    }
     const rsi = rsiWilder(closes, 14);
+    const bb = bollinger(closes, 20, 2);
+    const macd = macdDetail(closes);
+    const div = rsiDivergence(closes, highs, lows);
     const s200 = sma(closes, 200);
     const price = livePrice != null ? livePrice : closes[closes.length - 1];
     const mayer = (price != null && s200) ? price / s200 : null;
@@ -768,6 +899,7 @@
       rsi, mayer, maPct, s200, drawdown,
       window_high: wh.price, window_high_time: wh.time, window_n: wh.n,
       fund, fundPct, fng, pi,
+      bb, macd, div,
       top: weightedScore(topParts),
       bot: weightedScore(botParts),
     };
@@ -886,6 +1018,17 @@
     if (t === "caution") return "tone-caution";
     return "flat";
   }
+  function fmtOiQty(x) {
+    if (x == null || !Number.isFinite(x)) return "—";
+    if (Math.abs(x) >= 10000) return (x / 10000).toFixed(2) + " 万";
+    return x.toLocaleString("en-US", { maximumFractionDigits: 2 });
+  }
+  function mvrvZone(z) {
+    if (z == null || !Number.isFinite(z)) return { text: "—", cls: "" };
+    if (z >= 7) return { text: "历史高位观察区", cls: "tone-caution" };
+    if (z < 0) return { text: "历史偏低观察区", cls: "" };
+    return { text: "中间区域", cls: "" };
+  }
   function fmtUsd(x) {
     if (x == null) return "—";
     if (Math.abs(x) >= 1e12) return (x / 1e12).toFixed(2) + " 万亿";
@@ -1001,9 +1144,39 @@
       [maLab, maVal],
       ["窗口内最高价回撤", m.drawdown == null ? "—" : (fmtPct(m.drawdown) + (win ? " · " + win : ""))],
     ];
+    const macd = m.macd || {};
+    let macdVal = "—";
+    if (macd.hist != null) {
+      macdVal = (macd.hist > 0 ? "+" : "") + macd.hist.toFixed(2);
+      if (macd.note) macdVal += " · " + macd.note;
+    }
+    rows.push(["MACD 柱", macdVal]);
+    const bb = m.bb;
+    let bbVal = "—";
+    if (bb && bb.pctB != null) {
+      bbVal = "%B " + bb.pctB.toFixed(2) + " · " + bb.pos;
+    }
+    rows.push(["布林带(20,2)", bbVal]);
+    const div = m.div || {};
+    rows.push(["RSI 背离", div.label || "—", div.kind === "top" ? "tone-caution" : ""]);
     if (!isUsStock(symbol)) {
       rows.push(["资金费率", fundRate == null ? "—" : fmtFunding(fundRate)]);
       rows.push(["恐惧贪婪", m.fng == null ? "—" : (String(m.fng) + fngLabel)]);
+      const oi = state.openInterest && state.openInterest[symbol];
+      let oiVal = "—";
+      if (oi && oi.qty != null) {
+        oiVal = fmtOiQty(oi.qty) + (oi.value != null ? " · " + fmtUsd(oi.value) : "");
+        if (oi.changePct != null) oiVal += " · 较上一日 " + fmtPct(oi.changePct);
+      }
+      rows.push(["合约持仓量", oiVal]);
+    }
+    if (symbol === "BTC" && state.mvrv && state.mvrv.value != null) {
+      const z = state.mvrv.value;
+      const zone = mvrvZone(z);
+      let mv = z.toFixed(2) + " · " + zone.text;
+      if (state.mvrv.asOf) mv += " · 截至 " + state.mvrv.asOf;
+      if (state.mvrv.delayed) mv += "（约延迟一周）";
+      rows.push(["MVRV Z-Score（日线）", mv, zone.cls]);
     }
     if (symbol === "BTC" && m.pi && m.pi.sma111 != null && m.pi.twox350 != null) {
       const st = piCycleStatus(m.pi.sma111, m.pi.twox350);
@@ -1062,7 +1235,10 @@
     return bits.length ? `<p class="stock-quote">${bits.join(" · ")}</p>` : "";
   }
   function cycleDisclaimer(extra) {
-    return `<p class="cycle-note">${extra || ""}顶部倾向、底部倾向是按权重合成的 0–100 观察分数，不是统计概率，也不是价格预测；两者互不排斥，不必相加为 100。综合判断：任一项分数缺失则暂不给出；两项都达到 40 为「混合」；顶部倾向达到 50 且至少高出底部倾向 20 为「偏顶部观察」；底部倾向达到 50 且至少高出顶部倾向 20 为「偏底部观察」；其余为「中性」。仅供观察，不构成投资建议。窗口回撤取已加载 K 线的最高价，并非历史最高，若更高点不在窗口内则不会计入。</p>`;
+    const extraReads = state.cycleMkt === "us"
+      ? "布林带、MACD 和 RSI 背离同样只供观察，不是买卖信号，也不能避免假信号。"
+      : "布林带、MACD、RSI 背离、合约持仓量和 MVRV Z-Score 同样只供观察，不是买卖或开仓信号，也不能避免假信号。MVRV 的 0 与 7 是该指标文献里常被提起的参考带，不是买卖线；免费数据末值可能延迟约一周。";
+    return `<p class="cycle-note">${extra || ""}顶部倾向、底部倾向是按权重合成的 0–100 观察分数，不是统计概率，也不是价格预测；两者互不排斥，不必相加为 100。综合判断：任一项分数缺失则暂不给出；两项都达到 40 为「混合」；顶部倾向达到 50 且至少高出底部倾向 20 为「偏顶部观察」；底部倾向达到 50 且至少高出顶部倾向 20 为「偏底部观察」；其余为「中性」。仅供观察，不构成投资建议。窗口回撤取已加载 K 线的最高价，并非历史最高，若更高点不在窗口内则不会计入。${extraReads}</p>`;
   }
   function usCycleBlock() {
     const interval = state.cycleUsTf || "1d";
@@ -1175,9 +1351,11 @@
     if (!state.tfCloses[interval]) state.tfCloses[interval] = {};
     if (!state.tfTimes[interval]) state.tfTimes[interval] = {};
     if (!state.tfHighs[interval]) state.tfHighs[interval] = {};
+    if (!state.tfLows[interval]) state.tfLows[interval] = {};
     state.tfCloses[interval][symbol] = rows.map((r) => +r[4]);
     state.tfTimes[interval][symbol] = rows.map((r) => +r[0]);
     state.tfHighs[interval][symbol] = rows.map((r) => +r[2]);
+    state.tfLows[interval][symbol] = rows.map((r) => +r[3]);
   }
   async function refreshKlines() {
     const jobs = [];
@@ -1187,6 +1365,7 @@
         state.daily[symbol] = daily.map((r) => +r[4]);
         state.dailyTime[symbol] = daily.map((r) => +r[0]);
         state.dailyHigh[symbol] = daily.map((r) => +r[2]);
+        state.dailyLow[symbol] = daily.map((r) => +r[3]);
         storeTf("1d", symbol, daily);
         state.lastCross[symbol] = lastCross(state.daily[symbol], 50, 200);
       })());
@@ -1213,6 +1392,7 @@
         state.daily[symbol] = state.tfCloses["1d"][symbol].slice();
         state.dailyTime[symbol] = state.tfTimes["1d"][symbol].slice();
         state.dailyHigh[symbol] = state.tfHighs["1d"][symbol].slice();
+        state.dailyLow[symbol] = (state.tfLows["1d"] && state.tfLows["1d"][symbol] || []).slice();
         state.lastCross[symbol] = lastCross(state.daily[symbol], 50, 200);
       }
     }));
@@ -1239,6 +1419,57 @@
         if (Number.isFinite(rate)) state.funding[sym] = rate;
       } catch (e) { console.warn(e); }
     }));
+  }
+  async function refreshOpenInterest() {
+    await Promise.all([["BTC", "BTCUSDT"], ["ETH", "ETHUSDT"]].map(async ([sym, pair]) => {
+      try {
+        const now = await fetchJson("https://fapi.binance.com/fapi/v1/openInterest?symbol=" + pair);
+        const hist = await fetchJson("https://fapi.binance.com/futures/data/openInterestHist?symbol=" + pair + "&period=1d&limit=2");
+        const qty = +now.openInterest;
+        if (!Number.isFinite(qty)) return;
+        const prevQty = (Array.isArray(hist) && hist.length) ? +hist[0].sumOpenInterest : null;
+        const changePct = (prevQty && Number.isFinite(prevQty)) ? (qty - prevQty) / prevQty * 100 : null;
+        const px = state.tickers[sym] && state.tickers[sym].price;
+        const histVal = (Array.isArray(hist) && hist.length) ? +hist[hist.length - 1].sumOpenInterestValue : null;
+        const value = (px != null && Number.isFinite(px)) ? qty * px : histVal;
+        state.openInterest[sym] = { qty, value, prevQty, changePct, time: now.time };
+      } catch (e) { console.warn(e); }
+    }));
+  }
+  function applyMvrv(payload) {
+    if (!payload || payload.value == null || !Number.isFinite(+payload.value)) return;
+    const next = {
+      asOf: payload.asOf || "",
+      value: +payload.value,
+      delayed: !!payload.delayed,
+      sourceName: payload.sourceName || "BGeometrics",
+      fetchedAt: payload.fetchedAt || "",
+    };
+    const cur = state.mvrv;
+    if (cur && cur.asOf && next.asOf && cur.asOf > next.asOf) return;
+    state.mvrv = next;
+  }
+  async function loadMvrv() {
+    try {
+      const bundled = await fetchJson("./mvrv-zscore.json");
+      applyMvrv(bundled);
+    } catch (e) { console.warn(e); }
+    try {
+      let lastAt = 0;
+      try { lastAt = +localStorage.getItem("crypto-live-mvrv-at") || 0; } catch (e) {}
+      if (Date.now() - lastAt < 12 * 60 * 60 * 1000 && state.mvrv && state.mvrv.value != null) return;
+      const row = await fetchJson("https://bitcoin-data.com/v1/mvrv-zscore/last");
+      if (row && row.mvrvZscore != null) {
+        applyMvrv({
+          asOf: row.d,
+          value: row.mvrvZscore,
+          delayed: !!row.delayed,
+          sourceName: "BGeometrics",
+          fetchedAt: new Date().toISOString(),
+        });
+        try { localStorage.setItem("crypto-live-mvrv-at", String(Date.now())); } catch (e) {}
+      }
+    } catch (e) { console.warn(e); }
   }
   function usWeekFriday(dateStr) {
     const [y, m, d] = String(dateStr).split("-").map(Number);
@@ -1295,11 +1526,13 @@
   }
   async function initialLoad() {
     loadUsStocks().then(paint).catch((e) => console.warn(e));
+    loadMvrv().then(paint).catch((e) => console.warn(e));
     const errors = [];
     for (const [name, fn] of [["价格", refreshTickers], ["指标", refreshKlines], ["市值", refreshMarket], ["情绪", refreshFng]]) {
       try { await fn(); } catch (e) { errors.push(name); console.warn(e); }
     }
     try { await refreshFunding(); } catch (e) { console.warn(e); }
+    try { await refreshOpenInterest(); } catch (e) { console.warn(e); }
     state.status = errors.length ? "部分数据加载失败，将自动重试" : "数据已就绪";
     paint();
   }
@@ -1335,6 +1568,7 @@
     setInterval(() => { refreshKlines().then(paint).catch(() => {}); }, 60000);
     setInterval(() => { refreshMarket().then(paint).catch(() => {}); }, 60000);
     setInterval(() => { refreshFunding().then(paint).catch(() => {}); }, 60000);
+    setInterval(() => { refreshOpenInterest().then(paint).catch(() => {}); }, 60000);
     setInterval(() => { refreshFng().then(paint).catch(() => {}); }, 180000);
     setInterval(() => {
       if (!state.live) refreshTickers().then(paint).catch(() => {});
@@ -2494,6 +2728,7 @@
       bust("./sth-chart.json"),
       bust("./events-board.json"),
       bust("./us-stocks.json"),
+      bust("./mvrv-zscore.json"),
     ]).finally(go);
   }
   const pageRefreshBtn = $("page-refresh");
