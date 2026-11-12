@@ -2421,7 +2421,6 @@
       state.usStocksLoading = false;
     }
   }
-  async function initialLoad() {
 
   const X_FEED_URL = "./x-feed.json";
   const X_FEED_TAB_KEY = "crypto-live-x-feed-tab";
@@ -2512,6 +2511,7 @@
     }
   }
 
+  async function initialLoad() {
     loadUsStocks().then(paintAndReview).catch((e) => console.warn(e));
     loadMvrv().then(paintAndReview).catch((e) => console.warn(e));
     loadXFeed().then(paint).catch((e) => console.warn(e));
