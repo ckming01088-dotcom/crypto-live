@@ -543,7 +543,7 @@
     合约持仓量来自币安 U 本位合约。MVRV Z-Score 来自 BGeometrics，免费数据末值可能延迟约一周。AHR999 按币安 BTCUSDT 日线与九神公开公式计算，0.45、1.2、5 为文献参考带，不是买卖线。<br>
     短期持有者图表另参考 BGeometrics（bitcoin-data.com）与 Binance。<br>
     事件日程另参考美联储 FOMC 日历、美国劳工统计局（BLS）、经济分析局（BEA）与 Polymarket，事件观察不构成投资建议。<br>
-    X 关注栏为所列账号的公开帖快照，点开可查看原帖；内容由发帖人发布，可能有延迟，不是投资建议。<br>
+    X 关注栏为所列账号的公开帖快照，正文为中文译文，点开可查看原文；内容由发帖人发布，可能有延迟，不是投资建议。<br>
     仅供参考，不构成投资建议。<br>
     右上角「刷新」会重新加载本页最新内容，不必关掉再打开。<br>
     短期持有者图表可点「横屏」，单独满屏查看。<br>
@@ -2473,7 +2473,8 @@
       const avatar = acc.avatar
         ? `<span class="x-avatar-wrap"><span class="x-avatar-fallback">${letter}</span><img class="x-avatar" src="${escapeHtml(acc.avatar)}" alt="" width="32" height="32" onerror="this.remove()"></span>`
         : `<span class="x-avatar-fallback">${letter}</span>`;
-      const body = escapeHtml(p.text || "").replace(/\n/g, "<br>");
+      const display = (p.textZh && String(p.textZh).trim()) ? p.textZh : (p.text || "");
+      const body = escapeHtml(display).replace(/\n/g, "<br>");
       return `<a class="x-post" href="${escapeHtml(p.url)}" target="_blank" rel="noopener noreferrer">
         <div class="x-post-head">
           ${avatar}
@@ -2495,7 +2496,7 @@
     root.innerHTML = `<div class="tf-tabs x-tabs" role="tablist">${tabs}</div>
       <p class="x-asof">快照截至 ${escapeHtml(asOf)}</p>
       ${cards}
-      <p class="cycle-note">关注 ${who} 的公开帖。这是页面发布时的快照，不是 X 的即时推送；点开可查看原帖。内容由发帖人发布，仅供观察，不是投资建议。${digest ? escapeHtml(digest) : ""}</p>`;
+      <p class="cycle-note">关注 ${who} 的公开帖。正文为中文译文，点开卡片可查看原文。这是页面发布时的快照，不是 X 的即时推送。内容由发帖人发布，仅供观察，不是投资建议。${digest ? escapeHtml(digest) : ""}</p>`;
   }
   async function loadXFeed() {
     try {

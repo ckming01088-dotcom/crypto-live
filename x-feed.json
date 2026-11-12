@@ -1,6 +1,6 @@
 {
   "asOf": "2026-11-12T18:17:52+08:00",
-  "source": "X 公开帖快照",
+  "source": "X 公开帖快照（含中文译文）",
   "accounts": [
     {
       "id": "elonmusk",
@@ -77,7 +77,8 @@
       "kind": "repost",
       "repostOf": "NarutoNolimits",
       "likes": 0,
-      "reposts": 128
+      "reposts": 128,
+      "textZh": "为什么马斯克认为，我们可能在一百万年内殖民整个银河系\n\n对马斯克来说，这甚至不是个难题。\n\n一百万年足够扩散到整个银河系。\n\n那其他人在哪里？\n\n似乎还没有谁做到过。\n\n有某种力量会在文明……之前就把它拦住。"
     },
     {
       "id": "2120795813123129831",
@@ -91,7 +92,8 @@
       "kind": "repost",
       "repostOf": "Scobleizer",
       "likes": 0,
-      "reposts": 118
+      "reposts": 118,
+      "textZh": "不少极客聚集在奥斯汀，参加一场大型机器人/人工智能活动。\n\n马斯克每次出行都能获得免费曝光。\n\n有人说马斯克应该打广告。\n\n他却选择独特的设计。\n\n让大家都在谈论。"
     },
     {
       "id": "2120771071800430608",
@@ -105,7 +107,8 @@
       "kind": "quote",
       "repostOf": null,
       "likes": 44,
-      "reposts": 5
+      "reposts": 5,
+      "textZh": "正确的证明，正确的表述，两者都重要。\nhttps://t.co/2QLhHAfuE2"
     },
     {
       "id": "2120761225529168312",
@@ -119,7 +122,8 @@
       "kind": "quote",
       "repostOf": null,
       "likes": 7742,
-      "reposts": 747
+      "reposts": 747,
+      "textZh": "11年前\nhttps://t.co/Qf4oKo4xap"
     },
     {
       "id": "2120760435813306525",
@@ -133,7 +137,8 @@
       "kind": "quote",
       "repostOf": null,
       "likes": 5895,
-      "reposts": 571
+      "reposts": 571,
+      "textZh": "很松弛的氛围\nhttps://t.co/Cv4VOzPN0x"
     },
     {
       "id": "2120758305047904548",
@@ -147,7 +152,8 @@
       "kind": "quote",
       "repostOf": null,
       "likes": 2240,
-      "reposts": 269
+      "reposts": 269,
+      "textZh": "试试 Grok @Bot\nhttps://t.co/7tZnZbhCiP"
     },
     {
       "id": "2120751013724631513",
@@ -161,7 +167,8 @@
       "kind": "repost",
       "repostOf": "BinanceFutures",
       "likes": 0,
-      "reposts": 19
+      "reposts": 19,
+      "textZh": "盘后，币安上的 $NVDAUSDT 下跌 8.39%。价格发现正在实时进行。\n\n聪明钱持仓：\n\n🔶 空头头寸 2 亿美元，平均开仓价 172.5 美元\n🔶 多头头寸 2200 万美元，平均开仓价 164.9 美元\n🔶 该合约持仓量已累积至 3.47 亿\n\n请关注 https://t.co/x1IdEveysB"
     },
     {
       "id": "2120746428720988408",
@@ -175,7 +182,8 @@
       "kind": "quote",
       "repostOf": null,
       "likes": 14845,
-      "reposts": 1454
+      "reposts": 1454,
+      "textZh": "Robotaxi 一周工作 168 小时\nhttps://t.co/C9s5Puk2m5"
     },
     {
       "id": "2120745058853154974",
@@ -189,7 +197,8 @@
       "kind": "quote",
       "repostOf": null,
       "likes": 79,
-      "reposts": 8
+      "reposts": 8,
+      "textZh": "币安（@binance）上线 TRX USDC 期货\nhttps://t.co/NZc1PgKtNQ"
     },
     {
       "id": "2120744870507839665",
@@ -203,7 +212,8 @@
       "kind": "quote",
       "repostOf": null,
       "likes": 105,
-      "reposts": 15
+      "reposts": 15,
+      "textZh": "Tron 处于领先\nhttps://t.co/H2nT0bv8YE"
     },
     {
       "id": "2120740445961822536",
@@ -217,7 +227,8 @@
       "kind": "quote",
       "repostOf": null,
       "likes": 47,
-      "reposts": 8
+      "reposts": 8,
+      "textZh": "已经八年了。很高兴看到这个 🔻\nhttps://t.co/AJxDsev9CM"
     },
     {
       "id": "2120580771928842563",
@@ -231,7 +242,8 @@
       "kind": "repost",
       "repostOf": "Strategy",
       "likes": 0,
-      "reposts": 58
+      "reposts": 58,
+      "textZh": "数字信贷是为所有人打造的。$MSTR $STRC\nhttps://t.co/p7IZ7keLEC"
     },
     {
       "id": "2120580116963004755",
@@ -245,7 +257,8 @@
       "kind": "post",
       "repostOf": null,
       "likes": 2384,
-      "reposts": 226
+      "reposts": 226,
+      "textZh": "比特币是数字资本。Strategy 把它转化为数字信贷和数字股权。把 $STRC 和 $MSTR 带到链上，是迈向永不关闭的资本市场的又一步。\nhttps://t.co/nWVyRfRGjU"
     },
     {
       "id": "2120550619345752493",
@@ -259,7 +272,8 @@
       "kind": "quote",
       "repostOf": null,
       "likes": 245,
-      "reposts": 23
+      "reposts": 23,
+      "textZh": "稳定币会长期存在。🔻\nhttps://t.co/eDjArE1Ovo"
     },
     {
       "id": "2120525843558781180",
@@ -273,7 +287,8 @@
       "kind": "post",
       "repostOf": null,
       "likes": 5103,
-      "reposts": 531
+      "reposts": 531,
+      "textZh": "德意志₿银行。\nhttps://t.co/k0gKuWaW4U"
     },
     {
       "id": "2120508124763414687",
@@ -287,7 +302,8 @@
       "kind": "quote",
       "repostOf": null,
       "likes": 101,
-      "reposts": 9
+      "reposts": 9,
+      "textZh": "一步一个脚印\nhttps://t.co/HJT5cXCltd"
     },
     {
       "id": "2120306289117122888",
@@ -301,7 +317,8 @@
       "kind": "repost",
       "repostOf": "AcrossProtocol",
       "likes": 0,
-      "reposts": 50
+      "reposts": 50,
+      "textZh": "Across 的域名目前无法访问，我们正在加固，以防范今天早些时候的攻击。\n\n大约在 UTC 时间 18:45，针对域名注册商 @Namecheap 的社会工程学攻击，使攻击者控制了 Across 的域名。\n\n攻击发生后 15 分钟内，我们接到警报，并且……"
     },
     {
       "id": "2120301972393971731",
@@ -315,7 +332,8 @@
       "kind": "repost",
       "repostOf": "_BinanceJapan",
       "likes": 0,
-      "reposts": 116
+      "reposts": 116,
+      "textZh": "今天 11 月 10 日 20:30 左右，GMO 青空网银检测到来自外部的异常通信，因此作为预防措施暂时停止了 API 服务。受此影响，目前无法通过 GMO 青空网银办理日元入金和出金。"
     },
     {
       "id": "2120192385737257021",
@@ -329,7 +347,8 @@
       "kind": "repost",
       "repostOf": "JoshMandell6",
       "likes": 0,
-      "reposts": 42
+      "reposts": 42,
+      "textZh": "自上月 $SATS 开始交易以来，比特币大约下跌了 1 万美元。这只固定利率优先股仍明显高于发行价，表明分销正在触达那些专门寻求高收益、不会仅仅为了买……而卖出的投资者。"
     },
     {
       "id": "2120168714289197388",
@@ -343,7 +362,8 @@
       "kind": "repost",
       "repostOf": "HurdleRatePod",
       "likes": 0,
-      "reposts": 28
+      "reposts": 28,
+      "textZh": "欢迎回来收看 The Hurdle Rate\n\n第 81 期：为什么你的储蓄在不断缩水\n\n本周节目中，嘉宾们拆解了剧烈波动的一周、创纪录的人工智能融资，以及为什么 $BTC 对黄金的走势看起来仍然偏多。他们还讨论了如何摆脱法币思维，以及比特币……\nhttps://t.co/pko5d1Kh7B"
     },
     {
       "id": "2120158698278682752",
@@ -357,7 +377,8 @@
       "kind": "post",
       "repostOf": null,
       "likes": 3280,
-      "reposts": 313
+      "reposts": 313,
+      "textZh": "₿aby Bear 也懂。\nhttps://t.co/LUe0u6VvVp"
     },
     {
       "id": "2119927814858133619",
@@ -371,7 +392,8 @@
       "kind": "repost",
       "repostOf": "Strategy",
       "likes": 0,
-      "reposts": 86
+      "reposts": 86,
+      "textZh": "我们的美元资产可覆盖 3.4 年的年度利息和股息，而 5 月底时仅为 0.5 年。$MSTR $STRC\nhttps://t.co/3BF6kQt5UI"
     },
     {
       "id": "2119923429361266893",
@@ -385,7 +407,8 @@
       "kind": "repost",
       "repostOf": "Werkman",
       "likes": 0,
-      "reposts": 28
+      "reposts": 28,
+      "textZh": "最近网上有很多讨论，关于「每股比特币」和「BTC 收益率」（每股比特币的增长）到底重不重要。我想花几分钟分享一下我的看法。\n\n内容预警：长文\n\nBTC 收益率是一个关键指标，……"
     },
     {
       "id": "2119864764167798873",
@@ -399,7 +422,8 @@
       "kind": "post",
       "repostOf": null,
       "likes": 4943,
-      "reposts": 470
+      "reposts": 470,
+      "textZh": "两边都要看。\nhttps://t.co/43KfTIRr9o"
     },
     {
       "id": "2119841907140673816",
@@ -413,7 +437,8 @@
       "kind": "quote",
       "repostOf": null,
       "likes": 2602,
-      "reposts": 208
+      "reposts": 208,
+      "textZh": "这个帖串读起来有点扎心。我懂这种痛苦。想避开同类问题的话，值得一读。\nhttps://t.co/VGqYpdenFF"
     },
     {
       "id": "2119840330539586003",
@@ -427,7 +452,8 @@
       "kind": "repost",
       "repostOf": "BNBCHAIN",
       "likes": 0,
-      "reposts": 46
+      "reposts": 46,
+      "textZh": "BNB 智能链 24 小时内录得 486 万个活跃地址，在排名中居首 🥇\n\n比快照中的第二名网络多出超过 100 万个地址。\n\n来源：@DefiLlama https://t.co/G7cIMQRZD1"
     },
     {
       "id": "2119833206878781689",
@@ -441,7 +467,8 @@
       "kind": "post",
       "repostOf": null,
       "likes": 1685,
-      "reposts": 164
+      "reposts": 164,
+      "textZh": "这显然是假的/骗局。真正掌握私钥的人不会去「卖数据」，而会把资金转走。我昨天就看到了，以为这很明显，但还是有不少媒体拿来当标题。\nhttps://t.co/injBH7pXoG"
     },
     {
       "id": "2119782793341436016",
@@ -455,7 +482,8 @@
       "kind": "repost",
       "repostOf": "saylor",
       "likes": 0,
-      "reposts": 1256
+      "reposts": 1256,
+      "textZh": "Strategy 已增持 1,036 枚 $BTC，并回购了 1.88 亿美元的 $STRC。截至 2026 年 11 月 8 日，我们持有 850,364 枚 BTC 以及 49 亿美元的美元资产。$MSTR\nhttps://t.co/Pxqso5aVRU"
     },
     {
       "id": "2119777373306646777",
@@ -469,7 +497,8 @@
       "kind": "post",
       "repostOf": null,
       "likes": 1682,
-      "reposts": 175
+      "reposts": 175,
+      "textZh": "Strive 以 220 万美元买入 29 枚 $BTC，平均成本每枚 75,721 美元，总持仓达到 ₿43,153。\n\n$ASST $SATA $SATS\nhttps://t.co/AF7767LBQb"
     },
     {
       "id": "2119576189249765669",
@@ -483,7 +512,8 @@
       "kind": "repost",
       "repostOf": "mikealfred",
       "likes": 0,
-      "reposts": 248
+      "reposts": 248,
+      "textZh": "比特币即将进入有史以来最重要一轮牛市的下一阶段。"
     },
     {
       "id": "2117719664008851609",
@@ -497,7 +527,8 @@
       "kind": "repost",
       "repostOf": "realDonaldTrump",
       "likes": 0,
-      "reposts": 2837
+      "reposts": 2837,
+      "textZh": "致亚拉巴马的伟大人民，请走出来为这些伟大的爱国者投票！他们得到我完全、彻底的背书，绝不会让你们失望！唐纳德·J·特朗普总统\nhttps://t.co/CKrjCmURKi https://t.co/du0sEtyWU7"
     }
   ]
 }
