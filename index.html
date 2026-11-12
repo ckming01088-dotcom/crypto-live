@@ -121,7 +121,7 @@
     .stock-quote { color: var(--muted); font-size: 12px; margin: -2px 0 8px; font-variant-numeric: tabular-nums; }
     .cycle-stock + .cycle-stock { margin-top: 12px; }
     .tf-tab {
-      flex: 1 1 calc((100% - 30px) / 6);
+      flex: 1 1 calc((100% - 36px) / 7);
       min-width: 0;
       min-height: 36px;
       padding: 6px 4px;
@@ -614,6 +614,7 @@
     { id: "12h", label: "12H" },
     { id: "1d", label: "1D" },
     { id: "3d", label: "3D" },
+    { id: "1w", label: "1W" },
   ];
   const CYCLE_COINS = [
     { id: "BTC", label: "BTC", pair: "BTCUSDT" },
@@ -647,10 +648,10 @@
     dailyLow: emptyByCoin(() => []),
     weekly: { BTC: [], ETH: [] },
     lastCross: { BTC: null, ETH: null },
-    tfCloses: { "2h": emptyByCoin(() => []), "4h": emptyByCoin(() => []), "6h": emptyByCoin(() => []), "12h": emptyByCoin(() => []), "1d": emptyByCoin(() => []), "3d": emptyByCoin(() => []) },
-    tfTimes: { "2h": emptyByCoin(() => []), "4h": emptyByCoin(() => []), "6h": emptyByCoin(() => []), "12h": emptyByCoin(() => []), "1d": emptyByCoin(() => []), "3d": emptyByCoin(() => []) },
-    tfHighs: { "2h": emptyByCoin(() => []), "4h": emptyByCoin(() => []), "6h": emptyByCoin(() => []), "12h": emptyByCoin(() => []), "1d": emptyByCoin(() => []), "3d": emptyByCoin(() => []) },
-    tfLows: { "2h": emptyByCoin(() => []), "4h": emptyByCoin(() => []), "6h": emptyByCoin(() => []), "12h": emptyByCoin(() => []), "1d": emptyByCoin(() => []), "3d": emptyByCoin(() => []) },
+    tfCloses: { "2h": emptyByCoin(() => []), "4h": emptyByCoin(() => []), "6h": emptyByCoin(() => []), "12h": emptyByCoin(() => []), "1d": emptyByCoin(() => []), "3d": emptyByCoin(() => []), "1w": emptyByCoin(() => []) },
+    tfTimes: { "2h": emptyByCoin(() => []), "4h": emptyByCoin(() => []), "6h": emptyByCoin(() => []), "12h": emptyByCoin(() => []), "1d": emptyByCoin(() => []), "3d": emptyByCoin(() => []), "1w": emptyByCoin(() => []) },
+    tfHighs: { "2h": emptyByCoin(() => []), "4h": emptyByCoin(() => []), "6h": emptyByCoin(() => []), "12h": emptyByCoin(() => []), "1d": emptyByCoin(() => []), "3d": emptyByCoin(() => []), "1w": emptyByCoin(() => []) },
+    tfLows: { "2h": emptyByCoin(() => []), "4h": emptyByCoin(() => []), "6h": emptyByCoin(() => []), "12h": emptyByCoin(() => []), "1d": emptyByCoin(() => []), "3d": emptyByCoin(() => []), "1w": emptyByCoin(() => []) },
     market: {},
     fng: { value: null, label: "" },
     funding: emptyByCoin(() => null),
@@ -1163,7 +1164,7 @@
     const fund = state.funding[symbol];
     const fundPct = fund != null && Number.isFinite(fund) ? fund * 100 : null;
     const w = cycleWeights(symbol, interval);
-    const includePi = symbol === "BTC" && (interval === "1d" || interval === "3d") && !!w.pi;
+    const includePi = symbol === "BTC" && (interval === "1d" || interval === "3d" || interval === "1w") && !!w.pi;
     const dailySrc = tfClosesOf("1d", "BTC");
     const dailyTimes = tfTimesOf("1d", "BTC");
     const pi = symbol === "BTC"
@@ -2423,7 +2424,7 @@
           state.weekly[symbol] = weekly.map((r) => +r[4]);
         })());
       }
-      for (const iv of ["2h", "4h", "6h", "12h", "3d"]) {
+      for (const iv of ["2h", "4h", "6h", "12h", "3d", "1w"]) {
         jobs.push((async () => {
           const rows = await fetchJson(`https://api.binance.com/api/v3/klines?symbol=${pair}&interval=${iv}&limit=1000`);
           storeTf(iv, symbol, rows);
