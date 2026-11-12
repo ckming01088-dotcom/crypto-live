@@ -140,8 +140,85 @@
     .cycle-judge { margin: 4px 0 2px; font-size: 14px; color: var(--muted); }
     .cycle-judge b { font-weight: 700; }
     .cycle-judge.eth { font-size: 13px; margin-top: 6px; }
+    .cycle-board { margin-top: 8px; }
+    .cycle-board.eth { margin-top: 6px; }
+    .cyc-spectrum {
+      background: #1A2030; border: 1px solid var(--line); border-radius: 14px;
+      padding: 12px 14px 12px; margin-bottom: 8px;
+    }
+    .cyc-spectrum.eth .cyc-jud { font-size: 18px; }
+    .cyc-k { color: var(--muted); font-size: 11px; font-weight: 650; letter-spacing: .02em; }
+    .cyc-jud {
+      font-size: 22px; font-weight: 720; letter-spacing: -0.02em;
+      line-height: 1.2; margin: 2px 0 12px;
+    }
+    .cyc-spec-track {
+      position: relative; height: 10px; border-radius: 999px;
+      background: linear-gradient(90deg, var(--up) 0%, #6b9aa0 28%, #8B95A5 50%, #c9b56a 72%, var(--caution) 100%);
+    }
+    .cyc-needle {
+      position: absolute; top: 50%; width: 16px; height: 16px; border-radius: 50%;
+      background: var(--text); border: 2px solid var(--bg);
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--text) 35%, transparent);
+    }
+    .cyc-needle.tone-caution {
+      background: var(--caution);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--caution) 35%, transparent);
+    }
+    .cyc-needle.tone-down {
+      background: var(--up);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--up) 35%, transparent);
+    }
+    .cyc-needle.tone-neutral { background: var(--text); }
+    .cyc-spec-axis {
+      display: flex; justify-content: space-between; gap: 8px;
+      margin-top: 8px; font-size: 11px; color: var(--muted);
+    }
+    .cyc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .cyc-tile {
+      background: #1A2030; border: 1px solid var(--line); border-radius: 14px;
+      padding: 10px 11px 11px; min-width: 0;
+    }
+    .cyc-tile.wide { grid-column: 1 / -1; }
+    .cyc-v {
+      font-weight: 720; font-variant-numeric: tabular-nums; font-size: 16px;
+      letter-spacing: -0.02em; line-height: 1.25; margin: 2px 0 8px; word-break: break-word;
+    }
+    .cyc-sub { color: var(--muted); font-size: 11px; line-height: 1.4; margin-top: 6px; }
+    .cyc-meter {
+      position: relative; height: 8px; border-radius: 999px; background: #0B0E14;
+    }
+    .cyc-meter .cyc-hist {
+      position: absolute; top: 0; height: 100%; border-radius: 999px;
+    }
+    .cyc-meter .cyc-hist.pos { background: color-mix(in srgb, var(--up) 70%, #0B0E14); }
+    .cyc-meter .cyc-hist.neg { background: color-mix(in srgb, var(--down) 70%, #0B0E14); }
+    .cyc-meter .cyc-mid {
+      position: absolute; top: -2px; width: 1px; height: 12px;
+      background: color-mix(in srgb, var(--muted) 70%, transparent);
+      transform: translateX(-50%);
+    }
+    .cyc-meter .cyc-dot {
+      position: absolute; top: 50%; width: 10px; height: 10px; border-radius: 50%;
+      background: var(--text); border: 2px solid #1A2030;
+      transform: translate(-50%, -50%); z-index: 1;
+    }
+    .cyc-ticks { position: relative; height: 14px; margin-top: 4px; }
+    .cyc-ticks span {
+      position: absolute; transform: translateX(-50%);
+      font-size: 10px; color: var(--muted); white-space: nowrap; line-height: 1.2;
+    }
+    .cyc-chip {
+      display: inline-flex; align-items: center; margin-top: 2px;
+      padding: 4px 8px; border-radius: 999px; font-size: 12px; font-weight: 650;
+      background: #0B0E14; border: 1px solid var(--line); color: var(--text);
+    }
+    .cyc-chip.tone-caution { border-color: color-mix(in srgb, var(--caution) 55%, var(--line)); color: var(--caution); }
+    .cyc-chip.tone-up { border-color: color-mix(in srgb, var(--up) 55%, var(--line)); color: var(--up); }
     @media (max-width: 360px) {
       .prob-grid { grid-template-columns: 1fr; }
+      .cyc-grid { grid-template-columns: 1fr; }
     }
     .subhead { color: var(--muted); font-size: 12px; font-weight: 650; margin: 14px 0 0; padding-top: 10px; border-top: 1px solid var(--line); letter-spacing: .02em; }
     .sth-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 10px; }
@@ -1127,64 +1204,316 @@
     const cls = size === "eth" ? "cycle-judge eth" : "cycle-judge";
     return `<div class="${cls}">综合判断：<b class="tone-${j.tone}">${escapeHtml(j.text)}</b></div>`;
   }
+  function meterPos(value, min, max) {
+    if (value == null || !Number.isFinite(value) || max === min) return null;
+    return clamp((value - min) / (max - min) * 100, 0, 100);
+  }
+  function expandRange(value, min, max, pad) {
+    let lo = min, hi = max;
+    if (value != null && Number.isFinite(value)) {
+      const p = pad || 0;
+      if (value < lo) lo = value - p;
+      if (value > hi) hi = value + p;
+    }
+    return { min: lo, max: hi };
+  }
+  function tickMarks(ticks, min, max) {
+    return ticks.map((t) => {
+      const left = meterPos(t.at, min, max);
+      return left == null ? null : { left, label: t.label };
+    }).filter(Boolean);
+  }
+  function histFill(pos, mid) {
+    if (pos == null || mid == null) return "";
+    const left = Math.min(pos, mid);
+    const width = Math.abs(pos - mid);
+    const cls = pos >= mid ? "pos" : "neg";
+    return `<span class="cyc-hist ${cls}" style="left:${left}%;width:${width}%"></span>`;
+  }
+  function cycMeter(pos, opts) {
+    opts = opts || {};
+    const style = opts.gradient ? ` style="background:${opts.gradient}"` : "";
+    const mid = opts.mid == null ? "" : `<span class="cyc-mid" style="left:${opts.mid}%"></span>`;
+    const fill = opts.fill || "";
+    const dot = pos == null ? "" : `<span class="cyc-dot" style="left:${pos}%"></span>`;
+    const ticks = (opts.ticks || []).map((t) =>
+      `<span style="left:${Number(t.left).toFixed(2)}%">${escapeHtml(t.label)}</span>`
+    ).join("");
+    return `<div class="cyc-meter" aria-hidden="true"${style}>${fill}${mid}${dot}</div>${
+      ticks ? `<div class="cyc-ticks">${ticks}</div>` : ""
+    }`;
+  }
+  function cycTile(opts) {
+    const wide = opts.wide ? " wide" : "";
+    const vcls = opts.vcls ? " " + opts.vcls : "";
+    const valueHtml = opts.valueHtml != null ? opts.valueHtml : escapeHtml(opts.value == null ? "—" : String(opts.value));
+    const sub = opts.sub ? `<div class="cyc-sub">${opts.sub}</div>` : "";
+    const meter = opts.meter || "";
+    const aria = (opts.label || "") + " " + (opts.aria || opts.value || "");
+    return `<div class="cyc-tile${wide}" aria-label="${escapeHtml(aria)}">
+      <div class="cyc-k">${escapeHtml(opts.label)}</div>
+      <div class="cyc-v${vcls}">${valueHtml}</div>
+      ${meter}${sub}
+    </div>`;
+  }
+  function leanSpectrum(metrics, size) {
+    const ready = !!(metrics && metrics.ready);
+    const j = ready ? compositeLean(metrics.top, metrics.bot) : { text: "加载中", tone: "neutral" };
+    let pos = null;
+    if (ready && metrics.top != null && metrics.bot != null) {
+      pos = clamp(50 + (metrics.top - metrics.bot) / 2, 3, 97);
+    }
+    const needle = pos == null ? "" : `<span class="cyc-needle tone-${j.tone}" style="left:${pos}%"></span>`;
+    const cls = size === "eth" ? "cyc-spectrum eth" : "cyc-spectrum";
+    return `<div class="${cls}" aria-label="综合判断 ${escapeHtml(j.text)}">
+      <div class="cyc-k">综合判断</div>
+      <div class="cyc-jud tone-${j.tone}">${escapeHtml(j.text)}</div>
+      <div class="cyc-spec-track" aria-hidden="true">${needle}</div>
+      <div class="cyc-spec-axis"><span>偏底部观察</span><span>中性</span><span>偏顶部观察</span></div>
+    </div>`;
+  }
   function cycleReads(symbol, interval, m, fundRate) {
-    if (!m || !m.ready) return `<div class="cycle-reads"><p class="cycle-note">该周期数据不足</p></div>`;
+    return cycleBoard(symbol, interval, m, fundRate, "btc");
+  }
+  function cycleBoard(symbol, interval, m, fundRate, size) {
+    if (!m || !m.ready) return `<div class="cycle-board"><p class="cycle-note">该周期数据不足</p></div>`;
+    const tiles = [];
+    const rsiPos = meterPos(m.rsi, 0, 100);
+    tiles.push(cycTile({
+      label: "RSI(14)",
+      value: m.rsi == null ? "—" : m.rsi.toFixed(1),
+      meter: cycMeter(rsiPos, {
+        gradient: "linear-gradient(90deg, color-mix(in srgb, var(--up) 32%, #0B0E14) 0 30%, #0B0E14 30% 70%, color-mix(in srgb, var(--caution) 32%, #0B0E14) 70% 100%)",
+        ticks: tickMarks([{ at: 30, label: "30" }, { at: 70, label: "70" }], 0, 100),
+      }),
+    }));
+
     const useMayer = symbol === "BTC" && interval === "1d";
     const maLab = useMayer ? "Mayer 倍数" : "该周期 200均线倍数";
-    let maVal = "—";
+    let maMeter = "", maSub = "", maVal = "—";
     if (m.mayer != null) {
       maVal = m.mayer.toFixed(2);
-      if (!useMayer && m.maPct != null) maVal += ` · 窗口分位 ${Math.round(m.maPct)}%`;
+      if (useMayer) {
+        const rng = expandRange(m.mayer, 0.4, 3.0, 0.15);
+        maMeter = cycMeter(meterPos(m.mayer, rng.min, rng.max), {
+          mid: meterPos(1, rng.min, rng.max),
+          ticks: tickMarks([
+            { at: 0.6, label: "0.6" },
+            { at: 1.0, label: "1.0" },
+            { at: 1.6, label: "1.6" },
+            { at: 2.8, label: "2.8" },
+          ], rng.min, rng.max),
+        });
+      } else {
+        const rng = expandRange(m.mayer, 0.7, 1.4, 0.1);
+        if (rng.min > 1) rng.min = 0.7;
+        if (rng.max < 1) rng.max = 1.3;
+        maMeter = cycMeter(meterPos(m.mayer, rng.min, rng.max), {
+          mid: meterPos(1, rng.min, rng.max),
+          ticks: tickMarks([{ at: 1, label: "1.0" }], rng.min, rng.max),
+        });
+        if (m.maPct != null) maSub = "窗口分位 " + Math.round(m.maPct) + "%";
+      }
     }
+    tiles.push(cycTile({
+      label: maLab,
+      value: maVal,
+      meter: maMeter,
+      sub: maSub ? escapeHtml(maSub) : "",
+    }));
+
     const tfLabel = ((state.cycleMkt === "us" ? US_STOCK_TFS : CYCLE_TFS).find((t) => t.id === interval) || {}).label || interval;
     const win = m.window_n ? `近 ${m.window_n} 根 ${tfLabel} K 线` : "";
-    const fngLabel = (state.fng && state.fng.label) ? "  " + state.fng.label : "";
-    const rows = [
-      ["RSI(14)", m.rsi == null ? "—" : m.rsi.toFixed(1)],
-      [maLab, maVal],
-      ["窗口内最高价回撤", m.drawdown == null ? "—" : (fmtPct(m.drawdown) + (win ? " · " + win : ""))],
-    ];
+    let ddMeter = "";
+    if (m.drawdown != null) {
+      const rng = expandRange(m.drawdown, -60, 0, 5);
+      const pos = meterPos(m.drawdown, rng.min, rng.max);
+      const zero = meterPos(0, rng.min, rng.max);
+      ddMeter = cycMeter(pos, {
+        mid: zero,
+        fill: histFill(pos, zero),
+        ticks: tickMarks([{ at: -40, label: "-40%" }, { at: -20, label: "-20%" }, { at: 0, label: "0" }], rng.min, rng.max),
+      });
+    }
+    tiles.push(cycTile({
+      label: "窗口内最高价回撤",
+      value: m.drawdown == null ? "—" : fmtPct(m.drawdown),
+      meter: ddMeter,
+      sub: win ? escapeHtml(win) : "",
+      aria: (m.drawdown == null ? "—" : fmtPct(m.drawdown)) + (win ? " " + win : ""),
+    }));
+
     const macd = m.macd || {};
-    let macdVal = "—";
+    let macdMeter = "", macdVal = "—", macdSub = "";
     if (macd.hist != null) {
       macdVal = (macd.hist > 0 ? "+" : "") + macd.hist.toFixed(2);
-      if (macd.note) macdVal += " · " + macd.note;
+      if (macd.note) macdSub = macd.note;
+      const span = Math.max(Math.abs(macd.hist), macd.prevHist != null ? Math.abs(macd.prevHist) : 0, 1) * 1.25;
+      const pos = meterPos(macd.hist, -span, span);
+      const mid = meterPos(0, -span, span);
+      macdMeter = cycMeter(pos, { mid, fill: histFill(pos, mid) });
     }
-    rows.push(["MACD 柱", macdVal]);
+    tiles.push(cycTile({
+      label: "MACD 柱",
+      value: macdVal,
+      meter: macdMeter,
+      sub: macdSub ? escapeHtml(macdSub) : "",
+      aria: macdVal + (macdSub ? " " + macdSub : ""),
+    }));
+
     const bb = m.bb;
-    let bbVal = "—";
+    let bbMeter = "", bbVal = "—", bbSub = "";
     if (bb && bb.pctB != null) {
-      bbVal = "%B " + bb.pctB.toFixed(2) + " · " + bb.pos;
+      bbVal = "%B " + bb.pctB.toFixed(2);
+      bbSub = bb.pos || "";
+      const rng = expandRange(bb.pctB, -0.1, 1.1, 0.05);
+      bbMeter = cycMeter(meterPos(bb.pctB, rng.min, rng.max), {
+        mid: meterPos(0.5, rng.min, rng.max),
+        gradient: "linear-gradient(90deg, color-mix(in srgb, var(--up) 28%, #0B0E14) 0%, #0B0E14 " +
+          meterPos(0, rng.min, rng.max).toFixed(2) + "%, #0B0E14 " +
+          meterPos(1, rng.min, rng.max).toFixed(2) + "%, color-mix(in srgb, var(--caution) 28%, #0B0E14) 100%)",
+        ticks: tickMarks([
+          { at: 0, label: "下轨" },
+          { at: 0.5, label: "中轨" },
+          { at: 1, label: "上轨" },
+        ], rng.min, rng.max),
+      });
     }
-    rows.push(["布林带(20,2)", bbVal]);
+    tiles.push(cycTile({
+      label: "布林带(20,2)",
+      value: bbVal,
+      meter: bbMeter,
+      sub: bbSub ? escapeHtml(bbSub) : "",
+      aria: bbVal + (bbSub ? " " + bbSub : ""),
+    }));
+
     const div = m.div || {};
-    rows.push(["RSI 背离", div.label || "—", div.kind === "top" ? "tone-caution" : ""]);
+    const divLabel = div.label || "—";
+    const divCls = div.kind === "top" ? "tone-caution" : (div.kind === "bottom" ? "tone-up" : "");
+    tiles.push(cycTile({
+      label: "RSI 背离",
+      valueHtml: `<span class="cyc-chip${divCls ? " " + divCls : ""}">${escapeHtml(divLabel)}</span>`,
+      value: divLabel,
+      aria: divLabel,
+    }));
+
     if (!isUsStock(symbol)) {
-      rows.push(["资金费率", fundRate == null ? "—" : fmtFunding(fundRate)]);
-      rows.push(["恐惧贪婪", m.fng == null ? "—" : (String(m.fng) + fngLabel)]);
+      const fundVal = fundRate == null ? "—" : fmtFunding(fundRate);
+      let fundMeter = "";
+      if (fundRate != null) {
+        const fp = fundRate * 100;
+        const rng = expandRange(fp, -0.20, 0.20, 0.02);
+        const pos = meterPos(fp, rng.min, rng.max);
+        const mid = meterPos(0, rng.min, rng.max);
+        fundMeter = cycMeter(pos, {
+          mid,
+          fill: histFill(pos, mid),
+          ticks: tickMarks([
+            { at: -0.10, label: "-0.10" },
+            { at: 0, label: "0" },
+            { at: 0.10, label: "+0.10" },
+          ], rng.min, rng.max),
+        });
+      }
+      tiles.push(cycTile({
+        label: "资金费率",
+        value: fundVal,
+        meter: fundMeter,
+      }));
+
+      const fngLabel = (state.fng && state.fng.label) ? state.fng.label : "";
+      const fngVal = m.fng == null ? "—" : String(m.fng);
+      tiles.push(cycTile({
+        label: "恐惧贪婪",
+        value: fngVal,
+        meter: m.fng == null ? "" : cycMeter(meterPos(m.fng, 0, 100), {
+          gradient: "linear-gradient(90deg, color-mix(in srgb, var(--up) 40%, #0B0E14) 0%, #0B0E14 50%, color-mix(in srgb, var(--caution) 40%, #0B0E14) 100%)",
+          ticks: tickMarks([{ at: 25, label: "25" }, { at: 50, label: "50" }, { at: 75, label: "75" }], 0, 100),
+        }),
+        sub: fngLabel ? escapeHtml(fngLabel) : "",
+        aria: fngVal + (fngLabel ? " " + fngLabel : ""),
+      }));
+
       const oi = state.openInterest && state.openInterest[symbol];
-      let oiVal = "—";
+      let oiVal = "—", oiSub = "", oiMeter = "", oiAria = "—";
       if (oi && oi.qty != null) {
         oiVal = fmtOiQty(oi.qty) + (oi.value != null ? " · " + fmtUsd(oi.value) : "");
-        if (oi.changePct != null) oiVal += " · 较上一日 " + fmtPct(oi.changePct);
+        oiAria = oiVal;
+        if (oi.changePct != null) {
+          const chg = fmtPct(oi.changePct);
+          const chgCls = pctClass(oi.changePct);
+          oiSub = `较上一日 <span class="${chgCls}">${escapeHtml(chg)}</span>`;
+          oiAria += " 较上一日 " + chg;
+          const rng = expandRange(oi.changePct, -10, 10, 1);
+          const pos = meterPos(oi.changePct, rng.min, rng.max);
+          const mid = meterPos(0, rng.min, rng.max);
+          oiMeter = cycMeter(pos, { mid, fill: histFill(pos, mid) });
+        }
       }
-      rows.push(["合约持仓量", oiVal]);
+      tiles.push(cycTile({
+        label: "合约持仓量",
+        value: oiVal,
+        meter: oiMeter,
+        sub: oiSub,
+        wide: true,
+        aria: oiAria,
+      }));
     }
+
     if (symbol === "BTC" && state.mvrv && state.mvrv.value != null) {
       const z = state.mvrv.value;
       const zone = mvrvZone(z);
-      let mv = z.toFixed(2) + " · " + zone.text;
-      if (state.mvrv.asOf) mv += " · 截至 " + state.mvrv.asOf;
-      if (state.mvrv.delayed) mv += "（约延迟一周）";
-      rows.push(["MVRV Z-Score（日线）", mv, zone.cls]);
+      const rng = expandRange(z, -1, 8, 0.4);
+      const subParts = [zone.text];
+      if (state.mvrv.asOf) subParts.push("截至 " + state.mvrv.asOf);
+      if (state.mvrv.delayed) subParts.push("约延迟一周");
+      tiles.push(cycTile({
+        label: "MVRV Z-Score（日线）",
+        value: z.toFixed(2),
+        vcls: zone.cls,
+        meter: cycMeter(meterPos(z, rng.min, rng.max), {
+          gradient: "linear-gradient(90deg, color-mix(in srgb, var(--up) 28%, #0B0E14) 0%, #0B0E14 " +
+            meterPos(0, rng.min, rng.max).toFixed(2) + "%, #0B0E14 " +
+            meterPos(7, rng.min, rng.max).toFixed(2) + "%, color-mix(in srgb, var(--caution) 32%, #0B0E14) 100%)",
+          ticks: tickMarks([{ at: 0, label: "0" }, { at: 7, label: "7" }], rng.min, rng.max),
+        }),
+        sub: escapeHtml(subParts.join(" · ")),
+        wide: true,
+        aria: z.toFixed(2) + " " + subParts.join(" "),
+      }));
     }
+
     if (symbol === "BTC" && m.pi && m.pi.sma111 != null && m.pi.twox350 != null) {
       const st = piCycleStatus(m.pi.sma111, m.pi.twox350);
-      rows.push(["派循环（日线）", `${fmtPct(m.pi.gapPct)} ${st.short || st.status || "—"}`, st.lean > 0 ? "tone-caution" : ""]);
+      const gap = m.pi.gapPct;
+      let piMeter = "";
+      if (gap != null) {
+        const rng = expandRange(gap, -20, 20, 5);
+        const pos = meterPos(gap, rng.min, rng.max);
+        const mid = meterPos(0, rng.min, rng.max);
+        piMeter = cycMeter(pos, {
+          mid,
+          fill: histFill(pos, mid),
+          ticks: tickMarks([
+            { at: -5, label: "-5%" },
+            { at: 0, label: "交叉" },
+            { at: 5, label: "+5%" },
+          ], rng.min, rng.max),
+        });
+      }
+      tiles.push(cycTile({
+        label: "派循环（日线）",
+        value: fmtPct(m.pi.gapPct),
+        vcls: st.lean > 0 ? "tone-caution" : "",
+        meter: piMeter,
+        sub: escapeHtml(st.short || st.status || "—"),
+        wide: true,
+        aria: fmtPct(m.pi.gapPct) + " " + (st.short || st.status || ""),
+      }));
     }
-    return `<div class="cycle-reads">${rows.map(([lab, val, cls]) =>
-      `<div class="kv"><span class="lab">${escapeHtml(lab)}</span><span class="val${cls ? " " + cls : ""}">${escapeHtml(val)}</span></div>`
-    ).join("")}</div>`;
+
+    const cls = size === "eth" ? "cycle-board eth" : "cycle-board";
+    return `<div class="${cls}">${leanSpectrum(m, size)}<div class="cyc-grid">${tiles.join("")}</div></div>`;
   }
   function marketTabs() {
     const mkt = state.cycleMkt === "us" ? "us" : "crypto";
@@ -1259,7 +1588,7 @@
       return `<div class="cycle-stock">
         <div class="prob-kicker">${title}${sub ? " · " + sub : ""}</div>
         ${usStockQuoteLine(meta)}
-        ${m.ready ? probCards(m, "btc") + judgeLine(m, "btc") + cycleReads(s.id, interval, m, null) : `<p class="cycle-note">该周期数据不足</p>`}
+        ${m.ready ? probCards(m, "btc") + cycleBoard(s.id, interval, m, null, "btc") : `<p class="cycle-note">该周期数据不足</p>`}
       </div>`;
     }).join("");
     const extra = "QQQ、VOO 日线来自 Nasdaq 公开历史行情；标普500 日线来自华尔街日报公开历史行情，当日未收盘报价来自 CNBC。数据为页面发布时的快照，不是盘中持续更新，可能不是最新成交价。美股按交易日计算，周期仅提供 1 天和 1 周。观察分数使用该周期 RSI、200均线倍数窗口分位和回撤，不套用加密恐惧贪婪、资金费率、比特币 Mayer 阈值或派循环。";
@@ -1280,10 +1609,9 @@
     return head + `
     <div class="prob-kicker">比特币</div>
     ${probCards(btc, "btc")}
-    ${judgeLine(btc, "btc")}
-    ${cycleReads("BTC", interval, btc, fund.BTC)}
+    ${cycleBoard("BTC", interval, btc, fund.BTC, "btc")}
     <div class="subhead">以太坊</div>
-    ${eth.ready ? probCards(eth, "eth") + judgeLine(eth, "eth") + cycleReads("ETH", interval, eth, fund.ETH) : `<p class="cycle-note">正在加载以太坊该周期 K 线…</p>`}
+    ${eth.ready ? probCards(eth, "eth") + cycleBoard("ETH", interval, eth, fund.ETH, "eth") : `<p class="cycle-note">正在加载以太坊该周期 K 线…</p>`}
     ${cycleDisclaimer("")}`;
   }
   function render(data) {
