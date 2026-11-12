@@ -67,6 +67,14 @@
     .main-tabs::-webkit-scrollbar { display: none; }
     .main-tabs .tf-tab {
       flex: 1 1 0; min-width: 0; font-size: 13px; padding: 7px 4px; white-space: nowrap;
+      position: relative;
+    }
+    .main-tabs .tab-dot {
+      position: absolute; top: 4px; right: 5px;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--down);
+      box-shadow: 0 0 0 2px #1A2030;
+      pointer-events: none;
     }
     .main-panel { display: none; }
     .main-panel.on { display: block; }
@@ -495,10 +503,10 @@
     </div>
     <nav class="main-tabs tf-tabs" id="main-tabs" role="tablist" aria-label="主要栏目">
       <button type="button" class="tf-tab on" data-main-tab="market" aria-pressed="true">行情</button>
-      <button type="button" class="tf-tab" data-main-tab="cycle" aria-pressed="false">顶底</button>
-      <button type="button" class="tf-tab" data-main-tab="xfeed" aria-pressed="false">X关注</button>
-      <button type="button" class="tf-tab" data-main-tab="sth" aria-pressed="false">持有者</button>
-      <button type="button" class="tf-tab" data-main-tab="events" aria-pressed="false">事件</button>
+      <button type="button" class="tf-tab" data-main-tab="cycle" aria-pressed="false">顶底<span class="tab-dot" hidden></span></button>
+      <button type="button" class="tf-tab" data-main-tab="xfeed" aria-pressed="false">X关注<span class="tab-dot" hidden></span></button>
+      <button type="button" class="tf-tab" data-main-tab="sth" aria-pressed="false">持有者<span class="tab-dot" hidden></span></button>
+      <button type="button" class="tf-tab" data-main-tab="events" aria-pressed="false">事件<span class="tab-dot" hidden></span></button>
     </nav>
   </header>
   <div class="regime" id="regime">
@@ -572,7 +580,7 @@
     事件日程另参考美联储 FOMC 日历、美国劳工统计局（BLS）、经济分析局（BEA）与 Polymarket，事件观察不构成投资建议。<br>
     X 关注栏为所列账号的公开帖快照，正文为中文译文，点开可查看原文；内容由发帖人发布，可能有延迟，不是投资建议。<br>
     仅供参考，不构成投资建议。<br>
-    顶部选项卡可切换主要栏目。<br>
+    顶部选项卡可切换主要栏目；有更新时会在对应选项卡显示红点，点开后消失。行情为实时价格，不会为此亮红点。<br>
     右上角「刷新」会重新加载本页最新内容，不必关掉再打开。<br>
     短期持有者图表可点「横屏」，单独满屏查看。<br>
     顶底观察状态变化时会弹窗提示，点开可跳到对应指标并标出变化；仅供观察，不是买卖或逃顶抄底建议。<br>
@@ -2171,7 +2179,81 @@
     } catch (e) {}
   }
   const MAIN_TAB_KEY = "crypto-live-main-tab";
+  const TAB_SEEN_KEY = "crypto-live-tab-seen";
   const MAIN_TABS = ["market", "cycle", "xfeed", "sth", "events"];
+  function loadTabSeen() {
+    try { return JSON.parse(localStorage.getItem(TAB_SEEN_KEY) || "{}") || {}; } catch (e) { return {}; }
+  }
+  function saveTabSeen(seen) {
+    try { localStorage.setItem(TAB_SEEN_KEY, JSON.stringify(seen)); } catch (e) {}
+  }
+  function tabStamp(id) {
+    if (id === "xfeed") {
+      const d = state.xFeed;
+      if (!d) return "";
+      return String(d.asOf || "") + "|" + (d.posts || []).map((p) => String(p.id)).join(",");
+    }
+    if (id === "events") {
+      const d = eventsState.data || eventsState.bundled;
+      if (!d) return "";
+      const ev = (d.events || []).map((e) => String((e && (e.date || e.title)) || "")).join(",");
+      return String(d.asOf || "") + "|" + ev;
+    }
+    if (id === "sth") {
+      const a = (typeof sthState !== "undefined" && sthState.asOf) || {};
+      return [a.price || "", a.sthCost || "", a.sthProfitPct || ""].join("|");
+    }
+    return "";
+  }
+  function setTabDotVisible(id, on) {
+    const nav = $("main-tabs");
+    if (!nav) return;
+    const btn = nav.querySelector("[data-main-tab=\"" + id + "\"]");
+    if (!btn) return;
+    let dot = btn.querySelector(".tab-dot");
+    if (!dot) {
+      dot = document.createElement("span");
+      dot.className = "tab-dot";
+      btn.appendChild(dot);
+    }
+    dot.hidden = !on;
+    const names = { cycle: "顶底", xfeed: "X关注", sth: "持有者", events: "事件" };
+    if (on) btn.setAttribute("aria-label", (names[id] || id) + "，有更新");
+    else btn.removeAttribute("aria-label");
+  }
+  function markTabDot(id, on) {
+    if (id === "market") return;
+    if (on && state.mainTab === id) {
+      clearTabDot(id);
+      return;
+    }
+    if (on) {
+      const seen = loadTabSeen();
+      if (id === "cycle") seen.cycleUnseen = true;
+      saveTabSeen(seen);
+    }
+    setTabDotVisible(id, !!on);
+  }
+  function clearTabDot(id) {
+    const seen = loadTabSeen();
+    if (id === "cycle") seen.cycleUnseen = false;
+    const stamp = tabStamp(id);
+    if (stamp) seen[id] = stamp;
+    saveTabSeen(seen);
+    setTabDotVisible(id, false);
+  }
+  function reviewTabStamp(id) {
+    const stamp = tabStamp(id);
+    if (!stamp) return;
+    const seen = loadTabSeen();
+    if (seen[id] == null || seen[id] === "") {
+      seen[id] = stamp;
+      saveTabSeen(seen);
+      setTabDotVisible(id, false);
+      return;
+    }
+    if (seen[id] !== stamp) markTabDot(id, true);
+  }
   function showMainTab(id) {
     if (MAIN_TABS.indexOf(id) < 0) id = "market";
     state.mainTab = id;
@@ -2188,6 +2270,7 @@
       el.classList.toggle("on", el.getAttribute("data-main-panel") === id);
     });
     if (id === "sth") requestAnimationFrame(() => { try { drawSthChart(); } catch (e) {} });
+    if (id !== "market") clearTabDot(id);
   }
   function applyCycleChange(ch) {
     if (!ch) return;
@@ -2266,7 +2349,10 @@
     }
     const changes = diffCycleUnits(prev.units || {}, units);
     saveCycleSignals(next);
-    if (changes.length) showCycleAlert(changes);
+    if (changes.length) {
+      showCycleAlert(changes);
+      markTabDot("cycle", true);
+    }
     applyPendingCycleHash();
   }
   function paintAndReview() {
@@ -2557,6 +2643,7 @@
       }
       state.xFeed = bundled;
       state.xFeedError = "";
+      reviewTabStamp("xfeed");
     } catch (e) {
       console.warn(e);
       state.xFeedError = "关注帖快照加载失败，请点页眉刷新重试。";
@@ -3341,6 +3428,7 @@
         drawSthChart();
       }
     }
+    reviewTabStamp("sth");
   }
 
 
@@ -3727,6 +3815,7 @@
         if (okYe) parts.push("年底目标利率已更新");
         const miss = failed || okMeet < wantMeet || (next.yearEndRate && !okYe);
         renderEventsBoard(eventsState.data, parts.join("，") + (miss ? "；其余仍用本地快照" : "") + "。" + "日程未改。");
+        reviewTabStamp("events");
       } else {
         renderEventsBoard(eventsState.data, "隐含概率刷新失败，仍用本地快照");
       }
@@ -3759,6 +3848,7 @@
       eventsState.bundled = evClone(bundled);
       eventsState.data = bundled;
       renderEventsBoard(bundled, "已加载本地快照（" + evAsOfText(bundled.asOf) + "）");
+      reviewTabStamp("events");
     } catch (e) {
       console.warn(e);
       eventsState.status = "事件看板加载失败";
@@ -3840,6 +3930,7 @@
   state.cycleHashPending = parseCycleHash();
   if (state.cycleHashPending) state.mainTab = "cycle";
   showMainTab(state.mainTab || "market");
+  if (state.mainTab !== "cycle" && loadTabSeen().cycleUnseen) markTabDot("cycle", true);
   const mainTabs = $("main-tabs");
   if (mainTabs) {
     mainTabs.addEventListener("click", (ev) => {
