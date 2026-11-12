@@ -224,6 +224,50 @@
     }
     .cyc-chip.tone-caution { border-color: color-mix(in srgb, var(--caution) 55%, var(--line)); color: var(--caution); }
     .cyc-chip.tone-up { border-color: color-mix(in srgb, var(--up) 55%, var(--line)); color: var(--up); }
+    .cyc-flash {
+      outline: 2px solid var(--caution);
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--caution) 28%, transparent);
+      animation: cycPulse 1.1s ease-in-out 3;
+    }
+    .cyc-delta { margin-top: 5px; color: var(--caution); font-size: 11px; font-weight: 650; line-height: 1.35; }
+    @keyframes cycPulse {
+      0%, 100% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--caution) 28%, transparent); }
+      50% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--caution) 12%, transparent); }
+    }
+    .cyc-alert {
+      position: fixed; inset: 0; z-index: 80;
+      background: color-mix(in srgb, #0B0E14 56%, transparent);
+      display: flex; align-items: flex-end; justify-content: center;
+      padding: 16px 16px calc(16px + var(--safe-bottom));
+    }
+    .cyc-alert[hidden] { display: none !important; }
+    .cyc-alert-card {
+      width: min(100%, 440px); max-height: min(72vh, 560px); overflow: auto;
+      background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+      padding: 14px 14px 12px;
+    }
+    .cyc-alert-card h3 { margin: 0 0 4px; font-size: 17px; font-weight: 720; }
+    .cyc-alert-lead { color: var(--muted); font-size: 12px; line-height: 1.5; margin: 0 0 12px; }
+    .cyc-alert-item {
+      display: block; width: 100%; text-align: left; margin: 0 0 8px;
+      background: #1A2030; border: 1px solid var(--line); border-radius: 10px;
+      padding: 10px 12px; color: var(--text); font: inherit; cursor: pointer;
+      touch-action: manipulation;
+    }
+    .cyc-alert-item:hover, .cyc-alert-item:focus { border-color: color-mix(in srgb, var(--caution) 55%, var(--line)); }
+    .cyc-alert-item .where { color: var(--muted); font-size: 11px; font-weight: 650; margin: 0 0 3px; }
+    .cyc-alert-item .what { font-size: 14px; font-weight: 650; }
+    .cyc-alert-item .fromto { color: var(--caution); font-weight: 720; }
+    .cyc-alert-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+    .cyc-alert-actions button {
+      min-height: 36px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 10px;
+      background: #1A2030; color: var(--text); font: inherit; font-size: 13px; font-weight: 650;
+      cursor: pointer; touch-action: manipulation;
+    }
+    .cyc-alert-actions button.primary {
+      background: color-mix(in srgb, var(--caution) 20%, var(--card));
+      border-color: color-mix(in srgb, var(--caution) 55%, var(--line));
+    }
     @media (max-width: 360px) {
       .prob-grid { grid-template-columns: 1fr; }
       .cyc-grid { grid-template-columns: 1fr; }
@@ -476,8 +520,20 @@
     仅供参考，不构成投资建议。<br>
     右上角「刷新」会重新加载本页最新内容，不必关掉再打开。<br>
     短期持有者图表可点「横屏」，单独满屏查看。<br>
-    可在浏览器菜单里选择「添加到主屏幕」。
+    顶底观察状态变化时会弹窗提示，点开可跳到对应指标并标出变化；仅供观察，不是买卖或逃顶抄底建议。<br>
+    可在浏览器菜单里选择「添加到主屏幕」。如需在后台也收到系统通知，请在弹窗里开启，iPhone 需先把本页添加到主屏幕。
   </footer>
+  <div id="cyc-alert" class="cyc-alert" hidden role="dialog" aria-labelledby="cyc-alert-title" aria-modal="true">
+    <div class="cyc-alert-card">
+      <h3 id="cyc-alert-title">顶底观察有变化</h3>
+      <p class="cyc-alert-lead">以下是观察读数或分区的变化，不是买卖信号。点一条可跳到对应指标。</p>
+      <div id="cyc-alert-list"></div>
+      <div class="cyc-alert-actions">
+        <button type="button" class="primary" id="cyc-alert-close">知道了</button>
+        <button type="button" id="cyc-alert-notify">开启系统通知</button>
+      </div>
+    </div>
+  </div>
   <script>
   const COINS = [
     ["BTC", "BTCUSDT"],
@@ -1306,16 +1362,21 @@
     const botW = bot == null ? "0%" : clamp(bot, 0, 100) + "%";
     const topTxt = top == null ? "—" : (top + "分");
     const botTxt = bot == null ? "—" : (bot + "分");
+    const ctx = cycleBoardCtx();
+    const topHit = cycleHighlightHit(ctx, "top");
+    const botHit = cycleHighlightHit(ctx, "bot");
     return `<div class="${cls}">
-      <div class="prob-card top" aria-label="顶部倾向 ${escapeHtml(topTxt)}">
+      <div class="prob-card top${topHit ? " cyc-flash" : ""}"${ctxIdAttr(ctx, "top")} aria-label="顶部倾向 ${escapeHtml(topTxt)}">
         <div class="prob-lab">顶部倾向</div>
         <div class="prob-val">${escapeHtml(topTxt)}</div>
         <div class="prob-bar" aria-hidden="true"><span style="width:${topW}"></span></div>
+        ${cycleDeltaHtml(topHit)}
       </div>
-      <div class="prob-card bot" aria-label="底部倾向 ${escapeHtml(botTxt)}">
+      <div class="prob-card bot${botHit ? " cyc-flash" : ""}"${ctxIdAttr(ctx, "bot")} aria-label="底部倾向 ${escapeHtml(botTxt)}">
         <div class="prob-lab">底部倾向</div>
         <div class="prob-val">${escapeHtml(botTxt)}</div>
         <div class="prob-bar" aria-hidden="true"><span style="width:${botW}"></span></div>
+        ${cycleDeltaHtml(botHit)}
       </div>
     </div>`;
   }
@@ -1371,12 +1432,14 @@
     const sub = opts.sub ? `<div class="cyc-sub">${opts.sub}</div>` : "";
     const meter = opts.meter || "";
     const aria = (opts.label || "") + " " + (opts.aria || opts.value || "");
-    return `<div class="cyc-tile${wide}" aria-label="${escapeHtml(aria)}">
+    const ctx = cycleBoardCtx();
+    const hit = cycleHighlightHit(ctx, opts.key);
+    return `<div class="cyc-tile${wide}${hit ? " cyc-flash" : ""}"${ctxIdAttr(ctx, opts.key)} aria-label="${escapeHtml(aria)}">
       <div class="cyc-head">
         <div class="cyc-k">${escapeHtml(opts.label)}</div>
         <div class="cyc-v${vcls}">${valueHtml}</div>
       </div>
-      ${meter}${sub}
+      ${meter}${sub}${cycleDeltaHtml(hit)}
     </div>`;
   }
   function leanSpectrum(metrics, size) {
@@ -1388,11 +1451,14 @@
     }
     const needle = pos == null ? "" : `<span class="cyc-needle tone-${j.tone}" style="left:${pos}%"></span>`;
     const cls = size === "eth" ? "cyc-spectrum eth" : "cyc-spectrum";
-    return `<div class="${cls}" aria-label="综合判断 ${escapeHtml(j.text)}">
+    const ctx = cycleBoardCtx();
+    const hit = cycleHighlightHit(ctx, "lean");
+    return `<div class="${cls}${hit ? " cyc-flash" : ""}"${ctxIdAttr(ctx, "lean")} aria-label="综合判断 ${escapeHtml(j.text)}">
       <div class="cyc-head">
         <div class="cyc-k">综合判断</div>
         <div class="cyc-jud tone-${j.tone}">${escapeHtml(j.text)}</div>
       </div>
+      ${cycleDeltaHtml(hit)}
       <div class="cyc-spec-track" aria-hidden="true">${needle}</div>
       <div class="cyc-spec-axis"><span>偏底部观察</span><span>中性</span><span>偏顶部观察</span></div>
     </div>`;
@@ -1402,9 +1468,11 @@
   }
   function cycleBoard(symbol, interval, m, fundRate, size) {
     if (!m || !m.ready) return `<div class="cycle-board"><p class="cycle-note">该周期数据不足</p></div>`;
+    state._boardCtx = { symbol, interval };
     const tiles = [];
     const rsiPos = meterPos(m.rsi, 0, 100);
     tiles.push(cycTile({
+      key: "rsi",
       label: "RSI(14)",
       value: m.rsi == null ? "—" : m.rsi.toFixed(1),
       meter: cycMeter(rsiPos, {
@@ -1441,6 +1509,7 @@
       }
     }
     tiles.push(cycTile({
+      key: "ma",
       label: maLab,
       value: maVal,
       meter: maMeter,
@@ -1461,6 +1530,7 @@
       });
     }
     tiles.push(cycTile({
+      key: "dd",
       label: "窗口内最高价回撤",
       value: m.drawdown == null ? "—" : fmtPct(m.drawdown),
       meter: ddMeter,
@@ -1479,6 +1549,7 @@
       macdMeter = cycMeter(pos, { mid, fill: histFill(pos, mid) });
     }
     tiles.push(cycTile({
+      key: "macdSign",
       label: "MACD 柱",
       value: macdVal,
       meter: macdMeter,
@@ -1505,6 +1576,7 @@
       });
     }
     tiles.push(cycTile({
+      key: "bb",
       label: "布林带(20,2)",
       value: bbVal,
       meter: bbMeter,
@@ -1516,6 +1588,7 @@
     const divLabel = div.label || "—";
     const divCls = div.kind === "top" ? "tone-caution" : (div.kind === "bottom" ? "tone-up" : "");
     tiles.push(cycTile({
+      key: "rsiDiv",
       label: "RSI 背离",
       valueHtml: `<span class="cyc-chip${divCls ? " " + divCls : ""}">${escapeHtml(divLabel)}</span>`,
       value: divLabel,
@@ -1526,6 +1599,7 @@
     const macdDivLabel = macdDiv.label || "—";
     const macdDivCls = macdDiv.kind === "top" ? "tone-caution" : (macdDiv.kind === "bottom" ? "tone-up" : "");
     tiles.push(cycTile({
+      key: "macdDiv",
       label: "MACD 背离",
       valueHtml: `<span class="cyc-chip${macdDivCls ? " " + macdDivCls : ""}">${escapeHtml(macdDivLabel)}</span>`,
       value: macdDivLabel,
@@ -1551,6 +1625,7 @@
         });
       }
       tiles.push(cycTile({
+        key: "fund",
         label: "资金费率",
         value: fundVal,
         meter: fundMeter,
@@ -1559,6 +1634,7 @@
       const fngLabel = (state.fng && state.fng.label) ? state.fng.label : "";
       const fngVal = m.fng == null ? "—" : String(m.fng);
       tiles.push(cycTile({
+        key: "fng",
         label: "恐惧贪婪",
         value: fngVal,
         meter: m.fng == null ? "" : cycMeter(meterPos(m.fng, 0, 100), {
@@ -1586,6 +1662,7 @@
         }
       }
       tiles.push(cycTile({
+        key: "oi",
         label: "合约持仓量",
         value: oiVal,
         meter: oiMeter,
@@ -1603,6 +1680,7 @@
       if (state.mvrv.asOf) subParts.push("截至 " + state.mvrv.asOf);
       if (state.mvrv.delayed) subParts.push("约延迟一周");
       tiles.push(cycTile({
+        key: "mvrv",
         label: "MVRV Z-Score（日线）",
         value: z.toFixed(2),
         vcls: zone.cls,
@@ -1628,6 +1706,7 @@
       if (m.ahr.asOf) subParts.push("截至 " + m.ahr.asOf);
       subParts.push("未收盘用最新价");
       tiles.push(cycTile({
+        key: "ahr",
         label: "AHR999（日线）",
         value: z.toFixed(2),
         vcls: zone.cls,
@@ -1666,6 +1745,7 @@
         });
       }
       tiles.push(cycTile({
+        key: "pi",
         label: "派循环（日线）",
         value: fmtPct(m.pi.gapPct),
         vcls: st.lean > 0 ? "tone-caution" : "",
@@ -1821,6 +1901,292 @@
     (data.coins || []).forEach((c) => { if (c.price != null) lastPrices[c.symbol] = c.price; });
   }
   function paint() { render(snapshot()); }
+
+  const CYCLE_SIGNAL_KEY = "crypto-live-cycle-signals";
+  const CYCLE_NOTIFY_KEY = "crypto-live-cycle-notify";
+  const CYCLE_METRIC_LABELS = {
+    lean: "综合判断", top: "顶部倾向", bot: "底部倾向", rsi: "RSI(14)",
+    ma: "200均线倍数", maZone: "Mayer 分区", maSide: "相对 200 均线",
+    rsiDiv: "RSI 背离", macdDiv: "MACD 背离", bb: "布林带", macdSign: "MACD 柱",
+    fund: "资金费率", fng: "恐惧贪婪", mvrv: "MVRV Z-Score", ahr: "AHR999", pi: "派循环",
+  };
+  function cycleBoardCtx() {
+    return state._boardCtx || {};
+  }
+  function cycUnitId(symbol, interval, metric) {
+    return "cyc-" + symbol + "-" + interval + "-" + metric;
+  }
+  function ctxIdAttr(ctx, metric) {
+    if (!ctx || !ctx.symbol || !ctx.interval || !metric) return "";
+    return ` id="${cycUnitId(ctx.symbol, ctx.interval, metric)}"`;
+  }
+  function cycleHighlightHit(ctx, metric) {
+    const h = state.cycleHighlight;
+    if (!h || !ctx || !metric) return null;
+    if (h.symbol !== ctx.symbol || h.interval !== ctx.interval || h.metric !== metric) return null;
+    return h;
+  }
+  function cycleDeltaHtml(hit) {
+    if (!hit || hit.from == null || hit.to == null) return "";
+    return `<div class="cyc-delta">由 ${escapeHtml(String(hit.from))} 变为 ${escapeHtml(String(hit.to))}</div>`;
+  }
+  function tfLabelOf(interval, us) {
+    const list = us ? US_STOCK_TFS : CYCLE_TFS;
+    const row = list.find((t) => t.id === interval);
+    return (row && row.label) || interval;
+  }
+  function cycleUnitKey(mkt, symbol, interval) {
+    return (mkt || "crypto") + ":" + symbol + ":" + interval;
+  }
+  function macdSignLabel(hist) {
+    if (hist == null || !Number.isFinite(hist) || hist === 0) return "近零";
+    return hist > 0 ? "柱为正" : "柱为负";
+  }
+  function maSideLabel(mayer) {
+    if (mayer == null || !Number.isFinite(mayer)) return null;
+    if (mayer > 1) return "位于均线上方";
+    if (mayer < 1) return "位于均线下方";
+    return "靠近均线";
+  }
+  function collectCycleUnit(mkt, symbol, interval, livePrice, fundRate) {
+    const m = cycleMetrics(symbol, interval, livePrice);
+    if (!m || !m.ready) return null;
+    const lean = compositeLean(m.top, m.bot);
+    const rsiB = rsiBand(m.rsi);
+    const useMayer = symbol === "BTC" && interval === "1d";
+    const out = {
+      lean: lean && lean.text,
+      top: m.top,
+      bot: m.bot,
+      rsi: rsiB && rsiB.text,
+      maSide: maSideLabel(m.mayer),
+      rsiDiv: (m.div && m.div.label) || null,
+      macdDiv: (m.macdDiv && m.macdDiv.label) || null,
+      bb: (m.bb && m.bb.pos) || null,
+      macdSign: macdSignLabel(m.macd && m.macd.hist),
+    };
+    if (useMayer) out.maZone = mayerBand(m.mayer).label;
+    if (mkt !== "us") {
+      if (symbol === "BTC" && interval === "1d") {
+        out.fng = (fngCycle(state.fng).label) || null;
+        if (state.mvrv && state.mvrv.value != null) out.mvrv = mvrvZone(state.mvrv.value).text;
+        if (m.ahr && m.ahr.value != null) out.ahr = ahrZone(m.ahr.value).text;
+        if (m.pi && m.pi.sma111 != null && m.pi.twox350 != null) out.pi = piCycleStatus(m.pi.sma111, m.pi.twox350).short;
+      }
+      if (interval === "1d") out.fund = fundingBand(fundRate).label;
+    }
+    return out;
+  }
+  function loadCycleSignals() {
+    try {
+      const raw = localStorage.getItem(CYCLE_SIGNAL_KEY);
+      if (!raw) return null;
+      const data = JSON.parse(raw);
+      if (!data || data.v !== 1 || !data.units || typeof data.units !== "object") return null;
+      return data;
+    } catch (e) { return null; }
+  }
+  function saveCycleSignals(data) {
+    try { localStorage.setItem(CYCLE_SIGNAL_KEY, JSON.stringify(data)); } catch (e) {}
+  }
+  function currentCycleUnits() {
+    const units = {};
+    const data = typeof snapshot === "function" ? snapshot() : {};
+    const fund = (data.funding || state.funding || {});
+    for (const coin of CYCLE_COINS) {
+      for (const tf of CYCLE_TFS) {
+        if (!hasTfSymbol(tf.id, coin.id)) continue;
+        const live = coinBy(data, coin.id);
+        const row = collectCycleUnit("crypto", coin.id, tf.id, live && live.price, fund[coin.id]);
+        if (row) units[cycleUnitKey("crypto", coin.id, tf.id)] = row;
+      }
+    }
+    if (state.usStocks) {
+      for (const s of US_STOCKS) {
+        for (const tf of US_STOCK_TFS) {
+          if (!tfClosesOf(tf.id, s.id).length) continue;
+          const meta = (state.usStocks.symbols || {})[s.id] || {};
+          const live = meta.quote && meta.quote.price != null ? meta.quote.price : null;
+          const row = collectCycleUnit("us", s.id, tf.id, live, null);
+          if (row) units[cycleUnitKey("us", s.id, tf.id)] = row;
+        }
+      }
+    }
+    return units;
+  }
+  function formatScore(v) {
+    return v == null ? "—" : (v + "分");
+  }
+  function diffCycleUnits(prevUnits, nextUnits) {
+    const changes = [];
+    const keys = Object.keys(nextUnits);
+    for (let i = 0; i < keys.length; i++) {
+      const uk = keys[i];
+      const prev = prevUnits[uk];
+      const next = nextUnits[uk];
+      if (!prev || !next) continue;
+      const parts = uk.split(":");
+      const mkt = parts[0], symbol = parts[1], interval = parts[2];
+      const fields = ["lean", "rsi", "maZone", "maSide", "rsiDiv", "macdDiv", "bb", "macdSign", "fund", "fng", "mvrv", "ahr", "pi"];
+      for (const field of fields) {
+        const a = prev[field], b = next[field];
+        if (a == null || b == null || a === "" || b === "" || a === "—" || b === "—" || a === b) continue;
+        let metric = (field === "maZone" || field === "maSide") ? "ma" : field;
+        changes.push({
+          mkt, symbol, interval, metric, field,
+          label: CYCLE_METRIC_LABELS[field] || field,
+          from: String(a), to: String(b),
+        });
+      }
+      if (prev.lean && next.lean && prev.lean === next.lean) {
+        if (prev.top != null && next.top != null && Math.abs(next.top - prev.top) >= 15) {
+          changes.push({ mkt, symbol, interval, metric: "top", field: "top", label: "顶部倾向", from: formatScore(prev.top), to: formatScore(next.top) });
+        }
+        if (prev.bot != null && next.bot != null && Math.abs(next.bot - prev.bot) >= 15) {
+          changes.push({ mkt, symbol, interval, metric: "bot", field: "bot", label: "底部倾向", from: formatScore(prev.bot), to: formatScore(next.bot) });
+        }
+      }
+    }
+    return changes;
+  }
+  function changeWhere(ch) {
+    const us = ch.mkt === "us";
+    const name = us ? ((US_STOCKS.find((s) => s.id === ch.symbol) || {}).title || ch.symbol) : ch.symbol;
+    return name + " · " + tfLabelOf(ch.interval, us);
+  }
+  function hideCycleAlert() {
+    const box = $("cyc-alert");
+    if (box) box.hidden = true;
+  }
+  function showCycleAlert(changes) {
+    const box = $("cyc-alert");
+    const list = $("cyc-alert-list");
+    if (!box || !list || !changes || !changes.length) return;
+    state.cycleAlertDigest = changes;
+    list.innerHTML = changes.map((ch, i) =>
+      `<button type="button" class="cyc-alert-item" data-alert-idx="${i}">
+        <div class="where">${escapeHtml(changeWhere(ch))} · ${escapeHtml(ch.label)}</div>
+        <div class="what"><span class="fromto">${escapeHtml(ch.from)} → ${escapeHtml(ch.to)}</span></div>
+      </button>`
+    ).join("");
+    const nbtn = $("cyc-alert-notify");
+    if (nbtn) {
+      const can = typeof Notification !== "undefined";
+      nbtn.hidden = !can || Notification.permission === "granted";
+      nbtn.textContent = (!can) ? "此浏览器不支持系统通知" : (Notification.permission === "denied" ? "系统通知已被拒绝" : "开启系统通知");
+      nbtn.disabled = !can || Notification.permission === "denied";
+    }
+    if (document.hidden) {
+      state.cycleAlertPendingShow = true;
+      postCycleNotification(changes);
+      return;
+    }
+    state.cycleAlertPendingShow = false;
+    box.hidden = false;
+  }
+  function notifyPrefOn() {
+    try { return localStorage.getItem(CYCLE_NOTIFY_KEY) === "on"; } catch (e) { return false; }
+  }
+  function postCycleNotification(changes) {
+    if (!notifyPrefOn() || typeof Notification === "undefined" || Notification.permission !== "granted") return;
+    if (!changes || !changes.length) return;
+    const first = changes[0];
+    const body = changes.length === 1
+      ? (changeWhere(first) + " " + first.label + "：" + first.from + " → " + first.to)
+      : (changeWhere(first) + " " + first.label + " 等 " + changes.length + " 项变化");
+    try {
+      const n = new Notification("顶底观察有变化", { body, tag: "crypto-live-cycle", renotify: true });
+      n.onclick = () => {
+        try { window.focus(); } catch (e) {}
+        state.cycleAlertPendingShow = false;
+        const box = $("cyc-alert");
+        if (box && state.cycleAlertDigest && state.cycleAlertDigest.length) box.hidden = false;
+        n.close();
+      };
+    } catch (e) {}
+  }
+  function applyCycleChange(ch) {
+    if (!ch) return;
+    hideCycleAlert();
+    state.cycleHighlight = ch;
+    if (ch.mkt === "us") {
+      state.cycleMkt = "us";
+      if (US_STOCK_TFS.some((t) => t.id === ch.interval)) state.cycleUsTf = ch.interval;
+    } else {
+      state.cycleMkt = "crypto";
+      if (CYCLE_COINS.some((c) => c.id === ch.symbol)) state.cycleCoin = ch.symbol;
+      if (CYCLE_TFS.some((t) => t.id === ch.interval)) state.cycleTf = ch.interval;
+    }
+    try {
+      localStorage.setItem(CYCLE_MKT_KEY, state.cycleMkt);
+      if (state.cycleMkt === "crypto") {
+        localStorage.setItem(CYCLE_COIN_KEY, state.cycleCoin);
+        localStorage.setItem(CYCLE_TF_KEY, state.cycleTf);
+      } else {
+        localStorage.setItem(CYCLE_US_TF_KEY, state.cycleUsTf);
+      }
+    } catch (e) {}
+    const hash = "#cyc=" + encodeURIComponent(ch.symbol + "." + ch.interval + "." + ch.metric) + (ch.mkt === "us" ? "&m=us" : "");
+    try { history.replaceState(null, "", location.pathname + location.search + hash); } catch (e) {}
+    paint();
+    requestAnimationFrame(() => {
+      const el = document.getElementById(cycUnitId(ch.symbol, ch.interval, ch.metric)) || $("cycle");
+      if (el && el.scrollIntoView) el.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+    clearTimeout(state._highlightTimer);
+    state._highlightTimer = setTimeout(() => {
+      if (state.cycleHighlight === ch) {
+        state.cycleHighlight = null;
+        paint();
+      }
+    }, 8000);
+  }
+  function parseCycleHash() {
+    const raw = (location.hash || "").replace(/^#/, "");
+    if (!raw) return null;
+    const q = {};
+    raw.split("&").forEach((part) => {
+      const i = part.indexOf("=");
+      if (i < 0) q[part] = "";
+      else q[decodeURIComponent(part.slice(0, i))] = decodeURIComponent(part.slice(i + 1));
+    });
+    const spec = q.cyc || "";
+    const bits = spec.split(".");
+    if (bits.length < 3) return null;
+    return { mkt: q.m === "us" ? "us" : "crypto", symbol: bits[0], interval: bits[1], metric: bits[2], from: null, to: null };
+  }
+  function applyPendingCycleHash() {
+    const ch = state.cycleHashPending || parseCycleHash();
+    if (!ch) return;
+    const ready = ch.mkt === "us"
+      ? !!(state.usStocks && tfClosesOf(ch.interval, ch.symbol).length)
+      : hasTfSymbol(ch.interval, ch.symbol);
+    if (!ready) {
+      state.cycleHashPending = ch;
+      return;
+    }
+    state.cycleHashPending = null;
+    applyCycleChange(ch);
+  }
+  function reviewCycleAlerts() {
+    const units = currentCycleUnits();
+    if (!Object.keys(units).length) return;
+    const prev = loadCycleSignals();
+    const next = { v: 1, at: new Date().toISOString(), units };
+    if (!prev) {
+      saveCycleSignals(next);
+      applyPendingCycleHash();
+      return;
+    }
+    const changes = diffCycleUnits(prev.units || {}, units);
+    saveCycleSignals(next);
+    if (changes.length) showCycleAlert(changes);
+    applyPendingCycleHash();
+  }
+  function paintAndReview() {
+    paint();
+    reviewCycleAlerts();
+  }
 
   async function fetchJson(url) {
     const res = await fetch(url, { cache: "no-store" });
@@ -2021,8 +2387,8 @@
     }
   }
   async function initialLoad() {
-    loadUsStocks().then(paint).catch((e) => console.warn(e));
-    loadMvrv().then(paint).catch((e) => console.warn(e));
+    loadUsStocks().then(paintAndReview).catch((e) => console.warn(e));
+    loadMvrv().then(paintAndReview).catch((e) => console.warn(e));
     const errors = [];
     for (const [name, fn] of [["价格", refreshTickers], ["指标", refreshKlines], ["市值", refreshMarket], ["情绪", refreshFng]]) {
       try { await fn(); } catch (e) { errors.push(name); console.warn(e); }
@@ -2030,7 +2396,7 @@
     try { await refreshFunding(); } catch (e) { console.warn(e); }
     try { await refreshOpenInterest(); } catch (e) { console.warn(e); }
     state.status = errors.length ? "部分数据加载失败，将自动重试" : "数据已就绪";
-    paint();
+    paintAndReview();
   }
   function startSocket() {
     const streams = COINS.map(([, p]) => p.toLowerCase() + "@ticker").join("/");
@@ -2061,11 +2427,11 @@
     ws.onerror = () => { try { ws.close(); } catch (e) {} };
   }
   function startPolling() {
-    setInterval(() => { refreshKlines().then(paint).catch(() => {}); }, 60000);
+    setInterval(() => { refreshKlines().then(paintAndReview).catch(() => {}); }, 60000);
     setInterval(() => { refreshMarket().then(paint).catch(() => {}); }, 60000);
-    setInterval(() => { refreshFunding().then(paint).catch(() => {}); }, 60000);
+    setInterval(() => { refreshFunding().then(paintAndReview).catch(() => {}); }, 60000);
     setInterval(() => { refreshOpenInterest().then(paint).catch(() => {}); }, 60000);
-    setInterval(() => { refreshFng().then(paint).catch(() => {}); }, 180000);
+    setInterval(() => { refreshFng().then(paintAndReview).catch(() => {}); }, 180000);
     setInterval(() => {
       if (!state.live) refreshTickers().then(paint).catch(() => {});
     }, 3000);
@@ -3241,6 +3607,46 @@
   }
   const pageRefreshBtn = $("page-refresh");
   if (pageRefreshBtn) pageRefreshBtn.addEventListener("click", hardReloadPage);
+
+  const cycAlertBox = $("cyc-alert");
+  if (cycAlertBox) {
+    cycAlertBox.addEventListener("click", (ev) => {
+      if (ev.target === cycAlertBox) hideCycleAlert();
+      const item = ev.target.closest("[data-alert-idx]");
+      if (!item) return;
+      const idx = +item.getAttribute("data-alert-idx");
+      const ch = (state.cycleAlertDigest || [])[idx];
+      if (ch) applyCycleChange(ch);
+    });
+  }
+  const cycAlertClose = $("cyc-alert-close");
+  if (cycAlertClose) cycAlertClose.addEventListener("click", hideCycleAlert);
+  const cycAlertNotify = $("cyc-alert-notify");
+  if (cycAlertNotify) {
+    cycAlertNotify.addEventListener("click", async () => {
+      if (typeof Notification === "undefined") return;
+      try {
+        const perm = await Notification.requestPermission();
+        if (perm === "granted") {
+          try { localStorage.setItem(CYCLE_NOTIFY_KEY, "on"); } catch (e) {}
+          cycAlertNotify.hidden = true;
+          postCycleNotification(state.cycleAlertDigest || []);
+        } else {
+          cycAlertNotify.textContent = perm === "denied" ? "系统通知已被拒绝" : "未开启系统通知";
+          cycAlertNotify.disabled = perm === "denied";
+        }
+      } catch (e) {}
+    });
+  }
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) return;
+    if (state.cycleAlertPendingShow && state.cycleAlertDigest && state.cycleAlertDigest.length) {
+      state.cycleAlertPendingShow = false;
+      const box = $("cyc-alert");
+      if (box) box.hidden = false;
+    }
+  });
+  state.cycleHashPending = parseCycleHash();
 
   initSthChart();
   initEventsBoard();
