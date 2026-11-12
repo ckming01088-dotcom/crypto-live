@@ -1354,7 +1354,7 @@
       return `<div class="kv"><span class="lab">${lab}</span><span class="val">${escapeHtml(mid)}${right ? ` <span class="${extra}">${escapeHtml(right)}</span>` : ""}</span></div>`;
     }).join("");
   }
-  function probCards(metrics, size) {
+  function probCards(metrics, size, symbol, interval) {
     const cls = size === "eth" ? "prob-grid eth" : "prob-grid";
     const top = metrics && metrics.ready ? metrics.top : null;
     const bot = metrics && metrics.ready ? metrics.bot : null;
@@ -1362,6 +1362,7 @@
     const botW = bot == null ? "0%" : clamp(bot, 0, 100) + "%";
     const topTxt = top == null ? "—" : (top + "分");
     const botTxt = bot == null ? "—" : (bot + "分");
+    if (symbol && interval) state._boardCtx = { symbol, interval };
     const ctx = cycleBoardCtx();
     const topHit = cycleHighlightHit(ctx, "top");
     const botHit = cycleHighlightHit(ctx, "bot");
@@ -1839,7 +1840,7 @@
       return `<div class="cycle-stock">
         <div class="prob-kicker">${title}${sub ? " · " + sub : ""}</div>
         ${usStockQuoteLine(meta)}
-        ${m.ready ? probCards(m, "btc") + cycleBoard(s.id, interval, m, null, "btc") : `<p class="cycle-note">该周期数据不足</p>`}
+        ${m.ready ? probCards(m, "btc", s.id, interval) + cycleBoard(s.id, interval, m, null, "btc") : `<p class="cycle-note">该周期数据不足</p>`}
       </div>`;
     }).join("");
     const extra = "QQQ、VOO 日线来自 Nasdaq 公开历史行情；标普500 日线来自华尔街日报公开历史行情，当日未收盘报价来自 CNBC。数据为页面发布时的快照，不是盘中持续更新，可能不是最新成交价。美股按交易日计算，周期仅提供 1D 和 1W。观察分数使用该周期 RSI、200均线倍数窗口分位和回撤，不套用加密恐惧贪婪、资金费率、比特币 Mayer 阈值、派循环或 AHR999。";
@@ -1857,7 +1858,7 @@
     const m = cycleMetrics(symbol, interval, live && live.price);
     const fund = (data.funding || state.funding || {})[symbol];
     return head + `
-    ${m.ready ? probCards(m, "btc") + cycleBoard(symbol, interval, m, fund, "btc") : `<p class="cycle-note">该周期数据不足</p>`}
+    ${m.ready ? probCards(m, "btc", symbol, interval) + cycleBoard(symbol, interval, m, fund, "btc") : `<p class="cycle-note">该周期数据不足</p>`}
     ${cycleDisclaimer("")}`;
   }
   function render(data) {
@@ -2156,7 +2157,7 @@
     return { mkt: q.m === "us" ? "us" : "crypto", symbol: bits[0], interval: bits[1], metric: bits[2], from: null, to: null };
   }
   function applyPendingCycleHash() {
-    const ch = state.cycleHashPending || parseCycleHash();
+    const ch = state.cycleHashPending;
     if (!ch) return;
     const ready = ch.mkt === "us"
       ? !!(state.usStocks && tfClosesOf(ch.interval, ch.symbol).length)
@@ -2172,7 +2173,8 @@
     const units = currentCycleUnits();
     if (!Object.keys(units).length) return;
     const prev = loadCycleSignals();
-    const next = { v: 1, at: new Date().toISOString(), units };
+    const merged = Object.assign({}, (prev && prev.units) || {}, units);
+    const next = { v: 1, at: new Date().toISOString(), units: merged };
     if (!prev) {
       saveCycleSignals(next);
       applyPendingCycleHash();
