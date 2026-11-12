@@ -439,6 +439,28 @@
     .ev-cat.gdp { color: var(--up); border-color: color-mix(in srgb, var(--up) 40%, var(--line)); }
     .ev-tl-title { font-size: 13px; }
     .ev-status { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
+    .x-tabs { margin: 0 0 8px; }
+    .x-tabs .tf-tab { flex: 1 1 calc((100% - 36px) / 7); font-size: 12px; padding: 6px 2px; }
+    .x-asof { color: var(--muted); font-size: 12px; margin: 0 0 8px; }
+    .x-post {
+      display: block; background: #1A2030; border: 1px solid var(--line);
+      border-radius: 10px; padding: 10px 12px; margin: 0 0 8px;
+      color: inherit; text-decoration: none; touch-action: manipulation;
+    }
+    .x-post:hover, .x-post:focus { border-color: color-mix(in srgb, var(--caution) 45%, var(--line)); }
+    .x-post-head { display: flex; gap: 8px; align-items: center; }
+    .x-avatar-wrap { position: relative; width: 32px; height: 32px; flex: 0 0 32px; }
+    .x-avatar, .x-avatar-fallback {
+      width: 32px; height: 32px; border-radius: 50%; object-fit: cover;
+      background: #0B0E14; display: inline-flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; color: var(--muted);
+    }
+    .x-avatar-wrap img { position: absolute; inset: 0; z-index: 1; }
+    .x-post-who { min-width: 0; }
+    .x-post-name { font-size: 13px; font-weight: 700; }
+    .x-post-handle { color: var(--muted); font-weight: 650; }
+    .x-post-meta { color: var(--muted); font-size: 11px; margin-top: 1px; }
+    .x-post-text { font-size: 14px; line-height: 1.45; margin: 8px 0 0; word-break: break-word; }
     @media (min-width: 560px) {
       .ev-strip { grid-template-columns: 1fr 1fr 1.15fr; }
       .ev-meetings { grid-template-columns: 1fr 1fr; }
@@ -468,6 +490,10 @@
   <section id="heroes"></section>
   <h2>顶底指标</h2>
   <section class="block" id="cycle"></section>
+  <h2>X 关注</h2>
+  <section class="block" id="x-feed">
+    <p class="cycle-note">正在加载关注账号的公开帖…</p>
+  </section>
   <div id="sth-stage">
     <div class="sth-heading">
       <h2>短期持有者盈利供应占比与BTC价格</h2>
@@ -517,6 +543,7 @@
     合约持仓量来自币安 U 本位合约。MVRV Z-Score 来自 BGeometrics，免费数据末值可能延迟约一周。AHR999 按币安 BTCUSDT 日线与九神公开公式计算，0.45、1.2、5 为文献参考带，不是买卖线。<br>
     短期持有者图表另参考 BGeometrics（bitcoin-data.com）与 Binance。<br>
     事件日程另参考美联储 FOMC 日历、美国劳工统计局（BLS）、经济分析局（BEA）与 Polymarket，事件观察不构成投资建议。<br>
+    X 关注栏为所列账号的公开帖快照，点开可查看原帖；内容由发帖人发布，可能有延迟，不是投资建议。<br>
     仅供参考，不构成投资建议。<br>
     右上角「刷新」会重新加载本页最新内容，不必关掉再打开。<br>
     短期持有者图表可点「横屏」，单独满屏查看。<br>
@@ -600,6 +627,9 @@
     usStocks: null,
     usStocksLoading: false,
     usStocksError: "",
+    xFeed: null,
+    xFeedError: "",
+    xFeedTab: "all",
     live: false,
     status: "正在连接行情…",
   };
@@ -613,6 +643,8 @@
     if (US_STOCK_TFS.some((t) => t.id === savedUsTf)) state.cycleUsTf = savedUsTf;
     const savedCoin = localStorage.getItem(CYCLE_COIN_KEY);
     if (CYCLE_COINS.some((c) => c.id === savedCoin)) state.cycleCoin = savedCoin;
+    const savedXTab = localStorage.getItem("crypto-live-x-feed-tab");
+    if (savedXTab) state.xFeedTab = savedXTab;
   } catch (e) {}
   let lastPrices = {};
   let renderTimer = 0;
@@ -1900,6 +1932,7 @@
       `<div class="kv"><span class="lab">${n}</span><span class="val ${stClass(st)}">${escapeHtml(st || "—")} · ${escapeHtml(lab)} ${escapeHtml(ma || "")}</span></div>`
     ).join("") + `<p class="note">${escapeHtml(tip)}</p>`;
     (data.coins || []).forEach((c) => { if (c.price != null) lastPrices[c.symbol] = c.price; });
+      xFeedBlock();
   }
   function paint() { render(snapshot()); }
 
@@ -2389,8 +2422,99 @@
     }
   }
   async function initialLoad() {
+
+  const X_FEED_URL = "./x-feed.json";
+  const X_FEED_TAB_KEY = "crypto-live-x-feed-tab";
+  function xKindLabel(kind, repostOf) {
+    if (kind === "repost") return "转发" + (repostOf ? " @" + repostOf : "");
+    if (kind === "quote") return "引用";
+    return "";
+  }
+  function xHkTime(iso) {
+    const d = new Date(iso);
+    if (isNaN(+d)) return "—";
+    const parts = new Intl.DateTimeFormat("zh-HK", {
+      timeZone: "Asia/Hong_Kong",
+      month: "numeric",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false
+    }).formatToParts(d);
+    const get = (t) => ((parts.find((p) => p.type === t) || {}).value || "");
+    return get("month") + "/" + get("day") + " " + get("hour") + ":" + get("minute");
+  }
+  function xFeedBlock() {
+    const root = $("x-feed");
+    if (!root) return;
+    const data = state.xFeed;
+    if (state.xFeedError && !data) {
+      root.innerHTML = `<p class="cycle-note">${escapeHtml(state.xFeedError)}</p>`;
+      return;
+    }
+    if (!data) {
+      root.innerHTML = `<p class="cycle-note">正在加载关注账号的公开帖…</p>`;
+      return;
+    }
+    const accounts = data.accounts || [];
+    const tab = (state.xFeedTab !== "all" && !accounts.some((a) => a.id === state.xFeedTab)) ? "all" : (state.xFeedTab || "all");
+    state.xFeedTab = tab;
+    const tabs = [`<button type="button" class="tf-tab${tab === "all" ? " on" : ""}" data-x-tab="all" aria-pressed="${tab === "all" ? "true" : "false"}">全部</button>`].concat(
+      accounts.map((a) => `<button type="button" class="tf-tab${tab === a.id ? " on" : ""}" data-x-tab="${escapeHtml(a.id)}" aria-pressed="${tab === a.id ? "true" : "false"}">${escapeHtml(a.zh || a.name)}</button>`)
+    ).join("");
+    const accBy = {};
+    accounts.forEach((a) => { accBy[a.id] = a; });
+    let posts = (data.posts || []).slice();
+    if (tab !== "all") posts = posts.filter((p) => p.accountId === tab);
+    posts = posts.slice(0, tab === "all" ? 18 : 8);
+    const cards = posts.map((p) => {
+      const acc = accBy[p.accountId] || {};
+      const kind = xKindLabel(p.kind, p.repostOf);
+      const letter = escapeHtml(String(p.zh || p.name || "?").slice(0, 1));
+      const avatar = acc.avatar
+        ? `<span class="x-avatar-wrap"><span class="x-avatar-fallback">${letter}</span><img class="x-avatar" src="${escapeHtml(acc.avatar)}" alt="" width="32" height="32" onerror="this.remove()"></span>`
+        : `<span class="x-avatar-fallback">${letter}</span>`;
+      const body = escapeHtml(p.text || "").replace(/\n/g, "<br>");
+      return `<a class="x-post" href="${escapeHtml(p.url)}" target="_blank" rel="noopener noreferrer">
+        <div class="x-post-head">
+          ${avatar}
+          <div class="x-post-who">
+            <div class="x-post-name">${escapeHtml(p.zh || acc.zh || p.name || "")} <span class="x-post-handle">@${escapeHtml(p.username)}</span></div>
+            <div class="x-post-meta">${escapeHtml(xHkTime(p.createdAt))} 香港时间${kind ? " · " + escapeHtml(kind) : ""}</div>
+          </div>
+        </div>
+        <div class="x-post-text">${body}</div>
+      </a>`;
+    }).join("") || `<p class="cycle-note">该账号暂无快照帖文。</p>`;
+    const asOf = data.asOf ? xHkTime(data.asOf) + " 香港时间" : "—";
+    const current = accBy[tab];
+    const digest = current && current.digest ? current.digest : "";
+    const who = accounts.map((a) => {
+      const extra = a.note ? "，" + a.note : "";
+      return escapeHtml(a.zh || a.name) + "（@" + escapeHtml(a.username) + extra + "）";
+    }).join("、");
+    root.innerHTML = `<div class="tf-tabs x-tabs" role="tablist">${tabs}</div>
+      <p class="x-asof">快照截至 ${escapeHtml(asOf)}</p>
+      ${cards}
+      <p class="cycle-note">关注 ${who} 的公开帖。这是页面发布时的快照，不是 X 的即时推送；点开可查看原帖。内容由发帖人发布，仅供观察，不是投资建议。${digest ? escapeHtml(digest) : ""}</p>`;
+  }
+  async function loadXFeed() {
+    try {
+      const bundled = await fetchJson(X_FEED_URL);
+      if (!bundled || !Array.isArray(bundled.accounts) || !Array.isArray(bundled.posts)) {
+        throw new Error("bad x-feed.json");
+      }
+      state.xFeed = bundled;
+      state.xFeedError = "";
+    } catch (e) {
+      console.warn(e);
+      state.xFeedError = "关注帖快照加载失败，请点页眉刷新重试。";
+    }
+  }
+
     loadUsStocks().then(paintAndReview).catch((e) => console.warn(e));
     loadMvrv().then(paintAndReview).catch((e) => console.warn(e));
+    loadXFeed().then(paint).catch((e) => console.warn(e));
     const errors = [];
     for (const [name, fn] of [["价格", refreshTickers], ["指标", refreshKlines], ["市值", refreshMarket], ["情绪", refreshFng]]) {
       try { await fn(); } catch (e) { errors.push(name); console.warn(e); }
@@ -3605,10 +3729,23 @@
       bust("./events-board.json"),
       bust("./us-stocks.json"),
       bust("./mvrv-zscore.json"),
+      bust("./x-feed.json"),
     ]).finally(go);
   }
   const pageRefreshBtn = $("page-refresh");
   if (pageRefreshBtn) pageRefreshBtn.addEventListener("click", hardReloadPage);
+  const xFeedRoot = $("x-feed");
+  if (xFeedRoot) {
+    xFeedRoot.addEventListener("click", (ev) => {
+      const tab = ev.target.closest("[data-x-tab]");
+      if (!tab) return;
+      ev.preventDefault();
+      const id = tab.getAttribute("data-x-tab") || "all";
+      state.xFeedTab = id;
+      try { localStorage.setItem(X_FEED_TAB_KEY, id); } catch (e) {}
+      xFeedBlock();
+    });
+  }
 
   const cycAlertBox = $("cyc-alert");
   if (cycAlertBox) {
