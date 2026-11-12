@@ -112,6 +112,20 @@
     .kv .lab { color: var(--muted); flex: 0 1 42%; }
     .kv .val { text-align: right; font-variant-numeric: tabular-nums; }
     .note { color: var(--muted); font-size: 13px; margin-top: 8px; }
+    .sr-now { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin: 8px 0; padding: 9px 10px; border-radius: 10px; background: #1A2030; border: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+    .sr-now .lab { color: var(--muted); font-size: 12px; }
+    .sr-now .px { font-weight: 700; }
+    .sr-list { margin: 0; }
+    .sr-row { display: grid; grid-template-columns: 2.8em 1fr auto; gap: 8px; align-items: baseline; padding: 8px 0; border-top: 1px solid var(--line); font-variant-numeric: tabular-nums; font-size: 13px; }
+    .sr-list .sr-row:first-child { border-top: 0; padding-top: 2px; }
+    .sr-tag { font-size: 11px; font-weight: 650; }
+    .sr-row.res .sr-tag { color: var(--caution); }
+    .sr-row.sup .sr-tag { color: var(--up); }
+    .sr-row.near .sr-tag { color: var(--muted); }
+    .sr-src { color: var(--muted); font-size: 12px; line-height: 1.35; }
+    .sr-px { font-weight: 650; text-align: right; white-space: nowrap; }
+    .sr-gap { display: block; font-weight: 400; color: var(--muted); font-size: 11px; }
+    .sr-sub { color: var(--muted); font-size: 12px; font-weight: 650; margin: 8px 0 2px; }
     .tf-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
     .mkt-tabs { margin-bottom: 10px; }
     .coin-tabs { margin: 0 0 10px; }
@@ -516,6 +530,8 @@
   <section class="chips" id="chips"></section>
   <div id="panel-market" class="main-panel on" data-main-panel="market">
   <section id="heroes"></section>
+  <h2>比特币支撑与压力</h2>
+  <section class="block" id="btc-sr"></section>
   <h2>其他币种</h2>
   <section class="list" id="others"></section>
   <h2>比特币技术</h2>
@@ -576,6 +592,7 @@
     数据来自 Binance、CoinGecko、Alternative.me，时间为香港时间。<br>
     顶底指标为常用技术观察、不是买卖建议；不含自动交易。<br>
     合约持仓量来自币安 U 本位合约。MVRV Z-Score 来自 BGeometrics，免费数据末值可能延迟约一周。AHR999 按币安 BTCUSDT 日线与九神公开公式计算，0.45、1.2、5 为文献参考带，不是买卖线。<br>
+    比特币支撑与压力由币安 BTCUSDT 日线的近期摆动高低点、近30日/90日/一年区间高低，以及 50/200 日与周均线合并去重得出；未收盘的日线不作为已确认摆动点。仅供观察，不是买卖建议。<br>
     短期持有者图表另参考 BGeometrics（bitcoin-data.com）与 Binance。<br>
     事件日程另参考美联储 FOMC 日历、美国劳工统计局（BLS）、经济分析局（BEA）与 Polymarket，事件观察不构成投资建议。<br>
     X 关注栏为所列账号的公开帖快照，正文为中文译文，点开可查看原文；内容由发帖人发布，可能有延迟，不是投资建议。<br>
@@ -1433,6 +1450,153 @@
       return `<div class="kv"><span class="lab">${lab}</span><span class="val">${escapeHtml(mid)}${right ? ` <span class="${extra}">${escapeHtml(right)}</span>` : ""}</span></div>`;
     }).join("");
   }
+  function rangeHighLow(highs, lows, times, n) {
+    if (!highs || !lows || highs.length < 2) return null;
+    const start = Math.max(0, highs.length - n);
+    let hi = -Infinity, lo = Infinity, hiT = null, loT = null;
+    for (let i = start; i < highs.length; i++) {
+      if (Number.isFinite(highs[i]) && highs[i] > hi) { hi = highs[i]; hiT = times && times[i]; }
+      if (Number.isFinite(lows[i]) && lows[i] < lo) { lo = lows[i]; loT = times && times[i]; }
+    }
+    if (!Number.isFinite(hi) || !Number.isFinite(lo)) return null;
+    return { high: hi, low: lo, highTime: hiT, lowTime: loT };
+  }
+  function dailySwingLevels(highs, lows, times, radius) {
+    const out = [];
+    if (!highs || !lows || highs.length < radius * 2 + 1) return out;
+    const end = highs.length - radius;
+    for (let i = radius; i < end; i++) {
+      let isHigh = true, isLow = true;
+      for (let j = i - radius; j <= i + radius; j++) {
+        if (j === i) continue;
+        if (highs[j] >= highs[i]) isHigh = false;
+        if (lows[j] <= lows[i]) isLow = false;
+      }
+      if (isHigh) out.push({ price: highs[i], time: times && times[i], kind: "high" });
+      if (isLow) out.push({ price: lows[i], time: times && times[i], kind: "low" });
+    }
+    return out;
+  }
+  function srJoinLabels(arr) {
+    const seen = {};
+    const out = [];
+    (arr || []).forEach((s) => {
+      if (!s || seen[s]) return;
+      seen[s] = 1;
+      out.push(s);
+    });
+    return out.join("、");
+  }
+  function btcSupportResistance(price) {
+    const highs = (state.dailyHigh.BTC || []).slice();
+    const lows = (state.dailyLow.BTC || []).slice();
+    const closes = (state.daily.BTC || []).slice();
+    const weekly = (state.weekly.BTC || []).slice();
+    const times = state.dailyTime.BTC || [];
+    if (price == null || !Number.isFinite(price) || price <= 0 || highs.length < 30 || lows.length < 30) return null;
+    if (highs.length) {
+      highs[highs.length - 1] = Math.max(highs[highs.length - 1], price);
+      lows[lows.length - 1] = Math.min(lows[lows.length - 1], price);
+    }
+    if (closes.length) closes[closes.length - 1] = price;
+    if (weekly.length) weekly[weekly.length - 1] = price;
+    const cands = [];
+    const add = (level, label, key) => {
+      if (level == null || !Number.isFinite(level) || level <= 0) return;
+      cands.push({ price: level, label, key });
+    };
+    const lastT = times.length ? times[times.length - 1] : null;
+    const cutoff = lastT != null ? lastT - 180 * 86400000 : 0;
+    dailySwingLevels(highs, lows, times, 5).forEach((s) => {
+      if (s.time != null && cutoff && s.time < cutoff) return;
+      const when = s.time != null ? fmtDateHK(s.time) : "";
+      let name;
+      if (s.kind === "high") name = s.price < price - price * 0.0025 ? "原摆动高点" : "摆动高点";
+      else name = s.price > price + price * 0.0025 ? "原摆动低点" : "摆动低点";
+      add(s.price, when ? (name + "（" + when + "）") : name, "swing");
+    });
+    const r30 = rangeHighLow(highs, lows, times, 30);
+    const r90 = rangeHighLow(highs, lows, times, 90);
+    const r365 = rangeHighLow(highs, lows, times, Math.min(365, highs.length));
+    if (r30) { add(r30.high, "近30日高点", "rng"); add(r30.low, "近30日低点", "rng"); }
+    if (r90) { add(r90.high, "近90日高点", "rng"); add(r90.low, "近90日低点", "rng"); }
+    if (r365 && highs.length >= 200) { add(r365.high, "近一年高点", "rng"); add(r365.low, "近一年低点", "rng"); }
+    add(sma(closes, 50), "50日均线", "ma");
+    add(sma(closes, 200), "200日均线", "ma");
+    add(sma(weekly, 50), "50周均线", "ma");
+    add(sma(weekly, 200), "200周均线", "ma");
+    cands.sort((a, b) => a.price - b.price);
+    const tol = price * 0.008;
+    const clusters = [];
+    cands.forEach((c) => {
+      const last = clusters[clusters.length - 1];
+      if (last && Math.abs(c.price - last.price) <= tol) {
+        last.labels.push(c.label);
+        if (c.key === "ma" && last.keys.indexOf("ma") < 0) last.price = c.price;
+        last.keys.push(c.key);
+      } else {
+        clusters.push({ price: c.price, labels: [c.label], keys: [c.key] });
+      }
+    });
+    clusters.forEach((c) => { c.label = srJoinLabels(c.labels); c.major = c.labels.some((l) => /近30日|近90日|近一年/.test(l)); });
+    const nearBand = price * 0.0025;
+    const above = clusters.filter((c) => c.price > price + nearBand);
+    const below = clusters.filter((c) => c.price < price - nearBand);
+    const around = clusters.filter((c) => Math.abs(c.price - price) <= nearBand);
+    function splitSide(list, closerFirst) {
+      const sorted = list.slice().sort(closerFirst);
+      const near = sorted.slice(0, 3);
+      const used = new Set(near);
+      const far = list.filter((c) => !used.has(c) && c.major).sort(closerFirst);
+      return { near, far };
+    }
+    const res = splitSide(above, (a, b) => a.price - b.price);
+    const sup = splitSide(below, (a, b) => b.price - a.price);
+    return {
+      price,
+      resistance: res.near.sort((a, b) => b.price - a.price),
+      resistanceFar: res.far.sort((a, b) => b.price - a.price),
+      support: sup.near.sort((a, b) => b.price - a.price),
+      supportFar: sup.far.sort((a, b) => b.price - a.price),
+      near: around.sort((a, b) => b.price - a.price)
+    };
+  }
+  function srRowHtml(role, tag, item, price) {
+    const gap = item && price ? (item.price - price) / price * 100 : null;
+    return `<div class="sr-row ${role}">
+      <span class="sr-tag">${tag}</span>
+      <span class="sr-src">${escapeHtml(item.label)}</span>
+      <span class="sr-px">${fmtPrice(item.price)}<span class="sr-gap">${fmtPct(gap)}</span></span>
+    </div>`;
+  }
+  function btcLevelsBlock(c) {
+    const price = c && c.price;
+    const levels = btcSupportResistance(price);
+    if (!levels) {
+      return `<div class="note">正在用比特币日线计算支撑与压力…</div>`;
+    }
+    const resRows = levels.resistance.map((item) => srRowHtml("res", "压力", item, levels.price)).join("");
+    const resFar = (levels.resistanceFar || []).map((item) => srRowHtml("res", "压力", item, levels.price)).join("");
+    const nearRows = levels.near.map((item) => srRowHtml("near", "附近", item, levels.price)).join("");
+    const supRows = levels.support.map((item) => srRowHtml("sup", "支撑", item, levels.price)).join("");
+    const supFar = (levels.supportFar || []).map((item) => srRowHtml("sup", "支撑", item, levels.price)).join("");
+    if (!levels.resistance.length && !levels.resistanceFar.length && !levels.near.length && !levels.support.length && !levels.supportFar.length) {
+      return `<div class="sr-now"><span class="lab">现价</span><span class="px">${fmtPrice(levels.price)}</span></div>
+        <p class="cycle-note">当前窗口内暂未形成可展示的观察位。</p>`;
+    }
+    const emptyRes = (!levels.resistance.length && !levels.resistanceFar.length) ? `<p class="note">现价上方暂无更高的观察压力位。</p>` : "";
+    const emptySup = (!levels.support.length && !levels.supportFar.length) ? `<p class="note">现价下方暂无更低的观察支撑位。</p>` : "";
+    const resFarBlock = resFar ? `<div class="sr-sub">更远处</div><div class="sr-list">${resFar}</div>` : "";
+    const supFarBlock = supFar ? `<div class="sr-sub">更远处</div><div class="sr-list">${supFar}</div>` : "";
+    return `${emptyRes}
+      ${resFarBlock}
+      <div class="sr-list">${resRows}${nearRows}</div>
+      <div class="sr-now"><span class="lab">现价</span><span class="px">${fmtPrice(levels.price)}</span></div>
+      <div class="sr-list">${supRows}</div>
+      ${supFarBlock}
+      ${emptySup}
+      <p class="cycle-note">支撑与压力由币安 BTCUSDT 日线计算：近 180 日已确认摆动高低点（两侧各 5 根日线）、近 30 日 / 90 日 / 一年区间高低，以及 50 / 200 日与周均线。相近约 0.8% 的价位会合并。上方和下方各先列出最近的观察位，区间高低若更远则另列在「更远处」。最新未收盘日线不作为已确认摆动点。仅供观察，不是买卖建议，也不能保证价格会在这些位置停留或反转。</p>`;
+  }
   function probCards(metrics, size, symbol, interval) {
     const cls = size === "eth" ? "prob-grid eth" : "prob-grid";
     const top = metrics && metrics.ready ? metrics.top : null;
@@ -1963,6 +2127,7 @@
     ].map(([k, v]) => `<div class="chip"><span class="k">${k}</span><span class="v">${v}</span></div>`).join("");
     const btc = coinBy(data, "BTC"), eth = coinBy(data, "ETH");
     $("heroes").innerHTML = heroCard(btc) + heroCard(eth);
+    $("btc-sr").innerHTML = btcLevelsBlock(btc);
     $("cycle").innerHTML = cycleBlock(data);
     $("others").innerHTML = (data.coins || []).filter((c) => c.symbol !== "BTC" && c.symbol !== "ETH").map((c) => `
       <div class="coin">
