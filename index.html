@@ -462,7 +462,7 @@
   <footer>
     数据来自 Binance、CoinGecko、Alternative.me，时间为香港时间。<br>
     顶底指标为常用技术观察、不是买卖建议；不含自动交易。<br>
-    合约持仓量来自币安 U 本位合约。MVRV Z-Score 来自 BGeometrics，免费数据末值可能延迟约一周。<br>
+    合约持仓量来自币安 U 本位合约。MVRV Z-Score 来自 BGeometrics，免费数据末值可能延迟约一周。AHR999 按币安 BTCUSDT 日线与九神公开公式计算，0.45、1.2、5 为文献参考带，不是买卖线。<br>
     短期持有者图表另参考 BGeometrics（bitcoin-data.com）与 Binance。<br>
     事件日程另参考美联储 FOMC 日历、美国劳工统计局（BLS）、经济分析局（BEA）与 Polymarket，事件观察不构成投资建议。<br>
     仅供参考，不构成投资建议。<br>
@@ -951,9 +951,13 @@
     const w = cycleWeights(symbol, interval);
     const includePi = symbol === "BTC" && (interval === "1d" || interval === "3d") && !!w.pi;
     const dailySrc = tfClosesOf("1d", "BTC");
+    const dailyTimes = tfTimesOf("1d", "BTC");
     const pi = symbol === "BTC"
       ? piCycleTopScore(dailySrc, livePrice)
       : { score: null, sma111: null, twox350: null, gapPct: null };
+    const ahr = symbol === "BTC"
+      ? ahr999Index(dailySrc, dailyTimes, livePrice)
+      : { value: null };
     const topParts = [
       { score: ramp(rsi, 55, 85), weight: w.rsi },
       { score: maTop, weight: w.ma },
@@ -975,7 +979,7 @@
       ready: true,
       rsi, mayer, maPct, s200, drawdown,
       window_high: wh.price, window_high_time: wh.time, window_n: wh.n,
-      fund, fundPct, fng, pi,
+      fund, fundPct, fng, pi, ahr,
       bb, macd, div,
       top: weightedScore(topParts),
       bot: weightedScore(botParts),
@@ -1105,6 +1109,43 @@
     if (z >= 7) return { text: "历史高位观察区", cls: "tone-caution" };
     if (z < 0) return { text: "历史偏低观察区", cls: "" };
     return { text: "中间区域", cls: "" };
+  }
+  function ahrZone(z) {
+    if (z == null || !Number.isFinite(z)) return { text: "—", cls: "" };
+    if (z >= 5) return { text: "历史高位观察区", cls: "tone-caution" };
+    if (z < 0.45) return { text: "历史偏低观察区", cls: "" };
+    return { text: "中间区域", cls: "" };
+  }
+  function ahr999Index(closes, times, livePrice) {
+    // 九神公开公式：AHR999 = (价格 / 近200日收盘均价) * (价格 / 指数增长估值)
+    // 估值 = 10^(5.84 * log10(币龄) - 17.01)，币龄从 2009-01-03 起算。
+    const c = (closes || []).slice();
+    const t = (times || []).slice();
+    if (c.length < 200 || t.length < c.length) {
+      return { value: null, ma200: null, fitted: null, age: null, asOf: null };
+    }
+    if (livePrice != null && Number.isFinite(livePrice)) c[c.length - 1] = livePrice;
+    const window = c.slice(-200);
+    let sum = 0;
+    for (let i = 0; i < window.length; i++) sum += window[i];
+    const ma200 = sum / 200;
+    const lastT = t[t.length - 1];
+    if (lastT == null || !Number.isFinite(lastT) || !ma200) {
+      return { value: null, ma200, fitted: null, age: null, asOf: null };
+    }
+    const dt = new Date(lastT);
+    const y = dt.getUTCFullYear();
+    const mo = dt.getUTCMonth();
+    const d = dt.getUTCDate();
+    const age = Math.round((Date.UTC(y, mo, d) - Date.UTC(2009, 0, 3)) / 86400000);
+    const price = c[c.length - 1];
+    if (!(age > 1) || price == null || !Number.isFinite(price) || price <= 0) {
+      return { value: null, ma200, fitted: null, age, asOf: null };
+    }
+    const fitted = Math.pow(10, 5.84 * Math.log10(age) - 17.01);
+    const value = (price / ma200) * (price / fitted);
+    const asOf = y + "-" + String(mo + 1).padStart(2, "0") + "-" + String(d).padStart(2, "0");
+    return { value, ma200, fitted, age, asOf, price };
   }
   function fmtUsd(x) {
     if (x == null) return "—";
@@ -1483,6 +1524,35 @@
       }));
     }
 
+    if (symbol === "BTC" && m.ahr && m.ahr.value != null) {
+      const z = m.ahr.value;
+      const zone = ahrZone(z);
+      const rng = expandRange(z, 0, 6, 0.2);
+      if (rng.min > 0) rng.min = 0;
+      if (rng.max < 5) rng.max = 6;
+      const subParts = [zone.text];
+      if (m.ahr.asOf) subParts.push("截至 " + m.ahr.asOf);
+      subParts.push("未收盘用最新价");
+      tiles.push(cycTile({
+        label: "AHR999（日线）",
+        value: z.toFixed(2),
+        vcls: zone.cls,
+        meter: cycMeter(meterPos(z, rng.min, rng.max), {
+          gradient: "linear-gradient(90deg, color-mix(in srgb, var(--up) 28%, #0B0E14) 0%, #0B0E14 " +
+            meterPos(0.45, rng.min, rng.max).toFixed(2) + "%, #0B0E14 " +
+            meterPos(5, rng.min, rng.max).toFixed(2) + "%, color-mix(in srgb, var(--caution) 32%, #0B0E14) 100%)",
+          ticks: tickMarks([
+            { at: 0.45, label: "0.45" },
+            { at: 1.2, label: "1.2" },
+            { at: 5, label: "5" },
+          ], rng.min, rng.max),
+        }),
+        sub: escapeHtml(subParts.join(" · ")),
+        wide: true,
+        aria: z.toFixed(2) + " " + subParts.join(" "),
+      }));
+    }
+
     if (symbol === "BTC" && m.pi && m.pi.sma111 != null && m.pi.twox350 != null) {
       const st = piCycleStatus(m.pi.sma111, m.pi.twox350);
       const gap = m.pi.gapPct;
@@ -1566,7 +1636,7 @@
   function cycleDisclaimer(extra) {
     const extraReads = state.cycleMkt === "us"
       ? "布林带、MACD 和 RSI 背离同样只供观察，不是买卖信号，也不能避免假信号。"
-      : "布林带、MACD、RSI 背离、合约持仓量和 MVRV Z-Score 同样只供观察，不是买卖或开仓信号，也不能避免假信号。MVRV 的 0 与 7 是该指标文献里常被提起的参考带，不是买卖线；免费数据末值可能延迟约一周。";
+      : "布林带、MACD、RSI 背离、合约持仓量、MVRV Z-Score 和 AHR999 同样只供观察，不是买卖或开仓信号，也不能避免假信号。MVRV 的 0 与 7、AHR999 的 0.45、1.2 与 5 是各指标文献里常被提起的参考带，不是买卖线。MVRV 免费数据末值可能延迟约一周。AHR999 按币安 BTCUSDT 日线与九神公开公式计算：指数 =（价格÷近200日收盘均价）×（价格÷指数增长估值），估值 = 10^(5.84×log10(币龄)−17.01)，币龄从 2009-01-03 起算；当日未收盘用最新价。";
     return `<p class="cycle-note">${extra || ""}顶部倾向、底部倾向是按权重合成的 0–100 观察分数，不是统计概率，也不是价格预测；两者互不排斥，不必相加为 100。综合判断：任一项分数缺失则暂不给出；两项都达到 40 为「混合」；顶部倾向达到 50 且至少高出底部倾向 20 为「偏顶部观察」；底部倾向达到 50 且至少高出顶部倾向 20 为「偏底部观察」；其余为「中性」。仅供观察，不构成投资建议。窗口回撤取已加载 K 线的最高价，并非历史最高，若更高点不在窗口内则不会计入。${extraReads}</p>`;
   }
   function usCycleBlock() {
@@ -1591,7 +1661,7 @@
         ${m.ready ? probCards(m, "btc") + cycleBoard(s.id, interval, m, null, "btc") : `<p class="cycle-note">该周期数据不足</p>`}
       </div>`;
     }).join("");
-    const extra = "QQQ、VOO 日线来自 Nasdaq 公开历史行情；标普500 日线来自华尔街日报公开历史行情，当日未收盘报价来自 CNBC。数据为页面发布时的快照，不是盘中持续更新，可能不是最新成交价。美股按交易日计算，周期仅提供 1 天和 1 周。观察分数使用该周期 RSI、200均线倍数窗口分位和回撤，不套用加密恐惧贪婪、资金费率、比特币 Mayer 阈值或派循环。";
+    const extra = "QQQ、VOO 日线来自 Nasdaq 公开历史行情；标普500 日线来自华尔街日报公开历史行情，当日未收盘报价来自 CNBC。数据为页面发布时的快照，不是盘中持续更新，可能不是最新成交价。美股按交易日计算，周期仅提供 1 天和 1 周。观察分数使用该周期 RSI、200均线倍数窗口分位和回撤，不套用加密恐惧贪婪、资金费率、比特币 Mayer 阈值、派循环或 AHR999。";
     return head + body + cycleDisclaimer(extra);
   }
   function cycleBlock(data) {
