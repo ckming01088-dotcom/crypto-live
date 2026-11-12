@@ -99,8 +99,8 @@
     .stock-quote { color: var(--muted); font-size: 12px; margin: -2px 0 8px; font-variant-numeric: tabular-nums; }
     .cycle-stock + .cycle-stock { margin-top: 16px; }
     .tf-tab {
-      flex: 1 1 calc(20% - 6px);
-      min-width: 4.4em;
+      flex: 1 1 calc((100% - 30px) / 6);
+      min-width: 3.2em;
       min-height: 36px;
       padding: 6px 8px;
       border: 1px solid var(--line);
@@ -481,6 +481,7 @@
   ];
   const SPARK = "▁▂▃▄▅▆▇█";
   const CYCLE_TFS = [
+    { id: "2h", label: "2小时" },
     { id: "4h", label: "4小时" },
     { id: "6h", label: "6小时" },
     { id: "12h", label: "12小时" },
@@ -507,10 +508,10 @@
     dailyLow: { BTC: [], ETH: [] },
     weekly: { BTC: [], ETH: [] },
     lastCross: { BTC: null, ETH: null },
-    tfCloses: { "4h": { BTC: [], ETH: [] }, "6h": { BTC: [], ETH: [] }, "12h": { BTC: [], ETH: [] }, "1d": { BTC: [], ETH: [] }, "3d": { BTC: [], ETH: [] } },
-    tfTimes: { "4h": { BTC: [], ETH: [] }, "6h": { BTC: [], ETH: [] }, "12h": { BTC: [], ETH: [] }, "1d": { BTC: [], ETH: [] }, "3d": { BTC: [], ETH: [] } },
-    tfHighs: { "4h": { BTC: [], ETH: [] }, "6h": { BTC: [], ETH: [] }, "12h": { BTC: [], ETH: [] }, "1d": { BTC: [], ETH: [] }, "3d": { BTC: [], ETH: [] } },
-    tfLows: { "4h": { BTC: [], ETH: [] }, "6h": { BTC: [], ETH: [] }, "12h": { BTC: [], ETH: [] }, "1d": { BTC: [], ETH: [] }, "3d": { BTC: [], ETH: [] } },
+    tfCloses: { "2h": { BTC: [], ETH: [] }, "4h": { BTC: [], ETH: [] }, "6h": { BTC: [], ETH: [] }, "12h": { BTC: [], ETH: [] }, "1d": { BTC: [], ETH: [] }, "3d": { BTC: [], ETH: [] } },
+    tfTimes: { "2h": { BTC: [], ETH: [] }, "4h": { BTC: [], ETH: [] }, "6h": { BTC: [], ETH: [] }, "12h": { BTC: [], ETH: [] }, "1d": { BTC: [], ETH: [] }, "3d": { BTC: [], ETH: [] } },
+    tfHighs: { "2h": { BTC: [], ETH: [] }, "4h": { BTC: [], ETH: [] }, "6h": { BTC: [], ETH: [] }, "12h": { BTC: [], ETH: [] }, "1d": { BTC: [], ETH: [] }, "3d": { BTC: [], ETH: [] } },
+    tfLows: { "2h": { BTC: [], ETH: [] }, "4h": { BTC: [], ETH: [] }, "6h": { BTC: [], ETH: [] }, "12h": { BTC: [], ETH: [] }, "1d": { BTC: [], ETH: [] }, "3d": { BTC: [], ETH: [] } },
     market: {},
     fng: { value: null, label: "" },
     funding: { BTC: null, ETH: null },
@@ -637,6 +638,56 @@
       const a = sl[sl.length - 2], b = sl[sl.length - 1];
       if (b >= recentLimit && a >= lookback && rsi[a] != null && rsi[b] != null
           && pxL[b] < pxL[a] && rsi[b] > rsi[a] + 1) {
+        bot = { kind: "bottom", label: "底背离观察" };
+      }
+    }
+    if (top && bot) return b_pick_more_recent(sh, sl, top, bot, closes.length);
+    if (top) return top;
+    if (bot) return bot;
+    return { kind: null, label: "未见明显背离" };
+  }
+  function macdLineSeries(closes) {
+    const out = new Array((closes || []).length).fill(null);
+    if (!closes || closes.length < 26) return out;
+    const e12 = emaSeries(closes, 12);
+    const e26 = emaSeries(closes, 26);
+    for (let i = 0; i < closes.length; i++) {
+      if (e12[i] != null && e26[i] != null) out[i] = e12[i] - e26[i];
+    }
+    return out;
+  }
+  function macdDivGap(line, a, b) {
+    let scale = Math.max(Math.abs(line[a] || 0), Math.abs(line[b] || 0));
+    const start = Math.max(0, Math.min(a, b));
+    const end = Math.max(a, b);
+    for (let i = start; i <= end; i++) {
+      if (line[i] != null) scale = Math.max(scale, Math.abs(line[i]));
+    }
+    return Math.max(scale * 0.02, 1e-12);
+  }
+  function macdDivergence(closes, highs, lows) {
+    // Same swing window as RSI divergence: 5-bar swings, later swing in last 30 bars,
+    // earlier swing in last 80 bars. Compare price swings with the MACD line (12/26).
+    if (!closes || closes.length < 40) return { kind: null, label: "数据不足" };
+    const line = macdLineSeries(closes);
+    const pxH = (highs && highs.length === closes.length) ? highs : closes;
+    const pxL = (lows && lows.length === closes.length) ? lows : closes;
+    const sh = findSwingIndexes(pxH, "high");
+    const sl = findSwingIndexes(pxL, "low");
+    const recentLimit = Math.max(0, closes.length - 30);
+    const lookback = Math.max(0, closes.length - 80);
+    let top = null, bot = null;
+    if (sh.length >= 2) {
+      const a = sh[sh.length - 2], b = sh[sh.length - 1];
+      if (b >= recentLimit && a >= lookback && line[a] != null && line[b] != null
+          && pxH[b] > pxH[a] && line[b] < line[a] - macdDivGap(line, a, b)) {
+        top = { kind: "top", label: "顶背离观察" };
+      }
+    }
+    if (sl.length >= 2) {
+      const a = sl[sl.length - 2], b = sl[sl.length - 1];
+      if (b >= recentLimit && a >= lookback && line[a] != null && line[b] != null
+          && pxL[b] < pxL[a] && line[b] > line[a] + macdDivGap(line, a, b)) {
         bot = { kind: "bottom", label: "底背离观察" };
       }
     }
@@ -902,7 +953,7 @@
   }
   function cycleWeights(symbol, interval) {
     if (isUsStock(symbol)) return { rsi: 0.36, ma: 0.34, dd: 0.30 };
-    const shortTf = interval === "4h" || interval === "6h" || interval === "12h";
+    const shortTf = interval === "2h" || interval === "4h" || interval === "6h" || interval === "12h";
     if (symbol === "BTC") {
       return shortTf
         ? { rsi: 0.30, ma: 0.26, dd: 0.22, fund: 0.12, fng: 0.10 }
@@ -927,6 +978,7 @@
     const bb = bollinger(closes, 20, 2);
     const macd = macdDetail(closes);
     const div = rsiDivergence(closes, highs, lows);
+    const macdDiv = macdDivergence(closes, highs, lows);
     const s200 = sma(closes, 200);
     const price = livePrice != null ? livePrice : closes[closes.length - 1];
     const mayer = (price != null && s200) ? price / s200 : null;
@@ -980,7 +1032,7 @@
       rsi, mayer, maPct, s200, drawdown,
       window_high: wh.price, window_high_time: wh.time, window_n: wh.n,
       fund, fundPct, fng, pi, ahr,
-      bb, macd, div,
+      bb, macd, div, macdDiv,
       top: weightedScore(topParts),
       bot: weightedScore(botParts),
     };
@@ -1438,6 +1490,16 @@
       aria: divLabel,
     }));
 
+    const macdDiv = m.macdDiv || {};
+    const macdDivLabel = macdDiv.label || "—";
+    const macdDivCls = macdDiv.kind === "top" ? "tone-caution" : (macdDiv.kind === "bottom" ? "tone-up" : "");
+    tiles.push(cycTile({
+      label: "MACD 背离",
+      valueHtml: `<span class="cyc-chip${macdDivCls ? " " + macdDivCls : ""}">${escapeHtml(macdDivLabel)}</span>`,
+      value: macdDivLabel,
+      aria: macdDivLabel,
+    }));
+
     if (!isUsStock(symbol)) {
       const fundVal = fundRate == null ? "—" : fmtFunding(fundRate);
       let fundMeter = "";
@@ -1635,8 +1697,8 @@
   }
   function cycleDisclaimer(extra) {
     const extraReads = state.cycleMkt === "us"
-      ? "布林带、MACD 和 RSI 背离同样只供观察，不是买卖信号，也不能避免假信号。"
-      : "布林带、MACD、RSI 背离、合约持仓量、MVRV Z-Score 和 AHR999 同样只供观察，不是买卖或开仓信号，也不能避免假信号。MVRV 的 0 与 7、AHR999 的 0.45、1.2 与 5 是各指标文献里常被提起的参考带，不是买卖线。MVRV 免费数据末值可能延迟约一周。AHR999 按币安 BTCUSDT 日线与九神公开公式计算：指数 =（价格÷近200日收盘均价）×（价格÷指数增长估值），估值 = 10^(5.84×log10(币龄)−17.01)，币龄从 2009-01-03 起算；当日未收盘用最新价。";
+      ? "布林带、MACD 柱、RSI 背离和 MACD 背离同样只供观察，不是买卖信号，也不能避免假信号。MACD 背离比较的是价格摆动与 MACD 线（12/26），摆动规则与 RSI 背离相同。"
+      : "布林带、MACD 柱、RSI 背离、MACD 背离、合约持仓量、MVRV Z-Score 和 AHR999 同样只供观察，不是买卖或开仓信号，也不能避免假信号。MACD 背离比较的是价格摆动与 MACD 线（12/26），摆动规则与 RSI 背离相同。MVRV 的 0 与 7、AHR999 的 0.45、1.2 与 5 是各指标文献里常被提起的参考带，不是买卖线。MVRV 免费数据末值可能延迟约一周。AHR999 按币安 BTCUSDT 日线与九神公开公式计算：指数 =（价格÷近200日收盘均价）×（价格÷指数增长估值），估值 = 10^(5.84×log10(币龄)−17.01)，币龄从 2009-01-03 起算；当日未收盘用最新价。";
     return `<p class="cycle-note">${extra || ""}顶部倾向、底部倾向是按权重合成的 0–100 观察分数，不是统计概率，也不是价格预测；两者互不排斥，不必相加为 100。综合判断：任一项分数缺失则暂不给出；两项都达到 40 为「混合」；顶部倾向达到 50 且至少高出底部倾向 20 为「偏顶部观察」；底部倾向达到 50 且至少高出顶部倾向 20 为「偏底部观察」；其余为「中性」。仅供观察，不构成投资建议。窗口回撤取已加载 K 线的最高价，并非历史最高，若更高点不在窗口内则不会计入。${extraReads}</p>`;
   }
   function usCycleBlock() {
@@ -1771,7 +1833,7 @@
         const weekly = await fetchJson(`https://api.binance.com/api/v3/klines?symbol=${pair}&interval=1w&limit=250`);
         state.weekly[symbol] = weekly.map((r) => +r[4]);
       })());
-      for (const iv of ["4h", "6h", "12h", "3d"]) {
+      for (const iv of ["2h", "4h", "6h", "12h", "3d"]) {
         jobs.push((async () => {
           const rows = await fetchJson(`https://api.binance.com/api/v3/klines?symbol=${pair}&interval=${iv}&limit=1000`);
           storeTf(iv, symbol, rows);
