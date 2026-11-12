@@ -94,8 +94,10 @@
     .note { color: var(--muted); font-size: 13px; margin-top: 8px; }
     .tf-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
     .mkt-tabs { margin-bottom: 10px; }
+    .coin-tabs { margin: 0 0 10px; }
     .mkt-tabs .tf-tab,
     .tf-tabs.tf-two .tf-tab { flex: 1 1 calc(50% - 6px); }
+    .coin-tabs .tf-tab { flex: 1 1 calc((100% - 12px) / 3); }
     .stock-quote { color: var(--muted); font-size: 12px; margin: -2px 0 8px; font-variant-numeric: tabular-nums; }
     .cycle-stock + .cycle-stock { margin-top: 12px; }
     .tf-tab {
@@ -494,9 +496,20 @@
     { id: "1d", label: "1D" },
     { id: "3d", label: "3D" },
   ];
+  const CYCLE_COINS = [
+    { id: "BTC", label: "BTC", pair: "BTCUSDT" },
+    { id: "ETH", label: "ETH", pair: "ETHUSDT" },
+    { id: "SOL", label: "SOL", pair: "SOLUSDT" },
+  ];
   const CYCLE_TF_KEY = "crypto-live-cycle-tf";
   const CYCLE_MKT_KEY = "crypto-live-cycle-mkt";
   const CYCLE_US_TF_KEY = "crypto-live-cycle-us-tf";
+  const CYCLE_COIN_KEY = "crypto-live-cycle-coin";
+  function emptyByCoin(fill) {
+    const o = {};
+    CYCLE_COINS.forEach((c) => { o[c.id] = fill(); });
+    return o;
+  }
   const US_STOCK_TFS = [
     { id: "1d", label: "1D" },
     { id: "1w", label: "1W" },
@@ -508,23 +521,24 @@
   ];
   const state = {
     tickers: {},
-    daily: { BTC: [], ETH: [] },
-    dailyTime: { BTC: [], ETH: [] },
-    dailyHigh: { BTC: [], ETH: [] },
-    dailyLow: { BTC: [], ETH: [] },
+    daily: emptyByCoin(() => []),
+    dailyTime: emptyByCoin(() => []),
+    dailyHigh: emptyByCoin(() => []),
+    dailyLow: emptyByCoin(() => []),
     weekly: { BTC: [], ETH: [] },
     lastCross: { BTC: null, ETH: null },
-    tfCloses: { "2h": { BTC: [], ETH: [] }, "4h": { BTC: [], ETH: [] }, "6h": { BTC: [], ETH: [] }, "12h": { BTC: [], ETH: [] }, "1d": { BTC: [], ETH: [] }, "3d": { BTC: [], ETH: [] } },
-    tfTimes: { "2h": { BTC: [], ETH: [] }, "4h": { BTC: [], ETH: [] }, "6h": { BTC: [], ETH: [] }, "12h": { BTC: [], ETH: [] }, "1d": { BTC: [], ETH: [] }, "3d": { BTC: [], ETH: [] } },
-    tfHighs: { "2h": { BTC: [], ETH: [] }, "4h": { BTC: [], ETH: [] }, "6h": { BTC: [], ETH: [] }, "12h": { BTC: [], ETH: [] }, "1d": { BTC: [], ETH: [] }, "3d": { BTC: [], ETH: [] } },
-    tfLows: { "2h": { BTC: [], ETH: [] }, "4h": { BTC: [], ETH: [] }, "6h": { BTC: [], ETH: [] }, "12h": { BTC: [], ETH: [] }, "1d": { BTC: [], ETH: [] }, "3d": { BTC: [], ETH: [] } },
+    tfCloses: { "2h": emptyByCoin(() => []), "4h": emptyByCoin(() => []), "6h": emptyByCoin(() => []), "12h": emptyByCoin(() => []), "1d": emptyByCoin(() => []), "3d": emptyByCoin(() => []) },
+    tfTimes: { "2h": emptyByCoin(() => []), "4h": emptyByCoin(() => []), "6h": emptyByCoin(() => []), "12h": emptyByCoin(() => []), "1d": emptyByCoin(() => []), "3d": emptyByCoin(() => []) },
+    tfHighs: { "2h": emptyByCoin(() => []), "4h": emptyByCoin(() => []), "6h": emptyByCoin(() => []), "12h": emptyByCoin(() => []), "1d": emptyByCoin(() => []), "3d": emptyByCoin(() => []) },
+    tfLows: { "2h": emptyByCoin(() => []), "4h": emptyByCoin(() => []), "6h": emptyByCoin(() => []), "12h": emptyByCoin(() => []), "1d": emptyByCoin(() => []), "3d": emptyByCoin(() => []) },
     market: {},
     fng: { value: null, label: "" },
-    funding: { BTC: null, ETH: null },
-    openInterest: { BTC: null, ETH: null },
+    funding: emptyByCoin(() => null),
+    openInterest: emptyByCoin(() => null),
     mvrv: null,
     cycleTf: "1d",
     cycleUsTf: "1d",
+    cycleCoin: "BTC",
     cycleMkt: "crypto",
     cycleTfLoading: false,
     usStocks: null,
@@ -541,6 +555,8 @@
     if (savedMkt === "crypto" || savedMkt === "us") state.cycleMkt = savedMkt;
     const savedUsTf = localStorage.getItem(CYCLE_US_TF_KEY);
     if (US_STOCK_TFS.some((t) => t.id === savedUsTf)) state.cycleUsTf = savedUsTf;
+    const savedCoin = localStorage.getItem(CYCLE_COIN_KEY);
+    if (CYCLE_COINS.some((c) => c.id === savedCoin)) state.cycleCoin = savedCoin;
   } catch (e) {}
   let lastPrices = {};
   let renderTimer = 0;
@@ -937,8 +953,14 @@
     if (interval === "1d") return state.dailyLow[symbol] || [];
     return [];
   }
+  function hasTfSymbol(interval, symbol) {
+    return tfClosesOf(interval, symbol).length > 0;
+  }
   function hasTfData(interval) {
-    return tfClosesOf(interval, "BTC").length > 0 && tfClosesOf(interval, "ETH").length > 0;
+    return CYCLE_COINS.every((c) => hasTfSymbol(interval, c.id));
+  }
+  function cycleCoinId() {
+    return CYCLE_COINS.some((c) => c.id === state.cycleCoin) ? state.cycleCoin : "BTC";
   }
   function piCycleTopScore(dailySrc, livePrice) {
     const daily = (dailySrc || []).slice();
@@ -1664,6 +1686,13 @@
       <button type="button" class="tf-tab${mkt === "us" ? " on" : ""}" data-cycle-mkt="us" aria-pressed="${mkt === "us" ? "true" : "false"}">美股</button>
     </div>`;
   }
+  function coinTabs() {
+    const cur = cycleCoinId();
+    const tabs = CYCLE_COINS.map((c) =>
+      `<button type="button" class="tf-tab${c.id === cur ? " on" : ""}" data-cycle-coin="${c.id}" aria-pressed="${c.id === cur ? "true" : "false"}">${c.label}</button>`
+    ).join("");
+    return `<div class="tf-tabs coin-tabs" role="tablist">${tabs}</div>`;
+  }
   function tfTabsFor(list, current) {
     const two = list.length <= 2 ? " tf-two" : "";
     const tabs = list.map((t) =>
@@ -1739,21 +1768,16 @@
   function cycleBlock(data) {
     if (state.cycleMkt === "us") return usCycleBlock();
     const interval = state.cycleTf || "1d";
-    const head = marketTabs() + tfTabsFor(CYCLE_TFS, interval);
-    const btcReady = tfClosesOf(interval, "BTC").length > 0;
-    if (!btcReady) {
+    const symbol = cycleCoinId();
+    const head = marketTabs() + coinTabs() + tfTabsFor(CYCLE_TFS, interval);
+    if (!hasTfSymbol(interval, symbol)) {
       return head + `<p class="cycle-note">正在加载该周期 K 线…</p>`;
     }
-    const btcCoin = coinBy(data, "BTC"), ethCoin = coinBy(data, "ETH");
-    const btc = cycleMetrics("BTC", interval, btcCoin && btcCoin.price);
-    const eth = cycleMetrics("ETH", interval, ethCoin && ethCoin.price);
-    const fund = data.funding || state.funding || {};
+    const live = coinBy(data, symbol);
+    const m = cycleMetrics(symbol, interval, live && live.price);
+    const fund = (data.funding || state.funding || {})[symbol];
     return head + `
-    <div class="prob-kicker">比特币</div>
-    ${probCards(btc, "btc")}
-    ${cycleBoard("BTC", interval, btc, fund.BTC, "btc")}
-    <div class="subhead">以太坊</div>
-    ${eth.ready ? probCards(eth, "eth") + cycleBoard("ETH", interval, eth, fund.ETH, "eth") : `<p class="cycle-note">正在加载以太坊该周期 K 线…</p>`}
+    ${m.ready ? probCards(m, "btc") + cycleBoard(symbol, interval, m, fund, "btc") : `<p class="cycle-note">该周期数据不足</p>`}
     ${cycleDisclaimer("")}`;
   }
   function render(data) {
@@ -1829,7 +1853,7 @@
   }
   async function refreshKlines() {
     const jobs = [];
-    for (const [symbol, pair] of [["BTC", "BTCUSDT"], ["ETH", "ETHUSDT"]]) {
+    for (const { id: symbol, pair } of CYCLE_COINS) {
       jobs.push((async () => {
         const daily = await fetchJson(`https://api.binance.com/api/v3/klines?symbol=${pair}&interval=1d&limit=1000`);
         state.daily[symbol] = daily.map((r) => +r[4]);
@@ -1837,12 +1861,14 @@
         state.dailyHigh[symbol] = daily.map((r) => +r[2]);
         state.dailyLow[symbol] = daily.map((r) => +r[3]);
         storeTf("1d", symbol, daily);
-        state.lastCross[symbol] = lastCross(state.daily[symbol], 50, 200);
+        if (symbol === "BTC" || symbol === "ETH") state.lastCross[symbol] = lastCross(state.daily[symbol], 50, 200);
       })());
-      jobs.push((async () => {
-        const weekly = await fetchJson(`https://api.binance.com/api/v3/klines?symbol=${pair}&interval=1w&limit=250`);
-        state.weekly[symbol] = weekly.map((r) => +r[4]);
-      })());
+      if (symbol === "BTC" || symbol === "ETH") {
+        jobs.push((async () => {
+          const weekly = await fetchJson(`https://api.binance.com/api/v3/klines?symbol=${pair}&interval=1w&limit=250`);
+          state.weekly[symbol] = weekly.map((r) => +r[4]);
+        })());
+      }
       for (const iv of ["2h", "4h", "6h", "12h", "3d"]) {
         jobs.push((async () => {
           const rows = await fetchJson(`https://api.binance.com/api/v3/klines?symbol=${pair}&interval=${iv}&limit=1000`);
@@ -1854,7 +1880,7 @@
   }
   async function ensureTf(interval) {
     if (hasTfData(interval)) return;
-    await Promise.all([["BTC", "BTCUSDT"], ["ETH", "ETHUSDT"]].map(async ([symbol, pair]) => {
+    await Promise.all(CYCLE_COINS.map(async ({ id: symbol, pair }) => {
       if (tfClosesOf(interval, symbol).length) return;
       const rows = await fetchJson(`https://api.binance.com/api/v3/klines?symbol=${pair}&interval=${interval}&limit=1000`);
       storeTf(interval, symbol, rows);
@@ -1863,7 +1889,7 @@
         state.dailyTime[symbol] = state.tfTimes["1d"][symbol].slice();
         state.dailyHigh[symbol] = state.tfHighs["1d"][symbol].slice();
         state.dailyLow[symbol] = (state.tfLows["1d"] && state.tfLows["1d"][symbol] || []).slice();
-        state.lastCross[symbol] = lastCross(state.daily[symbol], 50, 200);
+        if (symbol === "BTC" || symbol === "ETH") state.lastCross[symbol] = lastCross(state.daily[symbol], 50, 200);
       }
     }));
   }
@@ -1882,7 +1908,7 @@
     state.fng = { value: +row.value, label: fngZh(row.value_classification, +row.value) };
   }
   async function refreshFunding() {
-    await Promise.all([["BTC", "BTCUSDT"], ["ETH", "ETHUSDT"]].map(async ([sym, pair]) => {
+    await Promise.all(CYCLE_COINS.map(async ({ id: sym, pair }) => {
       try {
         const row = await fetchJson("https://fapi.binance.com/fapi/v1/premiumIndex?symbol=" + pair);
         const rate = +row.lastFundingRate;
@@ -1891,7 +1917,7 @@
     }));
   }
   async function refreshOpenInterest() {
-    await Promise.all([["BTC", "BTCUSDT"], ["ETH", "ETHUSDT"]].map(async ([sym, pair]) => {
+    await Promise.all(CYCLE_COINS.map(async ({ id: sym, pair }) => {
       try {
         const now = await fetchJson("https://fapi.binance.com/fapi/v1/openInterest?symbol=" + pair);
         const hist = await fetchJson("https://fapi.binance.com/futures/data/openInterestHist?symbol=" + pair + "&period=1d&limit=2");
@@ -2053,6 +2079,18 @@
         try { localStorage.setItem(CYCLE_MKT_KEY, mkt); } catch (e) {}
         paint();
         if (mkt === "us" && !state.usStocks) loadUsStocks().then(paint).catch((e) => console.warn(e));
+      }
+      return;
+    }
+    const coinBtn = ev.target.closest("[data-cycle-coin]");
+    if (coinBtn && $("cycle").contains(coinBtn)) {
+      const coin = coinBtn.getAttribute("data-cycle-coin");
+      if (CYCLE_COINS.some((c) => c.id === coin) && coin !== state.cycleCoin) {
+        state.cycleCoin = coin;
+        try { localStorage.setItem(CYCLE_COIN_KEY, coin); } catch (e) {}
+        paint();
+        const tf = state.cycleTf || "1d";
+        if (!hasTfSymbol(tf, coin)) ensureTf(tf).then(paint).catch((e) => console.warn(e));
       }
       return;
     }
