@@ -591,6 +591,48 @@
     .sz-loading { color: var(--caution); }
     .sz-status { margin: 0; }
     .sz-results { margin: 0; }
+    .sz-rules {
+      margin: 12px 0 0;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #1A2030;
+    }
+    .sz-rules > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      touch-action: manipulation;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .sz-rules > summary::-webkit-details-marker,
+    .sz-rules > summary::marker { display: none; content: none; }
+    .sz-rules > summary::after {
+      content: "";
+      width: 0.55em;
+      height: 0.55em;
+      border-right: 2px solid var(--muted);
+      border-bottom: 2px solid var(--muted);
+      transform: rotate(45deg);
+      transition: transform .15s ease;
+      flex: 0 0 auto;
+    }
+    .sz-rules[open] > summary::after { transform: rotate(225deg); }
+    .sz-rules-body { padding: 0 12px 12px; color: var(--muted); font-size: 12px; line-height: 1.65; }
+    .sz-rules-lead { margin: 0 0 8px; }
+    .sz-rules-body h3 {
+      margin: 12px 0 4px;
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 750;
+    }
+    .sz-rules-body ol { margin: 0; padding-left: 1.25em; }
+    .sz-rules-body li { margin: 0 0 6px; }
     footer { margin-top: 18px; color: var(--muted); font-size: 12px; text-align: center; line-height: 1.6; }
   </style>
 </head>
@@ -3477,6 +3519,62 @@
     el._szHtml = html;
     el.innerHTML = html;
   }
+  function szRulesMarkup() {
+    return `<details class="sz-rules" id="sz-rules">
+      <summary>详细规则</summary>
+      <div class="sz-rules-body">
+        <p class="sz-rules-lead">以下为策略库当前规则，只用于本页观察状态与回测对比。历史回测不代表以后结果，不是买卖、逃顶抄底或加杠杆交易建议。</p>
+        <h3>一、数据与窗口</h3>
+        <ol>
+          <li>当前回测标的为币安 BTC/USDT 现货 K 线。回测周期可选 2H、4H、6H、12H、1D。</li>
+          <li>上方官方观察状态与下方回测都只用已收盘 K 线，不含形成中的当根。杠杆、本金最大亏损比与复利只作用于下方回测对比，不改变上方观察状态。</li>
+          <li>回测日期按香港日历，含起始日与结束日当天的已收盘 K 线。起始日必须早于结束日。结束日不超过该周期最后一根已收盘棒；未手动锁定时，结束日跟随最新已收盘日。</li>
+          <li>均线等指标需要足够的历史 K 线预热。若所选起始日过早、预热不足，实际回测起始会后移，并在结果中说明，不会虚构更早数据。</li>
+        </ol>
+        <h3>二、观察指标与持仓条件</h3>
+        <ol start="5">
+          <li>目前可多选三项：BDCP持股、一目云上、200均线上。至少勾选一个，才能给出观察状态与回测。</li>
+          <li>BDCP持股：典型价（最高价、最低价与收盘价的平均）的 5 周期均线向上；第一次由空变亮时，还要求 DIF（收盘价 12 周期与 26 周期指数均线之差）大于 0。亮起之后，只要该 5 周期均线仍向上，就继续视为看多。</li>
+          <li>一目云上：收盘价高于云层上沿，且转换线在基准线之上。</li>
+          <li>200均线上：收盘价高于收盘价的 200 周期简单均线。周期为 1D 时，即 200 日均线。</li>
+          <li>看多票数等于已选指标中当前满足条件的个数。持有条件为票数不少于「2」与「已选个数」中的较小值：只选 1 个时，该条看多即为持有；选 2 个时须两条同时看多；选 3 个时为三选二。</li>
+        </ol>
+        <h3>三、成交规则</h3>
+        <ol start="10">
+          <li>只做多，不做空。</li>
+          <li>空仓且当根收盘后满足持有条件，则在下一根开盘买入；持仓且当根收盘后不再满足，则在下一根开盘卖出。信号以当根已收盘确认，成交在下一根开盘。</li>
+          <li>若回测窗口开始时，前一根已收盘已处于持有，则在窗口第一根开盘买入。</li>
+          <li>主对比数字按不含手续费计算。附注会另外给出每边 0.1% 手续费的约数；有杠杆时，该手续费按仓位名义本金计。主数字也不含资金费率、借贷利息和爆仓罚金。</li>
+        </ol>
+        <h3>四、杠杆</h3>
+        <ol start="14">
+          <li>可选无杠杆（1 倍）或 2、3、4、5 倍。默认无杠杆。</li>
+          <li>开仓时，仓位名义本金等于当时交易本金乘以杠杆。回测权益按价格相对开仓价的涨跌放大：价格每变动 1%，权益大约变动杠杆倍。未设本金最大亏损限制时，若权益落到 0 或以下，则归零并停止后续开仓，不为负。</li>
+        </ol>
+        <h3>五、本金最大亏损比</h3>
+        <ol start="16">
+          <li>默认为不限制，也可选 5% 至 50%，每档 5%。</li>
+          <li>止损按每笔开仓时的交易本金计算：该笔权益降到「开仓本金 ×（1 − 所选比例）」或以下时平仓。它盯的是该笔开仓本金，不是账户从峰值算起的回撤，因此结果里的最大回撤可以大于所选比例。</li>
+          <li>在该根 K 线内部检查：若开盘价已经跌破止损线，按开盘价平仓；否则看该根最低价是否触及计算出的触发价，触及则以触发价平仓。这是用历史开高低收做的盘中止损，不是交易所里挂着的实时止损单。</li>
+          <li>止损后，若信号仍为持有且交易本金尚未亏完，则在下一根开盘用剩余交易本金继续开仓，新的止损按新的开仓本金计算。本金亏完后，该窗口内不再开仓。</li>
+        </ol>
+        <h3>六、复利与不复利</h3>
+        <ol start="20">
+          <li>默认勾选复利。勾选后，止盈卖出的全部余额作为下一笔开仓本金。</li>
+          <li>不勾选复利时，下一笔开仓本金不超过窗口起始本金。超过起始本金的利润会另行锁定，不投入下一笔，但仍计入总权益。若因止损或亏损使开仓本金低于起始本金，之后的盈利先补回开仓本金，补到起始本金后，再把多出来的利润锁定。</li>
+        </ol>
+        <h3>七、对照：一直持有现货</h3>
+        <ol start="22">
+          <li>右侧对照为窗口内第一根开盘买入，持有到结束日收盘。不加杠杆，不套本金最大亏损限制，也不套复利或不复利规则。</li>
+        </ol>
+      </div>
+    </details>`;
+  }
+  function sanzuanEnsureRules() {
+    const results = $("sz-results");
+    if (!results || $("sz-rules")) return;
+    results.insertAdjacentHTML("afterend", szRulesMarkup());
+  }
   function sanzuanEnsureControls() {
     const root = $("sanzuan");
     if (!root) return null;
@@ -3657,6 +3755,7 @@
     const root = $("sanzuan");
     if (!root) return;
     sanzuanEnsureControls();
+    sanzuanEnsureRules();
     szSyncControls();
     const status = $("sz-status");
     const results = $("sz-results");
