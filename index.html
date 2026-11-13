@@ -3192,7 +3192,8 @@
         const L = (lev != null && lev >= 1) ? lev : 1;
         const hasCap = maxLossX != null && Number.isFinite(maxLossX) && maxLossX > 0;
         const useCompound = compound !== false;
-        let tradeCap = 1, pocket = 0, entry = 0, entryCash = 0, trips = 0, pending = null;
+        const startCap = 1;
+        let tradeCap = startCap, pocket = 0, entry = 0, entryCash = 0, trips = 0, pending = null;
         let wiped = false, wipedOn = "", stopHits = 0, firstStopOn = "", lastStopOn = "";
         if (i0 > 0 && inPos[i0 - 1]) pending = "buy";
         let peak = 1, maxdd = 0, peakI = i0, bestPeak = null, bestTrough = null, inBars = 0, lastEq = 1;
@@ -3209,9 +3210,13 @@
         }
         function applyExit(px, kind) {
           const raw = Math.max(0, cashAfterExit(px));
-          if (kind === "signal" && !useCompound && raw > entryCash) {
-            pocket += raw - entryCash;
-            tradeCap = entryCash;
+          if (!useCompound) {
+            if (raw > startCap) {
+              pocket += raw - startCap;
+              tradeCap = startCap;
+            } else {
+              tradeCap = raw;
+            }
           } else {
             tradeCap = raw;
           }
@@ -3511,7 +3516,7 @@
           <span class="sz-lab">本金最大亏损比</span>
           <div class="tf-tabs sz-opt-tabs sz-loss-tabs" role="tablist" id="sz-loss-tabs">${losses}</div>
           <label class="sz-ind sz-compound"><input type="checkbox" id="sz-compound" data-sz-compound${szCompoundOn() ? " checked" : ""}>复利</label>
-          <p class="sz-hint">只用于下方回测对比，不改变上方观察状态。杠杆按价格涨跌放大盈亏。本金最大亏损比按每笔开仓时的交易本金计算，触达后平仓，条件再次满足则下一根开盘继续开仓。勾选复利时，止盈后按总余额开仓；不勾选则止盈利润不投入下一笔，亏损后按剩余开仓余额继续。主数字不含资金费率、借贷利息和爆仓罚金。一直持有现货不加杠杆，也不套这条亏损限制或复利。仅供观察，不是买卖或加杠杆交易建议。</p>
+          <p class="sz-hint">只用于下方回测对比，不改变上方观察状态。杠杆按价格涨跌放大盈亏。本金最大亏损比按每笔开仓时的交易本金计算，触达后平仓，条件再次满足则下一根开盘继续开仓。勾选复利时，止盈后按总余额开仓；不勾选时，超过起始本金的利润不投入下一笔；若止损或亏损后开仓本金低于起始本金，之后的盈利会先补回开仓本金，补到起始本金后再锁定多出的利润。主数字不含资金费率、借贷利息和爆仓罚金。一直持有现货不加杠杆，也不套这条亏损限制或复利。仅供观察，不是买卖或加杠杆交易建议。</p>
         </div>
         <div class="sz-field">
           <span class="sz-lab">回测周期</span>
@@ -3736,7 +3741,7 @@
         capKv = sanzuanKv("本金亏损限制", "未触达");
       }
       const extra = (bt.notes && bt.notes.length ? bt.notes.join("") : "") + (d.notes && d.notes.length && bt.notes !== d.notes ? d.notes.join("") : "");
-      const note = `币安 BTC/USDT ${lab} 线，信号当根已收盘确认、下一根开盘成交，只做多、不含手续费。杠杆按价格涨跌放大盈亏。本金最大亏损比按每笔开仓时的交易本金计算，触达后平仓，条件再次满足则下一根开盘继续开仓。勾选复利时止盈后按总余额开仓，不勾选则止盈利润不投入下一笔。主数字不含资金费率、借贷利息和爆仓罚金。一直持有现货不加杠杆，也不套这条本金亏损限制或复利。窗口按香港日期，含起始日与结束日当天的已收盘 K 线；结束日不超过该周期最后一根已收盘棒。${feeNote}${stopNote}${extra}历史回测不代表以后结果，不是投资建议。`;
+      const note = `币安 BTC/USDT ${lab} 线，信号当根已收盘确认、下一根开盘成交，只做多、不含手续费。杠杆按价格涨跌放大盈亏。本金最大亏损比按每笔开仓时的交易本金计算，触达后平仓，条件再次满足则下一根开盘继续开仓。勾选复利时止盈后按总余额开仓，不勾选则超过起始本金的利润不投入下一笔，本金亏掉后会先用盈利补回。主数字不含资金费率、借贷利息和爆仓罚金。一直持有现货不加杠杆，也不套这条本金亏损限制或复利。窗口按香港日期，含起始日与结束日当天的已收盘 K 线；结束日不超过该周期最后一根已收盘棒。${feeNote}${stopNote}${extra}历史回测不代表以后结果，不是投资建议。`;
       const title = "回测对比";
       const windowLine = escapeHtml(bt.from) + " 至 " + escapeHtml(bt.to);
       resultsHtml = szCmpShell(
