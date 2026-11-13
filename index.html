@@ -3136,6 +3136,7 @@
     let wiped = false, wipedOn = "", stopHits = 0, firstStopOn = "", lastStopOn = "";
     if (i0 > 0 && inPos[i0 - 1]) pending = "buy";
     let peak = 1, maxdd = 0, peakI = i0, bestPeak = null, bestTrough = null, inBars = 0, lastEq = 1;
+    let bestTradeRet = null, bestTradeFrom = 0, bestTradeTo = 0, bestTradeOpen = false, entryI = -1;
     function unitsOf() {
       return entryCash * L * (1 - fee) / entry;
     }
@@ -3146,6 +3147,17 @@
     function cashAfterExit(px) {
       if (!(entry > 0)) return tradeCap;
       return unitsOf() * px * (1 - fee) - entryCash * (L - 1);
+    }
+    function noteTrade(px, i, markedToEnd) {
+      if (!(entryCash > 0) || !(entryI >= 0)) return;
+      const cash = cashAfterExit(px);
+      const tradeRet = (cash - entryCash) / entryCash;
+      if (bestTradeRet == null || tradeRet > bestTradeRet) {
+        bestTradeRet = tradeRet;
+        bestTradeFrom = times[entryI];
+        bestTradeTo = times[i];
+        bestTradeOpen = !!markedToEnd;
+      }
     }
     function applyExit(px, kind) {
       const raw = Math.max(0, cashAfterExit(px));
@@ -3185,11 +3197,13 @@
         } else {
           entryCash = tradeCap;
           entry = opens[i];
+          entryI = i;
           tradeCap = 0;
           pending = null;
           held = true;
         }
       } else if (!wiped && pending === "sell" && entry > 0) {
+        noteTrade(opens[i], i, false);
         applyExit(opens[i], "signal");
         trips += 1;
         pending = null;
@@ -3208,6 +3222,7 @@
             px = Math.min(opens[i], Math.max(lo, trig));
           }
           const isCap = hasCap && floor > 0;
+          noteTrade(px, i, false);
           applyExit(px, isCap ? "stop" : "wipe");
           trips += 1;
           held = true;
@@ -3231,6 +3246,7 @@
         else if (have && !want) pending = "sell";
       }
     }
+    if (entry > 0) noteTrade(closes[iEnd], iEnd, true);
     const ret = lastEq - 1;
     const years = (times[iEnd] - times[i0]) / (365.25 * 86400000);
     const cagr = (lastEq > 0 && years > 0) ? Math.pow(lastEq, 1 / years) - 1 : null;
@@ -3245,6 +3261,10 @@
       firstStopOn,
       lastStopOn,
       lastEq,
+      bestTradeRet,
+      bestTradeFrom: bestTradeRet == null ? 0 : bestTradeFrom,
+      bestTradeTo: bestTradeRet == null ? 0 : bestTradeTo,
+      bestTradeOpen: !!(bestTradeRet != null && bestTradeOpen),
     };
   }
   function szBuildInPos(bd, ichi, aboveMa, selected) {
@@ -3383,6 +3403,10 @@
       mddTo: r.mddTo,
       firstStopOn: r.firstStopOn,
       lastStopOn: r.lastStopOn,
+      bestTradeRet: r.bestTradeRet,
+      bestTradeFrom: r.bestTradeFrom,
+      bestTradeTo: r.bestTradeTo,
+      bestTradeOpen: r.bestTradeOpen,
     };
   }
   let szSuggestGen = 0;
@@ -3590,6 +3614,10 @@
           ret, cagr, mdd: maxdd,
           mddFrom: hkYmd(times[bestPeak]),
           mddTo: hkYmd(times[bestTrough]),
+          bestTradeRet: ret,
+          bestTradeFrom: times[i0],
+          bestTradeTo: times[iEnd],
+          bestTradeOpen: true,
         };
       }
       const levMult = szLevMult();
@@ -3766,6 +3794,23 @@
   function sanzuanKv(lab, val, span) {
     return `<div class="sz-kv"><span class="lab">${lab}</span><span class="val">${val}${span ? `<span class="sz-span">${span}</span>` : ""}</span></div>`;
   }
+  function szFmtTradeTs(ms, tf) {
+    if (ms == null || !Number.isFinite(ms)) return "";
+    return tf === "1d" ? hkYmd(ms) : fmtTsHK(ms);
+  }
+  function szBestTradeSpan(row, tf) {
+    if (!row || row.bestTradeRet == null || !Number.isFinite(row.bestTradeRet)) return "";
+    const from = szFmtTradeTs(row.bestTradeFrom, tf);
+    const to = szFmtTradeTs(row.bestTradeTo, tf);
+    if (!from || !to) return "";
+    return from + " 至 " + to + (row.bestTradeOpen ? "（持有至结束日收盘）" : "");
+  }
+  function szBestTradeKv(row, tf) {
+    if (!row || row.bestTradeRet == null || !Number.isFinite(row.bestTradeRet)) {
+      return sanzuanKv("单笔最大盈利", "—", "无");
+    }
+    return sanzuanKv("单笔最大盈利", fmtSzPct(row.bestTradeRet, 1), szBestTradeSpan(row, tf));
+  }
   function szSetHtml(el, html) {
     if (!el) return;
     if (el._szHtml === html) return;
@@ -3826,7 +3871,11 @@
         </ol>
         <h3>八、对照：一直持有现货</h3>
         <ol start="27">
-          <li>右侧对照为窗口内第一根开盘买入，持有到结束日收盘。不加杠杆，不套本金最大亏损限制，也不套复利或不复利规则。</li>
+          <li>右侧对照为窗口内第一根开盘买入，持有到结束日收盘。不加杠杆，不套本金最大亏损限制，也不套复利或不复利规则。该对照只有这一笔连续持有，故「单笔最大盈利」即该窗口收益，起止为窗口第一根开盘至结束日收盘。</li>
+        </ol>
+        <h3>九、单笔最大盈利</h3>
+        <ol start="28">
+          <li>单笔指一笔多头持仓：在买入当根开盘价开仓（若窗口开始时已处于持有，则在窗口第一根开盘买入），持有至信号卖出（下一根开盘）、盘中止损或本金亏完平仓；若窗口结束时仍持有，则按结束日收盘计价。单笔盈利比例为（该笔平仓后现金 − 该笔开仓本金）÷ 该笔开仓本金，与回测权益同一算法，主数字不含手续费，已计入杠杆放大。结果列出该窗口内该比例最高的一笔及其起止时间（按香港时间；周期为 1D 时只列日期，2H、4H、6H、12H 含到分钟）。若最高的一笔在结束日仍持有，结束时间记为窗口最后一根收盘，并注明持有至结束日收盘。若该窗口没有开仓，则显示为无，不记为 0。即使最高的一笔仍为亏损，也照实列出。左侧回测对比、右侧一直持有对照，以及最佳组合建议的第一名与第二、三名摘要，均按同一口径展示。该数字只用于观察历史回测，不代表以后结果，不是买卖或交易建议。</li>
         </ol>
       </div>
     </details>`;
@@ -3857,11 +3906,14 @@
     }
     function altCard(rank, c) {
       if (!c) return "";
+      const tradeBit = (!c || c.bestTradeRet == null || !Number.isFinite(c.bestTradeRet))
+        ? "单笔最大盈利 —"
+        : ("单笔最大盈利 " + fmtSzPct(c.bestTradeRet, 1) + (szBestTradeSpan(c, tf) ? " " + szBestTradeSpan(c, tf) : ""));
       return `<div class="sz-col sz-suggest-alt">
         <div class="cyc-k">第${rank}</div>
         <p class="sz-bt-sub">${escapeHtml(szComboBrief(c, tf))}</p>
         <div class="sz-ret ${pctClass(c.ret)}">${fmtSzPctInt(c.ret)}</div>
-        <p class="sz-suggest-alt-nums">年化 ${fmtSzPct(c.cagr, 1)}　回撤 ${fmtSzPct(c.mdd, 1)}　${c.trips} 笔　止损 ${c.stopHits || 0} 次</p>
+        <p class="sz-suggest-alt-nums">年化 ${fmtSzPct(c.cagr, 1)}　回撤 ${fmtSzPct(c.mdd, 1)}　${c.trips} 笔　止损 ${c.stopHits || 0} 次　${tradeBit}</p>
       </div>`;
     }
     let inner = "";
@@ -3893,6 +3945,7 @@
         <div class="sz-ret ${pctClass(best.ret)}">${fmtSzPctInt(best.ret)}</div>
         ${sanzuanKv("年化", fmtSzPct(best.cagr, 1))}
         ${sanzuanKv("最大回撤", fmtSzPct(best.mdd, 1), best.mddFrom && best.mddTo ? (best.mddFrom + " 至 " + best.mddTo) : "")}
+        ${szBestTradeKv(best, tf)}
         ${sanzuanKv("完整买卖", String(best.trips) + " 笔")}
         ${sanzuanKv("止损次数", String(best.stopHits || 0) + " 次")}
         ${sanzuanKv("实际窗口", s.from + " 至 " + s.to)}
@@ -4207,6 +4260,7 @@
             <div class="sz-ret ${pctClass(st.ret)}">${fmtSzPctInt(st.ret)}</div>
             ${sanzuanKv("年化", fmtSzPct(st.cagr, 1))}
             ${sanzuanKv("最大回撤", fmtSzPct(st.mdd, 1), st.mddFrom && st.mddTo ? (st.mddFrom + " 至 " + st.mddTo) : "")}
+            ${szBestTradeKv(st, tf)}
             ${sanzuanKv("完整买卖", String(st.trips) + " 笔")}
             ${sanzuanKv("在场时间", fmtSzPct(st.timeInMkt, 1).replace(/^\+/, ""))}
             ${capKv}`,
@@ -4214,7 +4268,8 @@
             <p class="sz-bt-sub">无杠杆，不套本金亏损限制</p>
             <div class="sz-ret ${pctClass(hd.ret)}">${fmtSzPctInt(hd.ret)}</div>
             ${sanzuanKv("年化", fmtSzPct(hd.cagr, 1))}
-            ${sanzuanKv("最大回撤", fmtSzPct(hd.mdd, 1), hd.mddFrom && hd.mddTo ? (hd.mddFrom + " 至 " + hd.mddTo) : "")}`,
+            ${sanzuanKv("最大回撤", fmtSzPct(hd.mdd, 1), hd.mddFrom && hd.mddTo ? (hd.mddFrom + " 至 " + hd.mddTo) : "")}
+            ${szBestTradeKv(hd, tf)}`,
         title,
         windowLine,
         note
