@@ -510,6 +510,8 @@
       padding: 8px 10px 9px; min-width: 0;
     }
     .sz-overall { margin-bottom: 6px; }
+    .sz-lib-lead { margin: 0 0 10px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .sz-strategy .sz-card-k { margin: 0 0 6px; font-size: 15px; font-weight: 720; }
     .sz-lead { margin: 0 0 8px; color: var(--muted); font-size: 12px; line-height: 1.5; }
     .sz-grid { display: grid; gap: 6px; margin-bottom: 8px; }
     .sz-row-top { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
@@ -549,7 +551,7 @@
     <nav class="main-tabs tf-tabs" id="main-tabs" role="tablist" aria-label="主要栏目">
       <button type="button" class="tf-tab on" data-main-tab="market" aria-pressed="true">行情</button>
       <button type="button" class="tf-tab" data-main-tab="cycle" aria-pressed="false">顶底<span class="tab-dot" hidden></span></button>
-      <button type="button" class="tf-tab" data-main-tab="sanzuan" aria-pressed="false">三选二<span class="tab-dot" hidden></span></button>
+      <button type="button" class="tf-tab" data-main-tab="sanzuan" aria-pressed="false">策略库<span class="tab-dot" hidden></span></button>
       <button type="button" class="tf-tab" data-main-tab="xfeed" aria-pressed="false">X关注<span class="tab-dot" hidden></span></button>
       <button type="button" class="tf-tab" data-main-tab="sth" aria-pressed="false">持有者<span class="tab-dot" hidden></span></button>
       <button type="button" class="tf-tab" data-main-tab="events" aria-pressed="false">事件<span class="tab-dot" hidden></span></button>
@@ -578,8 +580,9 @@
   <section class="block" id="cycle"></section>
   </div>
   <div id="panel-sanzuan" class="main-panel" data-main-panel="sanzuan">
-  <h2>三选二</h2>
-  <section class="block" id="sanzuan">
+  <h2>策略库</h2>
+  <p class="sz-lib-lead">当前收录的观察策略。每条单独标注状态与回测，仅供观察，不是买卖建议。</p>
+  <section class="block sz-strategy" id="sanzuan">
     <p class="cycle-note">正在加载日线观察…</p>
   </section>
   </div>
@@ -629,7 +632,7 @@
   <footer>
     数据来自 Binance、CoinGecko、Alternative.me，时间为香港时间。<br>
     顶底指标（含综合倾向、分项读数与 V 反观察）为常用技术观察，不是买卖建议，也不确认见顶见底；不含自动交易。<br>
-    三选二栏为比特币日线三个条件的当前观察，并对照近四年回测与一直持有现货，不是买卖建议。<br>
+    策略库目前收录比特币日线「三选二」观察，并对照近四年回测与一直持有现货，不是买卖建议。<br>
     合约持仓量来自币安 U 本位合约。MVRV Z-Score 来自 BGeometrics，免费数据末值可能延迟约一周。AHR999 按币安 BTCUSDT 日线与九神公开公式计算，0.45、1.2、5 为文献参考带，不是买卖线。<br>
     比特币支撑与压力由币安 BTCUSDT 日线的近期摆动高低点、近30日/90日/一年区间高低，以及 50/200 日与周均线合并去重得出；未收盘的日线不作为已确认摆动点。仅供观察，不是买卖建议。<br>
     短期持有者图表另参考 BGeometrics（bitcoin-data.com）与 Binance。<br>
@@ -1175,7 +1178,7 @@
   function isUsStock(symbol) {
     return symbol === "QQQ" || symbol === "VOO" || symbol === "SPX";
   }
-  // V 反观察：独立卡片，不进入 compositeLean，不接入三选二。
+  // V 反观察：独立卡片，不进入 compositeLean，不接入策略库。
   // 展示「当前结构有多接近 V 底 / V 顶（倒 V）观察条件」的倾向分，不是确认反转，也不是买卖建议。
   // 权重（合计 100，成交量为加分项）：急而深的一腿 25、反向腿速度与回撤 30、单一极值 20、收盘收复关键位 20、成交量 0–5。
   // 缺成交量或未放量时成交量项为 0，不会让总分归零。官方读数只用最后一根已收盘 K 线。
@@ -2654,7 +2657,7 @@
     const extraReads = state.cycleMkt === "us"
       ? "布林带、MACD 柱、RSI 背离和 MACD 背离同样只供观察，不是买卖信号，也不能避免假信号。MACD 背离比较的是价格摆动与 MACD 线（12/26），摆动规则与 RSI 背离相同。"
       : "布林带、MACD 柱、RSI 背离、MACD 背离、合约持仓量、MVRV Z-Score 和 AHR999 同样只供观察，不是买卖或开仓信号，也不能避免假信号。MACD 背离比较的是价格摆动与 MACD 线（12/26），摆动规则与 RSI 背离相同。MVRV 的 0 与 7、AHR999 的 0.45、1.2 与 5 是各指标文献里常被提起的参考带，不是买卖线。MVRV 免费数据末值可能延迟约一周。AHR999 按币安 BTCUSDT 日线与九神公开公式计算：指数 =（价格÷近200日收盘均价）×（价格÷指数增长估值），估值 = 10^(5.84×log10(币龄)−17.01)，币龄从 2009-01-03 起算；当日未收盘用最新价。";
-    return `<p class="cycle-note">${extra || ""}顶部倾向、底部倾向是按权重合成的 0–100 观察分数，不是统计概率，也不是价格预测；两者互不排斥，不必相加为 100。综合判断：任一项分数缺失则暂不给出；两项都达到 40 为「混合」；顶部倾向达到 50 且至少高出底部倾向 20 为「偏顶部观察」；底部倾向达到 50 且至少高出顶部倾向 20 为「偏底部观察」；其余为「中性」。仅供观察，不构成投资建议。窗口回撤取已加载 K 线的最高价，并非历史最高，若更高点不在窗口内则不会计入。${extraReads} V 反观察是独立卡片，不进入综合判断、也不接入三选二；分数表示当前结构有多接近 V 底或 V 顶（倒 V）观察条件，不是确认反转，也不是买卖建议。官方读数只用最后一根已收盘 K 线；未收盘当根若显示分数会标明「形成中」，仅供预览，不触发本栏变化弹窗或红点。权重为急而深的一腿 25、反向腿速度与回撤 30、单一极值 20、收盘收复关键位 20、成交量 0–5（缺成交量或未放量时该项为 0，不会让总分归零）。深度与根数阈值随周期调整，不用同一百分比套 2H 与 1W。美股 K 线若无成交量，成交量项为 0 并在提示中说明。</p>`;
+    return `<p class="cycle-note">${extra || ""}顶部倾向、底部倾向是按权重合成的 0–100 观察分数，不是统计概率，也不是价格预测；两者互不排斥，不必相加为 100。综合判断：任一项分数缺失则暂不给出；两项都达到 40 为「混合」；顶部倾向达到 50 且至少高出底部倾向 20 为「偏顶部观察」；底部倾向达到 50 且至少高出顶部倾向 20 为「偏底部观察」；其余为「中性」。仅供观察，不构成投资建议。窗口回撤取已加载 K 线的最高价，并非历史最高，若更高点不在窗口内则不会计入。${extraReads} V 反观察是独立卡片，不进入综合判断、也不接入策略库；分数表示当前结构有多接近 V 底或 V 顶（倒 V）观察条件，不是确认反转，也不是买卖建议。官方读数只用最后一根已收盘 K 线；未收盘当根若显示分数会标明「形成中」，仅供预览，不触发本栏变化弹窗或红点。权重为急而深的一腿 25、反向腿速度与回撤 30、单一极值 20、收盘收复关键位 20、成交量 0–5（缺成交量或未放量时该项为 0，不会让总分归零）。深度与根数阈值随周期调整，不用同一百分比套 2H 与 1W。美股 K 线若无成交量，成交量项为 0 并在提示中说明。</p>`;
   }
   function usCycleBlock() {
     const interval = state.cycleUsTf || "1d";
@@ -2996,11 +2999,11 @@
     if (!root) return;
     const d = state.sanzuan;
     if (!d) {
-      root.innerHTML = `<p class="cycle-note">正在加载日线观察…</p>`;
+      root.innerHTML = `<div class="sz-card-k">三选二</div><p class="cycle-note">正在加载日线观察…</p>`;
       return;
     }
     if (!d.ready) {
-      root.innerHTML = `<p class="cycle-note">${escapeHtml(d.error || "暂无法计算观察状态")}</p>`;
+      root.innerHTML = `<div class="sz-card-k">三选二</div><p class="cycle-note">${escapeHtml(d.error || "暂无法计算观察状态")}</p>`;
       return;
     }
     const hold = d.inPos;
@@ -3033,7 +3036,8 @@
         </div>
         <p class="cycle-note">币安 BTC/USDT 日线（UTC），信号当日收盘确认、次日开盘成交，不含手续费。${feeNote}历史回测不代表以后结果，不是投资建议。</p>`;
     }
-    root.innerHTML = `<p class="sz-lead">BTC 日线三个条件中，至少两个看多则观察为持有，否则为空仓。仅供观察，不是买卖建议。</p>
+    root.innerHTML = `<div class="sz-card-k">三选二</div>
+      <p class="sz-lead">BTC 日线三个条件中，至少两个看多则观察为持有，否则为空仓。仅供观察，不是买卖建议。</p>
       <div class="sz-overall">
         <div class="cyc-head">
           <div class="cyc-k">观察状态</div>
@@ -3323,7 +3327,7 @@
       btn.appendChild(dot);
     }
     dot.hidden = !on;
-    const names = { cycle: "顶底", sanzuan: "三选二", xfeed: "X关注", sth: "持有者", events: "事件" };
+    const names = { cycle: "顶底", sanzuan: "策略库", xfeed: "X关注", sth: "持有者", events: "事件" };
     if (on) btn.setAttribute("aria-label", (names[id] || id) + "，有更新");
     else btn.removeAttribute("aria-label");
   }
