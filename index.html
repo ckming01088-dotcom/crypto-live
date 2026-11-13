@@ -555,6 +555,7 @@
       border-color: color-mix(in srgb, var(--caution) 55%, var(--line));
     }
     .sz-ind input { margin: 0; accent-color: var(--caution); flex: 0 0 auto; }
+    .sz-compound { flex: 0 1 auto; width: fit-content; max-width: 100%; margin: 6px 0 0; }
     .sz-tf-tabs { margin: 0; }
     .sz-tf-tabs .tf-tab { flex: 1 1 calc((100% - 24px) / 5); }
     .sz-opt-tabs { margin: 0; }
@@ -686,7 +687,7 @@
   <footer>
     数据来自 Binance、CoinGecko、Alternative.me，时间为香港时间。<br>
     顶底指标（含综合倾向、分项读数与 V 反观察）为常用技术观察，不是买卖建议，也不确认见顶见底；不含自动交易。<br>
-    策略库可多选指标并按周期与日期回测，目前收录三选二的三个条件；杠杆与本金最大亏损比只用于回测观察，主数字不含资金费率、借贷利息和爆仓罚金；仍是观察，不是买卖或加杠杆交易建议。<br>
+    策略库可多选指标并按周期与日期回测，目前收录三选二的三个条件；杠杆、本金最大亏损比与复利只用于回测观察，主数字不含资金费率、借贷利息和爆仓罚金；仍是观察，不是买卖或加杠杆交易建议。<br>
     合约持仓量来自币安 U 本位合约。MVRV Z-Score 来自 BGeometrics，免费数据末值可能延迟约一周。AHR999 按币安 BTCUSDT 日线与九神公开公式计算，0.45、1.2、5 为文献参考带，不是买卖线。<br>
     比特币支撑与压力由币安 BTCUSDT 日线的近期摆动高低点、近30日/90日/一年区间高低，以及 50/200 日与周均线合并去重得出；未收盘的日线不作为已确认摆动点。仅供观察，不是买卖建议。<br>
     短期持有者图表另参考 BGeometrics（bitcoin-data.com）与 Binance。<br>
@@ -758,6 +759,7 @@
   const SZ_END_FOLLOW_KEY = "crypto-live-sz-end-follow";
   const SZ_LEV_KEY = "crypto-live-sz-lev";
   const SZ_MAXLOSS_KEY = "crypto-live-sz-maxloss";
+  const SZ_COMPOUND_KEY = "crypto-live-sz-compound";
   const SZ_LEVS = [
     { id: "1", label: "无杠杆", L: 1 },
     { id: "2", label: "2倍", L: 2 },
@@ -837,6 +839,7 @@
     szEndFollow: true,
     szLev: "1",
     szMaxLoss: "none",
+    szCompound: true,
     live: false,
     status: "正在连接行情…",
   };
@@ -876,6 +879,9 @@
     if (SZ_LEVS.some((t) => t.id === savedSzLev)) state.szLev = savedSzLev;
     const savedSzMaxLoss = localStorage.getItem(SZ_MAXLOSS_KEY);
     if (SZ_MAXLOSS.some((t) => t.id === savedSzMaxLoss)) state.szMaxLoss = savedSzMaxLoss;
+    const savedSzCompound = localStorage.getItem(SZ_COMPOUND_KEY);
+    if (savedSzCompound === "0") state.szCompound = false;
+    else if (savedSzCompound === "1") state.szCompound = true;
   } catch (e) {}
   let lastPrices = {};
   let renderTimer = 0;
@@ -2942,12 +2948,16 @@
     const row = SZ_MAXLOSS.find((t) => t.id === szMaxLossId());
     return (row && row.x != null) ? row.x : null;
   }
+  function szCompoundOn() {
+    return state.szCompound !== false;
+  }
   function szBtRuleNote() {
     const lev = SZ_LEVS.find((t) => t.id === szLevId()) || SZ_LEVS[0];
     const loss = SZ_MAXLOSS.find((t) => t.id === szMaxLossId()) || SZ_MAXLOSS[0];
     const levTxt = lev.L === 1 ? "无杠杆" : (lev.label + "杠杆");
     const lossTxt = loss.x == null ? "本金亏损不限制" : ("本金最大亏损 " + loss.label);
-    return levTxt + "，" + lossTxt;
+    const cmpTxt = szCompoundOn() ? "复利" : "不复利";
+    return levTxt + "，" + lossTxt + "，" + cmpTxt;
   }
   function szIndName(id, tf) {
     if (id === "ma") return tf === "1d" ? "200日均线上" : "200周期均线上";
@@ -2988,6 +2998,7 @@
       localStorage.setItem(SZ_END_FOLLOW_KEY, state.szEndFollow ? "1" : "0");
       localStorage.setItem(SZ_LEV_KEY, szLevId());
       localStorage.setItem(SZ_MAXLOSS_KEY, szMaxLossId());
+      localStorage.setItem(SZ_COMPOUND_KEY, szCompoundOn() ? "1" : "0");
     } catch (e) {}
   }
   function szBarsOf(tf) {
@@ -3171,84 +3182,99 @@
     }
     let backtest = null;
     if (i0 >= 0 && i0 <= iEnd) {
-      function runEquity(fee, lev, maxLossX) {
+      function runEquity(fee, lev, maxLossX, compound) {
         const L = (lev != null && lev >= 1) ? lev : 1;
         const hasCap = maxLossX != null && Number.isFinite(maxLossX) && maxLossX > 0;
-        const stopLevel = hasCap ? (1 - maxLossX) : 0;
-        let cash = 1, entry = 0, entryCash = 0, trips = 0, pending = null;
-        let stopped = false, stoppedOn = "", stoppedKind = "";
+        const useCompound = compound !== false;
+        let tradeCap = 1, pocket = 0, entry = 0, entryCash = 0, trips = 0, pending = null;
+        let wiped = false, wipedOn = "", stopHits = 0, firstStopOn = "", lastStopOn = "";
         if (i0 > 0 && inPos[i0 - 1]) pending = "buy";
         let peak = 1, maxdd = 0, peakI = i0, bestPeak = null, bestTrough = null, inBars = 0, lastEq = 1;
         function unitsOf() {
           return entryCash * L * (1 - fee) / entry;
         }
         function eqAt(px) {
-          if (!(entry > 0)) return cash;
+          if (!(entry > 0)) return tradeCap;
           return unitsOf() * px - entryCash * (L - 1);
         }
         function cashAfterExit(px) {
-          if (!(entry > 0)) return cash;
+          if (!(entry > 0)) return tradeCap;
           return unitsOf() * px * (1 - fee) - entryCash * (L - 1);
         }
-        function flatten(px) {
-          cash = Math.max(0, cashAfterExit(px));
+        function applyExit(px, kind) {
+          const raw = Math.max(0, cashAfterExit(px));
+          if (kind === "signal" && !useCompound && raw > entryCash) {
+            pocket += raw - entryCash;
+            tradeCap = entryCash;
+          } else {
+            tradeCap = raw;
+          }
           entry = 0;
           entryCash = 0;
         }
-        function stopNow(kind, i) {
-          stopped = true;
-          stoppedKind = kind;
-          stoppedOn = hkYmd(times[i]);
+        function markStop(i) {
+          stopHits += 1;
+          const d = hkYmd(times[i]);
+          if (!firstStopOn) firstStopOn = d;
+          lastStopOn = d;
+        }
+        function markWipe(i) {
+          wiped = true;
+          wipedOn = hkYmd(times[i]);
           pending = null;
         }
-        function stopKindOf(eq) {
-          if (hasCap && eq <= (1 - maxLossX)) return "maxloss";
-          return "wipeout";
+        function maybeWipe(i) {
+          if (!(tradeCap > 0)) markWipe(i);
         }
         for (let i = i0; i <= iEnd; i++) {
           let held = entry > 0;
-          if (!stopped && pending === "buy") {
-            if (cash <= stopLevel) {
-              stopNow(stopKindOf(cash), i);
+          if (!wiped && pending === "buy") {
+            if (!(tradeCap > 0)) {
+              markWipe(i);
               pending = null;
             } else {
-              entryCash = cash;
+              entryCash = tradeCap;
               entry = opens[i];
-              cash = 0;
+              tradeCap = 0;
               pending = null;
               held = true;
             }
-          } else if (!stopped && pending === "sell" && entry > 0) {
-            flatten(opens[i]);
+          } else if (!wiped && pending === "sell" && entry > 0) {
+            applyExit(opens[i], "signal");
             trips += 1;
             pending = null;
             held = false;
-            if (cash <= stopLevel) stopNow(stopKindOf(cash), i);
+            maybeWipe(i);
           }
-          if (!stopped && entry > 0) {
+          if (!wiped && entry > 0) {
             const lo = Number.isFinite(lows[i]) ? lows[i] : Math.min(opens[i], closes[i]);
+            const floor = hasCap ? (entryCash * (1 - maxLossX)) : 0;
             const eqOpen = eqAt(opens[i]);
             const eqLow = eqAt(lo);
-            if (eqOpen <= stopLevel || eqLow <= stopLevel) {
+            if (eqOpen <= floor || eqLow <= floor) {
               let px = opens[i];
-              if (eqOpen > stopLevel) {
-                const trig = entry * (stopLevel / entryCash - 1 + L) / (L * (1 - fee));
+              if (eqOpen > floor) {
+                const trig = entry * (floor / entryCash - 1 + L) / (L * (1 - fee));
                 px = Math.min(opens[i], Math.max(lo, trig));
               }
-              flatten(px);
+              const isCap = hasCap && floor > 0;
+              applyExit(px, isCap ? "stop" : "wipe");
               trips += 1;
               held = true;
-              stopNow(stopKindOf(cash), i);
+              if (isCap) markStop(i);
+              maybeWipe(i);
             }
           }
-          let equity = entry > 0 ? eqAt(closes[i]) : cash;
+          let posEq = entry > 0 ? eqAt(closes[i]) : tradeCap;
+          if (!(posEq > 0)) posEq = 0;
+          let equity = pocket + posEq;
           if (!(equity > 0)) equity = 0;
           lastEq = equity;
           if (held) inBars += 1;
           if (equity >= peak) { peak = equity; peakI = i; }
           const dd = peak > 0 ? (equity / peak - 1) : 0;
           if (dd < maxdd) { maxdd = dd; bestPeak = peakI; bestTrough = i; }
-          if (i < iEnd && !stopped) {
+          if (i < iEnd && !wiped) {
             const want = inPos[i];
             const have = entry > 0;
             if (want && !have) pending = "buy";
@@ -3263,10 +3289,14 @@
           endedInPos: entry > 0,
           mddFrom: bestPeak != null ? hkYmd(times[bestPeak]) : "",
           mddTo: bestTrough != null ? hkYmd(times[bestTrough]) : "",
-          stopped: stoppedKind,
-          stoppedOn,
+          stopped: wiped ? "wipeout" : (stopHits ? "maxloss" : ""),
+          stoppedOn: wiped ? wipedOn : (lastStopOn || ""),
+          stopHits,
+          firstStopOn,
+          lastStopOn,
         };
       }
+
       function runBh(fee) {
         const startPx = opens[i0] / (1 - fee);
         let peak = closes[i0] / startPx, maxdd = 0, peakI = i0, bestPeak = i0, bestTrough = i0;
@@ -3289,9 +3319,10 @@
       }
       const levMult = szLevMult();
       const maxLossX = szMaxLossRatio();
-      const st0 = runEquity(0, levMult, maxLossX);
+      const compoundOn = szCompoundOn();
+      const st0 = runEquity(0, levMult, maxLossX, compoundOn);
       const bh0 = runBh(0);
-      const stFee = runEquity(0.001, levMult, maxLossX);
+      const stFee = runEquity(0.001, levMult, maxLossX, compoundOn);
       const bhFee = runBh(0.001);
       backtest = {
         from: hkYmd(times[i0]),
@@ -3306,6 +3337,7 @@
         holdFee: bhFee,
         lev: levMult,
         maxLoss: maxLossX,
+        compound: compoundOn,
         notes,
       };
     }
@@ -3472,7 +3504,8 @@
         <div class="sz-field">
           <span class="sz-lab">本金最大亏损比</span>
           <div class="tf-tabs sz-opt-tabs sz-loss-tabs" role="tablist" id="sz-loss-tabs">${losses}</div>
-          <p class="sz-hint">只用于下方回测对比，不改变上方观察状态。杠杆按价格涨跌放大盈亏；本金指回测起始资金；达到所选最大亏损比后平仓并在窗口内不再开仓。主数字不含资金费率、借贷利息和爆仓罚金。一直持有现货不加杠杆、也不套这条亏损限制。仅供观察，不是买卖或加杠杆交易建议。</p>
+          <label class="sz-ind sz-compound"><input type="checkbox" id="sz-compound" data-sz-compound${szCompoundOn() ? " checked" : ""}>复利</label>
+          <p class="sz-hint">只用于下方回测对比，不改变上方观察状态。杠杆按价格涨跌放大盈亏。本金最大亏损比按每笔开仓时的交易本金计算，触达后平仓，条件再次满足则下一根开盘继续开仓。勾选复利时，止盈后按总余额开仓；不勾选则止盈利润不投入下一笔，亏损后按剩余开仓余额继续。主数字不含资金费率、借贷利息和爆仓罚金。一直持有现货不加杠杆，也不套这条亏损限制或复利。仅供观察，不是买卖或加杠杆交易建议。</p>
         </div>
         <div class="sz-field">
           <span class="sz-lab">回测周期</span>
@@ -3500,6 +3533,13 @@
           sanzuanBlock();
           if (state.mainTab === "sanzuan") clearTabDot("sanzuan");
           else reviewTabStamp("sanzuan");
+          return;
+        }
+        if (t.id === "sz-compound" || (t.getAttribute && t.getAttribute("data-sz-compound") != null)) {
+          state.szCompound = !!t.checked;
+          szSavePrefs();
+          computeSanzuan();
+          sanzuanBlock();
           return;
         }
         if (t.id === "sz-start" || t.id === "sz-end") {
@@ -3556,6 +3596,8 @@
       const on = selected.has(id);
       if (el !== document.activeElement && el.checked !== on) el.checked = on;
     });
+    const cmpEl = $("sz-compound") || root.querySelector("input[data-sz-compound]");
+    if (cmpEl && document.activeElement !== cmpEl && cmpEl.checked !== szCompoundOn()) cmpEl.checked = szCompoundOn();
     const tf = szTfId();
     root.querySelectorAll("[data-sz-tf]").forEach((btn) => {
       const on = btn.getAttribute("data-sz-tf") === tf;
@@ -3671,18 +3713,24 @@
       const ruleNote = escapeHtml(szBtRuleNote());
       let stopNote = "";
       let capKv = "";
-      if (st.stopped === "maxloss" && st.stoppedOn) {
-        stopNote = `已于 ${st.stoppedOn} 触达本金最大亏损限制，之后窗口内不再开仓。`;
-        capKv = sanzuanKv("本金亏损限制", st.stoppedOn + " 触达后停仓");
-      } else if (st.stopped === "wipeout" && st.stoppedOn) {
-        stopNote = `已于 ${st.stoppedOn} 本金亏完，之后窗口内不再开仓。`;
-        capKv = sanzuanKv("本金亏损限制", st.stoppedOn + " 本金亏完停仓");
+      const stopHits = st.stopHits || 0;
+      if (st.stopped === "wipeout" && st.stoppedOn) {
+        stopNote = stopHits
+          ? `本窗口本金最大亏损限制触达 ${stopHits} 次，并已于 ${st.stoppedOn} 本金亏完，之后窗口内不再开仓。`
+          : `已于 ${st.stoppedOn} 本金亏完，之后窗口内不再开仓。`;
+        capKv = sanzuanKv("本金亏损限制", st.stoppedOn + (stopHits ? (" 触达" + stopHits + "次后亏完停仓") : " 本金亏完停仓"));
+      } else if (stopHits > 0) {
+        const when = st.firstStopOn || st.stoppedOn;
+        stopNote = stopHits === 1
+          ? `已于 ${when} 触达本金最大亏损限制，按当时开仓余额止损后，条件再次满足则继续开仓。`
+          : `本窗口本金最大亏损限制共触达 ${stopHits} 次（首次 ${when}），止损后条件再次满足则继续开仓。`;
+        capKv = sanzuanKv("本金亏损限制", stopHits === 1 ? (when + " 触达后继续开仓") : ("触达 " + stopHits + " 次"));
       } else if (maxLossX != null) {
         stopNote = "本窗口未触达所选本金最大亏损限制。";
         capKv = sanzuanKv("本金亏损限制", "未触达");
       }
       const extra = (bt.notes && bt.notes.length ? bt.notes.join("") : "") + (d.notes && d.notes.length && bt.notes !== d.notes ? d.notes.join("") : "");
-      const note = `币安 BTC/USDT ${lab} 线，信号当根已收盘确认、下一根开盘成交，只做多、不含手续费。杠杆按价格涨跌放大盈亏；本金指回测起始资金；达到所选最大亏损比后平仓并在窗口内不再开仓。主数字不含资金费率、借贷利息和爆仓罚金。一直持有现货不加杠杆、也不套这条本金亏损限制。窗口按香港日期，含起始日与结束日当天的已收盘 K 线；结束日不超过该周期最后一根已收盘棒。${feeNote}${stopNote}${extra}历史回测不代表以后结果，不是投资建议。`;
+      const note = `币安 BTC/USDT ${lab} 线，信号当根已收盘确认、下一根开盘成交，只做多、不含手续费。杠杆按价格涨跌放大盈亏。本金最大亏损比按每笔开仓时的交易本金计算，触达后平仓，条件再次满足则下一根开盘继续开仓。勾选复利时止盈后按总余额开仓，不勾选则止盈利润不投入下一笔。主数字不含资金费率、借贷利息和爆仓罚金。一直持有现货不加杠杆，也不套这条本金亏损限制或复利。窗口按香港日期，含起始日与结束日当天的已收盘 K 线；结束日不超过该周期最后一根已收盘棒。${feeNote}${stopNote}${extra}历史回测不代表以后结果，不是投资建议。`;
       const title = "回测对比";
       const windowLine = escapeHtml(bt.from) + " 至 " + escapeHtml(bt.to);
       resultsHtml = szCmpShell(
