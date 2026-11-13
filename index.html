@@ -258,6 +258,7 @@
     }
     .cyc-chip.tone-caution { border-color: color-mix(in srgb, var(--caution) 55%, var(--line)); color: var(--caution); }
     .cyc-chip.tone-up { border-color: color-mix(in srgb, var(--up) 55%, var(--line)); color: var(--up); }
+    .cyc-chip.tone-down { border-color: color-mix(in srgb, var(--down) 55%, var(--line)); color: var(--down); }
     .cyc-flash {
       outline: 2px solid var(--caution);
       box-shadow: 0 0 0 4px color-mix(in srgb, var(--caution) 28%, transparent);
@@ -500,6 +501,33 @@
       .ev-meetings { grid-template-columns: 1fr 1fr; }
       .ev-ye { grid-template-columns: repeat(4, 1fr); }
     }
+
+    .sz-overall, .sz-row, .sz-col {
+      background: #1A2030; border: 1px solid var(--line); border-radius: 10px;
+      padding: 8px 10px 9px; min-width: 0;
+    }
+    .sz-overall { margin-bottom: 6px; }
+    .sz-lead { margin: 0 0 8px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .sz-grid { display: grid; gap: 6px; margin-bottom: 8px; }
+    .sz-row-top { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+    .sz-name { font-size: 13px; font-weight: 650; }
+    .sz-votes { margin: 2px 0 0; font-size: 13px; font-variant-numeric: tabular-nums; color: var(--muted); }
+    .sz-votes b { color: var(--text); font-weight: 720; }
+    .sz-cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .sz-bt-title { margin: 12px 0 4px; font-size: 13px; font-weight: 650; color: var(--muted); }
+    .sz-window { margin: 0 0 6px; color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+    .sz-ret {
+      font-size: 20px; font-weight: 720; font-variant-numeric: tabular-nums;
+      letter-spacing: -0.03em; line-height: 1.15; margin: 2px 0 6px;
+    }
+    .sz-kv {
+      display: flex; justify-content: space-between; align-items: baseline; gap: 6px;
+      padding: 4px 0; border-top: 1px solid var(--line); font-size: 12px; font-variant-numeric: tabular-nums;
+    }
+    .sz-kv:first-of-type { border-top: 0; padding-top: 0; }
+    .sz-kv .lab { color: var(--muted); }
+    .sz-kv .val { text-align: right; }
+    .sz-span { display: block; color: var(--muted); font-size: 10px; line-height: 1.3; margin-top: 1px; }
     footer { margin-top: 18px; color: var(--muted); font-size: 12px; text-align: center; line-height: 1.6; }
   </style>
 </head>
@@ -518,6 +546,7 @@
     <nav class="main-tabs tf-tabs" id="main-tabs" role="tablist" aria-label="主要栏目">
       <button type="button" class="tf-tab on" data-main-tab="market" aria-pressed="true">行情</button>
       <button type="button" class="tf-tab" data-main-tab="cycle" aria-pressed="false">顶底<span class="tab-dot" hidden></span></button>
+      <button type="button" class="tf-tab" data-main-tab="sanzuan" aria-pressed="false">三选二<span class="tab-dot" hidden></span></button>
       <button type="button" class="tf-tab" data-main-tab="xfeed" aria-pressed="false">X关注<span class="tab-dot" hidden></span></button>
       <button type="button" class="tf-tab" data-main-tab="sth" aria-pressed="false">持有者<span class="tab-dot" hidden></span></button>
       <button type="button" class="tf-tab" data-main-tab="events" aria-pressed="false">事件<span class="tab-dot" hidden></span></button>
@@ -544,6 +573,12 @@
   <div id="panel-cycle" class="main-panel" data-main-panel="cycle">
   <h2>顶底指标</h2>
   <section class="block" id="cycle"></section>
+  </div>
+  <div id="panel-sanzuan" class="main-panel" data-main-panel="sanzuan">
+  <h2>三选二</h2>
+  <section class="block" id="sanzuan">
+    <p class="cycle-note">正在加载日线观察…</p>
+  </section>
   </div>
   <div id="panel-xfeed" class="main-panel" data-main-panel="xfeed">
   <h2>X 关注</h2>
@@ -591,6 +626,7 @@
   <footer>
     数据来自 Binance、CoinGecko、Alternative.me，时间为香港时间。<br>
     顶底指标为常用技术观察、不是买卖建议；不含自动交易。<br>
+    三选二栏为比特币日线三个条件的当前观察，并对照近四年回测与一直持有现货，不是买卖建议。<br>
     合约持仓量来自币安 U 本位合约。MVRV Z-Score 来自 BGeometrics，免费数据末值可能延迟约一周。AHR999 按币安 BTCUSDT 日线与九神公开公式计算，0.45、1.2、5 为文献参考带，不是买卖线。<br>
     比特币支撑与压力由币安 BTCUSDT 日线的近期摆动高低点、近30日/90日/一年区间高低，以及 50/200 日与周均线合并去重得出；未收盘的日线不作为已确认摆动点。仅供观察，不是买卖建议。<br>
     短期持有者图表另参考 BGeometrics（bitcoin-data.com）与 Binance。<br>
@@ -705,7 +741,7 @@
     const savedXTab = localStorage.getItem("crypto-live-x-feed-tab");
     if (savedXTab) state.xFeedTab = savedXTab;
     const savedMain = localStorage.getItem("crypto-live-main-tab");
-    if (savedMain === "market" || savedMain === "cycle" || savedMain === "xfeed" || savedMain === "sth" || savedMain === "events") state.mainTab = savedMain;
+    if (savedMain === "market" || savedMain === "cycle" || savedMain === "sanzuan" || savedMain === "xfeed" || savedMain === "sth" || savedMain === "events") state.mainTab = savedMain;
   } catch (e) {}
   let lastPrices = {};
   let renderTimer = 0;
@@ -2129,6 +2165,7 @@
     $("heroes").innerHTML = heroCard(btc) + heroCard(eth);
     $("btc-sr").innerHTML = btcLevelsBlock(btc);
     $("cycle").innerHTML = cycleBlock(data);
+    sanzuanBlock();
     $("others").innerHTML = (data.coins || []).filter((c) => c.symbol !== "BTC" && c.symbol !== "ETH").map((c) => `
       <div class="coin">
         <div class="name">${escapeHtml(c.symbol)}</div>
@@ -2153,6 +2190,318 @@
     (data.coins || []).forEach((c) => { if (c.price != null) lastPrices[c.symbol] = c.price; });
       xFeedBlock();
   }
+
+  function utcYmd(ms) {
+    const d = new Date(ms);
+    const y = d.getUTCFullYear();
+    const m = String(d.getUTCMonth() + 1).padStart(2, "0");
+    const day = String(d.getUTCDate()).padStart(2, "0");
+    return y + "-" + m + "-" + day;
+  }
+  function fmtTsHK(ms) {
+    if (ms == null || !Number.isFinite(ms)) return "—";
+    return new Date(ms).toLocaleString("sv-SE", { timeZone: "Asia/Hong_Kong" }).replace("T", " ").slice(0, 16);
+  }
+  function fmtSzPct(x, digits) {
+    if (x == null || !Number.isFinite(x)) return "—";
+    const n = (Math.abs(x) * 100).toFixed(digits) + "%";
+    if (x > 0) return "+" + n;
+    if (x < 0) return "\u2212" + n;
+    return (0).toFixed(digits) + "%";
+  }
+  function fmtSzPctInt(x) {
+    if (x == null || !Number.isFinite(x)) return "—";
+    const n = String(Math.round(Math.abs(x) * 100)) + "%";
+    if (x > 0) return "+" + n;
+    if (x < 0) return "\u2212" + n;
+    return "0%";
+  }
+  function addUtcYears(ms, years) {
+    const d = new Date(ms);
+    return Date.UTC(d.getUTCFullYear() + years, d.getUTCMonth(), d.getUTCDate(), d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds(), d.getUTCMilliseconds());
+  }
+  function dailyBarClosed(openMs, closeMs, now) {
+    const t = now == null ? Date.now() : now;
+    if (closeMs != null && Number.isFinite(closeMs)) return t > closeMs;
+    return t >= openMs + 86400000;
+  }
+  function rollExt(arr, period, i, pickMax) {
+    if (i + 1 < period) return null;
+    let v = arr[i - period + 1];
+    for (let j = i - period + 2; j <= i; j++) {
+      if (pickMax) { if (arr[j] > v) v = arr[j]; }
+      else if (arr[j] < v) v = arr[j];
+    }
+    return v;
+  }
+  function computeSanzuan() {
+    const bars = state.sanzuanBars || [];
+    if (!bars.length) {
+      state.sanzuan = { ready: false, error: "暂无日线数据" };
+      return;
+    }
+    const closed = bars.filter((b) => dailyBarClosed(b.t, b.ct));
+    if (closed.length < 200) {
+      state.sanzuan = { ready: false, error: "日线数据不足，暂无法计算观察状态" };
+      return;
+    }
+    const n = closed.length;
+    const opens = closed.map((b) => b.o);
+    const highs = closed.map((b) => b.h);
+    const lows = closed.map((b) => b.l);
+    const closes = closed.map((b) => b.c);
+    const times = closed.map((b) => b.t);
+    const typ = new Array(n);
+    for (let i = 0; i < n; i++) typ[i] = (closes[i] + highs[i] + lows[i]) / 3;
+    const e5 = emaSeries(typ, 5);
+    const e12 = emaSeries(closes, 12);
+    const e26 = emaSeries(closes, 26);
+    const bd = new Array(n);
+    let bdCur = false;
+    for (let i = 0; i < n; i++) {
+      const holding = e5[i] != null && i > 0 && e5[i - 1] != null && e5[i] > e5[i - 1];
+      const difOk = e12[i] != null && e26[i] != null && (e12[i] - e26[i] > 0);
+      bdCur = bdCur ? holding : (holding && difOk);
+      bd[i] = bdCur;
+    }
+    const tenkan = new Array(n).fill(null);
+    const kijun = new Array(n).fill(null);
+    const spanA = new Array(n).fill(null);
+    const spanB = new Array(n).fill(null);
+    const ichi = new Array(n);
+    const aboveMa = new Array(n);
+    const ma200s = new Array(n).fill(null);
+    const votes = new Array(n);
+    const inPos = new Array(n);
+    let run = 0;
+    for (let i = 0; i < n; i++) {
+      const h9 = rollExt(highs, 9, i, true), l9 = rollExt(lows, 9, i, false);
+      const h26 = rollExt(highs, 26, i, true), l26 = rollExt(lows, 26, i, false);
+      const h52 = rollExt(highs, 52, i, true), l52 = rollExt(lows, 52, i, false);
+      if (h9 != null) tenkan[i] = (h9 + l9) / 2;
+      if (h26 != null) kijun[i] = (h26 + l26) / 2;
+      if (tenkan[i] != null && kijun[i] != null) spanA[i] = (tenkan[i] + kijun[i]) / 2;
+      if (h52 != null) spanB[i] = (h52 + l52) / 2;
+      let ichiOk = false;
+      if (i >= 25 && spanA[i - 25] != null && spanB[i - 25] != null && tenkan[i] != null && kijun[i] != null) {
+        const cloudTop = Math.max(spanA[i - 25], spanB[i - 25]);
+        ichiOk = closes[i] > cloudTop && tenkan[i] > kijun[i];
+      }
+      ichi[i] = ichiOk;
+      if (i === 199) {
+        run = 0;
+        for (let j = 0; j <= 199; j++) run += closes[j];
+        ma200s[i] = run / 200;
+      } else if (i > 199) {
+        run += closes[i] - closes[i - 200];
+        ma200s[i] = run / 200;
+      }
+      aboveMa[i] = ma200s[i] != null && closes[i] > ma200s[i];
+      votes[i] = (bd[i] ? 1 : 0) + (ichi[i] ? 1 : 0) + (aboveMa[i] ? 1 : 0);
+      inPos[i] = votes[i] >= 2;
+    }
+    const iEnd = n - 1;
+    const startMs = addUtcYears(times[iEnd], -4);
+    let i0 = -1;
+    for (let i = 0; i < n; i++) {
+      if (times[i] >= startMs) { i0 = i; break; }
+    }
+    let backtest = null;
+    if (i0 >= 1 || (i0 === 0)) {
+      function runEquity(fee) {
+        let cash = 1, pos = 0, trips = 0, pending = null;
+        if (i0 > 0 && inPos[i0 - 1]) pending = "buy";
+        let peak = 1, maxdd = 0, peakI = i0, bestPeak = null, bestTrough = null, inBars = 0, lastEq = 1;
+        for (let i = i0; i <= iEnd; i++) {
+          if (pending === "buy") {
+            pos = cash * (1 - fee) / opens[i];
+            cash = 0;
+            pending = null;
+          } else if (pending === "sell") {
+            cash = pos * opens[i] * (1 - fee);
+            pos = 0;
+            trips += 1;
+            pending = null;
+          }
+          const equity = cash + pos * closes[i];
+          lastEq = equity;
+          if (pos > 0) inBars += 1;
+          if (equity >= peak) { peak = equity; peakI = i; }
+          const dd = equity / peak - 1;
+          if (dd < maxdd) { maxdd = dd; bestPeak = peakI; bestTrough = i; }
+          if (i < iEnd) {
+            const want = inPos[i];
+            const have = pos > 0;
+            if (want && !have) pending = "buy";
+            else if (have && !want) pending = "sell";
+          }
+        }
+        const ret = lastEq - 1;
+        const years = (times[iEnd] - times[i0]) / (365.25 * 86400000);
+        const cagr = (lastEq > 0 && years > 0) ? Math.pow(lastEq, 1 / years) - 1 : null;
+        return {
+          ret, cagr, mdd: maxdd, trips, timeInMkt: inBars / (iEnd - i0 + 1),
+          endedInPos: pos > 0,
+          mddFrom: bestPeak != null ? utcYmd(times[bestPeak]) : "",
+          mddTo: bestTrough != null ? utcYmd(times[bestTrough]) : "",
+        };
+      }
+      function runBh(fee) {
+        const startPx = opens[i0] / (1 - fee);
+        let peak = closes[i0] / startPx, maxdd = 0, peakI = i0, bestPeak = i0, bestTrough = i0;
+        let lastEq = peak;
+        for (let i = i0; i <= iEnd; i++) {
+          const equity = closes[i] / startPx;
+          lastEq = equity;
+          if (equity >= peak) { peak = equity; peakI = i; }
+          const dd = equity / peak - 1;
+          if (dd < maxdd) { maxdd = dd; bestPeak = peakI; bestTrough = i; }
+        }
+        const ret = lastEq - 1;
+        const years = (times[iEnd] - times[i0]) / (365.25 * 86400000);
+        const cagr = (lastEq > 0 && years > 0) ? Math.pow(lastEq, 1 / years) - 1 : null;
+        return {
+          ret, cagr, mdd: maxdd,
+          mddFrom: utcYmd(times[bestPeak]),
+          mddTo: utcYmd(times[bestTrough]),
+        };
+      }
+      const st0 = runEquity(0);
+      const bh0 = runBh(0);
+      const stFee = runEquity(0.001);
+      const bhFee = runBh(0.001);
+      backtest = {
+        from: utcYmd(times[i0]),
+        to: utcYmd(times[iEnd]),
+        startOpen: opens[i0],
+        endClose: closes[iEnd],
+        strategy: st0,
+        hold: bh0,
+        strategyFee: stFee,
+        holdFee: bhFee,
+      };
+    }
+    const asOfMs = times[iEnd] + 86400000;
+    state.sanzuan = {
+      ready: true,
+      error: "",
+      asOf: fmtTsHK(asOfMs),
+      asOfMs,
+      close: closes[iEnd],
+      ma200: ma200s[iEnd],
+      bd: bd[iEnd],
+      ichi: ichi[iEnd],
+      aboveMa: aboveMa[iEnd],
+      votes: votes[iEnd],
+      inPos: inPos[iEnd],
+      backtest,
+    };
+  }
+  function parseSanzuanKline(r) {
+    return { t: +r[0], o: +r[1], h: +r[2], l: +r[3], c: +r[4], ct: +r[6] };
+  }
+  async function refreshSanzuanKlines() {
+    const START = Date.UTC(2021, 0, 1);
+    const byTime = new Map();
+    (state.sanzuanBars || []).forEach((b) => { if (b && b.t != null) byTime.set(b.t, b); });
+    const merge = (batch) => {
+      if (!batch || !batch.length) return;
+      for (let i = 0; i < batch.length; i++) {
+        const b = parseSanzuanKline(batch[i]);
+        if (Number.isFinite(b.t) && Number.isFinite(b.c)) byTime.set(b.t, b);
+      }
+    };
+    const latest = await fetchJson("https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=1000");
+    merge(latest);
+    let oldest = Infinity;
+    byTime.forEach((b, t) => { if (t < oldest) oldest = t; });
+    let guard = 0;
+    while (oldest > START && guard++ < 8) {
+      const batch = await fetchJson("https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=1000&endTime=" + (oldest - 1));
+      if (!batch || !batch.length) break;
+      const first = +batch[0][0];
+      merge(batch);
+      if (!Number.isFinite(first) || first >= oldest) break;
+      oldest = first;
+      if (batch.length < 1000) break;
+    }
+    state.sanzuanBars = Array.from(byTime.values()).sort((a, b) => a.t - b.t);
+    computeSanzuan();
+  }
+  function sanzuanChip(ok) {
+    return ok
+      ? `<span class="cyc-chip tone-up">看多</span>`
+      : `<span class="cyc-chip tone-down">看空</span>`;
+  }
+  function sanzuanRow(name, ok, hint) {
+    return `<div class="sz-row">
+      <div class="sz-row-top"><span class="sz-name">${escapeHtml(name)}</span>${sanzuanChip(ok)}</div>
+      <p class="cyc-sub">${escapeHtml(hint)}</p>
+    </div>`;
+  }
+  function sanzuanKv(lab, val, span) {
+    return `<div class="sz-kv"><span class="lab">${lab}</span><span class="val">${val}${span ? `<span class="sz-span">${span}</span>` : ""}</span></div>`;
+  }
+  function sanzuanBlock() {
+    const root = $("sanzuan");
+    if (!root) return;
+    const d = state.sanzuan;
+    if (!d) {
+      root.innerHTML = `<p class="cycle-note">正在加载日线观察…</p>`;
+      return;
+    }
+    if (!d.ready) {
+      root.innerHTML = `<p class="cycle-note">${escapeHtml(d.error || "暂无法计算观察状态")}</p>`;
+      return;
+    }
+    const hold = d.inPos;
+    const tone = hold ? "up" : "neutral";
+    const status = hold ? "持有" : "空仓";
+    const bt = d.backtest;
+    let btHtml = `<p class="cycle-note">回测数据不足。</p>`;
+    if (bt && bt.strategy && bt.hold) {
+      const st = bt.strategy, hd = bt.hold;
+      const feeNote = (bt.strategyFee && bt.holdFee)
+        ? `若按每边 0.1% 手续费，策略约 ${fmtSzPctInt(bt.strategyFee.ret)}，一直持有约 ${fmtSzPctInt(bt.holdFee.ret)}。`
+        : "";
+      btHtml = `<div class="sz-bt-title">近四年回测</div>
+        <p class="sz-window">${escapeHtml(bt.from)} 至 ${escapeHtml(bt.to)}</p>
+        <div class="sz-cmp">
+          <div class="sz-col">
+            <div class="cyc-k">三选二规则</div>
+            <div class="sz-ret ${pctClass(st.ret)}">${fmtSzPctInt(st.ret)}</div>
+            ${sanzuanKv("年化", fmtSzPct(st.cagr, 1))}
+            ${sanzuanKv("最大回撤", fmtSzPct(st.mdd, 1), st.mddFrom && st.mddTo ? (st.mddFrom + " 至 " + st.mddTo) : "")}
+            ${sanzuanKv("完整买卖", String(st.trips) + " 笔")}
+            ${sanzuanKv("在场时间", fmtSzPct(st.timeInMkt, 1).replace(/^\+/, ""))}
+          </div>
+          <div class="sz-col">
+            <div class="cyc-k">一直持有现货</div>
+            <div class="sz-ret ${pctClass(hd.ret)}">${fmtSzPctInt(hd.ret)}</div>
+            ${sanzuanKv("年化", fmtSzPct(hd.cagr, 1))}
+            ${sanzuanKv("最大回撤", fmtSzPct(hd.mdd, 1), hd.mddFrom && hd.mddTo ? (hd.mddFrom + " 至 " + hd.mddTo) : "")}
+          </div>
+        </div>
+        <p class="cycle-note">币安 BTC/USDT 日线（UTC），信号当日收盘确认、次日开盘成交，不含手续费。${feeNote}历史回测不代表以后结果，不是投资建议。</p>`;
+    }
+    root.innerHTML = `<p class="sz-lead">BTC 日线三个条件中，至少两个看多则观察为持有，否则为空仓。仅供观察，不是买卖建议。</p>
+      <div class="sz-overall">
+        <div class="cyc-head">
+          <div class="cyc-k">观察状态</div>
+          <p class="cyc-jud tone-${tone}">${status}</p>
+        </div>
+        <p class="sz-votes">看多票数 <b>${d.votes} / 3</b></p>
+        <p class="cyc-sub">截至 ${escapeHtml(d.asOf)} 香港时间的已收盘日线</p>
+      </div>
+      <div class="sz-grid">
+        ${sanzuanRow("BDCP持股", d.bd, "典型价5日均线向上，且第一次亮起时日线 DIF>0")}
+        ${sanzuanRow("一目云上", d.ichi, "收盘价在云上且转换线>基准线")}
+        ${sanzuanRow("200日均线上", d.aboveMa, "收盘价在线上")}
+      </div>
+      ${btHtml}`;
+    reviewTabStamp("sanzuan");
+  }
+
   function paint() { render(snapshot()); }
 
   const CYCLE_SIGNAL_KEY = "crypto-live-cycle-signals";
@@ -2360,7 +2709,7 @@
   }
   const MAIN_TAB_KEY = "crypto-live-main-tab";
   const TAB_SEEN_KEY = "crypto-live-tab-seen";
-  const MAIN_TABS = ["market", "cycle", "xfeed", "sth", "events"];
+  const MAIN_TABS = ["market", "cycle", "sanzuan", "xfeed", "sth", "events"];
   function loadTabSeen() {
     try { return JSON.parse(localStorage.getItem(TAB_SEEN_KEY) || "{}") || {}; } catch (e) { return {}; }
   }
@@ -2368,6 +2717,11 @@
     try { localStorage.setItem(TAB_SEEN_KEY, JSON.stringify(seen)); } catch (e) {}
   }
   function tabStamp(id) {
+    if (id === "sanzuan") {
+      const d = state.sanzuan;
+      if (!d || !d.ready) return "";
+      return [d.asOf || "", d.inPos ? "1" : "0", d.bd ? "1" : "0", d.ichi ? "1" : "0", d.aboveMa ? "1" : "0"].join("|");
+    }
     if (id === "xfeed") {
       const d = state.xFeed;
       if (!d) return "";
@@ -2397,7 +2751,7 @@
       btn.appendChild(dot);
     }
     dot.hidden = !on;
-    const names = { cycle: "顶底", xfeed: "X关注", sth: "持有者", events: "事件" };
+    const names = { cycle: "顶底", sanzuan: "三选二", xfeed: "X关注", sth: "持有者", events: "事件" };
     if (on) btn.setAttribute("aria-label", (names[id] || id) + "，有更新");
     else btn.removeAttribute("aria-label");
   }
@@ -2836,6 +3190,7 @@
     loadUsStocks().then(paintAndReview).catch((e) => console.warn(e));
     loadMvrv().then(paintAndReview).catch((e) => console.warn(e));
     loadXFeed().then(paint).catch((e) => console.warn(e));
+    refreshSanzuanKlines().then(() => { paint(); reviewTabStamp("sanzuan"); }).catch((e) => console.warn(e));
     const errors = [];
     for (const [name, fn] of [["价格", refreshTickers], ["指标", refreshKlines], ["市值", refreshMarket], ["情绪", refreshFng]]) {
       try { await fn(); } catch (e) { errors.push(name); console.warn(e); }
@@ -2875,6 +3230,7 @@
   }
   function startPolling() {
     setInterval(() => { refreshKlines().then(paintAndReview).catch(() => {}); }, 60000);
+    setInterval(() => { refreshSanzuanKlines().then(() => { paint(); reviewTabStamp("sanzuan"); }).catch(() => {}); }, 60000);
     setInterval(() => { refreshMarket().then(paint).catch(() => {}); }, 60000);
     setInterval(() => { refreshFunding().then(paintAndReview).catch(() => {}); }, 60000);
     setInterval(() => { refreshOpenInterest().then(paint).catch(() => {}); }, 60000);
