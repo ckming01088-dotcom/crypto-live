@@ -80,6 +80,7 @@
     .main-panel.on { display: block; }
     #sth-stage.main-panel.on { display: block; }
     .chips { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
+    .regime[hidden], .chips[hidden] { display: none !important; }
     .chip { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; }
     .chip .k { display: block; color: var(--muted); font-size: 11px; margin-bottom: 2px; }
     .chip .v { font-weight: 650; font-variant-numeric: tabular-nums; }
@@ -4089,6 +4090,11 @@
     document.querySelectorAll("[data-main-panel]").forEach((el) => {
       el.classList.toggle("on", el.getAttribute("data-main-panel") === id);
     });
+    const hideMktStrip = id === "sanzuan";
+    const regimeEl = $("regime");
+    const chipsEl = $("chips");
+    if (regimeEl) regimeEl.hidden = hideMktStrip;
+    if (chipsEl) chipsEl.hidden = hideMktStrip;
     if (id === "sth") requestAnimationFrame(() => { try { drawSthChart(); } catch (e) {} });
     if (id !== "market") clearTabDot(id);
   }
