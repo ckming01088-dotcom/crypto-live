@@ -268,6 +268,11 @@
       box-shadow: 0 0 0 4px color-mix(in srgb, var(--caution) 28%, transparent);
       animation: cycPulse 1.1s ease-in-out 3;
     }
+    .cyc-border-flash {
+      outline: 2px solid var(--caution);
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--caution) 35%, transparent);
+      border-color: var(--caution) !important;
+    }
     .cyc-delta { margin-top: 5px; color: var(--caution); font-size: 11px; font-weight: 650; line-height: 1.35; }
     @keyframes cycPulse {
       0%, 100% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--caution) 28%, transparent); }
@@ -698,7 +703,7 @@
     顶部选项卡可切换主要栏目；有更新时会在对应选项卡显示红点，点开后消失。行情为实时价格，不会为此亮红点。<br>
     右上角「刷新」会重新加载本页最新内容，不必关掉再打开。<br>
     短期持有者图表可点「横屏」，单独满屏查看。<br>
-    顶底观察状态变化时会弹窗提示，点开可跳到对应指标并标出变化；仅供观察，不是买卖或逃顶抄底建议。<br>
+    顶底观察状态变化时，若本页正在前台查看，不会弹窗；正在看顶底栏目时，对应指标边框会闪三下。若当时没有在看本页，仍会按原方式弹窗提示，也可开启系统通知。仅供观察，不是买卖或逃顶抄底建议。<br>
     可在浏览器菜单里选择「添加到主屏幕」。如需在后台也收到系统通知，请在弹窗里开启，iPhone 需先把本页添加到主屏幕。
   </footer>
   <div id="cyc-alert" class="cyc-alert" hidden role="dialog" aria-labelledby="cyc-alert-title" aria-modal="true">
@@ -3761,7 +3766,7 @@
     }
   }
 
-  function paint() { render(snapshot()); }
+  function paint() { render(snapshot()); applyCycleBorderFlash(); }
 
   const CYCLE_SIGNAL_KEY = "crypto-live-cycle-signals";
   const CYCLE_NOTIFY_KEY = "crypto-live-cycle-notify";
@@ -3942,6 +3947,38 @@
     const box = $("cyc-alert");
     if (box) box.hidden = true;
   }
+  function pageIsVisible() {
+    return typeof document.visibilityState === "string" ? document.visibilityState === "visible" : !document.hidden;
+  }
+  function applyCycleBorderFlash() {
+    document.querySelectorAll(".cyc-border-flash").forEach((el) => el.classList.remove("cyc-border-flash"));
+    if (!state.cycleFlashOn || !state.cycleFlashes || !state.cycleFlashes.length) return;
+    state.cycleFlashes.forEach((ch) => {
+      if (!ch || !ch.symbol || !ch.interval || !ch.metric) return;
+      const el = document.getElementById(cycUnitId(ch.symbol, ch.interval, ch.metric));
+      if (el) el.classList.add("cyc-border-flash");
+    });
+  }
+  function flashCycleBorders(changes) {
+    const items = (changes || []).filter((ch) => ch && ch.symbol && ch.interval && ch.metric);
+    if (!items.length) return;
+    state.cycleFlashes = items;
+    state.cycleFlashOn = false;
+    if (state._flashTimer) clearTimeout(state._flashTimer);
+    let step = 0;
+    const run = () => {
+      state.cycleFlashOn = (step % 2 === 0);
+      applyCycleBorderFlash();
+      step += 1;
+      if (step < 6) state._flashTimer = setTimeout(run, 380);
+      else {
+        state.cycleFlashOn = false;
+        state.cycleFlashes = null;
+        applyCycleBorderFlash();
+      }
+    };
+    run();
+  }
   function showCycleAlert(changes) {
     const box = $("cyc-alert");
     const list = $("cyc-alert-list");
@@ -3960,13 +3997,20 @@
       nbtn.textContent = (!can) ? "此浏览器不支持系统通知" : (Notification.permission === "denied" ? "系统通知已被拒绝" : "开启系统通知");
       nbtn.disabled = !can || Notification.permission === "denied";
     }
-    if (document.hidden) {
+    if (!pageIsVisible()) {
       state.cycleAlertPendingShow = true;
+      state.cycleFlashPending = null;
       postCycleNotification(changes);
       return;
     }
     state.cycleAlertPendingShow = false;
-    box.hidden = false;
+    box.hidden = true;
+    if (state.mainTab === "cycle") {
+      state.cycleFlashPending = null;
+      flashCycleBorders(changes);
+    } else {
+      state.cycleFlashPending = changes;
+    }
   }
   function notifyPrefOn() {
     try { return localStorage.getItem(CYCLE_NOTIFY_KEY) === "on"; } catch (e) { return false; }
@@ -4097,6 +4141,11 @@
     if (chipsEl) chipsEl.hidden = hideMktStrip;
     if (id === "sth") requestAnimationFrame(() => { try { drawSthChart(); } catch (e) {} });
     if (id !== "market") clearTabDot(id);
+    if (id === "cycle" && state.cycleFlashPending && state.cycleFlashPending.length) {
+      const pending = state.cycleFlashPending;
+      state.cycleFlashPending = null;
+      requestAnimationFrame(() => flashCycleBorders(pending));
+    }
   }
   function applyCycleChange(ch) {
     if (!ch) return;
