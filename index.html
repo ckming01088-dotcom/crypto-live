@@ -4090,7 +4090,7 @@
     document.querySelectorAll("[data-main-panel]").forEach((el) => {
       el.classList.toggle("on", el.getAttribute("data-main-panel") === id);
     });
-    const hideMktStrip = id === "sanzuan";
+    const hideMktStrip = id !== "market";
     const regimeEl = $("regime");
     const chipsEl = $("chips");
     if (regimeEl) regimeEl.hidden = hideMktStrip;
