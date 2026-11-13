@@ -533,6 +533,53 @@
     .sz-kv .lab { color: var(--muted); }
     .sz-kv .val { text-align: right; }
     .sz-span { display: block; color: var(--muted); font-size: 10px; line-height: 1.3; margin-top: 1px; }
+    .sz-controls { margin: 0 0 8px; }
+    .sz-field { margin: 0 0 8px; }
+    .sz-lab { display: block; color: var(--muted); font-size: 11px; font-weight: 650; margin: 0 0 5px; }
+    .sz-inds { display: flex; flex-wrap: wrap; gap: 6px; }
+    .sz-ind {
+      display: flex; align-items: center; gap: 6px;
+      flex: 1 1 calc((100% - 12px) / 3);
+      min-width: 0;
+      padding: 7px 8px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #1A2030;
+      font-size: 13px;
+      font-weight: 650;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    .sz-ind:has(input:checked) {
+      background: color-mix(in srgb, var(--caution) 20%, var(--card));
+      border-color: color-mix(in srgb, var(--caution) 55%, var(--line));
+    }
+    .sz-ind input { margin: 0; accent-color: var(--caution); flex: 0 0 auto; }
+    .sz-tf-tabs { margin: 0; }
+    .sz-tf-tabs .tf-tab { flex: 1 1 calc((100% - 24px) / 5); }
+    .sz-dates { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .sz-date-lab {
+      display: flex; flex-direction: column; gap: 4px; min-width: 0;
+      color: var(--muted); font-size: 11px; font-weight: 650;
+    }
+    .sz-date {
+      width: 100%;
+      min-height: 36px;
+      padding: 6px 8px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #1A2030;
+      color: var(--text);
+      font: inherit;
+      font-size: 13px;
+      font-variant-numeric: tabular-nums;
+    }
+    .sz-date:focus { outline: 1px solid color-mix(in srgb, var(--caution) 55%, var(--line)); }
+    .sz-date::-webkit-calendar-picker-indicator { filter: invert(0.8); opacity: .85; }
+    .sz-hint { margin: 4px 0 0; color: var(--muted); font-size: 11px; line-height: 1.45; }
+    .sz-loading { color: var(--caution); }
+    .sz-status { margin: 0; }
+    .sz-results { margin: 0; }
     footer { margin-top: 18px; color: var(--muted); font-size: 12px; text-align: center; line-height: 1.6; }
   </style>
 </head>
@@ -581,9 +628,12 @@
   </div>
   <div id="panel-sanzuan" class="main-panel" data-main-panel="sanzuan">
   <h2>策略库</h2>
-  <p class="sz-lib-lead">当前收录的观察策略。每条单独标注状态与回测，仅供观察，不是买卖建议。</p>
+  <p class="sz-lib-lead">可勾选指标，选定回测周期与起止日期后查看观察状态，并对照一直持有现货。目前收录三选二的三个条件，以后还可在此继续加入其他指标。仅供观察，不是买卖建议。</p>
   <section class="block sz-strategy" id="sanzuan">
-    <p class="cycle-note">正在加载日线观察…</p>
+    <div class="sz-card-k">策略回测</div>
+    <div id="sz-controls" class="sz-controls"></div>
+    <div id="sz-status" class="sz-status"><p class="cycle-note">正在加载该周期观察…</p></div>
+    <div id="sz-results" class="sz-results"><p class="cycle-note">正在加载回测…</p></div>
   </section>
   </div>
   <div id="panel-xfeed" class="main-panel" data-main-panel="xfeed">
@@ -632,7 +682,7 @@
   <footer>
     数据来自 Binance、CoinGecko、Alternative.me，时间为香港时间。<br>
     顶底指标（含综合倾向、分项读数与 V 反观察）为常用技术观察，不是买卖建议，也不确认见顶见底；不含自动交易。<br>
-    策略库目前收录比特币日线「三选二」观察，并对照近四年回测与一直持有现货，不是买卖建议。<br>
+    策略库可多选指标并按周期与日期回测，目前收录三选二的三个条件；仍是观察，不是买卖建议。<br>
     合约持仓量来自币安 U 本位合约。MVRV Z-Score 来自 BGeometrics，免费数据末值可能延迟约一周。AHR999 按币安 BTCUSDT 日线与九神公开公式计算，0.45、1.2、5 为文献参考带，不是买卖线。<br>
     比特币支撑与压力由币安 BTCUSDT 日线的近期摆动高低点、近30日/90日/一年区间高低，以及 50/200 日与周均线合并去重得出；未收盘的日线不作为已确认摆动点。仅供观察，不是买卖建议。<br>
     短期持有者图表另参考 BGeometrics（bitcoin-data.com）与 Binance。<br>
@@ -685,6 +735,26 @@
   const CYCLE_US_TF_KEY = "crypto-live-cycle-us-tf";
   const CYCLE_COIN_KEY = "crypto-live-cycle-coin";
   const CYCLE_US_STOCK_KEY = "crypto-live-cycle-us-stock";
+  const SZ_TFS = [
+    { id: "2h", label: "2H", ms: 2 * 3600000 },
+    { id: "4h", label: "4H", ms: 4 * 3600000 },
+    { id: "6h", label: "6H", ms: 6 * 3600000 },
+    { id: "12h", label: "12H", ms: 12 * 3600000 },
+    { id: "1d", label: "1D", ms: 86400000 },
+  ];
+  const SZ_INDICATORS = [
+    { id: "bd", name: "BDCP持股" },
+    { id: "ichi", name: "一目云上" },
+    { id: "ma", name: "200均线上" },
+  ];
+  const SZ_TF_KEY = "crypto-live-sz-tf";
+  const SZ_IND_KEY = "crypto-live-sz-ind";
+  const SZ_START_KEY = "crypto-live-sz-start";
+  const SZ_END_KEY = "crypto-live-sz-end";
+  const SZ_END_FOLLOW_KEY = "crypto-live-sz-end-follow";
+  const SZ_WARMUP_BARS = 200;
+  const SZ_LOOKBACK_DAYS = 400;
+  const SZ_MAX_PAGES = 40;
   function emptyByCoin(fill) {
     const o = {};
     CYCLE_COINS.forEach((c) => { o[c.id] = fill(); });
@@ -730,6 +800,15 @@
     xFeedError: "",
     xFeedTab: "all",
     mainTab: "market",
+    sanzuan: null,
+    sanzuanBarsByTf: {},
+    sanzuanLoading: false,
+    sanzuanLoadError: "",
+    szTf: "1d",
+    szSelected: ["bd", "ichi", "ma"],
+    szStart: "",
+    szEnd: "",
+    szEndFollow: true,
     live: false,
     status: "正在连接行情…",
   };
@@ -749,6 +828,22 @@
     if (savedXTab) state.xFeedTab = savedXTab;
     const savedMain = localStorage.getItem("crypto-live-main-tab");
     if (savedMain === "market" || savedMain === "cycle" || savedMain === "sanzuan" || savedMain === "xfeed" || savedMain === "sth" || savedMain === "events") state.mainTab = savedMain;
+    const savedSzTf = localStorage.getItem(SZ_TF_KEY);
+    if (SZ_TFS.some((t) => t.id === savedSzTf)) state.szTf = savedSzTf;
+    try {
+      const savedSzInd = JSON.parse(localStorage.getItem(SZ_IND_KEY) || "null");
+      if (Array.isArray(savedSzInd)) {
+        state.szSelected = SZ_INDICATORS.map((x) => x.id).filter((id) => savedSzInd.indexOf(id) >= 0);
+      }
+    } catch (e2) {}
+    const savedSzStart = localStorage.getItem(SZ_START_KEY);
+    if (savedSzStart && /^\d{4}-\d{2}-\d{2}$/.test(savedSzStart)) state.szStart = savedSzStart;
+    const savedSzEnd = localStorage.getItem(SZ_END_KEY);
+    if (savedSzEnd && /^\d{4}-\d{2}-\d{2}$/.test(savedSzEnd)) state.szEnd = savedSzEnd;
+    const savedSzFollow = localStorage.getItem(SZ_END_FOLLOW_KEY);
+    if (savedSzFollow === "0") state.szEndFollow = false;
+    if (savedSzFollow === "1") state.szEndFollow = true;
+    if (!savedSzEnd) state.szEndFollow = true;
   } catch (e) {}
   let lastPrices = {};
   let renderTimer = 0;
@@ -2772,11 +2867,6 @@
     const d = new Date(ms);
     return Date.UTC(d.getUTCFullYear() + years, d.getUTCMonth(), d.getUTCDate(), d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds(), d.getUTCMilliseconds());
   }
-  function dailyBarClosed(openMs, closeMs, now) {
-    const t = now == null ? Date.now() : now;
-    if (closeMs != null && Number.isFinite(closeMs)) return t > closeMs;
-    return t >= openMs + 86400000;
-  }
   function rollExt(arr, period, i, pickMax) {
     if (i + 1 < period) return null;
     let v = arr[i - period + 1];
@@ -2786,15 +2876,159 @@
     }
     return v;
   }
+  function hkYmd(ms) {
+    if (ms == null || !Number.isFinite(ms)) return "";
+    return new Date(ms).toLocaleString("sv-SE", { timeZone: "Asia/Hong_Kong" }).slice(0, 10);
+  }
+  function szTfMeta(tf) {
+    return SZ_TFS.find((t) => t.id === tf) || SZ_TFS[SZ_TFS.length - 1];
+  }
+  function szTfId() {
+    return SZ_TFS.some((t) => t.id === state.szTf) ? state.szTf : "1d";
+  }
+  function szTfLabel(tf) {
+    return szTfMeta(tf).label || tf;
+  }
+  function szIntervalMs(tf) {
+    return szTfMeta(tf).ms || 86400000;
+  }
+  function szSelectedIds() {
+    const set = new Set(state.szSelected || []);
+    return SZ_INDICATORS.map((x) => x.id).filter((id) => set.has(id));
+  }
+  function szIndName(id, tf) {
+    if (id === "ma") return tf === "1d" ? "200日均线上" : "200周期均线上";
+    const row = SZ_INDICATORS.find((x) => x.id === id);
+    return (row && row.name) || id;
+  }
+  function szIndHint(id, tf) {
+    if (id === "bd") {
+      return tf === "1d"
+        ? "典型价5日均线向上，且第一次亮起时日线 DIF>0"
+        : "典型价5周期均线向上，且第一次亮起时 DIF>0";
+    }
+    if (id === "ichi") return "收盘价在云上且转换线>基准线";
+    if (id === "ma") return "收盘价在线上";
+    return "";
+  }
+  function szBarClosed(b, tf, now) {
+    const t = now == null ? Date.now() : now;
+    if (b && b.ct != null && Number.isFinite(+b.ct)) return t > +b.ct;
+    return t >= (+b.t + szIntervalMs(tf));
+  }
+  function szClosedBars(bars, tf) {
+    return (bars || []).filter((b) => b && Number.isFinite(b.t) && Number.isFinite(b.c) && szBarClosed(b, tf));
+  }
+  function szFirstValidIndex(selected) {
+    let need = 0;
+    if (selected.indexOf("ma") >= 0) need = Math.max(need, 199);
+    if (selected.indexOf("ichi") >= 0) need = Math.max(need, 76);
+    if (selected.indexOf("bd") >= 0) need = Math.max(need, 26);
+    return need;
+  }
+  function szSavePrefs() {
+    try {
+      localStorage.setItem(SZ_TF_KEY, szTfId());
+      localStorage.setItem(SZ_IND_KEY, JSON.stringify(szSelectedIds()));
+      localStorage.setItem(SZ_START_KEY, state.szStart || "");
+      localStorage.setItem(SZ_END_KEY, state.szEnd || "");
+      localStorage.setItem(SZ_END_FOLLOW_KEY, state.szEndFollow ? "1" : "0");
+    } catch (e) {}
+  }
+  function szBarsOf(tf) {
+    return (state.sanzuanBarsByTf && state.sanzuanBarsByTf[tf]) || [];
+  }
+  function szLastClosedBar(tf) {
+    const closed = szClosedBars(szBarsOf(tf || szTfId()), tf || szTfId());
+    return closed.length ? closed[closed.length - 1] : null;
+  }
+  function szLastClosedYmd(tf) {
+    const b = szLastClosedBar(tf);
+    return b ? hkYmd(b.t) : "";
+  }
+  function szNeededStartMs(tf, closed) {
+    const list = closed || szClosedBars(szBarsOf(tf), tf);
+    const last = list.length ? list[list.length - 1] : null;
+    let windowStart = last ? addUtcYears(last.t, -4) : Date.UTC(2021, 0, 1);
+    if (state.szStart && /^\d{4}-\d{2}-\d{2}$/.test(state.szStart)) {
+      const parts = state.szStart.split("-").map(Number);
+      windowStart = Date.UTC(parts[0], parts[1] - 1, parts[2]) - 8 * 3600000;
+    }
+    let needed = windowStart - SZ_WARMUP_BARS * szIntervalMs(tf);
+    const sticky = windowStart - SZ_LOOKBACK_DAYS * 86400000;
+    if (sticky < needed) needed = sticky;
+    if (tf === "1d" && windowStart >= Date.UTC(2021, 0, 1) && needed > Date.UTC(2021, 0, 1)) {
+      needed = Date.UTC(2021, 0, 1);
+    }
+    return needed;
+  }
+  function szCacheCoversNeed(tf) {
+    const bars = szBarsOf(tf);
+    if (!bars.length) return false;
+    const closed = szClosedBars(bars, tf);
+    if (!closed.length) return false;
+    return closed[0].t <= szNeededStartMs(tf, closed);
+  }
+  function szEnsureDefaultDates(closed, tf) {
+    if (!closed || !closed.length) return;
+    const last = closed[closed.length - 1];
+    const lastYmd = hkYmd(last.t);
+    if (!state.szEnd || state.szEndFollow) {
+      state.szEnd = lastYmd;
+      state.szEndFollow = true;
+    } else if (state.szEnd > lastYmd) {
+      state.szEnd = lastYmd;
+    }
+    if (!state.szStart) {
+      const startMs = addUtcYears(last.t, -4);
+      let first = last;
+      for (let i = 0; i < closed.length; i++) {
+        if (closed[i].t >= startMs) { first = closed[i]; break; }
+      }
+      state.szStart = hkYmd(first.t);
+    }
+    if (state.szStart && lastYmd && state.szStart >= lastYmd && state.szEnd === lastYmd) {
+      // keep as-is; validation happens in compute
+    }
+    szSavePrefs();
+  }
   function computeSanzuan() {
-    const bars = state.sanzuanBars || [];
-    if (!bars.length) {
-      state.sanzuan = { ready: false, error: "暂无日线数据" };
+    const tf = szTfId();
+    const selected = szSelectedIds();
+    const bars = szBarsOf(tf);
+    if (!selected.length) {
+      state.sanzuan = { ready: false, needSelect: true, tf, selected, error: "请先勾选至少一个指标，再查看观察状态与回测。" };
       return;
     }
-    const closed = bars.filter((b) => dailyBarClosed(b.t, b.ct));
-    if (closed.length < 200) {
-      state.sanzuan = { ready: false, error: "日线数据不足，暂无法计算观察状态" };
+    if (!bars.length) {
+      state.sanzuan = { ready: false, tf, selected, error: "暂无该周期 K 线数据" };
+      return;
+    }
+    const closedAll = szClosedBars(bars, tf);
+    if (!closedAll.length) {
+      state.sanzuan = { ready: false, tf, selected, error: "暂无已收盘 K 线，官方状态不用形成中的当根。" };
+      return;
+    }
+    szEnsureDefaultDates(closedAll, tf);
+    const startYmd = state.szStart;
+    const endYmd = state.szEnd;
+    if (!startYmd || !endYmd) {
+      state.sanzuan = { ready: false, tf, selected, error: "请选择回测起始日期与结束日期。" };
+      return;
+    }
+    if (startYmd >= endYmd) {
+      state.sanzuan = { ready: false, tf, selected, error: "起始日期必须早于结束日期。" };
+      return;
+    }
+    const lastYmd = hkYmd(closedAll[closedAll.length - 1].t);
+    if (endYmd > lastYmd) {
+      state.szEnd = lastYmd;
+      szSavePrefs();
+    }
+    const capYmd = state.szEnd;
+    const closed = closedAll.filter((b) => hkYmd(b.t) <= capYmd);
+    if (closed.length < 2) {
+      state.sanzuan = { ready: false, tf, selected, error: "该结束日期之前的已收盘 K 线不足，暂无法计算。" };
       return;
     }
     const n = closed.length;
@@ -2803,6 +3037,7 @@
     const lows = closed.map((b) => b.l);
     const closes = closed.map((b) => b.c);
     const times = closed.map((b) => b.t);
+    const closeTimes = closed.map((b) => b.ct);
     const typ = new Array(n);
     for (let i = 0; i < n; i++) typ[i] = (closes[i] + highs[i] + lows[i]) / 3;
     const e5 = emaSeries(typ, 5);
@@ -2825,6 +3060,7 @@
     const ma200s = new Array(n).fill(null);
     const votes = new Array(n);
     const inPos = new Array(n);
+    const threshold = Math.min(2, selected.length);
     let run = 0;
     for (let i = 0; i < n; i++) {
       const h9 = rollExt(highs, 9, i, true), l9 = rollExt(lows, 9, i, false);
@@ -2849,17 +3085,37 @@
         ma200s[i] = run / 200;
       }
       aboveMa[i] = ma200s[i] != null && closes[i] > ma200s[i];
-      votes[i] = (bd[i] ? 1 : 0) + (ichi[i] ? 1 : 0) + (aboveMa[i] ? 1 : 0);
-      inPos[i] = votes[i] >= 2;
+      const flag = { bd: bd[i], ichi: ichi[i], ma: aboveMa[i] };
+      let v = 0;
+      for (let s = 0; s < selected.length; s++) if (flag[selected[s]]) v += 1;
+      votes[i] = v;
+      inPos[i] = v >= threshold;
     }
     const iEnd = n - 1;
-    const startMs = addUtcYears(times[iEnd], -4);
+    const minValid = szFirstValidIndex(selected);
     let i0 = -1;
     for (let i = 0; i < n; i++) {
-      if (times[i] >= startMs) { i0 = i; break; }
+      if (hkYmd(times[i]) >= startYmd) { i0 = i; break; }
+    }
+    const notes = [];
+    if (i0 < 0) {
+      state.sanzuan = { ready: false, tf, selected, error: "起始日期之后没有已收盘 K 线。" };
+      return;
+    }
+    if (i0 < minValid) {
+      const asked = startYmd;
+      i0 = minValid;
+      if (i0 <= iEnd) notes.push("指标预热需要足够的历史 K 线，实际起始已从 " + asked + " 调整为 " + hkYmd(times[i0]) + "，未把更早、尚未算准的交易计入收益。");
+    }
+    if (closed[0] && closed[0].t > szNeededStartMs(tf, closedAll) && i0 <= minValid) {
+      notes.push("该周期可取到的最早已收盘 K 线为 " + hkYmd(times[0]) + "，已用能用的最早起始，未虚构更早数据。");
+    }
+    if (i0 >= iEnd) {
+      state.sanzuan = { ready: false, tf, selected, error: "该窗口内可用于回测的已收盘 K 线不足（均线等指标需要向前预热）。" };
+      return;
     }
     let backtest = null;
-    if (i0 >= 1 || (i0 === 0)) {
+    if (i0 >= 0 && i0 <= iEnd) {
       function runEquity(fee) {
         let cash = 1, pos = 0, trips = 0, pending = null;
         if (i0 > 0 && inPos[i0 - 1]) pending = "buy";
@@ -2894,8 +3150,8 @@
         return {
           ret, cagr, mdd: maxdd, trips, timeInMkt: inBars / (iEnd - i0 + 1),
           endedInPos: pos > 0,
-          mddFrom: bestPeak != null ? utcYmd(times[bestPeak]) : "",
-          mddTo: bestTrough != null ? utcYmd(times[bestTrough]) : "",
+          mddFrom: bestPeak != null ? hkYmd(times[bestPeak]) : "",
+          mddTo: bestTrough != null ? hkYmd(times[bestTrough]) : "",
         };
       }
       function runBh(fee) {
@@ -2914,8 +3170,8 @@
         const cagr = (lastEq > 0 && years > 0) ? Math.pow(lastEq, 1 / years) - 1 : null;
         return {
           ret, cagr, mdd: maxdd,
-          mddFrom: utcYmd(times[bestPeak]),
-          mddTo: utcYmd(times[bestTrough]),
+          mddFrom: hkYmd(times[bestPeak]),
+          mddTo: hkYmd(times[bestTrough]),
         };
       }
       const st0 = runEquity(0);
@@ -2923,20 +3179,27 @@
       const stFee = runEquity(0.001);
       const bhFee = runBh(0.001);
       backtest = {
-        from: utcYmd(times[i0]),
-        to: utcYmd(times[iEnd]),
+        from: hkYmd(times[i0]),
+        to: hkYmd(times[iEnd]),
+        askedFrom: startYmd,
+        askedTo: capYmd,
         startOpen: opens[i0],
         endClose: closes[iEnd],
         strategy: st0,
         hold: bh0,
         strategyFee: stFee,
         holdFee: bhFee,
+        notes,
       };
     }
-    const asOfMs = times[iEnd] + 86400000;
+    const officialCt = closeTimes[iEnd] != null && Number.isFinite(closeTimes[iEnd]) ? closeTimes[iEnd] : (times[iEnd] + szIntervalMs(tf));
+    const asOfMs = officialCt + 1;
     state.sanzuan = {
       ready: true,
       error: "",
+      tf,
+      selected: selected.slice(),
+      threshold,
       asOf: fmtTsHK(asOfMs),
       asOfMs,
       close: closes[iEnd],
@@ -2945,17 +3208,32 @@
       ichi: ichi[iEnd],
       aboveMa: aboveMa[iEnd],
       votes: votes[iEnd],
+      nSel: selected.length,
       inPos: inPos[iEnd],
       backtest,
+      notes,
     };
   }
   function parseSanzuanKline(r) {
     return { t: +r[0], o: +r[1], h: +r[2], l: +r[3], c: +r[4], ct: +r[6] };
   }
+  async function szFetchKlines(tf, extra) {
+    const url = "https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=" + encodeURIComponent(tf) + "&limit=1000" + (extra || "");
+    let lastErr = null;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        return await fetchJson(url);
+      } catch (e) {
+        lastErr = e;
+        await new Promise((r) => setTimeout(r, 400 * (attempt + 1)));
+      }
+    }
+    throw lastErr;
+  }
   async function refreshSanzuanKlines() {
-    const START = Date.UTC(2021, 0, 1);
+    const tf = szTfId();
     const byTime = new Map();
-    (state.sanzuanBars || []).forEach((b) => { if (b && b.t != null) byTime.set(b.t, b); });
+    szBarsOf(tf).forEach((b) => { if (b && b.t != null) byTime.set(b.t, b); });
     const merge = (batch) => {
       if (!batch || !batch.length) return;
       for (let i = 0; i < batch.length; i++) {
@@ -2963,22 +3241,61 @@
         if (Number.isFinite(b.t) && Number.isFinite(b.c)) byTime.set(b.t, b);
       }
     };
-    const latest = await fetchJson("https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=1000");
+    const latest = await szFetchKlines(tf, "");
     merge(latest);
     let oldest = Infinity;
     byTime.forEach((b, t) => { if (t < oldest) oldest = t; });
-    let guard = 0;
-    while (oldest > START && guard++ < 8) {
-      const batch = await fetchJson("https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=1000&endTime=" + (oldest - 1));
-      if (!batch || !batch.length) break;
-      const first = +batch[0][0];
-      merge(batch);
-      if (!Number.isFinite(first) || first >= oldest) break;
-      oldest = first;
-      if (batch.length < 1000) break;
+    const closedPreview = Array.from(byTime.values()).filter((b) => szBarClosed(b, tf)).sort((a, b) => a.t - b.t);
+    const needed = szNeededStartMs(tf, closedPreview);
+    const alreadyCovered = Number.isFinite(oldest) && oldest <= needed;
+    if (!alreadyCovered) {
+      let guard = 0;
+      while (oldest > needed && guard++ < SZ_MAX_PAGES) {
+        const batch = await szFetchKlines(tf, "&endTime=" + (oldest - 1));
+        if (!batch || !batch.length) break;
+        const first = +batch[0][0];
+        merge(batch);
+        if (!Number.isFinite(first) || first >= oldest) break;
+        oldest = first;
+        if (batch.length < 1000) break;
+      }
     }
-    state.sanzuanBars = Array.from(byTime.values()).sort((a, b) => a.t - b.t);
+    if (!state.sanzuanBarsByTf) state.sanzuanBarsByTf = {};
+    state.sanzuanBarsByTf[tf] = Array.from(byTime.values()).sort((a, b) => a.t - b.t);
     computeSanzuan();
+  }
+  let szFetchGen = 0;
+  async function szRequestRefresh() {
+    const gen = ++szFetchGen;
+    const tf = szTfId();
+    const needFetch = !szCacheCoversNeed(tf);
+    if (needFetch) {
+      state.sanzuanLoading = true;
+      state.sanzuanLoadError = "";
+      sanzuanBlock();
+    }
+    try {
+      await refreshSanzuanKlines();
+      if (gen !== szFetchGen) return;
+      state.sanzuanLoadError = "";
+    } catch (e) {
+      if (gen !== szFetchGen) return;
+      console.warn(e);
+      if (!szBarsOf(tf).length) {
+        state.sanzuanLoadError = "K 线加载失败，请稍后重试。";
+        state.sanzuan = { ready: false, tf, selected: szSelectedIds(), error: state.sanzuanLoadError };
+      } else {
+        state.sanzuanLoadError = "补充 K 线失败，先按已缓存数据计算。";
+        computeSanzuan();
+      }
+    } finally {
+      if (gen === szFetchGen) {
+        state.sanzuanLoading = false;
+        sanzuanBlock();
+        if (state.mainTab === "sanzuan") clearTabDot("sanzuan");
+        else reviewTabStamp("sanzuan");
+      }
+    }
   }
   function sanzuanChip(ok) {
     return ok
@@ -2994,65 +3311,220 @@
   function sanzuanKv(lab, val, span) {
     return `<div class="sz-kv"><span class="lab">${lab}</span><span class="val">${val}${span ? `<span class="sz-span">${span}</span>` : ""}</span></div>`;
   }
+  function szSetHtml(el, html) {
+    if (!el) return;
+    if (el._szHtml === html) return;
+    el._szHtml = html;
+    el.innerHTML = html;
+  }
+  function sanzuanEnsureControls() {
+    const root = $("sanzuan");
+    if (!root) return null;
+    if (!$("sz-controls") || !$("sz-status") || !$("sz-results")) {
+      root.innerHTML = `<div class="sz-card-k">策略回测</div>
+      <div id="sz-controls" class="sz-controls"></div>
+      <div id="sz-status" class="sz-status"><p class="cycle-note">正在加载该周期观察…</p></div>
+      <div id="sz-results" class="sz-results"><p class="cycle-note">正在加载回测…</p></div>`;
+    }
+    const box = $("sz-controls");
+    if (box && !box.dataset.ready) {
+      const inds = SZ_INDICATORS.map((ind) => {
+        const on = (state.szSelected || []).indexOf(ind.id) >= 0;
+        return `<label class="sz-ind"><input type="checkbox" data-sz-ind="${ind.id}"${on ? " checked" : ""}>${escapeHtml(ind.name)}</label>`;
+      }).join("");
+      const tfs = SZ_TFS.map((t) => {
+        const on = t.id === szTfId();
+        return `<button type="button" class="tf-tab${on ? " on" : ""}" data-sz-tf="${t.id}" aria-pressed="${on ? "true" : "false"}">${t.label}</button>`;
+      }).join("");
+      box.innerHTML = `<div class="sz-field">
+          <span class="sz-lab">观察指标</span>
+          <div class="sz-inds" id="sz-inds">${inds}</div>
+        </div>
+        <div class="sz-field">
+          <span class="sz-lab">回测周期</span>
+          <div class="tf-tabs sz-tf-tabs" role="tablist" id="sz-tf-tabs">${tfs}</div>
+        </div>
+        <div class="sz-field">
+          <span class="sz-lab">回测日期（香港时间）</span>
+          <div class="sz-dates">
+            <label class="sz-date-lab">起始<input type="date" id="sz-start" class="sz-date" value="${escapeHtml(state.szStart || "")}"></label>
+            <label class="sz-date-lab">结束<input type="date" id="sz-end" class="sz-date" value="${escapeHtml(state.szEnd || "")}"></label>
+          </div>
+          <p class="sz-hint">按香港日历日期，含起始日与结束日当天的已收盘 K 线。结束日不超过该周期最后一根已收盘棒。官方状态与回测只用已收盘 K 线，不含形成中的当根。</p>
+        </div>`;
+      box.dataset.ready = "1";
+    }
+    if (root && !root.dataset.szBound) {
+      root.dataset.szBound = "1";
+      root.addEventListener("change", (ev) => {
+        const t = ev.target;
+        if (!t) return;
+        if (t.getAttribute && t.getAttribute("data-sz-ind") != null) {
+          state.szSelected = Array.from(root.querySelectorAll("input[data-sz-ind]:checked")).map((el) => el.getAttribute("data-sz-ind"));
+          szSavePrefs();
+          computeSanzuan();
+          sanzuanBlock();
+          if (state.mainTab === "sanzuan") clearTabDot("sanzuan");
+          else reviewTabStamp("sanzuan");
+          return;
+        }
+        if (t.id === "sz-start" || t.id === "sz-end") {
+          const val = t.value || "";
+          if (t.id === "sz-start") state.szStart = val;
+          if (t.id === "sz-end") {
+            state.szEnd = val;
+            const last = szLastClosedYmd();
+            state.szEndFollow = !!(last && val === last);
+          }
+          szSavePrefs();
+          szRequestRefresh();
+        }
+      });
+      root.addEventListener("click", (ev) => {
+        const btn = ev.target.closest("[data-sz-tf]");
+        if (!btn || !root.contains(btn)) return;
+        const tf = btn.getAttribute("data-sz-tf");
+        if (!SZ_TFS.some((x) => x.id === tf) || tf === szTfId()) return;
+        state.szTf = tf;
+        szSavePrefs();
+        if (state.mainTab === "sanzuan") clearTabDot("sanzuan");
+        szRequestRefresh();
+      });
+    }
+    return root;
+  }
+  function szSyncControls() {
+    const root = $("sanzuan");
+    if (!root) return;
+    const selected = new Set(szSelectedIds());
+    root.querySelectorAll("input[data-sz-ind]").forEach((el) => {
+      const id = el.getAttribute("data-sz-ind");
+      const on = selected.has(id);
+      if (el !== document.activeElement && el.checked !== on) el.checked = on;
+    });
+    const tf = szTfId();
+    root.querySelectorAll("[data-sz-tf]").forEach((btn) => {
+      const on = btn.getAttribute("data-sz-tf") === tf;
+      btn.classList.toggle("on", on);
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    const last = szLastClosedYmd(tf);
+    const startInp = $("sz-start");
+    const endInp = $("sz-end");
+    const minYmd = (function () {
+      const closed = szClosedBars(szBarsOf(tf), tf);
+      const minValid = szFirstValidIndex(szSelectedIds());
+      if (closed.length > minValid) return hkYmd(closed[minValid].t);
+      return closed.length ? hkYmd(closed[0].t) : "";
+    })();
+    [startInp, endInp].forEach((inp) => {
+      if (!inp) return;
+      if (minYmd) inp.min = minYmd;
+      if (last) inp.max = last;
+    });
+    if (startInp && document.activeElement !== startInp && state.szStart && startInp.value !== state.szStart) startInp.value = state.szStart;
+    if (endInp && document.activeElement !== endInp && state.szEnd && endInp.value !== state.szEnd) endInp.value = state.szEnd;
+  }
+  function szCmpShell(innerLeft, innerRight, title, windowLine, note) {
+    return `<div class="sz-bt-title">${title}</div>
+        ${windowLine ? `<p class="sz-window">${windowLine}</p>` : ""}
+        <div class="sz-cmp">
+          <div class="sz-col">${innerLeft}</div>
+          <div class="sz-col">${innerRight}</div>
+        </div>
+        ${note ? `<p class="cycle-note">${note}</p>` : ""}`;
+  }
   function sanzuanBlock() {
     const root = $("sanzuan");
     if (!root) return;
+    sanzuanEnsureControls();
+    szSyncControls();
+    const status = $("sz-status");
+    const results = $("sz-results");
     const d = state.sanzuan;
-    if (!d) {
-      root.innerHTML = `<div class="sz-card-k">三选二</div><p class="cycle-note">正在加载日线观察…</p>`;
-      return;
+    const tf = szTfId();
+    const lab = szTfLabel(tf);
+    const selected = szSelectedIds();
+    const stale = !!(d && d.tf && d.tf !== tf);
+    const loading = !!state.sanzuanLoading;
+    const loadNote = loading ? `<p class="cycle-note sz-loading">正在加载 ${escapeHtml(lab)} K 线…</p>` : (state.sanzuanLoadError ? `<p class="cycle-note">${escapeHtml(state.sanzuanLoadError)}</p>` : "");
+
+    let statusHtml = "";
+    if (!selected.length) {
+      statusHtml = `<p class="sz-lead">请先勾选至少一个指标，再查看观察状态与回测。仅供观察，不是买卖建议。</p>`;
+    } else if (loading && (!d || !d.ready || stale)) {
+      statusHtml = `${loadNote}<p class="cycle-note">官方状态将使用 ${escapeHtml(lab)}、不晚于结束日期的最后一根已收盘 K 线。</p>`;
+    } else if (!d || !d.ready) {
+      statusHtml = `${loadNote}<p class="cycle-note">${escapeHtml((d && d.error) || "暂无法计算观察状态")}</p>`;
+    } else {
+      const hold = d.inPos;
+      const tone = hold ? "up" : "neutral";
+      const statusLab = hold ? "持有" : "空仓";
+      const threshold = d.threshold != null ? d.threshold : Math.min(2, selected.length);
+      const lead = (selected.length === 3 && threshold === 2)
+        ? `BTC ${lab} 三个条件中，至少两个看多则观察为持有，否则为空仓。仅供观察，不是买卖建议。`
+        : (selected.length === 1
+          ? `BTC ${lab} 已选条件看多则观察为持有，否则为空仓。仅供观察，不是买卖建议。`
+          : `BTC ${lab} 已选 ${selected.length} 个条件中，至少 ${threshold} 个看多则观察为持有，否则为空仓。仅供观察，不是买卖建议。`);
+      const flags = { bd: d.bd, ichi: d.ichi, ma: d.aboveMa };
+      const rows = selected.map((id) => sanzuanRow(szIndName(id, tf), !!flags[id], szIndHint(id, tf))).join("");
+      statusHtml = `${loadNote}<p class="sz-lead">${escapeHtml(lead)}</p>
+      <div class="sz-overall">
+        <div class="cyc-head">
+          <div class="cyc-k">观察状态</div>
+          <p class="cyc-jud tone-${tone}">${statusLab}</p>
+        </div>
+        <p class="sz-votes">看多票数 <b>${d.votes} / ${d.nSel}</b></p>
+        <p class="cyc-sub">截至 ${escapeHtml(d.asOf)} 香港时间的已收盘${escapeHtml(lab)}线</p>
+      </div>
+      <div class="sz-grid">${rows}</div>`;
     }
-    if (!d.ready) {
-      root.innerHTML = `<div class="sz-card-k">三选二</div><p class="cycle-note">${escapeHtml(d.error || "暂无法计算观察状态")}</p>`;
-      return;
-    }
-    const hold = d.inPos;
-    const tone = hold ? "up" : "neutral";
-    const status = hold ? "持有" : "空仓";
-    const bt = d.backtest;
-    let btHtml = `<p class="cycle-note">回测数据不足。</p>`;
-    if (bt && bt.strategy && bt.hold) {
+
+    const placeholderLeft = `<div class="cyc-k">所选规则</div><div class="sz-ret flat">—</div>`;
+    const placeholderRight = `<div class="cyc-k">一直持有现货</div><div class="sz-ret flat">—</div>`;
+    let resultsHtml = "";
+    if (!selected.length) {
+      resultsHtml = szCmpShell(placeholderLeft, placeholderRight, "回测对比", "", "请先勾选指标后再回测。") + loadNote;
+    } else if (loading && (!d || !d.ready || stale || !d.backtest)) {
+      resultsHtml = szCmpShell(placeholderLeft, placeholderRight, "回测对比", "", "") + loadNote;
+    } else if (!d || !d.ready) {
+      resultsHtml = szCmpShell(placeholderLeft, placeholderRight, "回测对比", "", escapeHtml((d && d.error) || "回测数据不足。")) + loadNote;
+    } else if (!(d.backtest && d.backtest.strategy && d.backtest.hold)) {
+      resultsHtml = szCmpShell(placeholderLeft, placeholderRight, "回测对比", "", "回测数据不足。") + loadNote;
+    } else {
+      const bt = d.backtest;
       const st = bt.strategy, hd = bt.hold;
       const feeNote = (bt.strategyFee && bt.holdFee)
         ? `若按每边 0.1% 手续费，策略约 ${fmtSzPctInt(bt.strategyFee.ret)}，一直持有约 ${fmtSzPctInt(bt.holdFee.ret)}。`
         : "";
-      btHtml = `<div class="sz-bt-title">近四年回测</div>
-        <p class="sz-window">${escapeHtml(bt.from)} 至 ${escapeHtml(bt.to)}</p>
-        <div class="sz-cmp">
-          <div class="sz-col">
-            <div class="cyc-k">三选二规则</div>
+      const classic = selected.length === 3 && (d.threshold == null || d.threshold === 2);
+      const leftName = classic ? "三选二规则" : "所选规则";
+      const extra = (bt.notes && bt.notes.length ? bt.notes.join("") : "") + (d.notes && d.notes.length && bt.notes !== d.notes ? d.notes.join("") : "");
+      const note = `币安 BTC/USDT ${lab} 线，信号当根已收盘确认、下一根开盘成交，不含手续费。窗口按香港日期，含起始日与结束日当天的已收盘 K 线；结束日不超过该周期最后一根已收盘棒。${feeNote}${extra}历史回测不代表以后结果，不是投资建议。`;
+      const title = "回测对比";
+      const windowLine = escapeHtml(bt.from) + " 至 " + escapeHtml(bt.to);
+      resultsHtml = szCmpShell(
+        `<div class="cyc-k">${leftName}</div>
             <div class="sz-ret ${pctClass(st.ret)}">${fmtSzPctInt(st.ret)}</div>
             ${sanzuanKv("年化", fmtSzPct(st.cagr, 1))}
             ${sanzuanKv("最大回撤", fmtSzPct(st.mdd, 1), st.mddFrom && st.mddTo ? (st.mddFrom + " 至 " + st.mddTo) : "")}
             ${sanzuanKv("完整买卖", String(st.trips) + " 笔")}
-            ${sanzuanKv("在场时间", fmtSzPct(st.timeInMkt, 1).replace(/^\+/, ""))}
-          </div>
-          <div class="sz-col">
-            <div class="cyc-k">一直持有现货</div>
+            ${sanzuanKv("在场时间", fmtSzPct(st.timeInMkt, 1).replace(/^\+/, ""))}`,
+        `<div class="cyc-k">一直持有现货</div>
             <div class="sz-ret ${pctClass(hd.ret)}">${fmtSzPctInt(hd.ret)}</div>
             ${sanzuanKv("年化", fmtSzPct(hd.cagr, 1))}
-            ${sanzuanKv("最大回撤", fmtSzPct(hd.mdd, 1), hd.mddFrom && hd.mddTo ? (hd.mddFrom + " 至 " + hd.mddTo) : "")}
-          </div>
-        </div>
-        <p class="cycle-note">币安 BTC/USDT 日线（UTC），信号当日收盘确认、次日开盘成交，不含手续费。${feeNote}历史回测不代表以后结果，不是投资建议。</p>`;
+            ${sanzuanKv("最大回撤", fmtSzPct(hd.mdd, 1), hd.mddFrom && hd.mddTo ? (hd.mddFrom + " 至 " + hd.mddTo) : "")}`,
+        title,
+        windowLine,
+        note
+      ) + loadNote;
     }
-    root.innerHTML = `<div class="sz-card-k">三选二</div>
-      <p class="sz-lead">BTC 日线三个条件中，至少两个看多则观察为持有，否则为空仓。仅供观察，不是买卖建议。</p>
-      <div class="sz-overall">
-        <div class="cyc-head">
-          <div class="cyc-k">观察状态</div>
-          <p class="cyc-jud tone-${tone}">${status}</p>
-        </div>
-        <p class="sz-votes">看多票数 <b>${d.votes} / 3</b></p>
-        <p class="cyc-sub">截至 ${escapeHtml(d.asOf)} 香港时间的已收盘日线</p>
-      </div>
-      <div class="sz-grid">
-        ${sanzuanRow("BDCP持股", d.bd, "典型价5日均线向上，且第一次亮起时日线 DIF>0")}
-        ${sanzuanRow("一目云上", d.ichi, "收盘价在云上且转换线>基准线")}
-        ${sanzuanRow("200日均线上", d.aboveMa, "收盘价在线上")}
-      </div>
-      ${btHtml}`;
-    reviewTabStamp("sanzuan");
+    szSetHtml(status, statusHtml);
+    szSetHtml(results, resultsHtml);
+    if (!loading && d && d.ready && d.tf === tf) {
+      if (state.mainTab === "sanzuan") clearTabDot("sanzuan");
+      else reviewTabStamp("sanzuan");
+    }
   }
 
   function paint() { render(snapshot()); }
@@ -3296,7 +3768,12 @@
     if (id === "sanzuan") {
       const d = state.sanzuan;
       if (!d || !d.ready) return "";
-      return [d.inPos ? "1" : "0", d.bd ? "1" : "0", d.ichi ? "1" : "0", d.aboveMa ? "1" : "0"].join("|");
+      const tf = d.tf || szTfId();
+      const selected = (d.selected && d.selected.length) ? d.selected : szSelectedIds();
+      const flags = { bd: d.bd, ichi: d.ichi, ma: d.aboveMa };
+      const bits = [d.inPos ? "1" : "0"];
+      selected.forEach((id) => bits.push(flags[id] ? "1" : "0"));
+      return [tf, selected.join(",")].concat(bits).join("|");
     }
     if (id === "xfeed") {
       const d = state.xFeed;
@@ -3771,7 +4248,17 @@
     loadUsStocks().then(paintAndReview).catch((e) => console.warn(e));
     loadMvrv().then(paintAndReview).catch((e) => console.warn(e));
     loadXFeed().then(paint).catch((e) => console.warn(e));
-    refreshSanzuanKlines().then(() => { paint(); reviewTabStamp("sanzuan"); }).catch((e) => console.warn(e));
+    state.sanzuanLoading = true;
+    refreshSanzuanKlines().then(() => {
+      state.sanzuanLoading = false;
+      paint();
+      reviewTabStamp("sanzuan");
+    }).catch((e) => {
+      state.sanzuanLoading = false;
+      state.sanzuanLoadError = "K 线加载失败，请稍后重试。";
+      console.warn(e);
+      paint();
+    });
     const errors = [];
     for (const [name, fn] of [["价格", refreshTickers], ["指标", refreshKlines], ["市值", refreshMarket], ["情绪", refreshFng]]) {
       try { await fn(); } catch (e) { errors.push(name); console.warn(e); }
