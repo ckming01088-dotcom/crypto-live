@@ -259,6 +259,9 @@
     .cyc-chip.tone-caution { border-color: color-mix(in srgb, var(--caution) 55%, var(--line)); color: var(--caution); }
     .cyc-chip.tone-up { border-color: color-mix(in srgb, var(--up) 55%, var(--line)); color: var(--up); }
     .cyc-chip.tone-down { border-color: color-mix(in srgb, var(--down) 55%, var(--line)); color: var(--down); }
+    .cyc-chip.forming { color: var(--caution); border-color: color-mix(in srgb, var(--caution) 55%, var(--line)); }
+    .cyc-vrev-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; margin: 2px 0 2px; }
+    .cyc-vrev-pair .prob-bar { margin-top: 3px; }
     .cyc-flash {
       outline: 2px solid var(--caution);
       box-shadow: 0 0 0 4px color-mix(in srgb, var(--caution) 28%, transparent);
@@ -625,7 +628,7 @@
   </div>
   <footer>
     数据来自 Binance、CoinGecko、Alternative.me，时间为香港时间。<br>
-    顶底指标为常用技术观察、不是买卖建议；不含自动交易。<br>
+    顶底指标（含综合倾向、分项读数与 V 反观察）为常用技术观察，不是买卖建议，也不确认见顶见底；不含自动交易。<br>
     三选二栏为比特币日线三个条件的当前观察，并对照近四年回测与一直持有现货，不是买卖建议。<br>
     合约持仓量来自币安 U 本位合约。MVRV Z-Score 来自 BGeometrics，免费数据末值可能延迟约一周。AHR999 按币安 BTCUSDT 日线与九神公开公式计算，0.45、1.2、5 为文献参考带，不是买卖线。<br>
     比特币支撑与压力由币安 BTCUSDT 日线的近期摆动高低点、近30日/90日/一年区间高低，以及 50/200 日与周均线合并去重得出；未收盘的日线不作为已确认摆动点。仅供观察，不是买卖建议。<br>
@@ -705,6 +708,7 @@
     tfTimes: { "2h": emptyByCoin(() => []), "4h": emptyByCoin(() => []), "6h": emptyByCoin(() => []), "12h": emptyByCoin(() => []), "1d": emptyByCoin(() => []), "3d": emptyByCoin(() => []), "1w": emptyByCoin(() => []) },
     tfHighs: { "2h": emptyByCoin(() => []), "4h": emptyByCoin(() => []), "6h": emptyByCoin(() => []), "12h": emptyByCoin(() => []), "1d": emptyByCoin(() => []), "3d": emptyByCoin(() => []), "1w": emptyByCoin(() => []) },
     tfLows: { "2h": emptyByCoin(() => []), "4h": emptyByCoin(() => []), "6h": emptyByCoin(() => []), "12h": emptyByCoin(() => []), "1d": emptyByCoin(() => []), "3d": emptyByCoin(() => []), "1w": emptyByCoin(() => []) },
+    tfVols: { "2h": emptyByCoin(() => []), "4h": emptyByCoin(() => []), "6h": emptyByCoin(() => []), "12h": emptyByCoin(() => []), "1d": emptyByCoin(() => []), "3d": emptyByCoin(() => []), "1w": emptyByCoin(() => []) },
     market: {},
     fng: { value: null, label: "" },
     funding: emptyByCoin(() => null),
@@ -1138,6 +1142,10 @@
     if (interval === "1d") return state.dailyLow[symbol] || [];
     return [];
   }
+  function tfVolsOf(interval, symbol) {
+    const tf = state.tfVols[interval] && state.tfVols[interval][symbol];
+    return (tf && tf.length) ? tf : [];
+  }
   function hasTfSymbol(interval, symbol) {
     return tfClosesOf(interval, symbol).length > 0;
   }
@@ -1167,6 +1175,546 @@
   function isUsStock(symbol) {
     return symbol === "QQQ" || symbol === "VOO" || symbol === "SPX";
   }
+  // V 反观察：独立卡片，不进入 compositeLean，不接入三选二。
+  // 展示「当前结构有多接近 V 底 / V 顶（倒 V）观察条件」的倾向分，不是确认反转，也不是买卖建议。
+  // 权重（合计 100，成交量为加分项）：急而深的一腿 25、反向腿速度与回撤 30、单一极值 20、收盘收复关键位 20、成交量 0–5。
+  // 缺成交量或未放量时成交量项为 0，不会让总分归零。官方读数只用最后一根已收盘 K 线。
+  const VREV_W = { impulse: 25, reverse: 30, single: 20, reclaim: 20, volume: 5 };
+  const VREV_TF = {
+    "2h":  { lookback: 60, maxDown: 18, sharp: 6, pctLo: 0.015, pctHi: 0.06, minBars: 25 },
+    "4h":  { lookback: 60, maxDown: 18, sharp: 6, pctLo: 0.02,  pctHi: 0.08, minBars: 25 },
+    "6h":  { lookback: 50, maxDown: 16, sharp: 5, pctLo: 0.025, pctHi: 0.10, minBars: 25 },
+    "12h": { lookback: 50, maxDown: 16, sharp: 5, pctLo: 0.035, pctHi: 0.12, minBars: 25 },
+    "1d":  { lookback: 50, maxDown: 12, sharp: 5, pctLo: 0.05,  pctHi: 0.16, minBars: 25 },
+    "3d":  { lookback: 45, maxDown: 10, sharp: 4, pctLo: 0.08,  pctHi: 0.22, minBars: 22 },
+    "1w":  { lookback: 40, maxDown: 8,  sharp: 4, pctLo: 0.10,  pctHi: 0.28, minBars: 20 },
+  };
+  function vrevSmaSeries(values, period) {
+    const out = new Array((values || []).length).fill(null);
+    if (!values || values.length < period) return out;
+    let s = 0;
+    for (let i = 0; i < values.length; i++) {
+      s += values[i];
+      if (i >= period) s -= values[i - period];
+      if (i >= period - 1) out[i] = s / period;
+    }
+    return out;
+  }
+  function vrevAtr(highs, lows, closes, period) {
+    period = period || 14;
+    const n = closes.length;
+    const out = new Array(n).fill(null);
+    if (n <= period) return out;
+    const tr = new Array(n);
+    tr[0] = highs[0] - lows[0];
+    for (let i = 1; i < n; i++) {
+      tr[i] = Math.max(highs[i] - lows[i], Math.abs(highs[i] - closes[i - 1]), Math.abs(lows[i] - closes[i - 1]));
+    }
+    let s = 0;
+    for (let i = 1; i <= period; i++) s += tr[i];
+    out[period] = s / period;
+    for (let i = period + 1; i < n; i++) out[i] = (out[i - 1] * (period - 1) + tr[i]) / period;
+    return out;
+  }
+  function vrevFindSwings(values, mode, left, right, from, to) {
+    const idx = [];
+    const start = Math.max(from, left);
+    const end = to - right;
+    if (end < start) return idx;
+    for (let i = start; i <= end; i++) {
+      const v = values[i];
+      if (v == null || !Number.isFinite(v)) continue;
+      let ok = true;
+      for (let j = i - left; j <= i + right; j++) {
+        if (j === i || values[j] == null) continue;
+        if (mode === "high" && values[j] >= v) { ok = false; break; }
+        if (mode === "low" && values[j] <= v) { ok = false; break; }
+      }
+      if (ok) idx.push(i);
+    }
+    return idx;
+  }
+  function vrevDepthOk(depthPct, depthAtr, p) {
+    return (depthAtr != null && depthAtr >= 2.0) || (depthPct != null && depthPct >= p.pctLo);
+  }
+  function vrevScoreImpulse(depthPct, depthAtr, downBars, p) {
+    const dAtr = ramp(depthAtr, 2.0, 6.0) || 0;
+    const dPct = ramp(depthPct, p.pctLo, p.pctHi) || 0;
+    const depth = Math.max(dAtr, dPct);
+    const steep = downBars <= p.sharp ? 100 : (ramp(downBars, p.maxDown, p.sharp) || 0);
+    return 0.6 * depth + 0.4 * steep;
+  }
+  function vrevScoreReverse(ret, upBars, downBars, sameBar) {
+    let retS = ramp(ret, 0.25, 0.80) || 0;
+    let timeS;
+    if (sameBar) {
+      timeS = ret >= 0.30 ? 35 : (ret >= 0.15 ? 15 : 0);
+      retS = Math.min(retS, 70);
+    } else {
+      const ratio = upBars / Math.max(downBars, 1);
+      timeS = ratio <= 1.2 ? 100 : (ramp(ratio, 3.0, 1.2) || 0);
+    }
+    return 0.60 * retS + 0.40 * timeS;
+  }
+  function vrevScoreSingle(secondGapAtr, secondGapFrac, noAfter, newExtreme) {
+    if (newExtreme) return 0;
+    if (noAfter) return 55;
+    const gAtr = ramp(secondGapAtr, 0.35, 1.6) || 0;
+    const gFr = ramp(secondGapFrac, 0.08, 0.30) || 0;
+    return Math.max(gAtr, gFr);
+  }
+  function vrevLocateLeg(highs, lows, end, side, p, atr) {
+    const winStart = Math.max(0, end - p.lookback + 1);
+    const maxSearch = p.maxDown + 6;
+    const cands = [];
+    for (let i = winStart + 1; i <= end; i++) {
+      const right = i >= end - 1 ? 0 : (i >= end - 2 ? 1 : 2);
+      const left = 2;
+      const lo = Math.max(winStart, i - left);
+      const hi = Math.min(end, i + right);
+      let ext, origin, j, depthPct, depthAtr;
+      if (side === "bot") {
+        let mn = Infinity;
+        for (let k = lo; k <= hi; k++) if (lows[k] < mn) mn = lows[k];
+        if (lows[i] !== mn) continue;
+        const a = Math.max(winStart, i - maxSearch);
+        if (a >= i) continue;
+        j = a;
+        for (let k = a + 1; k < i; k++) if (highs[k] >= highs[j]) j = k;
+        ext = lows[i];
+        origin = highs[j];
+        if (origin <= ext) continue;
+        depthPct = (origin - ext) / origin;
+        depthAtr = atr ? (origin - ext) / atr : null;
+      } else {
+        let mx = -Infinity;
+        for (let k = lo; k <= hi; k++) if (highs[k] > mx) mx = highs[k];
+        if (highs[i] !== mx) continue;
+        const a = Math.max(winStart, i - maxSearch);
+        if (a >= i) continue;
+        j = a;
+        for (let k = a + 1; k < i; k++) if (lows[k] <= lows[j]) j = k;
+        ext = highs[i];
+        origin = lows[j];
+        if (origin >= ext) continue;
+        depthPct = (ext - origin) / origin;
+        depthAtr = atr ? (ext - origin) / atr : null;
+      }
+      const downBars = i - j;
+      if (downBars < 1) continue;
+      if (!vrevDepthOk(depthPct, depthAtr, p)) continue;
+      cands.push({ i, j, ext, origin, depthPct, depthAtr, downBars });
+    }
+    if (!cands.length) return { leg: null, cands };
+    let leg = cands[0];
+    for (let k = 1; k < cands.length; k++) if (cands[k].i >= leg.i) leg = cands[k];
+    return { leg, cands };
+  }
+  function vrevApplyCluster(leg, cands, side, atr, highs, lows) {
+    // 反弹后再贴近前极值，视为二次探，保留较早的那个枢轴。
+    if (!leg || !cands || cands.length < 2) return { leg, second: null };
+    const earlier = cands.filter((c) => c.i < leg.i);
+    if (!earlier.length) return { leg, second: null };
+    let best = null;
+    for (let k = 0; k < earlier.length; k++) {
+      const e = earlier[k];
+      const span = Math.abs(e.origin - e.ext);
+      const gap = side === "bot" ? (leg.ext - e.ext) : (e.ext - leg.ext);
+      if (gap < -0.15 * (atr || 0)) continue;
+      if (Math.abs(leg.ext - e.ext) > Math.max(1.0 * (atr || 0), 0.15 * span)) continue;
+      if (leg.i - e.i < 2) continue;
+      let midRet = 0;
+      if (side === "bot") {
+        let mx = -Infinity;
+        for (let x = e.i + 1; x < leg.i; x++) if (highs[x] > mx) mx = highs[x];
+        midRet = span ? (mx - e.ext) / span : 0;
+      } else {
+        let mn = Infinity;
+        for (let x = e.i + 1; x < leg.i; x++) if (lows[x] < mn) mn = lows[x];
+        midRet = span ? (e.ext - mn) / span : 0;
+      }
+      if (midRet < 0.30) continue;
+      if (!best || e.i > best.i) best = e;
+    }
+    if (!best) return { leg, second: null };
+    if (leg.i - best.i < 2) return { leg, second: null };
+    return { leg: best, second: leg };
+  }
+  function vrevKeyLevels(highs, lows, closes, end, side, leg, atr, fromIdx) {
+    const i = leg.i, j = leg.j, ext = leg.ext, origin = leg.origin;
+    const span = Math.abs(origin - ext);
+    const minDist = Math.max(0.25 * span, 0.8 * (atr || 0));
+    const from = fromIdx != null ? fromIdx : Math.max(0, j - 18);
+    const broken = [];
+    if (side === "bot") {
+      const swings = vrevFindSwings(lows, "low", 3, 3, from, i - 1);
+      for (let s = 0; s < swings.length; s++) {
+        const lvl = lows[swings[s]];
+        if (!(ext + minDist <= lvl && lvl < origin)) continue;
+        let mn = Infinity;
+        for (let k = swings[s] + 1; k <= i; k++) if (lows[k] < mn) mn = lows[k];
+        if (mn < lvl * 0.998) broken.push(lvl);
+      }
+      let base = lows[from], bi = from;
+      for (let k = from; k <= j; k++) if (lows[k] <= base) { base = lows[k]; bi = k; }
+      if (bi < i && ext + minDist <= base && base < origin) {
+        let mn = Infinity;
+        for (let k = bi + 1; k <= i; k++) if (lows[k] < mn) mn = lows[k];
+        if (mn < base * 0.998 && !broken.some((x) => Math.abs(x - base) / base < 0.004)) broken.push(base);
+      }
+    } else {
+      const swings = vrevFindSwings(highs, "high", 3, 3, from, i - 1);
+      for (let s = 0; s < swings.length; s++) {
+        const lvl = highs[swings[s]];
+        if (!(origin < lvl && lvl <= ext - minDist)) continue;
+        let mx = -Infinity;
+        for (let k = swings[s] + 1; k <= i; k++) if (highs[k] > mx) mx = highs[k];
+        if (mx > lvl * 1.002) broken.push(lvl);
+      }
+      let base = highs[from], bi = from;
+      for (let k = from; k <= j; k++) if (highs[k] >= base) { base = highs[k]; bi = k; }
+      if (bi < i && origin < base && base <= ext - minDist) {
+        let mx = -Infinity;
+        for (let k = bi + 1; k <= i; k++) if (highs[k] > mx) mx = highs[k];
+        if (mx > base * 1.002 && !broken.some((x) => Math.abs(x - base) / base < 0.004)) broken.push(base);
+      }
+    }
+    const sma50 = vrevSmaSeries(closes, 50);
+    const sma200 = vrevSmaSeries(closes, 200);
+    const mas = [];
+    const close = closes[end];
+    for (const row of [["50", sma50], ["200", sma200]]) {
+      const name = row[0], series = row[1];
+      let lost = false;
+      for (let k = j; k <= i; k++) {
+        if (series[k] == null) continue;
+        if (side === "bot" && closes[k] < series[k]) { lost = true; break; }
+        if (side === "top" && closes[k] > series[k]) { lost = true; break; }
+      }
+      if (!lost) continue;
+      const cur = series[end];
+      const rec = cur != null && (side === "bot" ? close > cur : close < cur);
+      mas.push({ name, rec, cur });
+    }
+    return { broken, mas };
+  }
+  function vrevScoreReclaim(close, side, leg, levels) {
+    const ext = leg.ext;
+    let pts = 0;
+    const notes = [];
+    const broken = levels.broken || [];
+    const recSup = broken.filter((lvl) => side === "bot" ? close > lvl : close < lvl);
+    if (recSup.length) {
+      pts = Math.max(pts, 16);
+      notes.push("reclaimed_swing");
+    } else if (broken.length) {
+      let nearest = broken[0], nd = Math.abs(close - broken[0]);
+      for (let k = 1; k < broken.length; k++) {
+        const d = Math.abs(close - broken[k]);
+        if (d < nd) { nd = d; nearest = broken[k]; }
+      }
+      if (nearest !== ext) {
+        const prog = side === "bot" ? (close - ext) / (nearest - ext) : (ext - close) / (ext - nearest);
+        pts = Math.max(pts, (ramp(prog, 0.5, 1.0) || 0) * 0.12);
+      }
+      notes.push("swing_not_reclaimed");
+    }
+    const rec200 = levels.mas.some((m) => m.name === "200" && m.rec);
+    const rec50 = levels.mas.some((m) => m.name === "50" && m.rec);
+    if (rec200) { pts = Math.max(pts, 20); notes.push("reclaimed_ma200"); }
+    else if (rec50) { pts = Math.max(pts, 14); notes.push("reclaimed_ma50"); }
+    else if (levels.mas.length) notes.push("ma_not_reclaimed");
+    if (!broken.length && !levels.mas.length) notes.push("no_key_level");
+    return { score: clamp(pts / 20 * 100, 0, 100), notes };
+  }
+  function vrevScoreVolume(vols, i, end, sameBar) {
+    if (!vols || !vols.length) return { score: 0, missing: true };
+    let has = false;
+    for (let k = Math.max(0, end - 30); k <= end; k++) if (vols[k] != null && vols[k] > 0) { has = true; break; }
+    if (!has) return { score: 0, missing: true };
+    const baseSlice = [];
+    for (let k = Math.max(0, i - 20); k < i; k++) if (vols[k] != null && vols[k] > 0) baseSlice.push(vols[k]);
+    if (!baseSlice.length || vols[i] == null) return { score: 0, missing: false };
+    const base = baseSlice.reduce((a, b) => a + b, 0) / baseSlice.length;
+    if (!base) return { score: 0, missing: false };
+    const climax = ramp(vols[i] / base, 1.15, 2.2) || 0;
+    let exp = 0;
+    if (!sameBar) {
+      const up = [];
+      for (let k = i + 1; k <= end; k++) if (vols[k] != null && vols[k] > 0) up.push(vols[k]);
+      if (up.length) {
+        const avg = up.reduce((a, b) => a + b, 0) / up.length;
+        exp = ramp(avg / base, 1.0, 1.8) || 0;
+      }
+    }
+    return { score: 0.6 * climax + 0.4 * exp, missing: false };
+  }
+  function vrevCapByRetrace(total, ret, sameBar) {
+    // 尚未明显拉回时压低总分，避免低点当日假阳性。同根预览/当日也封顶。
+    let cap = 100;
+    if (ret < 0.15) cap = 24;
+    else if (ret < 0.25) cap = 36;
+    else if (ret < 0.40) cap = 55;
+    else if (ret < 0.50) cap = 68;
+    if (sameBar) cap = Math.min(cap, 56);
+    return Math.min(total, cap);
+  }
+  function vrevFreshness(ret, upBars, downBars) {
+    let fresh = 1;
+    if (ret >= 1.0) {
+      const lo = Math.max(downBars, 3);
+      const hi = Math.max(downBars * 2.5, 8);
+      const decay = ramp(upBars, lo, hi) || 0;
+      fresh *= 1 - 0.8 * (decay / 100);
+    }
+    const ratio = upBars / Math.max(downBars, 1);
+    if (ratio > 2.0) {
+      const stretch = ramp(ratio, 2.0, 3.5) || 0;
+      fresh *= 1 - 0.7 * (stretch / 100);
+    }
+    return fresh;
+  }
+  function vrevOneSide(highs, lows, closes, vols, end, side, interval) {
+    const p = VREV_TF[interval] || VREV_TF["1d"];
+    const atrs = vrevAtr(highs, lows, closes, 14);
+    let atr = atrs[end];
+    if (atr == null || atr <= 0) {
+      const rs = [];
+      for (let k = Math.max(0, end - 13); k <= end; k++) rs.push(highs[k] - lows[k]);
+      rs.sort((a, b) => a - b);
+      atr = rs[Math.floor(rs.length / 2)] || null;
+    }
+    if (atr == null || atr <= 0) return null;
+    const located = vrevLocateLeg(highs, lows, end, side, p, atr);
+    if (!located.leg) {
+      const volMissing = !vols || !vols.some((v) => v != null && v > 0);
+      return {
+        score: 0,
+        parts: { impulse: 0, reverse: 0, single: 0, reclaim: 0, volume: 0 },
+        hints: { impulse: false, reverse: false, single: false, reclaim: false, volume: false, volumeMissing: volMissing },
+        notes: [],
+        reason: "no_leg",
+        detail: {},
+      };
+    }
+    const clustered = vrevApplyCluster(located.leg, located.cands, side, atr, highs, lows);
+    const leg = clustered.leg;
+    const i = leg.i, j = leg.j, ext = leg.ext, origin = leg.origin, downBars = i - j;
+    const close = closes[end];
+    const sameBar = i === end;
+    const upBars = sameBar ? 0 : (end - i);
+    const span = Math.abs(origin - ext);
+    if (span <= 0) return null;
+    const ret = side === "bot" ? (close - ext) / span : (ext - close) / span;
+    let afterExt = null, newExtreme = false, secondGap = null;
+    if (clustered.second) {
+      afterExt = clustered.second.ext;
+      newExtreme = side === "bot" ? afterExt < ext - 1e-12 : afterExt > ext + 1e-12;
+      secondGap = side === "bot" ? (afterExt - ext) : (ext - afterExt);
+    } else if (end > i) {
+      if (side === "bot") {
+        afterExt = lows[i + 1];
+        for (let k = i + 1; k <= end; k++) if (lows[k] < afterExt) afterExt = lows[k];
+        newExtreme = afterExt < ext - 1e-12;
+        secondGap = afterExt - ext;
+      } else {
+        afterExt = highs[i + 1];
+        for (let k = i + 1; k <= end; k++) if (highs[k] > afterExt) afterExt = highs[k];
+        newExtreme = afterExt > ext + 1e-12;
+        secondGap = ext - afterExt;
+      }
+    }
+    const imp = vrevScoreImpulse(leg.depthPct, leg.depthAtr, downBars, p);
+    const rev = vrevScoreReverse(ret, upBars, downBars, sameBar);
+    const single = (afterExt == null)
+      ? vrevScoreSingle(null, null, true, false)
+      : vrevScoreSingle((secondGap || 0) / atr, (secondGap || 0) / span, false, newExtreme);
+    const levels = vrevKeyLevels(highs, lows, closes, end, side, leg, atr, Math.max(0, j - (p.maxDown + 6)));
+    const rec = vrevScoreReclaim(close, side, leg, levels);
+    const vol = vrevScoreVolume(vols, i, end, sameBar);
+    const fresh = vrevFreshness(ret, upBars, downBars);
+    let total = (imp / 100) * VREV_W.impulse + (rev / 100) * VREV_W.reverse +
+      (single / 100) * VREV_W.single + (rec.score / 100) * VREV_W.reclaim +
+      (vol.score / 100) * VREV_W.volume;
+    total = vrevCapByRetrace(total * fresh, ret, sameBar);
+    total = clamp(Math.round(total), 0, 100);
+    return {
+      score: total,
+      parts: {
+        impulse: Math.round(imp), reverse: Math.round(rev), single: Math.round(single),
+        reclaim: Math.round(rec.score), volume: Math.round(vol.score),
+      },
+      hints: {
+        impulse: imp >= 55,
+        reverse: rev >= 55,
+        single: single >= 55,
+        reclaim: rec.score >= 50,
+        volume: !vol.missing && vol.score >= 50,
+        volumeMissing: !!vol.missing,
+      },
+      notes: rec.notes,
+      reason: "ok",
+      detail: {
+        i, j, ext, origin, ret: Math.round(ret * 1000) / 1000,
+        downBars, upBars, sameBar,
+        depthPct: Math.round(leg.depthPct * 10000) / 100,
+        depthAtr: leg.depthAtr == null ? null : Math.round(leg.depthAtr * 100) / 100,
+        fresh: Math.round(fresh * 100) / 100,
+        atr: Math.round(atr * 100) / 100,
+        recNotes: rec.notes,
+        second: clustered.second ? clustered.second.ext : null,
+      },
+    };
+  }
+  function vrevAt(highs, lows, closes, vols, end, interval) {
+    interval = interval || "1d";
+    const p = VREV_TF[interval] || VREV_TF["1d"];
+    if (end + 1 < p.minBars) return { ok: false, reason: "short_history" };
+    return {
+      ok: true,
+      bot: vrevOneSide(highs, lows, closes, vols, end, "bot", interval),
+      top: vrevOneSide(highs, lows, closes, vols, end, "top", interval),
+    };
+  }
+  function vrevBand(score) {
+    if (score == null || !Number.isFinite(score)) return null;
+    if (score < 25) return "偏低";
+    if (score < 50) return "接近";
+    if (score < 75) return "较高";
+    return "很高";
+  }
+  function tfDurationMs(interval) {
+    if (interval === "2h") return 2 * 3600000;
+    if (interval === "4h") return 4 * 3600000;
+    if (interval === "6h") return 6 * 3600000;
+    if (interval === "12h") return 12 * 3600000;
+    if (interval === "1d") return 24 * 3600000;
+    if (interval === "3d") return 3 * 24 * 3600000;
+    if (interval === "1w") return 7 * 24 * 3600000;
+    return 0;
+  }
+  function isTfForming(symbol, interval) {
+    if (isUsStock(symbol)) {
+      const meta = state.usStocks && state.usStocks.symbols && state.usStocks.symbols[symbol];
+      const q = meta && meta.quote;
+      const rows = (meta && meta.rows) || [];
+      if (!q || !rows.length) return false;
+      const lastDate = String(rows[rows.length - 1][0]);
+      const quoteDay = String(q.asOf || q.asOfLabel || "");
+      return !!(q.isRealTime || (lastDate && quoteDay.indexOf(lastDate) >= 0));
+    }
+    const times = tfTimesOf(interval, symbol);
+    const ms = tfDurationMs(interval);
+    if (!times.length || !ms) return false;
+    return Date.now() < times[times.length - 1] + ms;
+  }
+  function vrevCompute(symbol, interval, livePrice, officialOnly) {
+    let closes = tfClosesOf(interval, symbol).slice();
+    let highs = tfHighsOf(interval, symbol).slice();
+    let lows = tfLowsOf(interval, symbol).slice();
+    let vols = tfVolsOf(interval, symbol).slice();
+    if (!closes.length) return { ok: false, reason: "no_data" };
+    const forming = isTfForming(symbol, interval);
+    if (officialOnly && forming) {
+      closes = closes.slice(0, -1);
+      if (highs.length) highs = highs.slice(0, -1);
+      if (lows.length) lows = lows.slice(0, -1);
+      if (vols.length) vols = vols.slice(0, -1);
+    } else if (!officialOnly && forming && livePrice != null && Number.isFinite(livePrice)) {
+      const n = closes.length - 1;
+      closes[n] = livePrice;
+      if (highs.length) highs[n] = Math.max(highs[n], livePrice);
+      if (lows.length) lows[n] = Math.min(lows[n], livePrice);
+    }
+    if (!closes.length) return { ok: false, reason: "short_history" };
+    while (vols.length < closes.length) vols.push(null);
+    const end = closes.length - 1;
+    const r = vrevAt(highs, lows, closes, vols, end, interval || "1d");
+    r.forming = !!(forming && !officialOnly);
+    return r;
+  }
+  function vrevHintLine(kind, row) {
+    const isBot = kind === "bot";
+    const name = isBot ? "底" : "顶";
+    if (!row || row.reason === "no_leg") {
+      return name + "：近期未见足够深的" + (isBot ? "急跌" : "急涨");
+    }
+    const h = row.hints || {};
+    const bits = [];
+    bits.push(h.impulse ? (isBot ? "急跌" : "急涨") : ("未见足够深的" + (isBot ? "急跌" : "急涨")));
+    if (h.single) bits.push(row.detail && row.detail.sameBar ? "暂未见二次探" : "单一极值");
+    else bits.push(isBot ? "疑似二次探底" : "疑似二次探顶");
+    const notes = row.notes || [];
+    bits.push(h.reclaim ? "收复关键位" : (notes.indexOf("no_key_level") >= 0 ? "无明显关键位" : "尚未收复关键位"));
+    bits.push(h.reverse ? "反向较快" : "反向不足或偏慢");
+    if (h.volumeMissing) bits.push("缺成交量");
+    else bits.push(h.volume ? "放量" : "未明显放量");
+    return name + " " + row.score + "分：" + bits.join("、");
+  }
+  function vrevLivePrice(symbol) {
+    if (isUsStock(symbol)) {
+      const meta = state.usStocks && state.usStocks.symbols && state.usStocks.symbols[symbol];
+      return (meta && meta.quote && meta.quote.price != null) ? meta.quote.price : null;
+    }
+    const tk = state.tickers && state.tickers[symbol];
+    return (tk && tk.price != null) ? tk.price : null;
+  }
+  function vrevTile(symbol, interval, livePrice) {
+    const official = vrevCompute(symbol, interval, null, true);
+    const forming = isTfForming(symbol, interval);
+    const shown = forming ? vrevCompute(symbol, interval, livePrice, false) : official;
+    const ctx = cycleBoardCtx();
+    const hit = cycleHighlightHit(ctx, "vrev");
+    if (!shown || !shown.ok) {
+      const why = (shown && shown.reason === "short_history")
+        ? "该周期历史根数不足，暂无法识别 V 形观察"
+        : "暂无足够数据计算 V 反观察";
+      return cycTile({
+        key: "vrev",
+        label: "V 反观察",
+        value: "—",
+        wide: true,
+        sub: escapeHtml(why),
+        aria: "V 反观察 " + why,
+      });
+    }
+    const bot = shown.bot || { score: 0 };
+    const top = shown.top || { score: 0 };
+    const botTxt = (bot.score == null ? "—" : bot.score + "分");
+    const topTxt = (top.score == null ? "—" : top.score + "分");
+    const botW = bot.score == null ? "0%" : clamp(bot.score, 0, 100) + "%";
+    const topW = top.score == null ? "0%" : clamp(top.score, 0, 100) + "%";
+    const headRight = forming
+      ? `<span class="cyc-chip forming">形成中</span>`
+      : `<span class="cyc-v">${escapeHtml(vrevBand(bot.score) || "—")} / ${escapeHtml(vrevBand(top.score) || "—")}</span>`;
+    const pair = `<div class="cyc-vrev-pair">
+        <div>
+          <div class="cyc-k">底倾向</div>
+          <div class="cyc-v tone-down">${escapeHtml(botTxt)}</div>
+          <div class="prob-bar bot" aria-hidden="true"><span style="width:${botW}"></span></div>
+        </div>
+        <div>
+          <div class="cyc-k">顶倾向</div>
+          <div class="cyc-v tone-caution">${escapeHtml(topTxt)}</div>
+          <div class="prob-bar top" aria-hidden="true"><span style="width:${topW}"></span></div>
+        </div>
+      </div>`;
+    const hints = `<div class="cyc-sub">${escapeHtml(vrevHintLine("bot", shown.bot))}</div>
+      <div class="cyc-sub">${escapeHtml(vrevHintLine("top", shown.top))}</div>`;
+    let officialLine = "";
+    if (forming && official && official.ok && official.bot && official.top) {
+      officialLine = `<div class="cyc-sub">已收盘官方 底 ${official.bot.score}分 / 顶 ${official.top.score}分</div>`;
+    }
+    const aria = "V 反观察 底倾向 " + botTxt + " 顶倾向 " + topTxt + (forming ? " 形成中" : "");
+    return `<div class="cyc-tile wide${hit ? " cyc-flash" : ""}"${ctxIdAttr(ctx, "vrev")} aria-label="${escapeHtml(aria)}">
+      <div class="cyc-head">
+        <div class="cyc-k">V 反观察</div>
+        ${headRight}
+      </div>
+      ${pair}${hints}${officialLine}${cycleDeltaHtml(hit)}
+    </div>`;
+  }
+
   function cycleWeights(symbol, interval) {
     if (isUsStock(symbol)) return { rsi: 0.36, ma: 0.34, dd: 0.30 };
     const shortTf = interval === "2h" || interval === "4h" || interval === "6h" || interval === "12h";
@@ -2036,6 +2584,7 @@
       }));
     }
 
+    tiles.push(vrevTile(symbol, interval, vrevLivePrice(symbol)));
     const cls = size === "eth" ? "cycle-board eth" : "cycle-board";
     return `<div class="${cls}">${leanSpectrum(m, size)}<div class="cyc-grid">${tiles.join("")}</div></div>`;
   }
@@ -2105,7 +2654,7 @@
     const extraReads = state.cycleMkt === "us"
       ? "布林带、MACD 柱、RSI 背离和 MACD 背离同样只供观察，不是买卖信号，也不能避免假信号。MACD 背离比较的是价格摆动与 MACD 线（12/26），摆动规则与 RSI 背离相同。"
       : "布林带、MACD 柱、RSI 背离、MACD 背离、合约持仓量、MVRV Z-Score 和 AHR999 同样只供观察，不是买卖或开仓信号，也不能避免假信号。MACD 背离比较的是价格摆动与 MACD 线（12/26），摆动规则与 RSI 背离相同。MVRV 的 0 与 7、AHR999 的 0.45、1.2 与 5 是各指标文献里常被提起的参考带，不是买卖线。MVRV 免费数据末值可能延迟约一周。AHR999 按币安 BTCUSDT 日线与九神公开公式计算：指数 =（价格÷近200日收盘均价）×（价格÷指数增长估值），估值 = 10^(5.84×log10(币龄)−17.01)，币龄从 2009-01-03 起算；当日未收盘用最新价。";
-    return `<p class="cycle-note">${extra || ""}顶部倾向、底部倾向是按权重合成的 0–100 观察分数，不是统计概率，也不是价格预测；两者互不排斥，不必相加为 100。综合判断：任一项分数缺失则暂不给出；两项都达到 40 为「混合」；顶部倾向达到 50 且至少高出底部倾向 20 为「偏顶部观察」；底部倾向达到 50 且至少高出顶部倾向 20 为「偏底部观察」；其余为「中性」。仅供观察，不构成投资建议。窗口回撤取已加载 K 线的最高价，并非历史最高，若更高点不在窗口内则不会计入。${extraReads}</p>`;
+    return `<p class="cycle-note">${extra || ""}顶部倾向、底部倾向是按权重合成的 0–100 观察分数，不是统计概率，也不是价格预测；两者互不排斥，不必相加为 100。综合判断：任一项分数缺失则暂不给出；两项都达到 40 为「混合」；顶部倾向达到 50 且至少高出底部倾向 20 为「偏顶部观察」；底部倾向达到 50 且至少高出顶部倾向 20 为「偏底部观察」；其余为「中性」。仅供观察，不构成投资建议。窗口回撤取已加载 K 线的最高价，并非历史最高，若更高点不在窗口内则不会计入。${extraReads} V 反观察是独立卡片，不进入综合判断、也不接入三选二；分数表示当前结构有多接近 V 底或 V 顶（倒 V）观察条件，不是确认反转，也不是买卖建议。官方读数只用最后一根已收盘 K 线；未收盘当根若显示分数会标明「形成中」，仅供预览，不触发本栏变化弹窗或红点。权重为急而深的一腿 25、反向腿速度与回撤 30、单一极值 20、收盘收复关键位 20、成交量 0–5（缺成交量或未放量时该项为 0，不会让总分归零）。深度与根数阈值随周期调整，不用同一百分比套 2H 与 1W。美股 K 线若无成交量，成交量项为 0 并在提示中说明。</p>`;
   }
   function usCycleBlock() {
     const interval = state.cycleUsTf || "1d";
@@ -2511,6 +3060,7 @@
     ma: "200均线倍数", maZone: "Mayer 分区", maSide: "相对 200 均线",
     rsiDiv: "RSI 背离", macdDiv: "MACD 背离", bb: "布林带", macdSign: "MACD 柱",
     fund: "资金费率", fng: "恐惧贪婪", mvrv: "MVRV Z-Score", ahr: "AHR999", pi: "派循环",
+    vrev: "V 反观察", vBot: "V 底观察", vTop: "V 顶观察", vBotBand: "V 底观察", vTopBand: "V 顶观察",
   };
   function cycleBoardCtx() {
     return state._boardCtx || {};
@@ -2576,6 +3126,13 @@
         if (m.pi && m.pi.sma111 != null && m.pi.twox350 != null) out.pi = piCycleStatus(m.pi.sma111, m.pi.twox350).short;
       }
       if (interval === "1d") out.fund = fundingBand(fundRate).label;
+    }
+    const vOff = vrevCompute(symbol, interval, null, true);
+    if (vOff && vOff.ok && vOff.bot && vOff.top && vOff.bot.score != null && vOff.top.score != null) {
+      out.vBot = vOff.bot.score;
+      out.vTop = vOff.top.score;
+      out.vBotBand = vrevBand(vOff.bot.score);
+      out.vTopBand = vrevBand(vOff.top.score);
     }
     return out;
   }
@@ -2646,6 +3203,21 @@
         }
         if (prev.bot != null && next.bot != null && Math.abs(next.bot - prev.bot) >= 15) {
           changes.push({ mkt, symbol, interval, metric: "bot", field: "bot", label: "底部倾向", from: formatScore(prev.bot), to: formatScore(next.bot) });
+        }
+      }
+      const vPairs = [
+        ["vBot", "vBotBand", "V 底观察"],
+        ["vTop", "vTopBand", "V 顶观察"],
+      ];
+      for (const [scoreKey, bandKey, label] of vPairs) {
+        const aBand = prev[bandKey], bBand = next[bandKey];
+        const a = prev[scoreKey], b = next[scoreKey];
+        if (aBand && bBand && aBand !== "—" && bBand !== "—" && aBand !== bBand) {
+          const from = aBand + (a != null ? "（" + a + "分）" : "");
+          const to = bBand + (b != null ? "（" + b + "分）" : "");
+          changes.push({ mkt, symbol, interval, metric: "vrev", field: bandKey, label, from, to });
+        } else if (a != null && b != null && Math.abs(b - a) >= 15) {
+          changes.push({ mkt, symbol, interval, metric: "vrev", field: scoreKey, label, from: formatScore(a), to: formatScore(b) });
         }
       }
     }
@@ -2924,6 +3496,11 @@
     state.tfTimes[interval][symbol] = rows.map((r) => +r[0]);
     state.tfHighs[interval][symbol] = rows.map((r) => +r[2]);
     state.tfLows[interval][symbol] = rows.map((r) => +r[3]);
+    if (!state.tfVols[interval]) state.tfVols[interval] = {};
+    state.tfVols[interval][symbol] = rows.map((r) => {
+      const v = r[5];
+      return (v == null || v === "" || !Number.isFinite(+v)) ? null : +v;
+    });
   }
   async function refreshKlines() {
     const jobs = [];
