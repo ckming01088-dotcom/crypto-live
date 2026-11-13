@@ -591,6 +591,26 @@
     .sz-loading { color: var(--caution); }
     .sz-status { margin: 0; }
     .sz-results { margin: 0; }
+    .sz-suggest { margin: 12px 0 0; }
+    .sz-suggest > .sz-bt-title { margin-top: 0; }
+    .sz-suggest-best { margin: 0; }
+    .sz-suggest-alts { display: grid; gap: 6px; margin-top: 6px; }
+    .sz-suggest-alt .sz-ret { font-size: 16px; margin: 0 0 4px; }
+    .sz-suggest-alt-nums { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.45; font-variant-numeric: tabular-nums; }
+    .sz-suggest-msg { margin: 6px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .sz-suggest-apply {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 36px; padding: 6px 12px; margin-top: 8px; width: 100%;
+      border: 1px solid color-mix(in srgb, var(--caution) 55%, var(--line));
+      border-radius: 10px;
+      background: color-mix(in srgb, var(--caution) 20%, var(--card));
+      color: var(--text); font: inherit; font-size: 13px; font-weight: 650;
+      cursor: pointer; touch-action: manipulation;
+    }
+    @media (min-width: 560px) {
+      .sz-suggest-alts { grid-template-columns: 1fr 1fr; }
+      .sz-suggest-apply { width: auto; min-width: 8.5em; }
+    }
     .sz-rules {
       margin: 12px 0 0;
       border: 1px solid var(--line);
@@ -687,6 +707,7 @@
     <div id="sz-controls" class="sz-controls"></div>
     <div id="sz-status" class="sz-status"><p class="cycle-note">正在加载该周期观察…</p></div>
     <div id="sz-results" class="sz-results"><p class="cycle-note">正在加载回测…</p></div>
+    <div id="sz-suggest" class="sz-suggest"></div>
   </section>
   </div>
   <div id="panel-xfeed" class="main-panel" data-main-panel="xfeed">
@@ -3106,6 +3127,326 @@
     }
     szSavePrefs();
   }
+  function szRunEquity(fee, lev, maxLossX, compound, inPos, i0, iEnd, opens, lows, closes, times) {
+    const L = (lev != null && lev >= 1) ? lev : 1;
+    const hasCap = maxLossX != null && Number.isFinite(maxLossX) && maxLossX > 0;
+    const useCompound = compound !== false;
+    const startCap = 1;
+    let tradeCap = startCap, pocket = 0, entry = 0, entryCash = 0, trips = 0, pending = null;
+    let wiped = false, wipedOn = "", stopHits = 0, firstStopOn = "", lastStopOn = "";
+    if (i0 > 0 && inPos[i0 - 1]) pending = "buy";
+    let peak = 1, maxdd = 0, peakI = i0, bestPeak = null, bestTrough = null, inBars = 0, lastEq = 1;
+    function unitsOf() {
+      return entryCash * L * (1 - fee) / entry;
+    }
+    function eqAt(px) {
+      if (!(entry > 0)) return tradeCap;
+      return unitsOf() * px - entryCash * (L - 1);
+    }
+    function cashAfterExit(px) {
+      if (!(entry > 0)) return tradeCap;
+      return unitsOf() * px * (1 - fee) - entryCash * (L - 1);
+    }
+    function applyExit(px, kind) {
+      const raw = Math.max(0, cashAfterExit(px));
+      if (!useCompound) {
+        if (raw > startCap) {
+          pocket += raw - startCap;
+          tradeCap = startCap;
+        } else {
+          tradeCap = raw;
+        }
+      } else {
+        tradeCap = raw;
+      }
+      entry = 0;
+      entryCash = 0;
+    }
+    function markStop(i) {
+      stopHits += 1;
+      const d = hkYmd(times[i]);
+      if (!firstStopOn) firstStopOn = d;
+      lastStopOn = d;
+    }
+    function markWipe(i) {
+      wiped = true;
+      wipedOn = hkYmd(times[i]);
+      pending = null;
+    }
+    function maybeWipe(i) {
+      if (!(tradeCap > 0)) markWipe(i);
+    }
+    for (let i = i0; i <= iEnd; i++) {
+      let held = entry > 0;
+      if (!wiped && pending === "buy") {
+        if (!(tradeCap > 0)) {
+          markWipe(i);
+          pending = null;
+        } else {
+          entryCash = tradeCap;
+          entry = opens[i];
+          tradeCap = 0;
+          pending = null;
+          held = true;
+        }
+      } else if (!wiped && pending === "sell" && entry > 0) {
+        applyExit(opens[i], "signal");
+        trips += 1;
+        pending = null;
+        held = false;
+        maybeWipe(i);
+      }
+      if (!wiped && entry > 0) {
+        const lo = Number.isFinite(lows[i]) ? lows[i] : Math.min(opens[i], closes[i]);
+        const floor = hasCap ? (entryCash * (1 - maxLossX)) : 0;
+        const eqOpen = eqAt(opens[i]);
+        const eqLow = eqAt(lo);
+        if (eqOpen <= floor || eqLow <= floor) {
+          let px = opens[i];
+          if (eqOpen > floor) {
+            const trig = entry * (floor / entryCash - 1 + L) / (L * (1 - fee));
+            px = Math.min(opens[i], Math.max(lo, trig));
+          }
+          const isCap = hasCap && floor > 0;
+          applyExit(px, isCap ? "stop" : "wipe");
+          trips += 1;
+          held = true;
+          if (isCap) markStop(i);
+          maybeWipe(i);
+        }
+      }
+      let posEq = entry > 0 ? eqAt(closes[i]) : tradeCap;
+      if (!(posEq > 0)) posEq = 0;
+      let equity = pocket + posEq;
+      if (!(equity > 0)) equity = 0;
+      lastEq = equity;
+      if (held) inBars += 1;
+      if (equity >= peak) { peak = equity; peakI = i; }
+      const dd = peak > 0 ? (equity / peak - 1) : 0;
+      if (dd < maxdd) { maxdd = dd; bestPeak = peakI; bestTrough = i; }
+      if (i < iEnd && !wiped) {
+        const want = inPos[i];
+        const have = entry > 0;
+        if (want && !have) pending = "buy";
+        else if (have && !want) pending = "sell";
+      }
+    }
+    const ret = lastEq - 1;
+    const years = (times[iEnd] - times[i0]) / (365.25 * 86400000);
+    const cagr = (lastEq > 0 && years > 0) ? Math.pow(lastEq, 1 / years) - 1 : null;
+    return {
+      ret, cagr, mdd: maxdd, trips, timeInMkt: inBars / (iEnd - i0 + 1),
+      endedInPos: entry > 0,
+      mddFrom: bestPeak != null ? hkYmd(times[bestPeak]) : "",
+      mddTo: bestTrough != null ? hkYmd(times[bestTrough]) : "",
+      stopped: wiped ? "wipeout" : (stopHits ? "maxloss" : ""),
+      stoppedOn: wiped ? wipedOn : (lastStopOn || ""),
+      stopHits,
+      firstStopOn,
+      lastStopOn,
+      lastEq,
+    };
+  }
+  function szBuildInPos(bd, ichi, aboveMa, selected) {
+    const n = bd.length;
+    const threshold = Math.min(2, selected.length);
+    const inPos = new Array(n);
+    for (let i = 0; i < n; i++) {
+      const flag = { bd: bd[i], ichi: ichi[i], ma: aboveMa[i] };
+      let v = 0;
+      for (let s = 0; s < selected.length; s++) if (flag[selected[s]]) v += 1;
+      inPos[i] = v >= threshold;
+    }
+    return inPos;
+  }
+  function szIndSubsets() {
+    const ids = SZ_INDICATORS.map((x) => x.id);
+    const out = [];
+    for (let mask = 1; mask < (1 << ids.length); mask++) {
+      const sel = [];
+      for (let i = 0; i < ids.length; i++) if (mask & (1 << i)) sel.push(ids[i]);
+      out.push(sel);
+    }
+    return out;
+  }
+  function szSuggestWiped(r) {
+    return !r || r.stopped === "wipeout" || !(r.lastEq > 0);
+  }
+  function szSuggestCmp(a, b) {
+    if (a.ret !== b.ret) return b.ret - a.ret;
+    if (a.mdd !== b.mdd) return b.mdd - a.mdd;
+    if (a.L !== b.L) return a.L - b.L;
+    const aNone = a.lossId === "none" ? 0 : 1;
+    const bNone = b.lossId === "none" ? 0 : 1;
+    if (aNone !== bNone) return aNone - bNone;
+    if (a.lossId !== b.lossId) {
+      const ai = SZ_MAXLOSS.findIndex((x) => x.id === a.lossId);
+      const bi = SZ_MAXLOSS.findIndex((x) => x.id === b.lossId);
+      return ai - bi;
+    }
+    if (a.compound !== b.compound) return a.compound ? 1 : -1;
+    const as = a.inds.join(",");
+    const bs = b.inds.join(",");
+    if (as < bs) return -1;
+    if (as > bs) return 1;
+    return 0;
+  }
+  function szComboIsCurrent(combo) {
+    if (!combo) return false;
+    return combo.inds.join(",") === szSelectedIds().join(",")
+      && combo.levId === szLevId()
+      && combo.lossId === szMaxLossId()
+      && !!combo.compound === szCompoundOn();
+  }
+  function szComboBrief(combo, tf) {
+    if (!combo) return "";
+    const inds = combo.inds.map((id) => szIndName(id, tf)).join("、");
+    const levRow = SZ_LEVS.find((t) => t.id === combo.levId) || SZ_LEVS[0];
+    const lossRow = SZ_MAXLOSS.find((t) => t.id === combo.lossId) || SZ_MAXLOSS[0];
+    const levTxt = levRow.L === 1 ? "无杠杆" : levRow.label;
+    const lossTxt = lossRow.x == null ? "本金亏损不限制" : ("本金最大亏损 " + lossRow.label);
+    const cmpTxt = combo.compound ? "复利" : "不复利";
+    return inds + "；" + levTxt + "；" + lossTxt + "；" + cmpTxt;
+  }
+  function szRankSuggest(rows) {
+    const wiped = [];
+    const alive = [];
+    for (let i = 0; i < rows.length; i++) {
+      if (szSuggestWiped(rows[i])) wiped.push(rows[i]);
+      else alive.push(rows[i]);
+    }
+    const allWiped = alive.length === 0;
+    const ranked = (allWiped ? [] : alive).slice().sort(szSuggestCmp);
+    const best = ranked[0] || null;
+    let tieCount = 0;
+    if (best) {
+      for (let i = 1; i < ranked.length; i++) {
+        if (ranked[i].ret === best.ret && ranked[i].mdd === best.mdd) tieCount += 1;
+        else break;
+      }
+    }
+    return {
+      allWiped,
+      wipedCount: wiped.length,
+      aliveCount: alive.length,
+      best,
+      second: ranked[1] || null,
+      third: ranked[2] || null,
+      tieCount,
+      currentIsBest: !!(best && szComboIsCurrent(best)),
+    };
+  }
+  function szSuggestJobs(bd, ichi, aboveMa) {
+    const subsets = szIndSubsets();
+    const jobs = [];
+    const inPosBy = [];
+    for (let s = 0; s < subsets.length; s++) {
+      inPosBy.push(szBuildInPos(bd, ichi, aboveMa, subsets[s]));
+    }
+    for (let s = 0; s < subsets.length; s++) {
+      for (let li = 0; li < SZ_LEVS.length; li++) {
+        for (let mi = 0; mi < SZ_MAXLOSS.length; mi++) {
+          for (let ci = 0; ci < 2; ci++) {
+            jobs.push({
+              inds: subsets[s],
+              inPos: inPosBy[s],
+              levId: SZ_LEVS[li].id,
+              L: SZ_LEVS[li].L,
+              lossId: SZ_MAXLOSS[mi].id,
+              lossX: SZ_MAXLOSS[mi].x,
+              compound: ci === 0,
+            });
+          }
+        }
+      }
+    }
+    return jobs;
+  }
+  function szRunSuggestJob(job, i0, iEnd, opens, lows, closes, times) {
+    const r = szRunEquity(0, job.L, job.lossX, job.compound, job.inPos, i0, iEnd, opens, lows, closes, times);
+    return {
+      inds: job.inds,
+      levId: job.levId,
+      L: job.L,
+      lossId: job.lossId,
+      lossX: job.lossX,
+      compound: job.compound,
+      ret: r.ret,
+      cagr: r.cagr,
+      mdd: r.mdd,
+      trips: r.trips,
+      stopHits: r.stopHits,
+      stopped: r.stopped,
+      stoppedOn: r.stoppedOn,
+      lastEq: r.lastEq,
+      mddFrom: r.mddFrom,
+      mddTo: r.mddTo,
+      firstStopOn: r.firstStopOn,
+      lastStopOn: r.lastStopOn,
+    };
+  }
+  let szSuggestGen = 0;
+  function szFinishSuggest(gen, key, payload) {
+    if (gen !== szSuggestGen) return;
+    const d = state.sanzuan;
+    if (!d || d.suggestKey !== key) return;
+    if (payload && payload.best) payload.currentIsBest = szComboIsCurrent(payload.best);
+    d.suggest = payload;
+    sanzuanPaintSuggest();
+  }
+  function szScheduleSuggest(gen, key, jobs, shared, meta) {
+    const bars = Math.max(1, shared.iEnd - shared.i0 + 1);
+    const heavy = bars > 2000;
+    const batch = heavy ? Math.max(5, Math.floor(80000 / bars)) : jobs.length;
+    const rows = [];
+    let idx = 0;
+    function pump() {
+      if (gen !== szSuggestGen) return;
+      const end = Math.min(jobs.length, idx + batch);
+      for (; idx < end; idx++) {
+        rows.push(szRunSuggestJob(jobs[idx], shared.i0, shared.iEnd, shared.opens, shared.lows, shared.closes, shared.times));
+      }
+      if (idx < jobs.length) {
+        setTimeout(pump, 0);
+        return;
+      }
+      const ranked = szRankSuggest(rows);
+      szFinishSuggest(gen, key, Object.assign({ ready: true, pending: false, error: "" }, meta, ranked));
+    }
+    if (!heavy) {
+      pump();
+      return;
+    }
+    setTimeout(pump, 0);
+  }
+  function szComputeSuggest(shared, bd, ichi, aboveMa, meta) {
+    const key = meta.key;
+    const prev = state.sanzuan;
+    if (prev && prev.suggestKey === key && prev.suggest && (prev.suggest.ready || prev.suggest.pending)) {
+      const s = prev.suggest;
+      if (s.ready && s.best) s.currentIsBest = szComboIsCurrent(s.best);
+      return s;
+    }
+    const gen = ++szSuggestGen;
+    if (!(shared && shared.i0 >= 0 && shared.i0 < shared.iEnd && bd && bd.length)) {
+      return Object.assign({ ready: false, pending: false, error: "该窗口内可用于比较的已收盘 K 线不足，暂无法给出组合建议。" }, meta);
+    }
+    const jobs = szSuggestJobs(bd, ichi, aboveMa);
+    const bars = Math.max(1, shared.iEnd - shared.i0 + 1);
+    const heavy = bars > 2000;
+    if (!heavy) {
+      const rows = [];
+      for (let i = 0; i < jobs.length; i++) {
+        rows.push(szRunSuggestJob(jobs[i], shared.i0, shared.iEnd, shared.opens, shared.lows, shared.closes, shared.times));
+      }
+      const ranked = szRankSuggest(rows);
+      return Object.assign({ ready: true, pending: false, error: "" }, meta, ranked);
+    }
+    setTimeout(function () {
+      szScheduleSuggest(gen, key, jobs, shared, meta);
+    }, 0);
+    return Object.assign({ ready: false, pending: true, error: "" }, meta);
+  }
   function computeSanzuan() {
     const tf = szTfId();
     const selected = szSelectedIds();
@@ -3207,15 +3548,16 @@
     }
     const iEnd = n - 1;
     const minValid = szFirstValidIndex(selected);
-    let i0 = -1;
+    let userI0 = -1;
     for (let i = 0; i < n; i++) {
-      if (hkYmd(times[i]) >= startYmd) { i0 = i; break; }
+      if (hkYmd(times[i]) >= startYmd) { userI0 = i; break; }
     }
     const notes = [];
-    if (i0 < 0) {
+    if (userI0 < 0) {
       state.sanzuan = { ready: false, tf, selected, error: "起始日期之后没有已收盘 K 线。" };
       return;
     }
+    let i0 = userI0;
     if (i0 < minValid) {
       const asked = startYmd;
       i0 = minValid;
@@ -3230,126 +3572,6 @@
     }
     let backtest = null;
     if (i0 >= 0 && i0 <= iEnd) {
-      function runEquity(fee, lev, maxLossX, compound) {
-        const L = (lev != null && lev >= 1) ? lev : 1;
-        const hasCap = maxLossX != null && Number.isFinite(maxLossX) && maxLossX > 0;
-        const useCompound = compound !== false;
-        const startCap = 1;
-        let tradeCap = startCap, pocket = 0, entry = 0, entryCash = 0, trips = 0, pending = null;
-        let wiped = false, wipedOn = "", stopHits = 0, firstStopOn = "", lastStopOn = "";
-        if (i0 > 0 && inPos[i0 - 1]) pending = "buy";
-        let peak = 1, maxdd = 0, peakI = i0, bestPeak = null, bestTrough = null, inBars = 0, lastEq = 1;
-        function unitsOf() {
-          return entryCash * L * (1 - fee) / entry;
-        }
-        function eqAt(px) {
-          if (!(entry > 0)) return tradeCap;
-          return unitsOf() * px - entryCash * (L - 1);
-        }
-        function cashAfterExit(px) {
-          if (!(entry > 0)) return tradeCap;
-          return unitsOf() * px * (1 - fee) - entryCash * (L - 1);
-        }
-        function applyExit(px, kind) {
-          const raw = Math.max(0, cashAfterExit(px));
-          if (!useCompound) {
-            if (raw > startCap) {
-              pocket += raw - startCap;
-              tradeCap = startCap;
-            } else {
-              tradeCap = raw;
-            }
-          } else {
-            tradeCap = raw;
-          }
-          entry = 0;
-          entryCash = 0;
-        }
-        function markStop(i) {
-          stopHits += 1;
-          const d = hkYmd(times[i]);
-          if (!firstStopOn) firstStopOn = d;
-          lastStopOn = d;
-        }
-        function markWipe(i) {
-          wiped = true;
-          wipedOn = hkYmd(times[i]);
-          pending = null;
-        }
-        function maybeWipe(i) {
-          if (!(tradeCap > 0)) markWipe(i);
-        }
-        for (let i = i0; i <= iEnd; i++) {
-          let held = entry > 0;
-          if (!wiped && pending === "buy") {
-            if (!(tradeCap > 0)) {
-              markWipe(i);
-              pending = null;
-            } else {
-              entryCash = tradeCap;
-              entry = opens[i];
-              tradeCap = 0;
-              pending = null;
-              held = true;
-            }
-          } else if (!wiped && pending === "sell" && entry > 0) {
-            applyExit(opens[i], "signal");
-            trips += 1;
-            pending = null;
-            held = false;
-            maybeWipe(i);
-          }
-          if (!wiped && entry > 0) {
-            const lo = Number.isFinite(lows[i]) ? lows[i] : Math.min(opens[i], closes[i]);
-            const floor = hasCap ? (entryCash * (1 - maxLossX)) : 0;
-            const eqOpen = eqAt(opens[i]);
-            const eqLow = eqAt(lo);
-            if (eqOpen <= floor || eqLow <= floor) {
-              let px = opens[i];
-              if (eqOpen > floor) {
-                const trig = entry * (floor / entryCash - 1 + L) / (L * (1 - fee));
-                px = Math.min(opens[i], Math.max(lo, trig));
-              }
-              const isCap = hasCap && floor > 0;
-              applyExit(px, isCap ? "stop" : "wipe");
-              trips += 1;
-              held = true;
-              if (isCap) markStop(i);
-              maybeWipe(i);
-            }
-          }
-          let posEq = entry > 0 ? eqAt(closes[i]) : tradeCap;
-          if (!(posEq > 0)) posEq = 0;
-          let equity = pocket + posEq;
-          if (!(equity > 0)) equity = 0;
-          lastEq = equity;
-          if (held) inBars += 1;
-          if (equity >= peak) { peak = equity; peakI = i; }
-          const dd = peak > 0 ? (equity / peak - 1) : 0;
-          if (dd < maxdd) { maxdd = dd; bestPeak = peakI; bestTrough = i; }
-          if (i < iEnd && !wiped) {
-            const want = inPos[i];
-            const have = entry > 0;
-            if (want && !have) pending = "buy";
-            else if (have && !want) pending = "sell";
-          }
-        }
-        const ret = lastEq - 1;
-        const years = (times[iEnd] - times[i0]) / (365.25 * 86400000);
-        const cagr = (lastEq > 0 && years > 0) ? Math.pow(lastEq, 1 / years) - 1 : null;
-        return {
-          ret, cagr, mdd: maxdd, trips, timeInMkt: inBars / (iEnd - i0 + 1),
-          endedInPos: entry > 0,
-          mddFrom: bestPeak != null ? hkYmd(times[bestPeak]) : "",
-          mddTo: bestTrough != null ? hkYmd(times[bestTrough]) : "",
-          stopped: wiped ? "wipeout" : (stopHits ? "maxloss" : ""),
-          stoppedOn: wiped ? wipedOn : (lastStopOn || ""),
-          stopHits,
-          firstStopOn,
-          lastStopOn,
-        };
-      }
-
       function runBh(fee) {
         const startPx = opens[i0] / (1 - fee);
         let peak = closes[i0] / startPx, maxdd = 0, peakI = i0, bestPeak = i0, bestTrough = i0;
@@ -3373,9 +3595,9 @@
       const levMult = szLevMult();
       const maxLossX = szMaxLossRatio();
       const compoundOn = szCompoundOn();
-      const st0 = runEquity(0, levMult, maxLossX, compoundOn);
+      const st0 = szRunEquity(0, levMult, maxLossX, compoundOn, inPos, i0, iEnd, opens, lows, closes, times);
       const bh0 = runBh(0);
-      const stFee = runEquity(0.001, levMult, maxLossX, compoundOn);
+      const stFee = szRunEquity(0.001, levMult, maxLossX, compoundOn, inPos, i0, iEnd, opens, lows, closes, times);
       const bhFee = runBh(0.001);
       backtest = {
         from: hkYmd(times[i0]),
@@ -3396,6 +3618,35 @@
     }
     const officialCt = closeTimes[iEnd] != null && Number.isFinite(closeTimes[iEnd]) ? closeTimes[iEnd] : (times[iEnd] + szIntervalMs(tf));
     const asOfMs = officialCt + 1;
+    let suggest = null;
+    let suggestKey = "";
+    if (userI0 >= 0 && iEnd > 0) {
+      const sharedMinValid = szFirstValidIndex(["bd", "ichi", "ma"]);
+      let sugI0 = userI0;
+      if (sugI0 < sharedMinValid) sugI0 = sharedMinValid;
+      const askedFrom = startYmd;
+      const sugFrom = (sugI0 >= 0 && sugI0 <= iEnd) ? hkYmd(times[sugI0]) : "";
+      const sugTo = hkYmd(times[iEnd]);
+      const warmupShifted = !!(sugFrom && askedFrom && sugFrom > askedFrom);
+      suggestKey = [tf, askedFrom, capYmd, sugFrom, sugTo, n, times[0], times[iEnd]].join("|");
+      const meta = {
+        key: suggestKey,
+        from: sugFrom,
+        to: sugTo,
+        askedFrom,
+        askedTo: capYmd,
+        warmupShifted,
+      };
+      if (sugI0 >= 0 && sugI0 < iEnd) {
+        suggest = szComputeSuggest(
+          { i0: sugI0, iEnd, opens, lows, closes, times },
+          bd, ichi, aboveMa,
+          meta
+        );
+      } else {
+        suggest = Object.assign({ ready: false, pending: false, error: "该窗口内可用于比较的已收盘 K 线不足（均线等指标需要向前预热），暂无法给出组合建议。" }, meta);
+      }
+    }
     state.sanzuan = {
       ready: true,
       error: "",
@@ -3414,6 +3665,8 @@
       inPos: inPos[iEnd],
       backtest,
       notes,
+      suggest,
+      suggestKey,
     };
   }
   function parseSanzuanKline(r) {
@@ -3563,17 +3816,114 @@
           <li>默认勾选复利。勾选后，止盈卖出的全部余额作为下一笔开仓本金。</li>
           <li>不勾选复利时，下一笔开仓本金不超过窗口起始本金。超过起始本金的利润会另行锁定，不投入下一笔，但仍计入总权益。若因止损或亏损使开仓本金低于起始本金，之后的盈利先补回开仓本金，补到起始本金后，再把多出来的利润锁定。</li>
         </ol>
-        <h3>七、对照：一直持有现货</h3>
+        <h3>七、最佳组合建议</h3>
         <ol start="22">
+          <li>在用户当前所选周期与起止日期下，另按同一实际窗口枚举比较：三个指标的全部非空组合（共 7 种），杠杆全部档位（无杠杆及 2、3、4、5 倍），本金最大亏损比全部档位（不限制及 5% 至 50%、每档 5%），以及复利与不复利。合计 770 组。持有条件仍为票数不少于「2」与「已选个数」中的较小值。不枚举周期与日期。</li>
+          <li>全部组合共用同一实际窗口：起始为「用户起始日当天第一根已收盘 K 线」与「三项指标同时勾选时所需预热（含 200 均线）」中较晚者；结束日与当前回测一致。预热较短的指标子集不会因此更早开算。若 200 均线预热使实际起始晚于用户所选起始日，建议中会说明。</li>
+          <li>排序先看不含手续费的窗口收益，由高到低，与左侧回测对比主数字同一口径。窗口收益相同时，再按更稳妥的次序：最大回撤更接近 0 者在前，然后杠杆更低者在前；若一组「不限制」与一组止损并未改变该窗口结果，取「不限制」；再取不复利；最后按指标编号 bd、ichi、ma 的稳定字串排序。本金亏完并停止开仓的组合不标为该窗口收益最高，除非全部组合都已亏完；若全部亏完，只说明情况，不给出建议。</li>
+          <li>上方官方观察状态与左侧回测对比仍只按用户当前勾选与设定计算，不会因建议结果自动改动。只有在点击「套用此组合」后，才会把建议中的指标、杠杆、本金止损比和是否复利写入当前选择并重算官方状态与回测对比；周期与日期不变。</li>
+          <li>上述比较只基于该窗口的历史回测，不代表以后结果，不是买卖、逃顶抄底或加杠杆交易建议。</li>
+        </ol>
+        <h3>八、对照：一直持有现货</h3>
+        <ol start="27">
           <li>右侧对照为窗口内第一根开盘买入，持有到结束日收盘。不加杠杆，不套本金最大亏损限制，也不套复利或不复利规则。</li>
         </ol>
       </div>
     </details>`;
   }
-  function sanzuanEnsureRules() {
+  function sanzuanEnsureSuggest() {
+    if ($("sz-suggest")) return;
+    const html = `<div id="sz-suggest" class="sz-suggest"></div>`;
+    const rules = $("sz-rules");
     const results = $("sz-results");
-    if (!results || $("sz-rules")) return;
-    results.insertAdjacentHTML("afterend", szRulesMarkup());
+    if (rules) rules.insertAdjacentHTML("beforebegin", html);
+    else if (results) results.insertAdjacentHTML("afterend", html);
+  }
+  function sanzuanPaintSuggest() {
+    const box = $("sz-suggest");
+    if (!box) return;
+    const d = state.sanzuan;
+    const tf = szTfId();
+    const lab = szTfLabel(tf);
+    const selected = szSelectedIds();
+    const loading = !!state.sanzuanLoading;
+    const stale = !!(d && d.tf && d.tf !== tf);
+    const lead = "在当前 " + lab + " 周期与所选日期下，按同一实际窗口枚举指标组合、杠杆、本金止损比和是否复利，按不含手续费的窗口收益排序。历史回测不代表以后结果，不是买卖或交易建议。";
+    function windowHtml(s) {
+      if (!s || !s.from || !s.to) return "";
+      let line = "实际窗口：" + s.from + " 至 " + s.to;
+      if (s.warmupShifted) line += "。因 200 均线预热，实际起始已从 " + s.askedFrom + " 调整为 " + s.from + "，各组都从同一天起算。";
+      return `<p class="sz-window">${escapeHtml(line)}</p>`;
+    }
+    function altCard(rank, c) {
+      if (!c) return "";
+      return `<div class="sz-col sz-suggest-alt">
+        <div class="cyc-k">第${rank}</div>
+        <p class="sz-bt-sub">${escapeHtml(szComboBrief(c, tf))}</p>
+        <div class="sz-ret ${pctClass(c.ret)}">${fmtSzPctInt(c.ret)}</div>
+        <p class="sz-suggest-alt-nums">年化 ${fmtSzPct(c.cagr, 1)}　回撤 ${fmtSzPct(c.mdd, 1)}　${c.trips} 笔　止损 ${c.stopHits || 0} 次</p>
+      </div>`;
+    }
+    let inner = "";
+    if (!selected.length) {
+      inner = `<p class="cycle-note">请先勾选至少一个指标，再查看最佳组合建议。</p>`;
+    } else if (loading && (stale || !d || !d.ready || !d.suggest || !(d.suggest.ready || d.suggest.pending))) {
+      inner = `<p class="cycle-note sz-loading">正在加载 ${escapeHtml(lab)} K 线，暂无法比较组合。</p>`;
+    } else if (!d || !d.ready) {
+      inner = `<p class="cycle-note">${escapeHtml((d && d.error) || "暂无法比较组合。")}</p>`;
+    } else if (d.suggest && d.suggest.pending && !d.suggest.ready) {
+      inner = `${windowHtml(d.suggest)}<p class="cycle-note sz-loading">正在比较 770 组组合…</p>`;
+    } else if (!d.suggest || !d.suggest.ready) {
+      inner = `${windowHtml(d.suggest)}<p class="cycle-note">${escapeHtml((d.suggest && d.suggest.error) || "暂无法给出组合建议。")}</p>`;
+    } else if (d.suggest.allWiped || !d.suggest.best) {
+      inner = `${windowHtml(d.suggest)}<p class="cycle-note">该窗口内全部 770 组组合都已本金亏完并停止开仓，因此不给出最佳组合建议。历史回测不代表以后结果，不是买卖或交易建议。</p>`;
+    } else {
+      const s = d.suggest;
+      const best = s.best;
+      const currentIsBest = szComboIsCurrent(best);
+      const tieMsg = s.tieCount > 0 ? `<p class="sz-suggest-msg">另有 ${s.tieCount} 组结果相同。</p>` : "";
+      const curMsg = currentIsBest ? `<p class="sz-suggest-msg">当前选择即是该窗口收益最高的组合。</p>` : "";
+      const alts = [];
+      if (s.second) alts.push(altCard(2, s.second));
+      if (s.third) alts.push(altCard(3, s.third));
+      inner = `${windowHtml(s)}
+      <div class="sz-col sz-suggest-best">
+        <div class="cyc-k">该窗口回测收益最高的组合</div>
+        <p class="sz-bt-sub">${escapeHtml(szComboBrief(best, tf))}</p>
+        <div class="sz-ret ${pctClass(best.ret)}">${fmtSzPctInt(best.ret)}</div>
+        ${sanzuanKv("年化", fmtSzPct(best.cagr, 1))}
+        ${sanzuanKv("最大回撤", fmtSzPct(best.mdd, 1), best.mddFrom && best.mddTo ? (best.mddFrom + " 至 " + best.mddTo) : "")}
+        ${sanzuanKv("完整买卖", String(best.trips) + " 笔")}
+        ${sanzuanKv("止损次数", String(best.stopHits || 0) + " 次")}
+        ${sanzuanKv("实际窗口", s.from + " 至 " + s.to)}
+        ${tieMsg}${curMsg}
+        <button type="button" class="sz-suggest-apply" id="sz-suggest-apply" data-sz-suggest-apply="1">套用此组合</button>
+      </div>
+      ${alts.length ? `<div class="sz-suggest-alts">${alts.join("")}</div>` : ""}
+      <p class="cycle-note">历史回测不代表以后结果，不是投资建议。</p>`;
+    }
+    szSetHtml(box, `<div class="sz-bt-title">最佳组合建议</div>
+      <p class="sz-lead">${escapeHtml(lead)}</p>${inner}`);
+  }
+  function szApplySuggestCombo() {
+    const d = state.sanzuan;
+    const best = d && d.suggest && d.suggest.best;
+    if (!best || !d.suggest.ready || d.suggest.allWiped) return;
+    state.szSelected = best.inds.slice();
+    state.szLev = best.levId;
+    state.szMaxLoss = best.lossId;
+    state.szCompound = !!best.compound;
+    szSavePrefs();
+    computeSanzuan();
+    sanzuanBlock();
+  }
+  function sanzuanEnsureRules() {
+    if ($("sz-rules")) return;
+    const markup = szRulesMarkup();
+    const suggest = $("sz-suggest");
+    const results = $("sz-results");
+    if (suggest) suggest.insertAdjacentHTML("afterend", markup);
+    else if (results) results.insertAdjacentHTML("afterend", markup);
   }
   function sanzuanEnsureControls() {
     const root = $("sanzuan");
@@ -3582,7 +3932,8 @@
       root.innerHTML = `<div class="sz-card-k">策略回测</div>
       <div id="sz-controls" class="sz-controls"></div>
       <div id="sz-status" class="sz-status"><p class="cycle-note">正在加载该周期观察…</p></div>
-      <div id="sz-results" class="sz-results"><p class="cycle-note">正在加载回测…</p></div>`;
+      <div id="sz-results" class="sz-results"><p class="cycle-note">正在加载回测…</p></div>
+      <div id="sz-suggest" class="sz-suggest"></div>`;
     }
     const box = $("sz-controls");
     if (box && !box.dataset.ready) {
@@ -3664,6 +4015,12 @@
         }
       });
       root.addEventListener("click", (ev) => {
+        const applyBtn = ev.target.closest("[data-sz-suggest-apply]");
+        if (applyBtn && root.contains(applyBtn)) {
+          ev.preventDefault();
+          szApplySuggestCombo();
+          return;
+        }
         const levBtn = ev.target.closest("[data-sz-lev]");
         if (levBtn && root.contains(levBtn)) {
           const id = levBtn.getAttribute("data-sz-lev");
@@ -3755,6 +4112,7 @@
     const root = $("sanzuan");
     if (!root) return;
     sanzuanEnsureControls();
+    sanzuanEnsureSuggest();
     sanzuanEnsureRules();
     szSyncControls();
     const status = $("sz-status");
@@ -3864,6 +4222,7 @@
     }
     szSetHtml(status, statusHtml);
     szSetHtml(results, resultsHtml);
+    sanzuanPaintSuggest();
     if (!loading && d && d.ready && d.tf === tf) {
       if (state.mainTab === "sanzuan") clearTabDot("sanzuan");
       else reviewTabStamp("sanzuan");
