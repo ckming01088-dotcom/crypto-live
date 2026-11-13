@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-13T18:34:42+08:00",
+  "asOf": "2026-11-13T21:07:26+08:00",
   "source": "X 公开帖快照（含中文译文）",
   "accounts": [
     {
@@ -66,6 +66,21 @@
   ],
   "posts": [
     {
+      "id": "2121222861851365610",
+      "accountId": "saylor",
+      "name": "Michael Saylor",
+      "zh": "Saylor",
+      "username": "saylor",
+      "text": "₿ack to business. https://t.co/FY7BFkQCaV",
+      "createdAt": "2026-11-13T12:45:15.000Z",
+      "url": "https://x.com/saylor/status/2121222861851365610",
+      "kind": "post",
+      "repostOf": null,
+      "likes": 941,
+      "reposts": 89,
+      "textZh": "回归正事。\nhttps://t.co/FY7BFkQCaV"
+    },
+    {
       "id": "2121178935358865537",
       "accountId": "justinsuntron",
       "name": "Justin Sun",
@@ -76,8 +91,8 @@
       "url": "https://x.com/justinsuntron/status/2121178935358865537",
       "kind": "post",
       "repostOf": null,
-      "likes": 543,
-      "reposts": 24,
+      "likes": 1990,
+      "reposts": 95,
       "textZh": "黄仁勋辞职离开英伟达是一个悲剧，对双方来说都是损失，对 AI 产业的发展来说，也是一个重大的挫折时刻。"
     },
     {
@@ -91,8 +106,8 @@
       "url": "https://x.com/justinsuntron/status/2121178555883438572",
       "kind": "post",
       "repostOf": null,
-      "likes": 277,
-      "reposts": 13,
+      "likes": 727,
+      "reposts": 36,
       "textZh": "黄仁勋辞职离开英伟达是一个悲剧，对双方来说都是损失，对 AI 产业的发展来说，也是一个重大的挫折时刻。"
     },
     {
@@ -106,8 +121,8 @@
       "url": "https://x.com/justinsuntron/status/2121177248606667211",
       "kind": "quote",
       "repostOf": null,
-      "likes": 22,
-      "reposts": 0,
+      "likes": 35,
+      "reposts": 2,
       "textZh": "经典。现在仍开放。👇\nhttps://t.co/NoPujmXh17"
     },
     {
@@ -122,7 +137,7 @@
       "kind": "repost",
       "repostOf": "SpaceX",
       "likes": 0,
-      "reposts": 781,
+      "reposts": 896,
       "textZh": "从得克萨斯州里奥格兰德河谷到亚利桑那州科奇斯县，我们建造的不只是超级计算机。我们在创造就业、投资关键基础设施、扩大地方税基，并与当地社区一起建设能让居民受益的未来 →\nhttps://t.co/kg8dAxEdJL"
     },
     {
@@ -136,8 +151,8 @@
       "url": "https://x.com/ColeMacro/status/2121156219188425139",
       "kind": "post",
       "repostOf": null,
-      "likes": 384,
-      "reposts": 39,
+      "likes": 747,
+      "reposts": 78,
       "textZh": "比特币今晚来到约 6.8 万美元的 200 周均线。\n\n从历史上看，这往往是增加比特币风险敞口的最好时机之一。这也是一家比特币公司如何构建变得最重要的时候。\n\nStrive 的投资者知道，我们的放大只来自优先……\nhttps://t.co/ZLrzdmvnhP"
     },
     {
@@ -151,8 +166,8 @@
       "url": "https://x.com/justinsuntron/status/2121145714185322697",
       "kind": "quote",
       "repostOf": null,
-      "likes": 48,
-      "reposts": 6,
+      "likes": 65,
+      "reposts": 10,
       "textZh": "关于机构采用在 TRON 上的走向，这场对话不错。🔻\nhttps://t.co/zGEHL6HsdW"
     },
     {
@@ -167,7 +182,7 @@
       "kind": "repost",
       "repostOf": "Yuvelir_22",
       "likes": 0,
-      "reposts": 287,
+      "reposts": 367,
       "textZh": "2014 年，埃隆·马斯克站在麻省理工学院的听众面前，向全世界准确说出了人工智能的走向。\n\n所有人都错过了。因为他只用了一个词，而互联网记住的也只有这个词：“恶魔”。\n\n新闻标题说他害怕杀人机器人。科技博客……\nhttps://t.co/GFRMNdmgT0"
     },
     {
@@ -181,8 +196,8 @@
       "url": "https://x.com/elonmusk/status/2121123425213399408",
       "kind": "quote",
       "repostOf": null,
-      "likes": 5754,
-      "reposts": 511,
+      "likes": 7691,
+      "reposts": 641,
       "textZh": "Grok Bot\nhttps://t.co/gAq2NDWHqX"
     },
     {
@@ -197,7 +212,7 @@
       "kind": "repost",
       "repostOf": "AJamesMcCarthy",
       "likes": 0,
-      "reposts": 2454,
+      "reposts": 2589,
       "textZh": "既然现在好像可以发最多 20 张照片/视频，那就发一批我的作品\nhttps://t.co/Sxj4oEVfDD"
     },
     {
@@ -212,7 +227,7 @@
       "kind": "repost",
       "repostOf": "SpaceX",
       "likes": 0,
-      "reposts": 1348,
+      "reposts": 1408,
       "textZh": "SpaceX 已承诺投入 2.2 亿美元，扩建布朗斯维尔和卡梅伦县的供水与污水处理基础设施——这是该市历史上规模最大的一笔私人供水投资。\n\n这项投资旨在解决该地区最紧迫的挑战之一：……"
     },
     {
@@ -227,7 +242,7 @@
       "kind": "repost",
       "repostOf": "esherifftv",
       "likes": 0,
-      "reposts": 104,
+      "reposts": 130,
       "textZh": "Cybertruck 将提前停产，为 Cybercab 让路……你支持这个决定吗？\nhttps://t.co/Nodwge3wzq"
     },
     {
@@ -256,8 +271,8 @@
       "url": "https://x.com/justinsuntron/status/2121097795834929474",
       "kind": "quote",
       "repostOf": null,
-      "likes": 58,
-      "reposts": 3,
+      "likes": 69,
+      "reposts": 4,
       "textZh": "一切才刚刚开始！\nhttps://t.co/x87Kf7UDcu"
     },
     {
@@ -287,7 +302,7 @@
       "kind": "repost",
       "repostOf": "BNBCHAIN",
       "likes": 0,
-      "reposts": 15,
+      "reposts": 17,
       "textZh": "BNB Chain 的新一层网络正在成型，我们想听听你的看法。\n\n你想了解什么？希望我们考虑什么？\n\n欢迎留言 👇\nhttps://t.co/7mYJtOqguq"
     },
     {
@@ -301,7 +316,7 @@
       "url": "https://x.com/justinsuntron/status/2121043550913843413",
       "kind": "quote",
       "repostOf": null,
-      "likes": 67,
+      "likes": 69,
       "reposts": 5,
       "textZh": "非法资金没有安全藏身之处。🔻\nhttps://t.co/i4DfNIKJVa"
     },
@@ -317,7 +332,7 @@
       "kind": "repost",
       "repostOf": "phongle",
       "likes": 0,
-      "reposts": 71,
+      "reposts": 73,
       "textZh": "我参加了 @contessabrewer 和 @SullyCNBC 在 @PowerLunch 的节目，讨论 $MSTR、MSCI、比特币市场波动、监管进展、网络安全以及人工智能的未来。\n\n00:17 - MSCI 剔除对 $MSTR 的影响不大；只有 3% 的股份与其指数挂钩\n01:01 - ……\nhttps://t.co/tc3vvb5VpR"
     },
     {
@@ -346,8 +361,8 @@
       "url": "https://x.com/cz_binance/status/2120944565448548658",
       "kind": "quote",
       "repostOf": null,
-      "likes": 7164,
-      "reposts": 545,
+      "likes": 7559,
+      "reposts": 567,
       "textZh": "100% 1:1 储备。资金是 SAFU 的！\nhttps://t.co/7KjrgIKknR"
     },
     {
@@ -377,7 +392,7 @@
       "kind": "repost",
       "repostOf": "Strategy",
       "likes": 0,
-      "reposts": 87,
+      "reposts": 88,
       "textZh": "每周银行贷款中的一小部分，就足以消化新挖出的全部比特币。$MSTR $STRC\nhttps://t.co/nvk4jks9ge"
     },
     {
@@ -392,7 +407,7 @@
       "kind": "repost",
       "repostOf": "Strategy",
       "likes": 0,
-      "reposts": 50,
+      "reposts": 51,
       "textZh": "请于 11 月 19 日美东时间下午 5 点，参加我们由 @NatBrunell 主持、@Saylor 与 @PhongLe 出席的 2026 年三季度财报投资者问答。\nhttps://t.co/0k3ZdTLyPY"
     },
     {
@@ -406,8 +421,8 @@
       "url": "https://x.com/cz_binance/status/2120888881717612576",
       "kind": "post",
       "repostOf": null,
-      "likes": 83002,
-      "reposts": 6072,
+      "likes": 85031,
+      "reposts": 6217,
       "textZh": "英伟达让黄仁勋辞职是个错误。"
     },
     {
@@ -422,7 +437,7 @@
       "kind": "repost",
       "repostOf": "Strive",
       "likes": 0,
-      "reposts": 107,
+      "reposts": 108,
       "textZh": "为履行我们对 $SATA 价格稳定的承诺，已将股息从 13.0% 上调至 13.25%，自 12 月 1 日起生效。\nhttps://t.co/njfJ1IbSyF"
     },
     {
@@ -436,8 +451,8 @@
       "url": "https://x.com/saylor/status/2120860530986336551",
       "kind": "post",
       "repostOf": null,
-      "likes": 3084,
-      "reposts": 245,
+      "likes": 3170,
+      "reposts": 254,
       "textZh": "让 $STRC 来挑重担。\nhttps://t.co/BvWWj65Cit"
     },
     {
@@ -454,21 +469,6 @@
       "likes": 0,
       "reposts": 25,
       "textZh": "盘后，币安上的 $NVDAUSDT 下跌 8.39%。价格发现正在实时进行。\n\n聪明钱持仓：\n\n🔶 空头头寸 2 亿美元，平均开仓价 172.5 美元\n🔶 多头头寸 2200 万美元，平均开仓价 164.9 美元\n🔶 该合约持仓量已累积至 3.47 亿\n\n请关注 https://t.co/x1IdEveysB"
-    },
-    {
-      "id": "2120580771928842563",
-      "accountId": "saylor",
-      "name": "Michael Saylor",
-      "zh": "Saylor",
-      "username": "saylor",
-      "text": "Digital Credit is built for everyone. $MSTR $STRC https://t.co/p7IZ7keLEC",
-      "createdAt": "2026-11-11T18:13:49.000Z",
-      "url": "https://x.com/saylor/status/2120580771928842563",
-      "kind": "repost",
-      "repostOf": "Strategy",
-      "likes": 0,
-      "reposts": 66,
-      "textZh": "数字信贷是为所有人打造的。$MSTR $STRC\nhttps://t.co/p7IZ7keLEC"
     },
     {
       "id": "2120192385737257021",
