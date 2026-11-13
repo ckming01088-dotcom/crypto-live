@@ -557,6 +557,10 @@
     .sz-ind input { margin: 0; accent-color: var(--caution); flex: 0 0 auto; }
     .sz-tf-tabs { margin: 0; }
     .sz-tf-tabs .tf-tab { flex: 1 1 calc((100% - 24px) / 5); }
+    .sz-opt-tabs { margin: 0; }
+    .sz-lev-tabs .tf-tab { flex: 1 1 calc((100% - 24px) / 5); }
+    .sz-loss-tabs .tf-tab { flex: 1 1 calc((100% - 30px) / 6); font-size: 12px; padding: 5px 2px; min-height: 32px; }
+    .sz-bt-sub { margin: 0 0 4px; color: var(--muted); font-size: 11px; line-height: 1.35; }
     .sz-dates { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
     .sz-date-lab {
       display: flex; flex-direction: column; gap: 4px; min-width: 0;
@@ -682,7 +686,7 @@
   <footer>
     数据来自 Binance、CoinGecko、Alternative.me，时间为香港时间。<br>
     顶底指标（含综合倾向、分项读数与 V 反观察）为常用技术观察，不是买卖建议，也不确认见顶见底；不含自动交易。<br>
-    策略库可多选指标并按周期与日期回测，目前收录三选二的三个条件；仍是观察，不是买卖建议。<br>
+    策略库可多选指标并按周期与日期回测，目前收录三选二的三个条件；杠杆与本金最大亏损比只用于回测观察，主数字不含资金费率、借贷利息和爆仓罚金；仍是观察，不是买卖或加杠杆交易建议。<br>
     合约持仓量来自币安 U 本位合约。MVRV Z-Score 来自 BGeometrics，免费数据末值可能延迟约一周。AHR999 按币安 BTCUSDT 日线与九神公开公式计算，0.45、1.2、5 为文献参考带，不是买卖线。<br>
     比特币支撑与压力由币安 BTCUSDT 日线的近期摆动高低点、近30日/90日/一年区间高低，以及 50/200 日与周均线合并去重得出；未收盘的日线不作为已确认摆动点。仅供观察，不是买卖建议。<br>
     短期持有者图表另参考 BGeometrics（bitcoin-data.com）与 Binance。<br>
@@ -752,6 +756,28 @@
   const SZ_START_KEY = "crypto-live-sz-start";
   const SZ_END_KEY = "crypto-live-sz-end";
   const SZ_END_FOLLOW_KEY = "crypto-live-sz-end-follow";
+  const SZ_LEV_KEY = "crypto-live-sz-lev";
+  const SZ_MAXLOSS_KEY = "crypto-live-sz-maxloss";
+  const SZ_LEVS = [
+    { id: "1", label: "无杠杆", L: 1 },
+    { id: "2", label: "2倍", L: 2 },
+    { id: "3", label: "3倍", L: 3 },
+    { id: "4", label: "4倍", L: 4 },
+    { id: "5", label: "5倍", L: 5 },
+  ];
+  const SZ_MAXLOSS = [
+    { id: "none", label: "不限制", x: null },
+    { id: "5", label: "5%", x: 0.05 },
+    { id: "10", label: "10%", x: 0.10 },
+    { id: "15", label: "15%", x: 0.15 },
+    { id: "20", label: "20%", x: 0.20 },
+    { id: "25", label: "25%", x: 0.25 },
+    { id: "30", label: "30%", x: 0.30 },
+    { id: "35", label: "35%", x: 0.35 },
+    { id: "40", label: "40%", x: 0.40 },
+    { id: "45", label: "45%", x: 0.45 },
+    { id: "50", label: "50%", x: 0.50 },
+  ];
   const SZ_WARMUP_BARS = 200;
   const SZ_LOOKBACK_DAYS = 400;
   const SZ_MAX_PAGES = 40;
@@ -809,6 +835,8 @@
     szStart: "",
     szEnd: "",
     szEndFollow: true,
+    szLev: "1",
+    szMaxLoss: "none",
     live: false,
     status: "正在连接行情…",
   };
@@ -844,6 +872,10 @@
     if (savedSzFollow === "0") state.szEndFollow = false;
     if (savedSzFollow === "1") state.szEndFollow = true;
     if (!savedSzEnd) state.szEndFollow = true;
+    const savedSzLev = localStorage.getItem(SZ_LEV_KEY);
+    if (SZ_LEVS.some((t) => t.id === savedSzLev)) state.szLev = savedSzLev;
+    const savedSzMaxLoss = localStorage.getItem(SZ_MAXLOSS_KEY);
+    if (SZ_MAXLOSS.some((t) => t.id === savedSzMaxLoss)) state.szMaxLoss = savedSzMaxLoss;
   } catch (e) {}
   let lastPrices = {};
   let renderTimer = 0;
@@ -2896,6 +2928,27 @@
     const set = new Set(state.szSelected || []);
     return SZ_INDICATORS.map((x) => x.id).filter((id) => set.has(id));
   }
+  function szLevId() {
+    return SZ_LEVS.some((t) => t.id === state.szLev) ? state.szLev : "1";
+  }
+  function szLevMult() {
+    const row = SZ_LEVS.find((t) => t.id === szLevId());
+    return row && row.L ? row.L : 1;
+  }
+  function szMaxLossId() {
+    return SZ_MAXLOSS.some((t) => t.id === state.szMaxLoss) ? state.szMaxLoss : "none";
+  }
+  function szMaxLossRatio() {
+    const row = SZ_MAXLOSS.find((t) => t.id === szMaxLossId());
+    return (row && row.x != null) ? row.x : null;
+  }
+  function szBtRuleNote() {
+    const lev = SZ_LEVS.find((t) => t.id === szLevId()) || SZ_LEVS[0];
+    const loss = SZ_MAXLOSS.find((t) => t.id === szMaxLossId()) || SZ_MAXLOSS[0];
+    const levTxt = lev.L === 1 ? "无杠杆" : (lev.label + "杠杆");
+    const lossTxt = loss.x == null ? "本金亏损不限制" : ("本金最大亏损 " + loss.label);
+    return levTxt + "，" + lossTxt;
+  }
   function szIndName(id, tf) {
     if (id === "ma") return tf === "1d" ? "200日均线上" : "200周期均线上";
     const row = SZ_INDICATORS.find((x) => x.id === id);
@@ -2933,6 +2986,8 @@
       localStorage.setItem(SZ_START_KEY, state.szStart || "");
       localStorage.setItem(SZ_END_KEY, state.szEnd || "");
       localStorage.setItem(SZ_END_FOLLOW_KEY, state.szEndFollow ? "1" : "0");
+      localStorage.setItem(SZ_LEV_KEY, szLevId());
+      localStorage.setItem(SZ_MAXLOSS_KEY, szMaxLossId());
     } catch (e) {}
   }
   function szBarsOf(tf) {
@@ -3116,30 +3171,86 @@
     }
     let backtest = null;
     if (i0 >= 0 && i0 <= iEnd) {
-      function runEquity(fee) {
-        let cash = 1, pos = 0, trips = 0, pending = null;
+      function runEquity(fee, lev, maxLossX) {
+        const L = (lev != null && lev >= 1) ? lev : 1;
+        const hasCap = maxLossX != null && Number.isFinite(maxLossX) && maxLossX > 0;
+        const stopLevel = hasCap ? (1 - maxLossX) : 0;
+        let cash = 1, entry = 0, entryCash = 0, trips = 0, pending = null;
+        let stopped = false, stoppedOn = "", stoppedKind = "";
         if (i0 > 0 && inPos[i0 - 1]) pending = "buy";
         let peak = 1, maxdd = 0, peakI = i0, bestPeak = null, bestTrough = null, inBars = 0, lastEq = 1;
+        function unitsOf() {
+          return entryCash * L * (1 - fee) / entry;
+        }
+        function eqAt(px) {
+          if (!(entry > 0)) return cash;
+          return unitsOf() * px - entryCash * (L - 1);
+        }
+        function cashAfterExit(px) {
+          if (!(entry > 0)) return cash;
+          return unitsOf() * px * (1 - fee) - entryCash * (L - 1);
+        }
+        function flatten(px) {
+          cash = Math.max(0, cashAfterExit(px));
+          entry = 0;
+          entryCash = 0;
+        }
+        function stopNow(kind, i) {
+          stopped = true;
+          stoppedKind = kind;
+          stoppedOn = hkYmd(times[i]);
+          pending = null;
+        }
+        function stopKindOf(eq) {
+          if (hasCap && eq <= (1 - maxLossX)) return "maxloss";
+          return "wipeout";
+        }
         for (let i = i0; i <= iEnd; i++) {
-          if (pending === "buy") {
-            pos = cash * (1 - fee) / opens[i];
-            cash = 0;
-            pending = null;
-          } else if (pending === "sell") {
-            cash = pos * opens[i] * (1 - fee);
-            pos = 0;
+          let held = entry > 0;
+          if (!stopped && pending === "buy") {
+            if (cash <= stopLevel) {
+              stopNow(stopKindOf(cash), i);
+              pending = null;
+            } else {
+              entryCash = cash;
+              entry = opens[i];
+              cash = 0;
+              pending = null;
+              held = true;
+            }
+          } else if (!stopped && pending === "sell" && entry > 0) {
+            flatten(opens[i]);
             trips += 1;
             pending = null;
+            held = false;
+            if (cash <= stopLevel) stopNow(stopKindOf(cash), i);
           }
-          const equity = cash + pos * closes[i];
+          if (!stopped && entry > 0) {
+            const lo = Number.isFinite(lows[i]) ? lows[i] : Math.min(opens[i], closes[i]);
+            const eqOpen = eqAt(opens[i]);
+            const eqLow = eqAt(lo);
+            if (eqOpen <= stopLevel || eqLow <= stopLevel) {
+              let px = opens[i];
+              if (eqOpen > stopLevel) {
+                const trig = entry * (stopLevel / entryCash - 1 + L) / (L * (1 - fee));
+                px = Math.min(opens[i], Math.max(lo, trig));
+              }
+              flatten(px);
+              trips += 1;
+              held = true;
+              stopNow(stopKindOf(cash), i);
+            }
+          }
+          let equity = entry > 0 ? eqAt(closes[i]) : cash;
+          if (!(equity > 0)) equity = 0;
           lastEq = equity;
-          if (pos > 0) inBars += 1;
+          if (held) inBars += 1;
           if (equity >= peak) { peak = equity; peakI = i; }
-          const dd = equity / peak - 1;
+          const dd = peak > 0 ? (equity / peak - 1) : 0;
           if (dd < maxdd) { maxdd = dd; bestPeak = peakI; bestTrough = i; }
-          if (i < iEnd) {
+          if (i < iEnd && !stopped) {
             const want = inPos[i];
-            const have = pos > 0;
+            const have = entry > 0;
             if (want && !have) pending = "buy";
             else if (have && !want) pending = "sell";
           }
@@ -3149,9 +3260,11 @@
         const cagr = (lastEq > 0 && years > 0) ? Math.pow(lastEq, 1 / years) - 1 : null;
         return {
           ret, cagr, mdd: maxdd, trips, timeInMkt: inBars / (iEnd - i0 + 1),
-          endedInPos: pos > 0,
+          endedInPos: entry > 0,
           mddFrom: bestPeak != null ? hkYmd(times[bestPeak]) : "",
           mddTo: bestTrough != null ? hkYmd(times[bestTrough]) : "",
+          stopped: stoppedKind,
+          stoppedOn,
         };
       }
       function runBh(fee) {
@@ -3174,9 +3287,11 @@
           mddTo: hkYmd(times[bestTrough]),
         };
       }
-      const st0 = runEquity(0);
+      const levMult = szLevMult();
+      const maxLossX = szMaxLossRatio();
+      const st0 = runEquity(0, levMult, maxLossX);
       const bh0 = runBh(0);
-      const stFee = runEquity(0.001);
+      const stFee = runEquity(0.001, levMult, maxLossX);
       const bhFee = runBh(0.001);
       backtest = {
         from: hkYmd(times[i0]),
@@ -3189,6 +3304,8 @@
         hold: bh0,
         strategyFee: stFee,
         holdFee: bhFee,
+        lev: levMult,
+        maxLoss: maxLossX,
         notes,
       };
     }
@@ -3336,9 +3453,26 @@
         const on = t.id === szTfId();
         return `<button type="button" class="tf-tab${on ? " on" : ""}" data-sz-tf="${t.id}" aria-pressed="${on ? "true" : "false"}">${t.label}</button>`;
       }).join("");
+      const levs = SZ_LEVS.map((t) => {
+        const on = t.id === szLevId();
+        return `<button type="button" class="tf-tab${on ? " on" : ""}" data-sz-lev="${t.id}" aria-pressed="${on ? "true" : "false"}">${t.label}</button>`;
+      }).join("");
+      const losses = SZ_MAXLOSS.map((t) => {
+        const on = t.id === szMaxLossId();
+        return `<button type="button" class="tf-tab${on ? " on" : ""}" data-sz-maxloss="${t.id}" aria-pressed="${on ? "true" : "false"}">${t.label}</button>`;
+      }).join("");
       box.innerHTML = `<div class="sz-field">
           <span class="sz-lab">观察指标</span>
           <div class="sz-inds" id="sz-inds">${inds}</div>
+        </div>
+        <div class="sz-field">
+          <span class="sz-lab">杠杆</span>
+          <div class="tf-tabs sz-opt-tabs sz-lev-tabs" role="tablist" id="sz-lev-tabs">${levs}</div>
+        </div>
+        <div class="sz-field">
+          <span class="sz-lab">本金最大亏损比</span>
+          <div class="tf-tabs sz-opt-tabs sz-loss-tabs" role="tablist" id="sz-loss-tabs">${losses}</div>
+          <p class="sz-hint">只用于下方回测对比，不改变上方观察状态。杠杆按价格涨跌放大盈亏；本金指回测起始资金；达到所选最大亏损比后平仓并在窗口内不再开仓。主数字不含资金费率、借贷利息和爆仓罚金。一直持有现货不加杠杆、也不套这条亏损限制。仅供观察，不是买卖或加杠杆交易建议。</p>
         </div>
         <div class="sz-field">
           <span class="sz-lab">回测周期</span>
@@ -3381,6 +3515,26 @@
         }
       });
       root.addEventListener("click", (ev) => {
+        const levBtn = ev.target.closest("[data-sz-lev]");
+        if (levBtn && root.contains(levBtn)) {
+          const id = levBtn.getAttribute("data-sz-lev");
+          if (!SZ_LEVS.some((x) => x.id === id) || id === szLevId()) return;
+          state.szLev = id;
+          szSavePrefs();
+          computeSanzuan();
+          sanzuanBlock();
+          return;
+        }
+        const lossBtn = ev.target.closest("[data-sz-maxloss]");
+        if (lossBtn && root.contains(lossBtn)) {
+          const id = lossBtn.getAttribute("data-sz-maxloss");
+          if (!SZ_MAXLOSS.some((x) => x.id === id) || id === szMaxLossId()) return;
+          state.szMaxLoss = id;
+          szSavePrefs();
+          computeSanzuan();
+          sanzuanBlock();
+          return;
+        }
         const btn = ev.target.closest("[data-sz-tf]");
         if (!btn || !root.contains(btn)) return;
         const tf = btn.getAttribute("data-sz-tf");
@@ -3405,6 +3559,18 @@
     const tf = szTfId();
     root.querySelectorAll("[data-sz-tf]").forEach((btn) => {
       const on = btn.getAttribute("data-sz-tf") === tf;
+      btn.classList.toggle("on", on);
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    const lev = szLevId();
+    root.querySelectorAll("[data-sz-lev]").forEach((btn) => {
+      const on = btn.getAttribute("data-sz-lev") === lev;
+      btn.classList.toggle("on", on);
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    const loss = szMaxLossId();
+    root.querySelectorAll("[data-sz-maxloss]").forEach((btn) => {
+      const on = btn.getAttribute("data-sz-maxloss") === loss;
       btn.classList.toggle("on", on);
       btn.setAttribute("aria-pressed", on ? "true" : "false");
     });
@@ -3494,23 +3660,42 @@
     } else {
       const bt = d.backtest;
       const st = bt.strategy, hd = bt.hold;
+      const levMult = bt.lev != null ? bt.lev : szLevMult();
+      const maxLossX = bt.maxLoss != null ? bt.maxLoss : szMaxLossRatio();
+      const feeExtra = levMult > 1 ? "（按仓位名义本金计）" : "";
       const feeNote = (bt.strategyFee && bt.holdFee)
-        ? `若按每边 0.1% 手续费，策略约 ${fmtSzPctInt(bt.strategyFee.ret)}，一直持有约 ${fmtSzPctInt(bt.holdFee.ret)}。`
+        ? `若按每边 0.1% 手续费${feeExtra}，策略约 ${fmtSzPctInt(bt.strategyFee.ret)}，一直持有约 ${fmtSzPctInt(bt.holdFee.ret)}。`
         : "";
       const classic = selected.length === 3 && (d.threshold == null || d.threshold === 2);
       const leftName = classic ? "三选二规则" : "所选规则";
+      const ruleNote = escapeHtml(szBtRuleNote());
+      let stopNote = "";
+      let capKv = "";
+      if (st.stopped === "maxloss" && st.stoppedOn) {
+        stopNote = `已于 ${st.stoppedOn} 触达本金最大亏损限制，之后窗口内不再开仓。`;
+        capKv = sanzuanKv("本金亏损限制", st.stoppedOn + " 触达后停仓");
+      } else if (st.stopped === "wipeout" && st.stoppedOn) {
+        stopNote = `已于 ${st.stoppedOn} 本金亏完，之后窗口内不再开仓。`;
+        capKv = sanzuanKv("本金亏损限制", st.stoppedOn + " 本金亏完停仓");
+      } else if (maxLossX != null) {
+        stopNote = "本窗口未触达所选本金最大亏损限制。";
+        capKv = sanzuanKv("本金亏损限制", "未触达");
+      }
       const extra = (bt.notes && bt.notes.length ? bt.notes.join("") : "") + (d.notes && d.notes.length && bt.notes !== d.notes ? d.notes.join("") : "");
-      const note = `币安 BTC/USDT ${lab} 线，信号当根已收盘确认、下一根开盘成交，不含手续费。窗口按香港日期，含起始日与结束日当天的已收盘 K 线；结束日不超过该周期最后一根已收盘棒。${feeNote}${extra}历史回测不代表以后结果，不是投资建议。`;
+      const note = `币安 BTC/USDT ${lab} 线，信号当根已收盘确认、下一根开盘成交，只做多、不含手续费。杠杆按价格涨跌放大盈亏；本金指回测起始资金；达到所选最大亏损比后平仓并在窗口内不再开仓。主数字不含资金费率、借贷利息和爆仓罚金。一直持有现货不加杠杆、也不套这条本金亏损限制。窗口按香港日期，含起始日与结束日当天的已收盘 K 线；结束日不超过该周期最后一根已收盘棒。${feeNote}${stopNote}${extra}历史回测不代表以后结果，不是投资建议。`;
       const title = "回测对比";
       const windowLine = escapeHtml(bt.from) + " 至 " + escapeHtml(bt.to);
       resultsHtml = szCmpShell(
         `<div class="cyc-k">${leftName}</div>
+            <p class="sz-bt-sub">${ruleNote}</p>
             <div class="sz-ret ${pctClass(st.ret)}">${fmtSzPctInt(st.ret)}</div>
             ${sanzuanKv("年化", fmtSzPct(st.cagr, 1))}
             ${sanzuanKv("最大回撤", fmtSzPct(st.mdd, 1), st.mddFrom && st.mddTo ? (st.mddFrom + " 至 " + st.mddTo) : "")}
             ${sanzuanKv("完整买卖", String(st.trips) + " 笔")}
-            ${sanzuanKv("在场时间", fmtSzPct(st.timeInMkt, 1).replace(/^\+/, ""))}`,
+            ${sanzuanKv("在场时间", fmtSzPct(st.timeInMkt, 1).replace(/^\+/, ""))}
+            ${capKv}`,
         `<div class="cyc-k">一直持有现货</div>
+            <p class="sz-bt-sub">无杠杆，不套本金亏损限制</p>
             <div class="sz-ret ${pctClass(hd.ret)}">${fmtSzPctInt(hd.ret)}</div>
             ${sanzuanKv("年化", fmtSzPct(hd.cagr, 1))}
             ${sanzuanKv("最大回撤", fmtSzPct(hd.mdd, 1), hd.mddFrom && hd.mddTo ? (hd.mddFrom + " 至 " + hd.mddTo) : "")}`,
