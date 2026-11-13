@@ -2720,7 +2720,7 @@
     if (id === "sanzuan") {
       const d = state.sanzuan;
       if (!d || !d.ready) return "";
-      return [d.asOf || "", d.inPos ? "1" : "0", d.bd ? "1" : "0", d.ichi ? "1" : "0", d.aboveMa ? "1" : "0"].join("|");
+      return [d.inPos ? "1" : "0", d.bd ? "1" : "0", d.ichi ? "1" : "0", d.aboveMa ? "1" : "0"].join("|");
     }
     if (id === "xfeed") {
       const d = state.xFeed;
