@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-14T08:08:11+08:00",
+  "asOf": "2026-11-14T10:03:27+08:00",
   "source": "X 公开帖快照（含中文译文）",
   "accounts": [
     {
@@ -65,6 +65,21 @@
     }
   ],
   "posts": [
+    {
+      "id": "2121412758717788581",
+      "accountId": "justinsuntron",
+      "name": "Justin Sun",
+      "zh": "孙宇晨",
+      "username": "justinsuntron",
+      "text": "Crime doesn’t scale here. https://t.co/Pf2mEAcjRq",
+      "createdAt": "2026-11-14T01:19:50.000Z",
+      "url": "https://x.com/justinsuntron/status/2121412758717788581",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 30,
+      "reposts": 2,
+      "textZh": "犯罪在这里无法规模化。\nhttps://t.co/Pf2mEAcjRq"
+    },
     {
       "id": "2121388517540716839",
       "accountId": "elonmusk",
@@ -274,21 +289,6 @@
       "likes": 86,
       "reposts": 5,
       "textZh": "一切才刚刚开始！\nhttps://t.co/x87Kf7UDcu"
-    },
-    {
-      "id": "2121043550913843413",
-      "accountId": "justinsuntron",
-      "name": "Justin Sun",
-      "zh": "孙宇晨",
-      "username": "justinsuntron",
-      "text": "No safe place for illicit funds. 🔻 https://t.co/i4DfNIKJVa",
-      "createdAt": "2026-11-13T00:52:44.000Z",
-      "url": "https://x.com/justinsuntron/status/2121043550913843413",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 85,
-      "reposts": 9,
-      "textZh": "非法资金没有安全藏身之处。🔻\nhttps://t.co/i4DfNIKJVa"
     },
     {
       "id": "2120944565448548658",
