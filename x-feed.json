@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-15T12:07:32+08:00",
+  "asOf": "2026-11-15T16:11:18+08:00",
   "source": "X 公开帖快照（含中文译文）",
   "accounts": [
     {
@@ -66,6 +66,51 @@
   ],
   "posts": [
     {
+      "id": "2121875758704370144",
+      "accountId": "elonmusk",
+      "name": "Elon Musk",
+      "zh": "马斯克",
+      "username": "elonmusk",
+      "text": "5 years ago https://t.co/PvHI3xcTJf",
+      "createdAt": "2026-11-15T07:59:38.000Z",
+      "url": "https://x.com/elonmusk/status/2121875758704370144",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 2051,
+      "reposts": 178,
+      "textZh": "5年前\nhttps://t.co/PvHI3xcTJf"
+    },
+    {
+      "id": "2121875600906592260",
+      "accountId": "elonmusk",
+      "name": "Elon Musk",
+      "zh": "马斯克",
+      "username": "elonmusk",
+      "text": "This gives a clear sense of the catch maneuver https://t.co/5IlsUeDFnd",
+      "createdAt": "2026-11-15T07:59:00.000Z",
+      "url": "https://x.com/elonmusk/status/2121875600906592260",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 1179,
+      "reposts": 139,
+      "textZh": "这能让人清楚地感受到这次捕获动作。\nhttps://t.co/5IlsUeDFnd"
+    },
+    {
+      "id": "2121875056817328621",
+      "accountId": "elonmusk",
+      "name": "Elon Musk",
+      "zh": "马斯克",
+      "username": "elonmusk",
+      "text": "Great day https://t.co/B3sFYvxicR",
+      "createdAt": "2026-11-15T07:56:50.000Z",
+      "url": "https://x.com/elonmusk/status/2121875056817328621",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 1899,
+      "reposts": 163,
+      "textZh": "很棒的一天\nhttps://t.co/B3sFYvxicR"
+    },
+    {
       "id": "2121802527524164015",
       "accountId": "elonmusk",
       "name": "Elon Musk",
@@ -76,8 +121,8 @@
       "url": "https://x.com/elonmusk/status/2121802527524164015",
       "kind": "quote",
       "repostOf": null,
-      "likes": 13746,
-      "reposts": 1214,
+      "likes": 36882,
+      "reposts": 2903,
       "textZh": "你想要的未来，会实现吗\nhttps://t.co/kkSV08AUuv"
     },
     {
@@ -91,8 +136,8 @@
       "url": "https://x.com/elonmusk/status/2121770874885845044",
       "kind": "quote",
       "repostOf": null,
-      "likes": 7579,
-      "reposts": 738,
+      "likes": 9652,
+      "reposts": 942,
       "textZh": "试试 Grok @Bot\nhttps://t.co/wupzwF1bkE"
     },
     {
@@ -106,54 +151,9 @@
       "url": "https://x.com/elonmusk/status/2121764319792677119",
       "kind": "quote",
       "repostOf": null,
-      "likes": 9503,
-      "reposts": 545,
+      "likes": 12539,
+      "reposts": 724,
       "textZh": "谢谢\nhttps://t.co/wOjiVpoHqz"
-    },
-    {
-      "id": "2121763977349013884",
-      "accountId": "elonmusk",
-      "name": "Elon Musk",
-      "zh": "马斯克",
-      "username": "elonmusk",
-      "text": "I hugged ship 42 upon its return",
-      "createdAt": "2026-11-15T00:35:27.000Z",
-      "url": "https://x.com/elonmusk/status/2121763977349013884",
-      "kind": "post",
-      "repostOf": null,
-      "likes": 56919,
-      "reposts": 2932,
-      "textZh": "42 号飞船归来时，我拥抱了它"
-    },
-    {
-      "id": "2121763396190179414",
-      "accountId": "elonmusk",
-      "name": "Elon Musk",
-      "zh": "马斯克",
-      "username": "elonmusk",
-      "text": "Some phone videos I took from the tower https://t.co/kxiSkIvoHQ",
-      "createdAt": "2026-11-15T00:33:08.000Z",
-      "url": "https://x.com/elonmusk/status/2121763396190179414",
-      "kind": "post",
-      "repostOf": null,
-      "likes": 94402,
-      "reposts": 9802,
-      "textZh": "我在塔上用手机拍的一些视频\nhttps://t.co/kxiSkIvoHQ"
-    },
-    {
-      "id": "2121759522851115109",
-      "accountId": "elonmusk",
-      "name": "Elon Musk",
-      "zh": "马斯克",
-      "username": "elonmusk",
-      "text": "The epic day has arrived, thanks to the incredibly talented team at SpaceX! https://t.co/vGQ8eSoEFk",
-      "createdAt": "2026-11-15T00:17:45.000Z",
-      "url": "https://x.com/elonmusk/status/2121759522851115109",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 31964,
-      "reposts": 2619,
-      "textZh": "史诗般的一天到来了，这要感谢 SpaceX 这支才华横溢的团队！\nhttps://t.co/vGQ8eSoEFk"
     },
     {
       "id": "2121737011581395310",
