@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-16T13:07:13+08:00",
+  "asOf": "2026-11-16T14:05:00+08:00",
   "source": "X 公开帖快照（含中文译文）",
   "accounts": [
     {
@@ -65,6 +65,21 @@
     }
   ],
   "posts": [
+    {
+      "id": "2122203324460265943",
+      "accountId": "elonmusk",
+      "name": "Elon Musk",
+      "zh": "马斯克",
+      "username": "elonmusk",
+      "text": "Yup https://t.co/QVOy9tq9Gz",
+      "createdAt": "2026-11-16T05:41:15.000Z",
+      "url": "https://x.com/elonmusk/status/2122203324460265943",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 1915,
+      "reposts": 195,
+      "textZh": "没错\nhttps://t.co/QVOy9tq9Gz"
+    },
     {
       "id": "2122191623731745133",
       "accountId": "elonmusk",
@@ -139,21 +154,6 @@
       "likes": 4994,
       "reposts": 357,
       "textZh": "Robotaxi 的日子不好过。特斯拉团队很同情这位老兄。\nhttps://t.co/HE6NoyNv0r"
-    },
-    {
-      "id": "2122146355074232469",
-      "accountId": "elonmusk",
-      "name": "Elon Musk",
-      "zh": "马斯克",
-      "username": "elonmusk",
-      "text": "Say no to crack https://t.co/uQmtL5s2yh",
-      "createdAt": "2026-11-16T01:54:53.000Z",
-      "url": "https://x.com/elonmusk/status/2122146355074232469",
-      "kind": "post",
-      "repostOf": null,
-      "likes": 28547,
-      "reposts": 1760,
-      "textZh": "对 crack 说不\nhttps://t.co/uQmtL5s2yh"
     },
     {
       "id": "2122087344392012232",
