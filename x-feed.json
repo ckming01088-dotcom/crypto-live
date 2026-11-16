@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-16T15:11:16+08:00",
+  "asOf": "2026-11-16T16:03:36+08:00",
   "source": "X 公开帖快照（含中文译文）",
   "accounts": [
     {
@@ -76,8 +76,8 @@
       "url": "https://x.com/elonmusk/status/2122223599079559603",
       "kind": "quote",
       "repostOf": null,
-      "likes": 756,
-      "reposts": 84,
+      "likes": 2376,
+      "reposts": 248,
       "textZh": "重要\nhttps://t.co/kpjb9Ttnlb"
     },
     {
@@ -91,8 +91,8 @@
       "url": "https://x.com/elonmusk/status/2122221516867895726",
       "kind": "quote",
       "repostOf": null,
-      "likes": 1258,
-      "reposts": 142,
+      "likes": 2205,
+      "reposts": 241,
       "textZh": "💯\nhttps://t.co/BQNBVr5IoM"
     },
     {
@@ -106,8 +106,8 @@
       "url": "https://x.com/elonmusk/status/2122220308799316072",
       "kind": "quote",
       "repostOf": null,
-      "likes": 1449,
-      "reposts": 193,
+      "likes": 2615,
+      "reposts": 361,
       "textZh": "人类文明从太阳获取的能量，最终显然会四舍五入到全部能源的 100%。这个算术显而易见、毫无难度。\nhttps://t.co/gSekwyUrSM"
     },
     {
@@ -121,9 +121,39 @@
       "url": "https://x.com/elonmusk/status/2122203324460265943",
       "kind": "quote",
       "repostOf": null,
-      "likes": 3164,
-      "reposts": 343,
+      "likes": 3554,
+      "reposts": 404,
       "textZh": "没错\nhttps://t.co/QVOy9tq9Gz"
+    },
+    {
+      "id": "2122191623731745133",
+      "accountId": "elonmusk",
+      "name": "Elon Musk",
+      "zh": "马斯克",
+      "username": "elonmusk",
+      "text": "Yup https://t.co/d0K80VhUWW",
+      "createdAt": "2026-11-16T04:54:46.000Z",
+      "url": "https://x.com/elonmusk/status/2122191623731745133",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 5156,
+      "reposts": 587,
+      "textZh": "没错\nhttps://t.co/d0K80VhUWW"
+    },
+    {
+      "id": "2122186399575396604",
+      "accountId": "elonmusk",
+      "name": "Elon Musk",
+      "zh": "马斯克",
+      "username": "elonmusk",
+      "text": "12 years ago https://t.co/YIXO0Wr73N",
+      "createdAt": "2026-11-16T04:34:00.000Z",
+      "url": "https://x.com/elonmusk/status/2122186399575396604",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 9122,
+      "reposts": 681,
+      "textZh": "12 年前\nhttps://t.co/YIXO0Wr73N"
     },
     {
       "id": "2122132729508855992",
@@ -136,39 +166,9 @@
       "url": "https://x.com/saylor/status/2122132729508855992",
       "kind": "post",
       "repostOf": null,
-      "likes": 132,
-      "reposts": 11,
+      "likes": 2172,
+      "reposts": 151,
       "textZh": "2026 年 12 月的 Stretch 股息率维持在 12.00%。$STRC\nhttps://t.co/Cjh8tIxE8h"
-    },
-    {
-      "id": "2122127527040712704",
-      "accountId": "elonmusk",
-      "name": "Elon Musk",
-      "zh": "马斯克",
-      "username": "elonmusk",
-      "text": "Starlink helps rural schools with education https://t.co/mOb4qjOrri",
-      "createdAt": "2026-11-16T00:40:04.000Z",
-      "url": "https://x.com/elonmusk/status/2122127527040712704",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 2745,
-      "reposts": 274,
-      "textZh": "Starlink 帮助农村学校开展教育\nhttps://t.co/mOb4qjOrri"
-    },
-    {
-      "id": "2122109219855806886",
-      "accountId": "elonmusk",
-      "name": "Elon Musk",
-      "zh": "马斯克",
-      "username": "elonmusk",
-      "text": "Starlink saves lives https://t.co/geX77GkNL1",
-      "createdAt": "2026-11-15T23:27:19.000Z",
-      "url": "https://x.com/elonmusk/status/2122109219855806886",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 4326,
-      "reposts": 509,
-      "textZh": "Starlink 能拯救生命\nhttps://t.co/geX77GkNL1"
     },
     {
       "id": "2122087339669541321",
@@ -181,8 +181,8 @@
       "url": "https://x.com/cz_binance/status/2122087339669541321",
       "kind": "quote",
       "repostOf": null,
-      "likes": 1029,
-      "reposts": 109,
+      "likes": 2151,
+      "reposts": 227,
       "textZh": "别人眼中的你不是你，你眼中的自己不是你，你眼中的别人才是真正的你。——萨特\n\n1/2 👇\nhttps://t.co/JOpZ2Y7JSk"
     },
     {
@@ -196,8 +196,8 @@
       "url": "https://x.com/saylor/status/2122062138126823754",
       "kind": "post",
       "repostOf": null,
-      "likes": 3153,
-      "reposts": 260,
+      "likes": 4711,
+      "reposts": 371,
       "textZh": "要想了解比特币正在发生什么，先看数据。Strategy 的比特币仪表盘把关键指标集中呈现出来。\nhttps://t.co/rXyEcWbRTF\nhttps://t.co/HYHwr4cHBn"
     },
     {
@@ -211,8 +211,8 @@
       "url": "https://x.com/cz_binance/status/2122000010992824627",
       "kind": "quote",
       "repostOf": null,
-      "likes": 9593,
-      "reposts": 1020,
+      "likes": 11846,
+      "reposts": 1343,
       "textZh": "加密货币价格为什么下跌？\n\n没有人确切知道。相关性并不等于因果关系。以下是一些可能的原因。\n\n资金流向 Anthropic IPO：\nhttps://t.co/jYwVi4huAY\n\nETF 资金流出：美国现货比特币 ETF 在七个交易……\nhttps://t.co/XL2aB1ZL9W"
     },
     {
@@ -226,8 +226,8 @@
       "url": "https://x.com/saylor/status/2121960852643545184",
       "kind": "post",
       "repostOf": null,
-      "likes": 15342,
-      "reposts": 1109,
+      "likes": 17110,
+      "reposts": 1249,
       "textZh": "这波回调可以用一点橙色。\nhttps://t.co/b0LzB94RAP"
     },
     {
@@ -241,8 +241,8 @@
       "url": "https://x.com/ColeMacro/status/2121958498032590991",
       "kind": "post",
       "repostOf": null,
-      "likes": 2583,
-      "reposts": 241,
+      "likes": 2857,
+      "reposts": 255,
       "textZh": "比特币便宜了，我们想要更多。\nhttps://t.co/9DMEOXRKNg"
     },
     {
@@ -256,8 +256,8 @@
       "url": "https://x.com/cz_binance/status/2121737011581395310",
       "kind": "quote",
       "repostOf": null,
-      "likes": 3214,
-      "reposts": 192,
+      "likes": 3260,
+      "reposts": 196,
       "textZh": "👀\nhttps://t.co/MMHgMvBqgn"
     },
     {
@@ -286,8 +286,8 @@
       "url": "https://x.com/saylor/status/2121724034715144572",
       "kind": "post",
       "repostOf": null,
-      "likes": 4188,
-      "reposts": 374,
+      "likes": 4327,
+      "reposts": 387,
       "textZh": "下个 ₿lock 见，Laura。\nhttps://t.co/PiJNP1Jc0V"
     },
     {
@@ -316,7 +316,7 @@
       "url": "https://x.com/ColeMacro/status/2121650852780036596",
       "kind": "quote",
       "repostOf": null,
-      "likes": 331,
+      "likes": 333,
       "reposts": 21,
       "textZh": "滴答滴答\nhttps://t.co/qpGP2NMORp"
     },
@@ -331,8 +331,8 @@
       "url": "https://x.com/justinsuntron/status/2121631275081773236",
       "kind": "post",
       "repostOf": null,
-      "likes": 647,
-      "reposts": 45,
+      "likes": 664,
+      "reposts": 48,
       "textZh": "市场有涨有跌。TRON 上的稳定币转账每秒都在结算，昼夜不停。我们继续建设。"
     },
     {
@@ -391,8 +391,8 @@
       "url": "https://x.com/justinsuntron/status/2121462310342697130",
       "kind": "quote",
       "repostOf": null,
-      "likes": 135,
-      "reposts": 19,
+      "likes": 137,
+      "reposts": 20,
       "textZh": "USDD明年还会是市面上增长最快的稳定币\nhttps://t.co/AxCzPpqO6M"
     },
     {
@@ -406,8 +406,8 @@
       "url": "https://x.com/justinsuntron/status/2121458279096393896",
       "kind": "quote",
       "repostOf": null,
-      "likes": 420,
-      "reposts": 18,
+      "likes": 437,
+      "reposts": 17,
       "textZh": "微博小黑屋60天，1月就更新薄肌进展，大家监督。\nhttps://t.co/m63KECbQbA"
     },
     {
@@ -466,8 +466,8 @@
       "url": "https://x.com/justinsuntron/status/2121178935358865537",
       "kind": "post",
       "repostOf": null,
-      "likes": 5024,
-      "reposts": 189,
+      "likes": 5033,
+      "reposts": 188,
       "textZh": "黄仁勋辞职离开英伟达是一个悲剧，对双方来说都是损失，对 AI 产业的发展来说，也是一个重大的挫折时刻。"
     },
     {
@@ -527,7 +527,7 @@
       "kind": "repost",
       "repostOf": "realDonaldTrump",
       "likes": 0,
-      "reposts": 2840,
+      "reposts": 2839,
       "textZh": "致亚拉巴马的伟大人民，请走出来为这些伟大的爱国者投票！他们得到我完全、彻底的背书，绝不会让你们失望！唐纳德·J·特朗普总统\nhttps://t.co/CKrjCmURKi https://t.co/du0sEtyWU7"
     }
   ]
