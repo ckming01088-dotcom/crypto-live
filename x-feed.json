@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-16T08:06:46+08:00",
+  "asOf": "2026-11-16T09:04:15+08:00",
   "source": "X 公开帖快照（含中文译文）",
   "accounts": [
     {
@@ -65,6 +65,36 @@
     }
   ],
   "posts": [
+    {
+      "id": "2122132729508855992",
+      "accountId": "saylor",
+      "name": "Michael Saylor",
+      "zh": "Saylor",
+      "username": "saylor",
+      "text": "Stretch Dividend Rate maintained at 12.00% for December 2026. $STRC https://t.co/Cjh8tIxE8h",
+      "createdAt": "2026-11-16T01:00:44.000Z",
+      "url": "https://x.com/saylor/status/2122132729508855992",
+      "kind": "post",
+      "repostOf": null,
+      "likes": 132,
+      "reposts": 11,
+      "textZh": "2026 年 12 月的 Stretch 股息率维持在 12.00%。$STRC\nhttps://t.co/Cjh8tIxE8h"
+    },
+    {
+      "id": "2122127527040712704",
+      "accountId": "elonmusk",
+      "name": "Elon Musk",
+      "zh": "马斯克",
+      "username": "elonmusk",
+      "text": "Starlink helps rural schools with education https://t.co/mOb4qjOrri",
+      "createdAt": "2026-11-16T00:40:04.000Z",
+      "url": "https://x.com/elonmusk/status/2122127527040712704",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 2745,
+      "reposts": 274,
+      "textZh": "Starlink 帮助农村学校开展教育\nhttps://t.co/mOb4qjOrri"
+    },
     {
       "id": "2122109219855806886",
       "accountId": "elonmusk",
@@ -169,21 +199,6 @@
       "likes": 3153,
       "reposts": 260,
       "textZh": "要想了解比特币正在发生什么，先看数据。Strategy 的比特币仪表盘把关键指标集中呈现出来。\nhttps://t.co/rXyEcWbRTF\nhttps://t.co/HYHwr4cHBn"
-    },
-    {
-      "id": "2122043427776819503",
-      "accountId": "elonmusk",
-      "name": "Elon Musk",
-      "zh": "马斯克",
-      "username": "elonmusk",
-      "text": "Starlink https://t.co/UZzHsuqb39",
-      "createdAt": "2026-11-15T19:05:53.000Z",
-      "url": "https://x.com/elonmusk/status/2122043427776819503",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 7945,
-      "reposts": 843,
-      "textZh": "Starlink\nhttps://t.co/UZzHsuqb39"
     },
     {
       "id": "2122000010992824627",
@@ -351,6 +366,21 @@
       "textZh": "👀 到时候见。\nhttps://t.co/c4VCid0fQE"
     },
     {
+      "id": "2120853388510318708",
+      "accountId": "justinsuntron",
+      "name": "Justin Sun",
+      "zh": "孙宇晨",
+      "username": "justinsuntron",
+      "text": "TRON $TRX, TETHER AND CHAINALYSIS LAUNCH A DIGITAL CRIME TASK FORCE TO IDENTIFY AND DISRUPT ILLICIT $USDT ACTIVITY ON TRON https://t.co/I0MHfjh8OA",
+      "createdAt": "2026-11-14T07:06:03.000Z",
+      "url": "https://x.com/justinsuntron/status/2120853388510318708",
+      "kind": "post",
+      "repostOf": null,
+      "likes": 45,
+      "reposts": 4,
+      "textZh": "TRON $TRX、TETHER 与 CHAINALYSIS 联合成立数字犯罪特别工作组，用于识别并打击 TRON 上的非法 $USDT 活动\nhttps://t.co/I0MHfjh8OA"
+    },
+    {
       "id": "2121462310342697130",
       "accountId": "justinsuntron",
       "name": "Justin Sun",
@@ -441,21 +471,6 @@
       "textZh": "黄仁勋辞职离开英伟达是一个悲剧，对双方来说都是损失，对 AI 产业的发展来说，也是一个重大的挫折时刻。"
     },
     {
-      "id": "2121178555883438572",
-      "accountId": "justinsuntron",
-      "name": "Justin Sun",
-      "zh": "孙宇晨",
-      "username": "justinsuntron",
-      "text": "Jensen Huang's resignation from NVIDIA is a tragedy and a loss for both sides, and a major setback for the AI industry.",
-      "createdAt": "2026-11-13T09:49:11.000Z",
-      "url": "https://x.com/justinsuntron/status/2121178555883438572",
-      "kind": "post",
-      "repostOf": null,
-      "likes": 1761,
-      "reposts": 82,
-      "textZh": "黄仁勋辞职离开英伟达是一个悲剧，对双方来说都是损失，对 AI 产业的发展来说，也是一个重大的挫折时刻。"
-    },
-    {
       "id": "2121156219188425139",
       "accountId": "ColeMacro",
       "name": "Matt Cole",
@@ -469,21 +484,6 @@
       "likes": 1350,
       "reposts": 152,
       "textZh": "比特币今晚来到约 6.8 万美元的 200 周均线。\n\n从历史上看，这往往是增加比特币风险敞口的最好时机之一。这也是一家比特币公司如何构建变得最重要的时候。\n\nStrive 的投资者知道，我们的放大只来自优先……\nhttps://t.co/ZLrzdmvnhP"
-    },
-    {
-      "id": "2120860530986336551",
-      "accountId": "saylor",
-      "name": "Michael Saylor",
-      "zh": "Saylor",
-      "username": "saylor",
-      "text": "Let $STRC do the heavy lifting. https://t.co/BvWWj65Cit",
-      "createdAt": "2026-11-12T12:45:28.000Z",
-      "url": "https://x.com/saylor/status/2120860530986336551",
-      "kind": "post",
-      "repostOf": null,
-      "likes": 3650,
-      "reposts": 300,
-      "textZh": "让 $STRC 来挑重担。\nhttps://t.co/BvWWj65Cit"
     },
     {
       "id": "2119777373306646777",
