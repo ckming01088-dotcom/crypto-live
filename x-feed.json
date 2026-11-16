@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-15T16:11:18+08:00",
+  "asOf": "2026-11-16T08:06:46+08:00",
   "source": "X 公开帖快照（含中文译文）",
   "accounts": [
     {
@@ -66,94 +66,169 @@
   ],
   "posts": [
     {
-      "id": "2121875758704370144",
+      "id": "2122109219855806886",
       "accountId": "elonmusk",
       "name": "Elon Musk",
       "zh": "马斯克",
       "username": "elonmusk",
-      "text": "5 years ago https://t.co/PvHI3xcTJf",
-      "createdAt": "2026-11-15T07:59:38.000Z",
-      "url": "https://x.com/elonmusk/status/2121875758704370144",
+      "text": "Starlink saves lives https://t.co/geX77GkNL1",
+      "createdAt": "2026-11-15T23:27:19.000Z",
+      "url": "https://x.com/elonmusk/status/2122109219855806886",
       "kind": "quote",
       "repostOf": null,
-      "likes": 2051,
-      "reposts": 178,
-      "textZh": "5年前\nhttps://t.co/PvHI3xcTJf"
+      "likes": 4326,
+      "reposts": 509,
+      "textZh": "Starlink 能拯救生命\nhttps://t.co/geX77GkNL1"
     },
     {
-      "id": "2121875600906592260",
+      "id": "2122092920434274773",
       "accountId": "elonmusk",
       "name": "Elon Musk",
       "zh": "马斯克",
       "username": "elonmusk",
-      "text": "This gives a clear sense of the catch maneuver https://t.co/5IlsUeDFnd",
-      "createdAt": "2026-11-15T07:59:00.000Z",
-      "url": "https://x.com/elonmusk/status/2121875600906592260",
+      "text": "Starlink is a gamechanger https://t.co/rRhQ4bvzcN",
+      "createdAt": "2026-11-15T22:22:33.000Z",
+      "url": "https://x.com/elonmusk/status/2122092920434274773",
       "kind": "quote",
       "repostOf": null,
-      "likes": 1179,
-      "reposts": 139,
-      "textZh": "这能让人清楚地感受到这次捕获动作。\nhttps://t.co/5IlsUeDFnd"
+      "likes": 7188,
+      "reposts": 741,
+      "textZh": "Starlink 是改变游戏规则的产品\nhttps://t.co/rRhQ4bvzcN"
     },
     {
-      "id": "2121875056817328621",
+      "id": "2122092646294581460",
       "accountId": "elonmusk",
       "name": "Elon Musk",
       "zh": "马斯克",
       "username": "elonmusk",
-      "text": "Great day https://t.co/B3sFYvxicR",
-      "createdAt": "2026-11-15T07:56:50.000Z",
-      "url": "https://x.com/elonmusk/status/2121875056817328621",
+      "text": "🍌 4 scale https://t.co/ndHd3mosRp",
+      "createdAt": "2026-11-15T22:21:28.000Z",
+      "url": "https://x.com/elonmusk/status/2122092646294581460",
       "kind": "quote",
       "repostOf": null,
-      "likes": 1899,
-      "reposts": 163,
-      "textZh": "很棒的一天\nhttps://t.co/B3sFYvxicR"
+      "likes": 4089,
+      "reposts": 386,
+      "textZh": "香蕉作比例尺 🍌\nhttps://t.co/ndHd3mosRp"
     },
     {
-      "id": "2121802527524164015",
+      "id": "2122092374016806969",
       "accountId": "elonmusk",
       "name": "Elon Musk",
       "zh": "马斯克",
       "username": "elonmusk",
-      "text": "Will the future that you want https://t.co/kkSV08AUuv",
-      "createdAt": "2026-11-15T03:08:38.000Z",
-      "url": "https://x.com/elonmusk/status/2121802527524164015",
+      "text": "Yeah, I was going over the whole Starship heat shield earlier today. Overall, it looks great. The engines look great too. Ship 42 could probably be reflown with a few weeks of refurbishment. \n\nHowever, many small fixes are needed to achieve immediate reusability (like an https://t.co/ypGLoAkRGu",
+      "createdAt": "2026-11-15T22:20:23.000Z",
+      "url": "https://x.com/elonmusk/status/2122092374016806969",
       "kind": "quote",
       "repostOf": null,
-      "likes": 36882,
-      "reposts": 2903,
-      "textZh": "你想要的未来，会实现吗\nhttps://t.co/kkSV08AUuv"
+      "likes": 26866,
+      "reposts": 2353,
+      "textZh": "对，我今天早些时候把整个 Starship 热盾都检查了一遍。总体看起来很好。发动机看起来也很好。42 号飞船大概只需几周整修就能再次飞行。\n\n不过，要实现即时重复使用，还需要许多小修小补（比如一个……\nhttps://t.co/ypGLoAkRGu"
     },
     {
-      "id": "2121770874885845044",
-      "accountId": "elonmusk",
-      "name": "Elon Musk",
-      "zh": "马斯克",
-      "username": "elonmusk",
-      "text": "Try Grok @Bot https://t.co/wupzwF1bkE",
-      "createdAt": "2026-11-15T01:02:51.000Z",
-      "url": "https://x.com/elonmusk/status/2121770874885845044",
+      "id": "2122087339669541321",
+      "accountId": "cz_binance",
+      "name": "CZ",
+      "zh": "赵长鹏",
+      "username": "cz_binance",
+      "text": "How others see you isn’t you, how you see yourself isn’t you, how you see others is the real you. - Sartre\n\n1/2 👇 https://t.co/JOpZ2Y7JSk",
+      "createdAt": "2026-11-15T22:00:22.000Z",
+      "url": "https://x.com/cz_binance/status/2122087339669541321",
       "kind": "quote",
       "repostOf": null,
-      "likes": 9652,
-      "reposts": 942,
-      "textZh": "试试 Grok @Bot\nhttps://t.co/wupzwF1bkE"
+      "likes": 1029,
+      "reposts": 109,
+      "textZh": "别人眼中的你不是你，你眼中的自己不是你，你眼中的别人才是真正的你。——萨特\n\n1/2 👇\nhttps://t.co/JOpZ2Y7JSk"
     },
     {
-      "id": "2121764319792677119",
+      "id": "2122068777189716003",
       "accountId": "elonmusk",
       "name": "Elon Musk",
       "zh": "马斯克",
       "username": "elonmusk",
-      "text": "Thanks https://t.co/wOjiVpoHqz",
-      "createdAt": "2026-11-15T00:36:48.000Z",
-      "url": "https://x.com/elonmusk/status/2121764319792677119",
+      "text": "Ship, in the future, will almost always be taken to mean spaceship https://t.co/vzvPxJiqTs",
+      "createdAt": "2026-11-15T20:46:37.000Z",
+      "url": "https://x.com/elonmusk/status/2122068777189716003",
       "kind": "quote",
       "repostOf": null,
-      "likes": 12539,
-      "reposts": 724,
-      "textZh": "谢谢\nhttps://t.co/wOjiVpoHqz"
+      "likes": 25300,
+      "reposts": 2272,
+      "textZh": "未来，“ship”几乎总会被理解成宇宙飞船\nhttps://t.co/vzvPxJiqTs"
+    },
+    {
+      "id": "2122062138126823754",
+      "accountId": "saylor",
+      "name": "Michael Saylor",
+      "zh": "Saylor",
+      "username": "saylor",
+      "text": "When you want to understand what’s happening with Bitcoin, start with the data. Strategy’s Bitcoin dashboard brings the key metrics into focus. https://t.co/rXyEcWbRTF https://t.co/HYHwr4cHBn",
+      "createdAt": "2026-11-15T20:20:14.000Z",
+      "url": "https://x.com/saylor/status/2122062138126823754",
+      "kind": "post",
+      "repostOf": null,
+      "likes": 3153,
+      "reposts": 260,
+      "textZh": "要想了解比特币正在发生什么，先看数据。Strategy 的比特币仪表盘把关键指标集中呈现出来。\nhttps://t.co/rXyEcWbRTF\nhttps://t.co/HYHwr4cHBn"
+    },
+    {
+      "id": "2122043427776819503",
+      "accountId": "elonmusk",
+      "name": "Elon Musk",
+      "zh": "马斯克",
+      "username": "elonmusk",
+      "text": "Starlink https://t.co/UZzHsuqb39",
+      "createdAt": "2026-11-15T19:05:53.000Z",
+      "url": "https://x.com/elonmusk/status/2122043427776819503",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 7945,
+      "reposts": 843,
+      "textZh": "Starlink\nhttps://t.co/UZzHsuqb39"
+    },
+    {
+      "id": "2122000010992824627",
+      "accountId": "cz_binance",
+      "name": "CZ",
+      "zh": "赵长鹏",
+      "username": "cz_binance",
+      "text": "Why are crypto prices down?\n\nNo one knows for sure. Correlation does not prove causation. Here are some potential reasons.\n\nMoney shifting to the Anthropic IPO: https://t.co/jYwVi4huAY\n\nETF outflows: U.S. spot Bitcoin ETFs saw about $1.9 billion in outflows over seven trading https://t.co/XL2aB1ZL9W",
+      "createdAt": "2026-11-15T16:13:22.000Z",
+      "url": "https://x.com/cz_binance/status/2122000010992824627",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 9593,
+      "reposts": 1020,
+      "textZh": "加密货币价格为什么下跌？\n\n没有人确切知道。相关性并不等于因果关系。以下是一些可能的原因。\n\n资金流向 Anthropic IPO：\nhttps://t.co/jYwVi4huAY\n\nETF 资金流出：美国现货比特币 ETF 在七个交易……\nhttps://t.co/XL2aB1ZL9W"
+    },
+    {
+      "id": "2121960852643545184",
+      "accountId": "saylor",
+      "name": "Michael Saylor",
+      "zh": "Saylor",
+      "username": "saylor",
+      "text": "This dip could use a little orange. https://t.co/b0LzB94RAP",
+      "createdAt": "2026-11-15T13:37:46.000Z",
+      "url": "https://x.com/saylor/status/2121960852643545184",
+      "kind": "post",
+      "repostOf": null,
+      "likes": 15342,
+      "reposts": 1109,
+      "textZh": "这波回调可以用一点橙色。\nhttps://t.co/b0LzB94RAP"
+    },
+    {
+      "id": "2121958498032590991",
+      "accountId": "ColeMacro",
+      "name": "Matt Cole",
+      "zh": "Cole",
+      "username": "ColeMacro",
+      "text": "Bitcoin's cheap, we want more. https://t.co/9DMEOXRKNg",
+      "createdAt": "2026-11-15T13:28:24.000Z",
+      "url": "https://x.com/ColeMacro/status/2121958498032590991",
+      "kind": "post",
+      "repostOf": null,
+      "likes": 2583,
+      "reposts": 241,
+      "textZh": "比特币便宜了，我们想要更多。\nhttps://t.co/9DMEOXRKNg"
     },
     {
       "id": "2121737011581395310",
@@ -166,8 +241,8 @@
       "url": "https://x.com/cz_binance/status/2121737011581395310",
       "kind": "quote",
       "repostOf": null,
-      "likes": 1363,
-      "reposts": 74,
+      "likes": 3214,
+      "reposts": 192,
       "textZh": "👀\nhttps://t.co/MMHgMvBqgn"
     },
     {
@@ -181,8 +256,8 @@
       "url": "https://x.com/cz_binance/status/2121733692137852944",
       "kind": "quote",
       "repostOf": null,
-      "likes": 5083,
-      "reposts": 382,
+      "likes": 8677,
+      "reposts": 662,
       "textZh": "有意思的分析\nhttps://t.co/r4fUlHaYsv"
     },
     {
@@ -196,8 +271,8 @@
       "url": "https://x.com/saylor/status/2121724034715144572",
       "kind": "post",
       "repostOf": null,
-      "likes": 2944,
-      "reposts": 240,
+      "likes": 4188,
+      "reposts": 374,
       "textZh": "下个 ₿lock 见，Laura。\nhttps://t.co/PiJNP1Jc0V"
     },
     {
@@ -211,8 +286,8 @@
       "url": "https://x.com/saylor/status/2121650989782425631",
       "kind": "post",
       "repostOf": null,
-      "likes": 1804,
-      "reposts": 248,
+      "likes": 2319,
+      "reposts": 315,
       "textZh": "周三在 @Official_Cantor Convergence 上，我谈到了银行采用如何推动比特币的下一轮牛市，以及 Strategy 如何把数字资本转化为数字信贷和数字股权。\n\n00:23 - 比特币的下一轮牛市：银行采用、宏观顺风，以及……\nhttps://t.co/5bLiEnLUxj"
     },
     {
@@ -226,8 +301,8 @@
       "url": "https://x.com/ColeMacro/status/2121650852780036596",
       "kind": "quote",
       "repostOf": null,
-      "likes": 252,
-      "reposts": 13,
+      "likes": 331,
+      "reposts": 21,
       "textZh": "滴答滴答\nhttps://t.co/qpGP2NMORp"
     },
     {
@@ -241,8 +316,8 @@
       "url": "https://x.com/justinsuntron/status/2121631275081773236",
       "kind": "post",
       "repostOf": null,
-      "likes": 537,
-      "reposts": 36,
+      "likes": 647,
+      "reposts": 45,
       "textZh": "市场有涨有跌。TRON 上的稳定币转账每秒都在结算，昼夜不停。我们继续建设。"
     },
     {
@@ -256,8 +331,8 @@
       "url": "https://x.com/saylor/status/2121599681427869760",
       "kind": "post",
       "repostOf": null,
-      "likes": 3727,
-      "reposts": 325,
+      "likes": 4288,
+      "reposts": 378,
       "textZh": "比特币是数字资本。Strategy 把它转化为数字信贷。过去一个月，比特币下跌了 17.3%。STRC 的价格基本持平，加上股息后总回报为 +1.0%。\nhttps://t.co/zzDGHuvIC0"
     },
     {
@@ -271,8 +346,8 @@
       "url": "https://x.com/cz_binance/status/2121587830342254722",
       "kind": "quote",
       "repostOf": null,
-      "likes": 1397,
-      "reposts": 106,
+      "likes": 1607,
+      "reposts": 119,
       "textZh": "👀 到时候见。\nhttps://t.co/c4VCid0fQE"
     },
     {
@@ -286,8 +361,8 @@
       "url": "https://x.com/justinsuntron/status/2121462310342697130",
       "kind": "quote",
       "repostOf": null,
-      "likes": 129,
-      "reposts": 17,
+      "likes": 135,
+      "reposts": 19,
       "textZh": "USDD明年还会是市面上增长最快的稳定币\nhttps://t.co/AxCzPpqO6M"
     },
     {
@@ -301,8 +376,8 @@
       "url": "https://x.com/justinsuntron/status/2121458279096393896",
       "kind": "quote",
       "repostOf": null,
-      "likes": 379,
-      "reposts": 16,
+      "likes": 420,
+      "reposts": 18,
       "textZh": "微博小黑屋60天，1月就更新薄肌进展，大家监督。\nhttps://t.co/m63KECbQbA"
     },
     {
@@ -316,8 +391,8 @@
       "url": "https://x.com/justinsuntron/status/2121412758717788581",
       "kind": "quote",
       "repostOf": null,
-      "likes": 168,
-      "reposts": 17,
+      "likes": 173,
+      "reposts": 19,
       "textZh": "犯罪在这里无法规模化。\nhttps://t.co/Pf2mEAcjRq"
     },
     {
@@ -331,8 +406,8 @@
       "url": "https://x.com/cz_binance/status/2121287996540416365",
       "kind": "quote",
       "repostOf": null,
-      "likes": 2648,
-      "reposts": 324,
+      "likes": 2748,
+      "reposts": 336,
       "textZh": "日本首例，世界首例！\n\n日本上市的 ASIAN STAR 将向符合条件的股东发放价值 800 万日元的 BNB，并在 BNB Chain 上把日本房地产代币化。\n\n传统企业和他们的股东，又多了参与加密的途径。🔶\n\n市场是一个……\nhttps://t.co/4GWEHmyZl0"
     },
     {
@@ -346,8 +421,8 @@
       "url": "https://x.com/ColeMacro/status/2121273976576155825",
       "kind": "post",
       "repostOf": null,
-      "likes": 3944,
-      "reposts": 576,
+      "likes": 6239,
+      "reposts": 934,
       "textZh": "比特币在史上最大 IPO 前下跌了 19%。如今在第二大 IPO 到来前，它又下跌了 18%。\n\nSpaceX 于 6 月 12 日上市时筹资 750 亿美元。在上市前的 50 天里，比特币下跌了 19%。Anthropic 计划下周上市时筹资最多 640 亿美元，而比特币……\nhttps://t.co/pRAkGpxr1z"
     },
     {
@@ -361,8 +436,8 @@
       "url": "https://x.com/justinsuntron/status/2121178935358865537",
       "kind": "post",
       "repostOf": null,
-      "likes": 4974,
-      "reposts": 186,
+      "likes": 5024,
+      "reposts": 189,
       "textZh": "黄仁勋辞职离开英伟达是一个悲剧，对双方来说都是损失，对 AI 产业的发展来说，也是一个重大的挫折时刻。"
     },
     {
@@ -376,8 +451,8 @@
       "url": "https://x.com/justinsuntron/status/2121178555883438572",
       "kind": "post",
       "repostOf": null,
-      "likes": 1752,
-      "reposts": 79,
+      "likes": 1761,
+      "reposts": 82,
       "textZh": "黄仁勋辞职离开英伟达是一个悲剧，对双方来说都是损失，对 AI 产业的发展来说，也是一个重大的挫折时刻。"
     },
     {
@@ -391,39 +466,9 @@
       "url": "https://x.com/ColeMacro/status/2121156219188425139",
       "kind": "post",
       "repostOf": null,
-      "likes": 1328,
-      "reposts": 148,
+      "likes": 1350,
+      "reposts": 152,
       "textZh": "比特币今晚来到约 6.8 万美元的 200 周均线。\n\n从历史上看，这往往是增加比特币风险敞口的最好时机之一。这也是一家比特币公司如何构建变得最重要的时候。\n\nStrive 的投资者知道，我们的放大只来自优先……\nhttps://t.co/ZLrzdmvnhP"
-    },
-    {
-      "id": "2120944565448548658",
-      "accountId": "cz_binance",
-      "name": "CZ",
-      "zh": "赵长鹏",
-      "username": "cz_binance",
-      "text": "100% 1:1 backing. Funds are SAFU! https://t.co/7KjrgIKknR",
-      "createdAt": "2026-11-12T18:19:24.000Z",
-      "url": "https://x.com/cz_binance/status/2120944565448548658",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 8846,
-      "reposts": 673,
-      "textZh": "100% 1:1 储备。资金是 SAFU 的！\nhttps://t.co/7KjrgIKknR"
-    },
-    {
-      "id": "2120888881717612576",
-      "accountId": "cz_binance",
-      "name": "CZ",
-      "zh": "赵长鹏",
-      "username": "cz_binance",
-      "text": "It's a mistake for Nvidia to let Jensen resign.",
-      "createdAt": "2026-11-12T14:38:08.000Z",
-      "url": "https://x.com/cz_binance/status/2120888881717612576",
-      "kind": "post",
-      "repostOf": null,
-      "likes": 93196,
-      "reposts": 6739,
-      "textZh": "英伟达让黄仁勋辞职是个错误。"
     },
     {
       "id": "2120860530986336551",
@@ -436,39 +481,9 @@
       "url": "https://x.com/saylor/status/2120860530986336551",
       "kind": "post",
       "repostOf": null,
-      "likes": 3629,
+      "likes": 3650,
       "reposts": 300,
       "textZh": "让 $STRC 来挑重担。\nhttps://t.co/BvWWj65Cit"
-    },
-    {
-      "id": "2120580116963004755",
-      "accountId": "saylor",
-      "name": "Michael Saylor",
-      "zh": "Saylor",
-      "username": "saylor",
-      "text": "Bitcoin is Digital Capital. Strategy transforms it into Digital Credit and Digital Equity. Bringing $STRC and $MSTR onchain is another step toward capital markets that never close.\nhttps://t.co/nWVyRfRGjU",
-      "createdAt": "2026-11-11T18:11:13.000Z",
-      "url": "https://x.com/saylor/status/2120580116963004755",
-      "kind": "post",
-      "repostOf": null,
-      "likes": 2822,
-      "reposts": 264,
-      "textZh": "比特币是数字资本。Strategy 把它转化为数字信贷和数字股权。把 $STRC 和 $MSTR 带到链上，是迈向永不关闭的资本市场的又一步。\nhttps://t.co/nWVyRfRGjU"
-    },
-    {
-      "id": "2120525843558781180",
-      "accountId": "saylor",
-      "name": "Michael Saylor",
-      "zh": "Saylor",
-      "username": "saylor",
-      "text": "Deutsche ₿ank. https://t.co/k0gKuWaW4U",
-      "createdAt": "2026-11-11T14:35:33.000Z",
-      "url": "https://x.com/saylor/status/2120525843558781180",
-      "kind": "post",
-      "repostOf": null,
-      "likes": 5658,
-      "reposts": 604,
-      "textZh": "德意志 ₿ank。\nhttps://t.co/k0gKuWaW4U"
     },
     {
       "id": "2119777373306646777",
@@ -481,7 +496,7 @@
       "url": "https://x.com/ColeMacro/status/2119777373306646777",
       "kind": "post",
       "repostOf": null,
-      "likes": 1693,
+      "likes": 1698,
       "reposts": 175,
       "textZh": "Strive 以均价每枚 75,721 美元购入 29 枚 $BTC，总金额 220 万美元，比特币总持仓达到 ₿43,153。\n\n$ASST $SATA $SATS\nhttps://t.co/AF7767LBQb"
     },
@@ -496,24 +511,9 @@
       "url": "https://x.com/ColeMacro/status/2119459058407354476",
       "kind": "quote",
       "repostOf": null,
-      "likes": 718,
+      "likes": 722,
       "reposts": 73,
       "textZh": "DOGE 结束的那天，就是该停止相信「比特币未来回报会低于历史回报」这一迷思的日子。\n\n从那一刻起，债务危机已进入终局。\n\n下面这张图很好地刻画了我认为比特币现在所处的位置，以及接下来会去向哪里。\nhttps://t.co/Mw96bvuRlL\nhttps://t.co/iajAVtIM79"
-    },
-    {
-      "id": "2119426316865089880",
-      "accountId": "ColeMacro",
-      "name": "Matt Cole",
-      "zh": "Cole",
-      "username": "ColeMacro",
-      "text": "The hurdle rate is orange. https://t.co/Q6lYAJnNZ0",
-      "createdAt": "2026-11-08T13:46:25.000Z",
-      "url": "https://x.com/ColeMacro/status/2119426316865089880",
-      "kind": "post",
-      "repostOf": null,
-      "likes": 1784,
-      "reposts": 187,
-      "textZh": "门槛收益率是橙色的。\nhttps://t.co/Q6lYAJnNZ0"
     },
     {
       "id": "2117719664008851609",
