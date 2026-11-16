@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-16T11:10:14+08:00",
+  "asOf": "2026-11-16T13:07:13+08:00",
   "source": "X 公开帖快照（含中文译文）",
   "accounts": [
     {
@@ -66,6 +66,36 @@
   ],
   "posts": [
     {
+      "id": "2122191623731745133",
+      "accountId": "elonmusk",
+      "name": "Elon Musk",
+      "zh": "马斯克",
+      "username": "elonmusk",
+      "text": "Yup https://t.co/d0K80VhUWW",
+      "createdAt": "2026-11-16T04:54:46.000Z",
+      "url": "https://x.com/elonmusk/status/2122191623731745133",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 1457,
+      "reposts": 183,
+      "textZh": "没错\nhttps://t.co/d0K80VhUWW"
+    },
+    {
+      "id": "2122186399575396604",
+      "accountId": "elonmusk",
+      "name": "Elon Musk",
+      "zh": "马斯克",
+      "username": "elonmusk",
+      "text": "12 years ago https://t.co/YIXO0Wr73N",
+      "createdAt": "2026-11-16T04:34:00.000Z",
+      "url": "https://x.com/elonmusk/status/2122186399575396604",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 3311,
+      "reposts": 289,
+      "textZh": "12 年前\nhttps://t.co/YIXO0Wr73N"
+    },
+    {
       "id": "2122164224382447808",
       "accountId": "elonmusk",
       "name": "Elon Musk",
@@ -124,36 +154,6 @@
       "likes": 28547,
       "reposts": 1760,
       "textZh": "对 crack 说不\nhttps://t.co/uQmtL5s2yh"
-    },
-    {
-      "id": "2122145276681220436",
-      "accountId": "elonmusk",
-      "name": "Elon Musk",
-      "zh": "马斯克",
-      "username": "elonmusk",
-      "text": "I have a very wide distribution of training data https://t.co/QxHW95Nzsk",
-      "createdAt": "2026-11-16T01:50:36.000Z",
-      "url": "https://x.com/elonmusk/status/2122145276681220436",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 4827,
-      "reposts": 421,
-      "textZh": "我的训练数据分布非常广\nhttps://t.co/QxHW95Nzsk"
-    },
-    {
-      "id": "2122141959917842487",
-      "accountId": "elonmusk",
-      "name": "Elon Musk",
-      "zh": "马斯克",
-      "username": "elonmusk",
-      "text": "That’s how it happened https://t.co/IceeiJGYX6",
-      "createdAt": "2026-11-16T01:37:25.000Z",
-      "url": "https://x.com/elonmusk/status/2122141959917842487",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 6099,
-      "reposts": 660,
-      "textZh": "事情就是这样发生的\nhttps://t.co/IceeiJGYX6"
     },
     {
       "id": "2122087344392012232",
