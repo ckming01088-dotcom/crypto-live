@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-17T17:00:00+08:00",
+  "asOf": "2026-11-17T19:10:00+08:00",
   "source": "X 公开帖快照（含中文译文）",
   "accounts": [
     {
@@ -156,6 +156,21 @@
       "textZh": "转推 @elonmusk：@XFreeze 我找到了一张“长线布局”的图 https://t.co/7UKH8JurPH"
     },
     {
+      "id": "2122644086221951117",
+      "accountId": "cz_binance",
+      "name": "CZ",
+      "zh": "赵长鹏",
+      "username": "cz_binance",
+      "text": "RT @ChainCatcher_: 过去 7 日 MEXC 储备资产净流出超 7 亿美元；Binance 净流入超 9 亿美元\n\n据 ChainCatcher 官网数据面板显示，BTC 钱包余额方面，过去 7 日，余额排名前 10 的交易所中，Gemini 降幅最大，达 2.…",
+      "createdAt": "2026-11-17T10:52:41.000Z",
+      "url": "https://x.com/cz_binance/status/2122644086221951117",
+      "kind": "repost",
+      "repostOf": "ChainCatcher_",
+      "likes": 0,
+      "reposts": 0,
+      "textZh": "转推 @ChainCatcher_：过去 7 日 MEXC 储备资产净流出超 7 亿美元；Binance 净流入超 9 亿美元\n\n据 ChainCatcher 官网数据面板显示，BTC 钱包余额方面，过去 7 日，余额排名前 10 的交易所中，Gemini 降幅最大，达 2.…"
+    },
+    {
       "id": "2122452698578530321",
       "accountId": "cz_binance",
       "name": "CZ",
@@ -231,6 +246,21 @@
       "textZh": "致亚拉巴马的伟大人民，请走出来为这些伟大的爱国者投票！他们得到我完全、彻底的背书，绝不会让你们失望！唐纳德·J·特朗普总统\nhttps://t.co/CKrjCmURKi https://t.co/du0sEtyWU7"
     },
     {
+      "id": "2122636487552553311",
+      "accountId": "justinsuntron",
+      "name": "Justin Sun",
+      "zh": "孙宇晨",
+      "username": "justinsuntron",
+      "text": "New work, public record. https://t.co/jPPXnGPJ3l",
+      "createdAt": "2026-11-17T10:22:29.000Z",
+      "url": "https://x.com/justinsuntron/status/2122636487552553311",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 33,
+      "reposts": 6,
+      "textZh": "新成果，公开记录。\nhttps://t.co/jPPXnGPJ3l"
+    },
+    {
       "id": "2122606163896492121",
       "accountId": "justinsuntron",
       "name": "Justin Sun",
@@ -304,21 +334,6 @@
       "likes": 159,
       "reposts": 13,
       "textZh": "如果全部资金不分红全部回购销毁，就是更完美的公司了 https://t.co/NMJ1UTFm6Z"
-    },
-    {
-      "id": "2122391967283974478",
-      "accountId": "justinsuntron",
-      "name": "Justin Sun",
-      "zh": "孙宇晨",
-      "username": "justinsuntron",
-      "text": "京东市值很快没有波场高了，波场员工 500 个人 https://t.co/vGhncYKc1t",
-      "createdAt": "2026-11-16T18:10:51.000Z",
-      "url": "https://x.com/justinsuntron/status/2122391967283974478",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 784,
-      "reposts": 34,
-      "textZh": "京东市值很快没有波场高了，波场员工 500 个人 https://t.co/vGhncYKc1t"
     },
     {
       "id": "2122459949695484063",
