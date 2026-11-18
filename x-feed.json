@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-18T11:12:00+08:00",
+  "asOf": "2026-11-18T12:05:52+08:00",
   "source": "X 公开帖快照（含中文译文）",
   "accounts": [
     {
@@ -66,6 +66,51 @@
   ],
   "posts": [
     {
+      "id": "2122900620495704530",
+      "accountId": "elonmusk",
+      "name": "Elon Musk",
+      "zh": "马斯克",
+      "username": "elonmusk",
+      "text": "😂 https://t.co/jf1CvQxmZP",
+      "createdAt": "2026-11-18T03:52:04.000Z",
+      "url": "https://x.com/elonmusk/status/2122900620495704530",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 2448,
+      "reposts": 199,
+      "textZh": "😂\nhttps://t.co/jf1CvQxmZP"
+    },
+    {
+      "id": "2122898321044127878",
+      "accountId": "elonmusk",
+      "name": "Elon Musk",
+      "zh": "马斯克",
+      "username": "elonmusk",
+      "text": "Nice shot https://t.co/mGWvXT7REK",
+      "createdAt": "2026-11-18T03:42:55.000Z",
+      "url": "https://x.com/elonmusk/status/2122898321044127878",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 2330,
+      "reposts": 238,
+      "textZh": "好镜头\nhttps://t.co/mGWvXT7REK"
+    },
+    {
+      "id": "2122891480729829482",
+      "accountId": "elonmusk",
+      "name": "Elon Musk",
+      "zh": "马斯克",
+      "username": "elonmusk",
+      "text": "Grok @Bot can do your accounting https://t.co/tpMh017FK7",
+      "createdAt": "2026-11-18T03:15:45.000Z",
+      "url": "https://x.com/elonmusk/status/2122891480729829482",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 2431,
+      "reposts": 219,
+      "textZh": "Grok @Bot 能帮你做会计工作\nhttps://t.co/tpMh017FK7"
+    },
+    {
       "id": "2122872199623414175",
       "accountId": "elonmusk",
       "name": "Elon Musk",
@@ -76,8 +121,8 @@
       "url": "https://x.com/elonmusk/status/2122872199623414175",
       "kind": "quote",
       "repostOf": null,
-      "likes": 2549,
-      "reposts": 329,
+      "likes": 3464,
+      "reposts": 436,
       "textZh": "Grok @Bot 能为你节省数百万美元的企业开支！\n\n它会审查每一笔支出、评估其必要性，并在互联网上或直接打电话给供应商，寻找更优惠的方案。\nhttps://t.co/PvDxsFgLLe"
     },
     {
@@ -91,8 +136,8 @@
       "url": "https://x.com/elonmusk/status/2122871410561593384",
       "kind": "quote",
       "repostOf": null,
-      "likes": 4795,
-      "reposts": 451,
+      "likes": 6204,
+      "reposts": 577,
       "textZh": "确实，Starship 发射非常激动人心\nhttps://t.co/cDuzCHAXH2"
     },
     {
@@ -106,54 +151,9 @@
       "url": "https://x.com/elonmusk/status/2122866559425384674",
       "kind": "quote",
       "repostOf": null,
-      "likes": 5067,
-      "reposts": 590,
+      "likes": 6809,
+      "reposts": 771,
       "textZh": "超级智能会入侵你的边缘系统\nhttps://t.co/r0DDc4N87q"
-    },
-    {
-      "id": "2122810772967575759",
-      "accountId": "elonmusk",
-      "name": "Elon Musk",
-      "zh": "马斯克",
-      "username": "elonmusk",
-      "text": "🤦‍♂️ https://t.co/DLC14CvtLT",
-      "createdAt": "2026-11-17T21:55:02.000Z",
-      "url": "https://x.com/elonmusk/status/2122810772967575759",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 32361,
-      "reposts": 2785,
-      "textZh": "🤦‍♂️\nhttps://t.co/DLC14CvtLT"
-    },
-    {
-      "id": "2122747622662222010",
-      "accountId": "elonmusk",
-      "name": "Elon Musk",
-      "zh": "马斯克",
-      "username": "elonmusk",
-      "text": "Starlink saves lives https://t.co/j21iGhH6DS",
-      "createdAt": "2026-11-17T17:44:06.000Z",
-      "url": "https://x.com/elonmusk/status/2122747622662222010",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 15493,
-      "reposts": 1954,
-      "textZh": "Starlink 能拯救生命\nhttps://t.co/j21iGhH6DS"
-    },
-    {
-      "id": "2122733232894468308",
-      "accountId": "elonmusk",
-      "name": "Elon Musk",
-      "zh": "马斯克",
-      "username": "elonmusk",
-      "text": "Advanced solid state transformers at scale from Tesla https://t.co/gIE2FGJqrK",
-      "createdAt": "2026-11-17T16:46:55.000Z",
-      "url": "https://x.com/elonmusk/status/2122733232894468308",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 16551,
-      "reposts": 1678,
-      "textZh": "特斯拉大规模推出先进固态变压器\nhttps://t.co/gIE2FGJqrK"
     },
     {
       "id": "2122830089276756302",
@@ -166,8 +166,8 @@
       "url": "https://x.com/cz_binance/status/2122830089276756302",
       "kind": "quote",
       "repostOf": null,
-      "likes": 1757,
-      "reposts": 90,
+      "likes": 1913,
+      "reposts": 100,
       "textZh": "Zach 真的很优秀。\nhttps://t.co/KZMmykBjRx"
     },
     {
@@ -181,8 +181,8 @@
       "url": "https://x.com/cz_binance/status/2122674971151577363",
       "kind": "post",
       "repostOf": null,
-      "likes": 2060,
-      "reposts": 141,
+      "likes": 2112,
+      "reposts": 146,
       "textZh": "这两张假照片在过去两天流传得很广。\n\n为什么黑子会用这么明显的假图片呢？因为他们想筛选和针对那些没有独立思考能力的人们。\n\n如果你看不出来这图片是假的，建议你远离社交媒体。\n\n（没有交易所会用微信做内部沟通。） https://t.co/esIzxouXYj"
     },
     {
@@ -257,7 +257,7 @@
       "kind": "repost",
       "repostOf": "realDonaldTrump",
       "likes": 0,
-      "reposts": 2839,
+      "reposts": 2838,
       "textZh": "致亚拉巴马的伟大人民，请走出来为这些伟大的爱国者投票！他们得到我完全、彻底的背书，绝不会让你们失望！唐纳德·J·特朗普总统\nhttps://t.co/CKrjCmURKi https://t.co/du0sEtyWU7"
     },
     {
@@ -271,7 +271,7 @@
       "url": "https://x.com/justinsuntron/status/2122883994509607314",
       "kind": "quote",
       "repostOf": null,
-      "likes": 41,
+      "likes": 62,
       "reposts": 3,
       "textZh": "很高兴看到更多地区在探索稳定币。🌐\nhttps://t.co/GySaP4uK78"
     },
@@ -287,7 +287,7 @@
       "kind": "quote",
       "repostOf": null,
       "likes": 88,
-      "reposts": 10,
+      "reposts": 11,
       "textZh": "新成果，公开记录。\nhttps://t.co/jPPXnGPJ3l"
     },
     {
@@ -301,8 +301,8 @@
       "url": "https://x.com/justinsuntron/status/2122606163896492121",
       "kind": "quote",
       "repostOf": null,
-      "likes": 190,
-      "reposts": 24,
+      "likes": 192,
+      "reposts": 25,
       "textZh": "着眼未来 100 年的建设，后量子安全也是其中一部分。\nhttps://t.co/VmYsr3jIzf"
     },
     {
@@ -316,7 +316,7 @@
       "url": "https://x.com/justinsuntron/status/2122605800636235927",
       "kind": "quote",
       "repostOf": null,
-      "likes": 877,
+      "likes": 888,
       "reposts": 24,
       "textZh": "我很尊重东哥，也尊重京东这些年走出的路。我前一条只是在说两种不同的企业增长模式，都有自己的前景。大家对我的批评我都收到了！虚心整改！东哥永远是我大哥！ https://t.co/PuqfdFQNjk"
     },
@@ -331,7 +331,7 @@
       "url": "https://x.com/justinsuntron/status/2122538078057451585",
       "kind": "post",
       "repostOf": null,
-      "likes": 144,
+      "likes": 145,
       "reposts": 16,
       "textZh": "很高兴与 @jessicasmw 一起参加「通往 2026 币安区块链周之路」直播，探讨塑造 2027 年的势头。\n\n⌛️ 11 月 17 日 15:00（UTC+4）\n\n在币安广场（Binance Square）观看直播，设置提醒 👇\nhttps://t.co/gcoeVf5kOG"
     },
@@ -346,7 +346,7 @@
       "url": "https://x.com/justinsuntron/status/2122395268394127371",
       "kind": "post",
       "repostOf": null,
-      "likes": 2694,
+      "likes": 2702,
       "reposts": 123,
       "textZh": "中概股这么多年很差的最核心原因就是因为没有回购销毁，很多创始人的心态无非是把股市当作抽水机，看看美国同行走势与表现，美股的长牛核心地基还是靠基本面的改善来实现的。"
     },
@@ -361,8 +361,8 @@
       "url": "https://x.com/saylor/status/2122761335834624196",
       "kind": "quote",
       "repostOf": null,
-      "likes": 2848,
-      "reposts": 159,
+      "likes": 2913,
+      "reposts": 161,
       "textZh": "照这个速度，每个人都会聪明到去买比特币。\nhttps://t.co/iFzaN6KLMS"
     },
     {
@@ -376,8 +376,8 @@
       "url": "https://x.com/saylor/status/2122685864421843248",
       "kind": "post",
       "repostOf": null,
-      "likes": 4713,
-      "reposts": 497,
+      "likes": 4767,
+      "reposts": 501,
       "textZh": "银行正在把比特币带给客户。富国银行（Wells Fargo）报告，截至 9 月 30 日持有 4958 万份贝莱德比特币 ETF 份额，较 6 月增加 103%。这些份额价值 23.5 亿美元。\nhttps://t.co/ABCmSP4dsm"
     },
     {
@@ -391,8 +391,8 @@
       "url": "https://x.com/saylor/status/2122459084599197886",
       "kind": "post",
       "repostOf": null,
-      "likes": 3887,
-      "reposts": 328,
+      "likes": 3898,
+      "reposts": 329,
       "textZh": "我们在 Strategy 仪表板中新增了“美元实力”指标。按当前利率，我们的美元资产可支付 3.4 年的利息和股息，相当于我们数字信用加权久期的 41%。\nhttps://t.co/RsyMiNESxU https://t.co/XyFVbVCFCM"
     },
     {
@@ -406,8 +406,8 @@
       "url": "https://x.com/saylor/status/2122374878850383918",
       "kind": "post",
       "repostOf": null,
-      "likes": 12970,
-      "reposts": 863,
+      "likes": 13021,
+      "reposts": 867,
       "textZh": "比特币是我的退出方案。\nhttps://t.co/OYqrBlVlA4"
     },
     {
@@ -421,8 +421,8 @@
       "url": "https://x.com/saylor/status/2122315179522429177",
       "kind": "post",
       "repostOf": null,
-      "likes": 11813,
-      "reposts": 1217,
+      "likes": 11825,
+      "reposts": 1220,
       "textZh": "Strategy 已购入 485 枚 $BTC，并回购了 2.28 亿美元的 $STRC。截至 2026 年 11 月 15 日，我们持有 850,849 枚 BTC 以及 49 亿美元的美元资产。$MSTR\nhttps://t.co/cACnaFSMsr"
     },
     {
@@ -436,7 +436,7 @@
       "url": "https://x.com/saylor/status/2122132729508855992",
       "kind": "post",
       "repostOf": null,
-      "likes": 3318,
+      "likes": 3319,
       "reposts": 237,
       "textZh": "Stretch 股息率在 2026 年 12 月维持在 12.00%。$STRC\nhttps://t.co/Cjh8tIxE8h"
     },
@@ -451,8 +451,8 @@
       "url": "https://x.com/ColeMacro/status/2122876916982227166",
       "kind": "post",
       "repostOf": null,
-      "likes": 196,
-      "reposts": 20,
+      "likes": 483,
+      "reposts": 39,
       "textZh": "这将是一场较量，也需要时间，但 @JensenHuang 几乎肯定会重新担任 @nvidia 的 CEO。\n\n如有疑问，把这段视频多看几遍。\nhttps://t.co/1oemv5u7PP"
     },
     {
@@ -466,8 +466,8 @@
       "url": "https://x.com/ColeMacro/status/2122842821967372460",
       "kind": "post",
       "repostOf": null,
-      "likes": 1281,
-      "reposts": 133,
+      "likes": 1557,
+      "reposts": 170,
       "textZh": "我妻子今天去美国最大银行之一的网点取现。工作人员告诉她，现金已经取完了，因为很多人出于网络安全担忧在取钱。\n\n我们以前从未遇到过这种情况。这是观察外界恐慌程度的一个有意思窗口。"
     },
     {
@@ -481,8 +481,8 @@
       "url": "https://x.com/ColeMacro/status/2122717049621459301",
       "kind": "quote",
       "repostOf": null,
-      "likes": 244,
-      "reposts": 25,
+      "likes": 249,
+      "reposts": 27,
       "textZh": "我们的国家美国，建立在自由是与生俱来的权利、政府的存在是为了保护这一权利的信念之上。在技术日益强大的时代捍卫这一传统，将成为我们这一代人决定性的政治斗争之一。\n\n货币、言论和智能方面的自由，将塑造美国的下一篇章。比特币、开源 AI 和加密通信可以把非凡的力量交到个人手中，帮助我们建设一个既更自由也更安全的未来。我们欠孩子们的，不仅是我们继承来的自由，还有捍卫这些自由的工具。\n\nFinney Foundation 正在承担这场斗争。它的使命值得我们的资金支持，更重要的是值得我们投入时间和精力。感谢这个团队的工作和领导，也自豪能支持他们。\n\n🇺🇸"
     },
     {
@@ -496,8 +496,8 @@
       "url": "https://x.com/ColeMacro/status/2122714491045695663",
       "kind": "post",
       "repostOf": null,
-      "likes": 361,
-      "reposts": 39,
+      "likes": 369,
+      "reposts": 40,
       "textZh": "我与 @natbrunell 一起讨论了比特币的回调、为何永久支付高法币收益率对我们的普通股和优先股股东是终极双赢、比特币要达到 50 万美元至 100 万美元需要具备哪些条件，以及更多内容。\n\n时间戳\n0:00 - 预告片\n0:59 - 将 Strive 的 BTC 持仓从 5K 做到 40K+\n8:47 - 夏季解杠杆的真正原因\n14:33 - 那种并非比特币归零的恐惧\n16:47 - AI 如何加速债务危机\n21:06 - 比特币的表现以及与黄金的对比考验\n27:21 - 为什么数字信贷比比特币更好卖\n39:13 - Strive 会不会卖出比特币？\n41:49 - 自托管是否比行业承认的更难？\n43:45 - 为什么我不持有数字信贷\n45:08 - 回应数字信贷的批评者\n49:49 - 为什么 DOGE 的失败让我们更加看好\n53:40 - 比特币要达到 50 万美元至 100 万美元需要什么\n\n$ASST $SATA $SATS\nhttps://t.co/ZltQkIe8TZ"
     },
     {
@@ -526,7 +526,7 @@
       "url": "https://x.com/ColeMacro/status/2122314310127079639",
       "kind": "post",
       "repostOf": null,
-      "likes": 1841,
+      "likes": 1843,
       "reposts": 227,
       "textZh": "Strive 以平均每枚 69,853 美元的成本、总价 1750 万美元购入 251 枚 $BTC，总持仓达到 ₿43,404。\n\n- 通过 $SATS 的 ATM 募资 1000 万美元\n- 当前优先股股息覆盖：133 个月\n- 放大比率：76%\n\n$ASST $SATA $SATS\nhttps://t.co/TG7dL7nkZC"
     }
