@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-19T12:14:26+08:00",
+  "asOf": "2026-11-19T13:04:53+08:00",
   "source": "X 公开帖快照（含中文译文）",
   "accounts": [
     {
@@ -66,6 +66,21 @@
   ],
   "posts": [
     {
+      "id": "2123272422719967730",
+      "accountId": "elonmusk",
+      "name": "Elon Musk",
+      "zh": "马斯克",
+      "username": "elonmusk",
+      "text": "4 years ago https://t.co/odjxLrGjnN",
+      "createdAt": "2026-11-19T04:29:28.000Z",
+      "url": "https://x.com/elonmusk/status/2123272422719967730",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 4204,
+      "reposts": 440,
+      "textZh": "四年前\nhttps://t.co/odjxLrGjnN"
+    },
+    {
       "id": "2123229344936173890",
       "accountId": "elonmusk",
       "name": "Elon Musk",
@@ -76,8 +91,8 @@
       "url": "https://x.com/elonmusk/status/2123229344936173890",
       "kind": "quote",
       "repostOf": null,
-      "likes": 9196,
-      "reposts": 1146,
+      "likes": 10793,
+      "reposts": 1302,
       "textZh": "正在寻找硬核工程师加入 Terafab！\nhttps://t.co/e6dEjgUNh5"
     },
     {
@@ -91,8 +106,8 @@
       "url": "https://x.com/elonmusk/status/2123220899264679988",
       "kind": "quote",
       "repostOf": null,
-      "likes": 10863,
-      "reposts": 1153,
+      "likes": 12327,
+      "reposts": 1288,
       "textZh": "接住飞船是这道拼图的最后一块关键部分\nhttps://t.co/tzAJsAkwVS"
     },
     {
@@ -106,8 +121,8 @@
       "url": "https://x.com/elonmusk/status/2123220589657944265",
       "kind": "quote",
       "repostOf": null,
-      "likes": 4811,
-      "reposts": 578,
+      "likes": 5454,
+      "reposts": 641,
       "textZh": "是的\nhttps://t.co/eDRBZQEVes"
     },
     {
@@ -121,8 +136,8 @@
       "url": "https://x.com/elonmusk/status/2123163808592265639",
       "kind": "quote",
       "repostOf": null,
-      "likes": 11666,
-      "reposts": 1440,
+      "likes": 11992,
+      "reposts": 1497,
       "textZh": "星链能拯救生命\nhttps://t.co/8dhNQfrDnc"
     },
     {
@@ -136,24 +151,9 @@
       "url": "https://x.com/elonmusk/status/2123161902683746640",
       "kind": "quote",
       "repostOf": null,
-      "likes": 6490,
-      "reposts": 714,
+      "likes": 6697,
+      "reposts": 747,
       "textZh": "把 Grok @Bot 当作一名非常聪明的员工来用\nhttps://t.co/vxR4Hsx7Tv"
-    },
-    {
-      "id": "2123159371119280372",
-      "accountId": "elonmusk",
-      "name": "Elon Musk",
-      "zh": "马斯克",
-      "username": "elonmusk",
-      "text": "We put a lot of thought into public safety https://t.co/HFinXIw3pq",
-      "createdAt": "2026-11-18T21:00:15.000Z",
-      "url": "https://x.com/elonmusk/status/2123159371119280372",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 31678,
-      "reposts": 2439,
-      "textZh": "我们在公共安全上花了很多心思\nhttps://t.co/HFinXIw3pq"
     },
     {
       "id": "2123263179199537339",
@@ -166,8 +166,8 @@
       "url": "https://x.com/cz_binance/status/2123263179199537339",
       "kind": "quote",
       "repostOf": null,
-      "likes": 212,
-      "reposts": 17,
+      "likes": 416,
+      "reposts": 39,
       "textZh": "日本个人信息保护委员会发布通知，敦促租车运营商在完成身份核验后及时删除驾照及其他带照片身份证件的影像，此前发生了因未授权访问导致的数据泄露。\n\n通知指出，尽管证件号码需保留两年，但租期结束后并无法律要求保留证件影像。\n\n公众回复对该措施仍只是没有处罚的非强制提醒表示不满，并强调对执法不足、难以防止身份盗用的担忧。"
     },
     {
@@ -181,8 +181,8 @@
       "url": "https://x.com/cz_binance/status/2123173810333421717",
       "kind": "quote",
       "repostOf": null,
-      "likes": 1075,
-      "reposts": 76,
+      "likes": 1133,
+      "reposts": 83,
       "textZh": "代币化的 ANT 将在 IPO 首日通过 bStocks、Ondo 和 xStocks 在 @BNBCHAIN 上线：\nhttps://t.co/X9Q3mzFygE"
     },
     {
@@ -196,8 +196,8 @@
       "url": "https://x.com/cz_binance/status/2122830089276756302",
       "kind": "quote",
       "repostOf": null,
-      "likes": 4502,
-      "reposts": 222,
+      "likes": 4512,
+      "reposts": 225,
       "textZh": "Zach 真的很优秀。\nhttps://t.co/KZMmykBjRx"
     },
     {
@@ -211,7 +211,7 @@
       "url": "https://x.com/cz_binance/status/2122674971151577363",
       "kind": "post",
       "repostOf": null,
-      "likes": 2678,
+      "likes": 2686,
       "reposts": 180,
       "textZh": "这两张假照片在过去两天流传得很广。\n\n为什么黑子会用这么明显的假图片呢？因为他们想筛选和针对那些没有独立思考能力的人们。\n\n如果你看不出来这图片是假的，建议你远离社交媒体。\n\n（没有交易所会用微信做内部沟通。） https://t.co/esIzxouXYj"
     },
@@ -226,7 +226,7 @@
       "url": "https://x.com/cz_binance/status/2122087339669541321",
       "kind": "quote",
       "repostOf": null,
-      "likes": 3459,
+      "likes": 3460,
       "reposts": 367,
       "textZh": "别人眼中的你不是你，你眼中的自己不是你，你眼中的别人才是真正的你。——萨特\n\n1/2 👇\nhttps://t.co/JOpZ2Y7JSk"
     },
@@ -241,8 +241,8 @@
       "url": "https://x.com/cz_binance/status/2122000010992824627",
       "kind": "quote",
       "repostOf": null,
-      "likes": 14019,
-      "reposts": 1683,
+      "likes": 14017,
+      "reposts": 1685,
       "textZh": "为什么加密货币价格在下跌？\n\n没有人确切知道。相关性并不等于因果关系。以下是一些可能的原因。\n\n资金转向 Anthropic 的 IPO：https://t.co/4WXOMfH9Th\n\nETF 资金流出：截至 11 月 13 日，美国现货比特币 ETF 在七个交易日内流出约 19 亿美元。以太坊基金也出现了赎回。https://t.co/RxhYaaOMAU\n\n安全担忧：币安遭黑客攻击、与 iPhone 关联的加密钱包被抽空、Chrome 漏洞、微软宕机。这些安全事件可能让一些人更不愿意把资金留在加密货币里。\n\n美国通胀偏热，提高了美联储再次加息的预期。更高的收益率和更强的美元可能压制加密货币这类“风险资产”。\n\n政治不确定性：中期选举结果引发了人们对美国加密政策可能收紧的担忧。\n\n不，币安没有抛售加密货币。\n\n我过去几天买了加密货币，因为最近拿到了一些稳定币。（也许这就是原因 🤣）\n\n中长期来看，加密货币将继续增长。\n\n以上仅为我个人观点，不构成财务建议。\n\n供日后参考：比特币价格今天最低触及 $62,006。"
     },
     {
@@ -261,6 +261,21 @@
       "textZh": "致亚拉巴马的伟大人民，请走出来为这些伟大的爱国者投票！他们得到我完全、彻底的背书，绝不会让你们失望！唐纳德·J·特朗普总统\nhttps://t.co/CKrjCmURKi https://t.co/du0sEtyWU7"
     },
     {
+      "id": "2123277839881338989",
+      "accountId": "justinsuntron",
+      "name": "Justin Sun",
+      "zh": "孙宇晨",
+      "username": "justinsuntron",
+      "text": "$94.21B in USDT on TRON. 🔻 https://t.co/EE58q9M2bg",
+      "createdAt": "2026-11-19T04:51:00.000Z",
+      "url": "https://x.com/justinsuntron/status/2123277839881338989",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 28,
+      "reposts": 5,
+      "textZh": "TRON 上的 USDT 达 $94.21B。🔻\nhttps://t.co/EE58q9M2bg"
+    },
+    {
       "id": "2123077955006214441",
       "accountId": "justinsuntron",
       "name": "Justin Sun",
@@ -271,7 +286,7 @@
       "url": "https://x.com/justinsuntron/status/2123077955006214441",
       "kind": "quote",
       "repostOf": null,
-      "likes": 174,
+      "likes": 184,
       "reposts": 14,
       "textZh": "一切才刚刚开始 $TRON https://t.co/mv4fGIeRaY"
     },
@@ -286,7 +301,7 @@
       "url": "https://x.com/justinsuntron/status/2123075506346328118",
       "kind": "quote",
       "repostOf": null,
-      "likes": 66,
+      "likes": 67,
       "reposts": 11,
       "textZh": "很高兴看到 @0xPolygon 在 TRON 的轨道上建设。\nhttps://t.co/XcNJpMu1Qs"
     },
@@ -301,8 +316,8 @@
       "url": "https://x.com/justinsuntron/status/2123049087503380810",
       "kind": "quote",
       "repostOf": null,
-      "likes": 56,
-      "reposts": 13,
+      "likes": 59,
+      "reposts": 14,
       "textZh": "📢 GPT-6.2 Astra 和 GPT-6.2 Sol 现已在 https://t.co/Id9VsXTy4C 上线\nhttps://t.co/BL2ivy95y4"
     },
     {
@@ -331,24 +346,9 @@
       "url": "https://x.com/justinsuntron/status/2122988077589373050",
       "kind": "quote",
       "repostOf": null,
-      "likes": 1594,
-      "reposts": 114,
+      "likes": 1624,
+      "reposts": 115,
       "textZh": "字节一家公司等同于做空了整个恒科与中概，有点类似于1644 年前的明朝，清军入关前你做多任何明末势力最终都是错误的 https://t.co/3BNkEikRGH"
-    },
-    {
-      "id": "2122976341012496884",
-      "accountId": "justinsuntron",
-      "name": "Justin Sun",
-      "zh": "孙宇晨",
-      "username": "justinsuntron",
-      "text": "Real-world payments on TRON. 🔻 https://t.co/0WFh1A7R9K",
-      "createdAt": "2026-11-18T08:52:57.000Z",
-      "url": "https://x.com/justinsuntron/status/2122976341012496884",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 89,
-      "reposts": 13,
-      "textZh": "TRON 上的现实世界支付。🔻\nhttps://t.co/0WFh1A7R9K"
     },
     {
       "id": "2123098624204710141",
@@ -361,8 +361,8 @@
       "url": "https://x.com/saylor/status/2123098624204710141",
       "kind": "post",
       "repostOf": null,
-      "likes": 19387,
-      "reposts": 1379,
+      "likes": 19672,
+      "reposts": 1396,
       "textZh": "卖方耗尽会远早于 Saylor 的耗尽。"
     },
     {
@@ -376,7 +376,7 @@
       "url": "https://x.com/saylor/status/2122761335834624196",
       "kind": "quote",
       "repostOf": null,
-      "likes": 3834,
+      "likes": 3848,
       "reposts": 230,
       "textZh": "照这个速度，每个人都会聪明到去买比特币。\nhttps://t.co/iFzaN6KLMS"
     },
@@ -391,8 +391,8 @@
       "url": "https://x.com/saylor/status/2122685864421843248",
       "kind": "post",
       "repostOf": null,
-      "likes": 5739,
-      "reposts": 604,
+      "likes": 5747,
+      "reposts": 605,
       "textZh": "银行正在把比特币带给客户。富国银行（Wells Fargo）报告，截至 9 月 30 日持有 4958 万份贝莱德比特币 ETF 份额，较 6 月增加 103%。这些份额价值 23.5 亿美元。\nhttps://t.co/ABCmSP4dsm"
     },
     {
@@ -421,8 +421,8 @@
       "url": "https://x.com/saylor/status/2122374878850383918",
       "kind": "post",
       "repostOf": null,
-      "likes": 13871,
-      "reposts": 940,
+      "likes": 13875,
+      "reposts": 941,
       "textZh": "比特币是我的退出方案。\nhttps://t.co/OYqrBlVlA4"
     },
     {
@@ -451,7 +451,7 @@
       "url": "https://x.com/ColeMacro/status/2123047267607498814",
       "kind": "quote",
       "repostOf": null,
-      "likes": 298,
+      "likes": 300,
       "reposts": 22,
       "textZh": "美国国债是有亏损保证的收益率。\nhttps://t.co/cvTcgWqxMO"
     },
@@ -466,8 +466,8 @@
       "url": "https://x.com/ColeMacro/status/2122910999720440283",
       "kind": "quote",
       "repostOf": null,
-      "likes": 573,
-      "reposts": 54,
+      "likes": 578,
+      "reposts": 56,
       "textZh": "对 @nvidia 来说，最优路径是让 @JensenHuang 重新担任 CEO，并撤掉任何反对的董事会成员或高管。\n\n如果这一步能实现，公司很可能变得比以往任何时候都更强大。\n\n如果做不到，他们大概会缓慢消亡。\nhttps://t.co/ONU1vcRzYI"
     },
     {
@@ -481,7 +481,7 @@
       "url": "https://x.com/ColeMacro/status/2122876916982227166",
       "kind": "post",
       "repostOf": null,
-      "likes": 1895,
+      "likes": 1897,
       "reposts": 145,
       "textZh": "这将是一场较量，也需要时间，但 @JensenHuang 几乎肯定会重新担任 @nvidia 的 CEO。\n\n如有疑问，把这段视频多看几遍。\nhttps://t.co/1oemv5u7PP"
     },
@@ -496,7 +496,7 @@
       "url": "https://x.com/ColeMacro/status/2122842821967372460",
       "kind": "post",
       "repostOf": null,
-      "likes": 2594,
+      "likes": 2599,
       "reposts": 297,
       "textZh": "我妻子今天去美国最大银行之一的网点取现。工作人员告诉她，现金已经取完了，因为很多人出于网络安全担忧在取钱。\n\n我们以前从未遇到过这种情况。这是观察外界恐慌程度的一个有意思窗口。"
     },
