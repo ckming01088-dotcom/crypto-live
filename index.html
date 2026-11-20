@@ -483,6 +483,56 @@
     .ev-cat.gdp { color: var(--up); border-color: color-mix(in srgb, var(--up) 40%, var(--line)); }
     .ev-tl-title { font-size: 13px; }
     .ev-status { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
+
+    .cris-wrap { margin: 0 0 14px; padding: 0 0 14px; border-bottom: 1px solid var(--line); }
+    .cris-kicker { color: var(--muted); font-size: 12px; font-weight: 650; letter-spacing: .02em; margin: 0 0 6px; }
+    .cris-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+    .cris-level {
+      font-size: 34px; font-weight: 720; font-variant-numeric: tabular-nums;
+      letter-spacing: -0.03em; line-height: 1.1; margin: 0;
+    }
+    .cris-level.t-low { color: var(--up); }
+    .cris-level.t-mid { color: var(--caution); }
+    .cris-level.t-high { color: #F08A3A; }
+    .cris-level.t-alert { color: var(--down); }
+    .cris-level.t-max { color: #E0242E; }
+    .cris-asof { color: var(--muted); font-size: 11px; text-align: right; font-variant-numeric: tabular-nums; }
+    .cris-meter {
+      display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px;
+      margin: 10px 0 12px;
+    }
+    .cris-seg {
+      min-height: 22px; border-radius: 5px; background: #0B0E14;
+      border: 1px solid var(--line); color: var(--muted);
+      font-size: 10px; font-weight: 650; font-variant-numeric: tabular-nums;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cris-seg.s1, .cris-seg.s2, .cris-seg.s3,
+    .cris-mini-seg.s1, .cris-mini-seg.s2, .cris-mini-seg.s3 { --seg: var(--up); }
+    .cris-seg.s4, .cris-seg.s5, .cris-seg.s6,
+    .cris-mini-seg.s4, .cris-mini-seg.s5, .cris-mini-seg.s6 { --seg: var(--caution); }
+    .cris-seg.s7, .cris-seg.s8,
+    .cris-mini-seg.s7, .cris-mini-seg.s8 { --seg: #F08A3A; }
+    .cris-seg.s9, .cris-mini-seg.s9 { --seg: var(--down); }
+    .cris-seg.s10, .cris-mini-seg.s10 { --seg: #E0242E; }
+    .cris-seg.on { background: var(--seg); border-color: var(--seg); color: #0B0E14; }
+    .cris-seg.s7.on, .cris-seg.s8.on, .cris-seg.s9.on, .cris-seg.s10.on { color: #fff; }
+    .cris-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .cris-item {
+      background: #1A2030; border: 1px solid var(--line); border-radius: 14px;
+      padding: 8px 10px 9px; min-width: 0;
+    }
+    .cris-item .k { display: block; color: var(--muted); font-size: 11px; margin-bottom: 1px; }
+    .cris-item .v { font-weight: 650; font-variant-numeric: tabular-nums; font-size: 15px; line-height: 1.25; }
+    .cris-item .sub { display: block; color: var(--muted); font-size: 11px; margin-top: 1px; line-height: 1.35; }
+    .cris-mini { display: grid; grid-template-columns: repeat(10, 1fr); gap: 2px; margin-top: 7px; }
+    .cris-mini-seg {
+      height: 5px; border-radius: 99px; background: #0B0E14; border: 0;
+    }
+    .cris-mini-seg.on { background: var(--seg); }
+    .cris-status { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
+    .cris-wrap .cycle-note { margin-top: 10px; }
+    #events-board { min-width: 0; }
     .x-tabs { margin: 0 0 8px; }
     .x-tabs .tf-tab { flex: 1 1 calc((100% - 36px) / 7); font-size: 12px; padding: 6px 2px; }
     .x-asof { color: var(--muted); font-size: 12px; margin: 0 0 8px; }
@@ -751,7 +801,12 @@
   <div id="panel-events" class="main-panel" data-main-panel="events">
   <h2>未来 3 个月内可能影响 BTC 价格的重要事件</h2>
   <section class="block" id="events">
-    <p class="ev-status" id="events-status">正在加载事件看板…</p>
+    <div id="crisis-watch" class="cris-wrap">
+      <p class="cris-status" id="crisis-status">正在加载危机观察…</p>
+    </div>
+    <div id="events-board">
+      <p class="ev-status" id="events-status">正在加载事件看板…</p>
+    </div>
   </section>
   </div>
   <footer>
@@ -762,6 +817,7 @@
     比特币支撑与压力由币安 BTCUSDT 日线的近期摆动高低点、近30日/90日/一年区间高低，以及 50/200 日与周均线合并去重得出；未收盘的日线不作为已确认摆动点。仅供观察，不是买卖建议。<br>
     短期持有者图表另参考 BGeometrics（bitcoin-data.com）与 Binance。<br>
     事件日程另参考美联储 FOMC 日历、美国劳工统计局（BLS）、经济分析局（BEA）与 Polymarket，事件观察不构成投资建议。<br>
+    危机观察为 1 至 10 级公开序列读数，10 为最高，不是买卖建议，也不确认金融危机已经发生。<br>
     X 关注栏为所列账号的公开帖快照，正文为中文译文，点开可查看原文；内容由发帖人发布，可能有延迟，不是投资建议。<br>
     仅供参考，不构成投资建议。<br>
     顶部选项卡可切换主要栏目；有更新时会在对应选项卡显示红点，点开后消失。行情为实时价格，不会为此亮红点。<br>
@@ -4680,9 +4736,13 @@
     }
     if (id === "events") {
       const d = eventsState.bundled || eventsState.data;
-      if (!d) return "";
-      const ev = (d.events || []).map((e) => String((e && (e.date || e.title)) || "")).join(",");
-      return String(d.asOf || "") + "|" + ev;
+      const ev = d
+        ? (String(d.asOf || "") + "|" + (d.events || []).map((e) => String((e && (e.date || e.title)) || "")).join(","))
+        : "";
+      const c = (typeof crisisState !== "undefined" && crisisState.data) ? crisisState.data : null;
+      const cr = c ? ("crisis:" + String(c.asOf || "") + ":" + String(c.level || "")) : "";
+      if (!d && !c) return "";
+      return ev + "|" + cr;
     }
     if (id === "sth") {
       const a = (typeof sthState !== "undefined" && sthState.asOf) || {};
@@ -5959,6 +6019,118 @@
 
 
   const EVENTS_BOARD_URL = "./events-board.json";
+  const CRISIS_WATCH_URL = "./crisis-watch.json";
+  const crisisState = { data: null, status: "正在加载危机观察…" };
+  const CRISIS_NOTE = "本栏为 1 至 10 级观察读数，由公开市场与宏观序列（美元指数、联邦基金利率、信用利差等）加权得出，10 为最高。不是投资建议，也不确认金融危机已经发生。时间均为香港时间。";
+  function crisTone(level) {
+    const n = Math.max(1, Math.min(10, Math.round(+level || 0)));
+    if (n <= 3) return "low";
+    if (n <= 6) return "mid";
+    if (n <= 8) return "high";
+    if (n === 9) return "alert";
+    return "max";
+  }
+  function crisFilled(score) {
+    const n = evNum(score);
+    if (n == null) return 0;
+    return Math.max(0, Math.min(10, Math.round(n)));
+  }
+  function crisMeter(score, withNums) {
+    const filled = crisFilled(score);
+    let html = "";
+    for (let i = 1; i <= 10; i++) {
+      const on = i <= filled ? " on" : "";
+      html += withNums
+        ? `<span class="cris-seg s${i}${on}">${i}</span>`
+        : `<span class="cris-mini-seg s${i}${on}"></span>`;
+    }
+    return withNums
+      ? `<div class="cris-meter" aria-hidden="true">${html}</div>`
+      : `<div class="cris-mini" aria-hidden="true">${html}</div>`;
+  }
+  function crisAsOf(iso) {
+    const s = String(iso || "");
+    const m = s.match(/^(\d{4}-\d{2}-\d{2})(?:[T ](\d{2}:\d{2}))?/);
+    if (!m) return s || "—";
+    return m[2] ? (m[1] + " " + m[2] + " 香港时间") : (m[1] + " 香港时间");
+  }
+  function crisValueText(row) {
+    if (!row) return "—";
+    if (row.valueText) return String(row.valueText);
+    const n = evNum(row.value);
+    const unit = row.unit ? (" " + row.unit) : "";
+    return n == null ? "—" : String(row.value) + unit;
+  }
+  function crisItems(data) {
+    const items = [];
+    for (const c of (data && data.components) || []) {
+      if (Array.isArray(c.parts) && c.parts.length) {
+        c.parts.forEach((p) => {
+          items.push({
+            name: p.name || c.name,
+            valueText: crisValueText(p),
+            sub: p.sub || "",
+            score: c.score,
+            asOf: p.asOf || c.asOf
+          });
+        });
+      } else {
+        items.push({
+          name: c.name,
+          valueText: crisValueText(c),
+          sub: c.sub || "",
+          score: c.score,
+          asOf: c.asOf
+        });
+      }
+    }
+    return items;
+  }
+  function renderCrisisWatch(data, statusText) {
+    const root = $("crisis-watch");
+    if (!root) return;
+    const note = `<p class="cycle-note">${CRISIS_NOTE}</p>`;
+    if (!data || data.level == null) {
+      crisisState.status = statusText || "读数暂不可用";
+      root.innerHTML = `
+        <div class="cris-kicker">危机观察</div>
+        <p class="cris-status" id="crisis-status">${escapeHtml(crisisState.status)}</p>
+        ${note}`;
+      return;
+    }
+    const level = Math.max(1, Math.min(10, Math.round(+data.level) || 1));
+    const tone = crisTone(level);
+    const cells = crisItems(data).map((it) => `
+        <div class="cris-item">
+          <span class="k">${escapeHtml(it.name || "")}</span>
+          <span class="v">${escapeHtml(it.valueText || "—")}</span>
+          ${it.sub ? `<span class="sub">${escapeHtml(it.sub)}</span>` : ""}
+          ${crisMeter(it.score, false)}
+        </div>`).join("");
+    crisisState.status = statusText || "";
+    root.innerHTML = `
+      <div class="cris-kicker">危机观察</div>
+      <div class="cris-head">
+        <div class="cris-level t-${tone}">${level} / 10</div>
+        <div class="cris-asof">${escapeHtml(crisAsOf(data.asOf))}</div>
+      </div>
+      ${crisMeter(level, true)}
+      <div class="cris-grid">${cells}</div>
+      ${note}`;
+  }
+  async function initCrisisWatch() {
+    try {
+      const data = await fetchJson(CRISIS_WATCH_URL);
+      if (!data || data.level == null || +data.levelMax !== 10) throw new Error("bad crisis-watch.json");
+      crisisState.data = data;
+      renderCrisisWatch(data);
+      reviewTabStamp("events");
+    } catch (e) {
+      console.warn(e);
+      crisisState.data = null;
+      renderCrisisWatch(null, "读数暂不可用");
+    }
+  }
   const EV_MONTH_KEY = "crypto-live-events-month";
   const eventsState = { bundled: null, data: null, status: "正在加载事件看板…", refreshing: false, month: "" };
   function evNum(v) {
@@ -6194,7 +6366,7 @@
       <div class="ev-tl">${body}</div>`;
   }
   function renderEventsBoard(data, statusText) {
-    const root = $("events");
+    const root = $("events-board") || $("events");
     if (!root || !data) return;
     const meetings = (data.meetings || []).map(evMeetingView);
     const nextLean = meetings[0] ? meetings[0].lean : { text: "—", tone: "hold", arrow: "→" };
@@ -6395,6 +6567,7 @@
       bust("./index.html"),
       bust("./sth-chart.json"),
       bust("./events-board.json"),
+      bust("./crisis-watch.json"),
       bust("./us-stocks.json"),
       bust("./mvrv-zscore.json"),
       bust("./x-feed.json"),
@@ -6468,6 +6641,7 @@
   }
 
   initSthChart();
+  initCrisisWatch();
   initEventsBoard();
   initialLoad().finally(() => { startSocket(); startPolling(); });
   </script>
