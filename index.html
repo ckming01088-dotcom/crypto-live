@@ -397,6 +397,108 @@
         padding: max(8px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left)) max(12px, env(safe-area-inset-top));
       }
     }
+
+    .hld-block { margin-top: 8px; }
+    .hld-heading { display: block; }
+    .hld-heading h2 { margin: 18px 2px 8px; font-size: 14px; color: var(--muted); font-weight: 650; }
+    .hld-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 10px; }
+    .hld-tabs { flex: 1 1 16em; margin: 0; }
+    .hld-refresh {
+      min-height: 36px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 10px;
+      background: #1A2030; color: var(--text); font: inherit; font-size: 13px; font-weight: 650;
+      cursor: pointer; touch-action: manipulation; white-space: nowrap;
+    }
+    .hld-refresh:disabled { opacity: .6; cursor: default; }
+    .hld-legend {
+      display: flex; flex-wrap: wrap; gap: 6px 12px; margin: 0 0 8px;
+      font-size: 12px; color: var(--muted);
+    }
+    .hld-legend span, .hld-leg {
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    button.hld-leg {
+      margin: 0; padding: 2px 0; border: 0; background: none;
+      color: var(--muted); font: inherit; font-size: 12px; cursor: pointer;
+      touch-action: manipulation;
+    }
+    button.hld-leg.off { opacity: .42; }
+    .hld-swatch { width: 14px; height: 3px; border-radius: 2px; display: inline-block; flex: 0 0 auto; }
+    .hld-zones {
+      display: flex; flex-wrap: wrap; gap: 6px 10px; margin: 0 0 8px;
+      font-size: 11px; color: var(--muted);
+    }
+    .hld-zones span { display: inline-flex; align-items: center; gap: 5px; }
+    .hld-zone-chip { width: 10px; height: 10px; border-radius: 2px; display: inline-block; flex: 0 0 auto; }
+    .hld-chart-wrap { position: relative; height: 280px; }
+    .hld-chart-wrap canvas { width: 100%; height: 100%; display: block; touch-action: none; }
+    .hld-tip {
+      position: absolute; z-index: 2; pointer-events: none;
+      min-width: 11em; max-width: calc(100% - 16px);
+      background: color-mix(in srgb, var(--card) 94%, #000);
+      border: 1px solid var(--line); border-radius: 10px;
+      padding: 8px 10px; font-size: 12px; line-height: 1.45;
+      box-shadow: 0 8px 24px rgba(0,0,0,.35);
+    }
+    .hld-tip .d { color: var(--text); font-weight: 650; margin-bottom: 4px; }
+    .hld-tip .r { display: flex; justify-content: space-between; gap: 12px; font-variant-numeric: tabular-nums; }
+    .hld-tip .r .k { color: var(--muted); }
+    .hld-readout {
+      margin-top: 8px; font-size: 12px; color: var(--muted);
+      font-variant-numeric: tabular-nums; line-height: 1.5;
+    }
+    .hld-readout b { color: var(--text); font-weight: 650; }
+    .hld-status { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+    .hld-fs-exit {
+      display: none; min-height: 36px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 10px;
+      background: #1A2030; color: var(--text); font: inherit; font-size: 13px; font-weight: 650;
+      cursor: pointer; touch-action: manipulation; white-space: nowrap; flex: 0 0 auto;
+    }
+    #sth-stage.sth-full .hld-block { display: none !important; }
+    html.hld-fs-on, html.hld-fs-on body {
+      overflow: hidden; height: 100%; overscroll-behavior: none;
+    }
+    html.hld-fs-on body { padding: 0; }
+    html.hld-fs-on body > *:not(#sth-stage) { display: none; }
+    html.hld-fs-on #sth-stage.hld-stage-full {
+      position: fixed; z-index: 80; inset: 0;
+      width: 100dvw; height: 100dvh; max-width: none;
+      background: var(--bg);
+      padding: max(8px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+      display: flex; flex-direction: column; overflow: hidden; box-sizing: border-box;
+      touch-action: none;
+    }
+    html.hld-fs-on #sth-stage.hld-stage-full > *:not(.hld-full) { display: none; }
+    .hld-block.hld-full {
+      flex: 1 1 auto; min-height: 0; margin: 0;
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+    .hld-block.hld-full .hld-heading {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      flex: 0 0 auto; margin: 0 0 6px;
+    }
+    .hld-block.hld-full .hld-heading h2 { margin: 0; font-size: 14px; color: var(--text); }
+    .hld-block.hld-full .hld-fs-exit { display: inline-flex; align-items: center; }
+    .hld-block.hld-full .block {
+      flex: 1 1 auto; min-height: 0; margin: 0;
+      display: flex; flex-direction: column; border-radius: 12px;
+    }
+    .hld-block.hld-full .hld-toolbar { margin-bottom: 6px; flex: 0 0 auto; }
+    .hld-block.hld-full .hld-legend,
+    .hld-block.hld-full .hld-zones { flex: 0 0 auto; margin-bottom: 6px; }
+    .hld-block.hld-full .hld-chart-wrap { flex: 1 1 auto; height: auto; min-height: 0; }
+    .hld-block.hld-full .hld-readout,
+    .hld-block.hld-full .hld-status { flex: 0 0 auto; }
+    .hld-block.hld-full .cycle-note,
+    .hld-block.hld-full .hld-fs-open { display: none; }
+    @media (orientation: portrait) {
+      html.hld-fs-on #sth-stage.hld-stage-full {
+        top: 0; left: 100dvw; right: auto; bottom: auto;
+        width: 100dvh; height: 100dvw;
+        transform: rotate(90deg);
+        transform-origin: top left;
+        padding: max(8px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left)) max(12px, env(safe-area-inset-top));
+      }
+    }
     .ev-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin: 0 0 10px; }
     .ev-kicker { color: var(--muted); font-size: 12px; font-weight: 650; letter-spacing: .02em; }
     .ev-refresh {
@@ -797,6 +899,61 @@
     <p class="sth-status" id="sth-status">正在加载图表…</p>
     <p class="cycle-note">短期持有者（STH）通常指持有约 155 天以内的比特币。盈利供应占比是处于盈利的 STH 供应量占全部 STH 供应量的比例。成本线是 STH 实现价格（该群体的平均链上成本）。数据来自 BGeometrics（bitcoin-data.com）与 Binance；成本线的免费数据大约覆盖近四年，末值可能延迟数日。仅供观察，不构成投资建议。</p>
     </section>
+  <div class="hld-block" id="hld-pnl-block">
+    <div class="hld-heading">
+      <h2>比特币盈利、亏损供应占比与BTC价格</h2>
+      <button type="button" class="hld-fs-exit" id="hld-pnl-fs-exit" hidden>退出横屏</button>
+    </div>
+    <section class="block" id="hld-pnl">
+    <div class="hld-toolbar">
+      <div class="tf-tabs hld-tabs" role="tablist" id="hld-pnl-tabs">
+        <button type="button" class="tf-tab" role="tab" data-hld-pnl-range="1y">1年</button>
+        <button type="button" class="tf-tab" role="tab" data-hld-pnl-range="3y">3年</button>
+        <button type="button" class="tf-tab on" role="tab" data-hld-pnl-range="5y" aria-selected="true">5年</button>
+        <button type="button" class="tf-tab" role="tab" data-hld-pnl-range="10y">10年</button>
+        <button type="button" class="tf-tab" role="tab" data-hld-pnl-range="all">全部</button>
+      </div>
+      <button type="button" class="hld-refresh" id="hld-pnl-refresh">刷新</button>
+      <button type="button" class="hld-refresh hld-fs-open" id="hld-pnl-fs" aria-expanded="false" aria-controls="hld-pnl-block">横屏</button>
+    </div>
+    <div class="hld-legend" id="hld-pnl-legend"></div>
+    <div class="hld-zones" id="hld-pnl-zones"></div>
+    <div class="hld-chart-wrap" id="hld-pnl-wrap">
+      <canvas id="hld-pnl-canvas" width="600" height="280"></canvas>
+      <div class="hld-tip" id="hld-pnl-tip" hidden></div>
+    </div>
+    <div class="hld-readout" id="hld-pnl-readout"></div>
+    <p class="hld-status" id="hld-pnl-status">正在加载图表…</p>
+    <p class="cycle-note">盈利供应占比与亏损供应占比是全网口径（不是只有短期持有者），二者合计约为 100%。短期 / 长期持有者通常以约 155 天为界。背景分区按盈利供应占比：深度压力 &lt;50%；压力修复 50–60%；中性扩张 60–75%；广泛盈利 75–90%；高度盈利 ≥90%。数据来自 BGeometrics（bitcoin-data.com）与价格源（Blockchain.com 全历史日价，重叠日及之后以币安 BTCUSDT 日线收盘为准）。免费链上序列的末值可能延迟数日；成本线的免费数据大约覆盖近四年。仅供观察，不是买卖建议。</p>
+    </section>
+  </div>
+  <div class="hld-block" id="hld-val-block">
+    <div class="hld-heading">
+      <h2>比特币长期均线与链上估值基准</h2>
+      <button type="button" class="hld-fs-exit" id="hld-val-fs-exit" hidden>退出横屏</button>
+    </div>
+    <section class="block" id="hld-val">
+    <div class="hld-toolbar">
+      <div class="tf-tabs hld-tabs" role="tablist" id="hld-val-tabs">
+        <button type="button" class="tf-tab" role="tab" data-hld-val-range="1y">1年</button>
+        <button type="button" class="tf-tab" role="tab" data-hld-val-range="3y">3年</button>
+        <button type="button" class="tf-tab" role="tab" data-hld-val-range="5y">5年</button>
+        <button type="button" class="tf-tab" role="tab" data-hld-val-range="10y">10年</button>
+        <button type="button" class="tf-tab on" role="tab" data-hld-val-range="all" aria-selected="true">全部</button>
+      </div>
+      <button type="button" class="hld-refresh" id="hld-val-refresh">刷新</button>
+      <button type="button" class="hld-refresh hld-fs-open" id="hld-val-fs" aria-expanded="false" aria-controls="hld-val-block">横屏</button>
+    </div>
+    <div class="hld-legend" id="hld-val-legend"></div>
+    <div class="hld-chart-wrap" id="hld-val-wrap">
+      <canvas id="hld-val-canvas" width="600" height="280"></canvas>
+      <div class="hld-tip" id="hld-val-tip" hidden></div>
+    </div>
+    <div class="hld-readout" id="hld-val-readout"></div>
+    <p class="hld-status" id="hld-val-status">正在加载图表…</p>
+    <p class="cycle-note">均线为已收盘价的简单移动平均：200 日、365 日按日收盘；50 / 100 / 200 / 365 周先将日收盘重采样为 UTC 周（周一至周日，取该周最后一个有数据的收盘），再做均线，未结束的周不计入。实现价格、真实市场均价与短 / 长期持有者成本来自 BGeometrics（bitcoin-data.com），免费序列大约覆盖近四年，末值可能延迟数日。价格为 Blockchain.com 全历史日价，重叠日及之后以币安 BTCUSDT 日线收盘为准。公开免费源目前没有可靠的全历史 Cointime Price 与 CVDD，本图暂未收录。图例可点按开关序列。仅供观察，不是买卖建议。</p>
+    </section>
+  </div>
   </div>
   <div id="panel-events" class="main-panel" data-main-panel="events">
   <h2>未来 3 个月内可能影响 BTC 价格的重要事件</h2>
@@ -816,13 +973,14 @@
     合约持仓量来自币安 U 本位合约。MVRV Z-Score 来自 BGeometrics，免费数据末值可能延迟约一周。AHR999 按币安 BTCUSDT 日线与九神公开公式计算，0.45、1.2、5 为文献参考带，不是买卖线。<br>
     比特币支撑与压力由币安 BTCUSDT 日线的近期摆动高低点、近30日/90日/一年区间高低，以及 50/200 日与周均线合并去重得出；未收盘的日线不作为已确认摆动点。仅供观察，不是买卖建议。<br>
     短期持有者图表另参考 BGeometrics（bitcoin-data.com）与 Binance。<br>
+    持有者栏的全网盈利与亏损供应占比、实现价格、真实市场均价与长短期持有者成本来自 BGeometrics（bitcoin-data.com）；长期均线由 Blockchain.com 全历史日价与币安 BTCUSDT 日线收盘的简单移动平均计算，重叠日以币安为准。公开免费源目前没有可靠的全历史 Cointime Price 与 CVDD，相关图暂未收录。<br>
     事件日程另参考美联储 FOMC 日历、美国劳工统计局（BLS）、经济分析局（BEA）与 Polymarket，事件观察不构成投资建议。<br>
     危机观察为 1 至 10 级公开序列读数，10 为最高，不是买卖建议，也不确认金融危机已经发生。<br>
     X 关注栏为所列账号的公开帖快照，正文为中文译文，点开可查看原文；内容由发帖人发布，可能有延迟，不是投资建议。<br>
     仅供参考，不构成投资建议。<br>
     顶部选项卡可切换主要栏目；有更新时会在对应选项卡显示红点，点开后消失。行情为实时价格，不会为此亮红点。<br>
     右上角「刷新」会重新加载本页最新内容，不必关掉再打开。<br>
-    短期持有者图表可点「横屏」，单独满屏查看。<br>
+    短期持有者与下方两张持有者图表均可点「横屏」，单独满屏查看。<br>
     顶底观察状态变化时，若本页正在前台查看，不会弹窗；正在看顶底栏目时，对应指标边框会闪三下。若当时没有在看本页，仍会按原方式弹窗提示，也可开启系统通知。仅供观察，不是买卖或逃顶抄底建议。<br>
     可在浏览器菜单里选择「添加到主屏幕」。如需在后台也收到系统通知，请在弹窗里开启，iPhone 需先把本页添加到主屏幕。
   </footer>
@@ -4746,7 +4904,15 @@
     }
     if (id === "sth") {
       const a = (typeof sthState !== "undefined" && sthState.asOf) || {};
-      return [a.price || "", a.sthCost || "", a.sthProfitPct || ""].join("|");
+      const pack = (st) => {
+        if (!st || !st.asOf) return "";
+        const o = st.asOf;
+        return Object.keys(o).sort().map((k) => k + ":" + (o[k] || "")).join(",");
+      };
+      let stamp = [a.price || "", a.sthCost || "", a.sthProfitPct || ""].join("|");
+      if (typeof hldPnl !== "undefined") stamp += "|pnl:" + pack(hldPnl);
+      if (typeof hldVal !== "undefined") stamp += "|val:" + pack(hldVal);
+      return stamp;
     }
     return "";
   }
@@ -4819,7 +4985,7 @@
     const chipsEl = $("chips");
     if (regimeEl) regimeEl.hidden = hideMktStrip;
     if (chipsEl) chipsEl.hidden = hideMktStrip;
-    if (id === "sth") requestAnimationFrame(() => { try { drawSthChart(); } catch (e) {} });
+    if (id === "sth") requestAnimationFrame(() => { try { drawSthChart(); } catch (e) {} try { drawHldCharts(); } catch (e) {} });
     if (id !== "market") clearTabDot(id);
     if (id === "cycle" && state.cycleFlashPending && state.cycleFlashPending.length) {
       const pending = state.cycleFlashPending;
@@ -6014,7 +6180,6 @@
         drawSthChart();
       }
     }
-    reviewTabStamp("sth");
   }
 
 
@@ -6022,6 +6187,811 @@
   const CRISIS_WATCH_URL = "./crisis-watch.json";
   const crisisState = { data: null, status: "正在加载危机观察…" };
   const CRISIS_NOTE = "本栏为 1 至 10 级观察读数，由公开市场与宏观序列（美元指数、联邦基金利率、信用利差等）加权得出，10 为最高。不是投资建议，也不确认金融危机已经发生。时间均为香港时间。";
+
+  const HLD_RANGES = [
+    { id: "1y", label: "1年", years: 1 },
+    { id: "3y", label: "3年", years: 3 },
+    { id: "5y", label: "5年", years: 5 },
+    { id: "10y", label: "10年", years: 10 },
+    { id: "all", label: "全部", years: null },
+  ];
+  const HLD_GRID = "#232A38";
+  const HLD_AXIS = "#8B95A5";
+  const HLD_HAIR = "rgba(232,238,245,.45)";
+  const HLD_ZONES = [
+    { name: "深度压力", range: "<50%", min: 0, max: 50, fill: "rgba(240,97,90,0.16)", chip: "rgba(240,97,90,0.65)" },
+    { name: "压力修复", range: "50–60%", min: 50, max: 60, fill: "rgba(240,138,58,0.15)", chip: "rgba(240,138,58,0.75)" },
+    { name: "中性扩张", range: "60–75%", min: 60, max: 75, fill: "rgba(245,197,66,0.12)", chip: "rgba(245,197,66,0.75)" },
+    { name: "广泛盈利", range: "75–90%", min: 75, max: 90, fill: "rgba(46,201,179,0.12)", chip: "rgba(46,201,179,0.7)" },
+    { name: "高度盈利", range: "≥90%", min: 90, max: 100, fill: "rgba(46,201,179,0.22)", chip: "rgba(46,201,179,0.95)" },
+  ];
+  const HLD_PNL_SERIES = [
+    { key: "price", idx: 1, label: "BTC价格", color: "#E8EEF5", axis: "px", on: true, width: 1.65 },
+    { key: "profit", idx: 2, label: "盈利供应占比", color: "#2EC9B3", axis: "pct", on: true, width: 1.55 },
+    { key: "loss", idx: 3, label: "亏损供应占比", color: "#F0615A", axis: "pct", on: true, width: 1.55 },
+    { key: "sthCost", idx: 4, label: "STH成本线", color: "#E08A86", axis: "px", on: true, width: 1.4 },
+    { key: "lthCost", idx: 5, label: "LTH成本线", color: "#5B9FDB", axis: "px", on: true, width: 1.4 },
+  ];
+  const HLD_VAL_SERIES = [
+    { key: "price", idx: 1, label: "BTC价格", color: "#E8EEF5", axis: "px", on: true, width: 1.7 },
+    { key: "sma200w", idx: 6, label: "200周均线", color: "#F5C542", axis: "px", on: true, width: 1.45 },
+    { key: "sma365d", idx: 3, label: "365日均线", color: "#C084FC", axis: "px", on: true, width: 1.3 },
+    { key: "realized", idx: 8, label: "比特币实现价格", color: "#F08A3A", axis: "px", on: true, width: 1.4 },
+    { key: "tmm", idx: 9, label: "真实市场均价", color: "#49C5E6", axis: "px", on: true, width: 1.4 },
+    { key: "sthCost", idx: 10, label: "短期持有者成本", color: "#E08A86", axis: "px", on: true, width: 1.3 },
+    { key: "lthCost", idx: 11, label: "长期持有者成本", color: "#5B9FDB", axis: "px", on: true, width: 1.3 },
+    { key: "sma100w", idx: 5, label: "100周均线", color: "#86C06C", axis: "px", on: false, width: 1.25 },
+    { key: "sma50w", idx: 4, label: "50周均线", color: "#E8B86D", axis: "px", on: false, width: 1.25 },
+    { key: "sma200d", idx: 2, label: "200日均线", color: "#9B8EC4", axis: "px", on: false, width: 1.25 },
+    { key: "sma365w", idx: 7, label: "365周均线", color: "#D4729C", axis: "px", on: false, width: 1.25 },
+  ];
+
+  function hldMakeState(cfg) {
+    const st = {
+      id: cfg.id,
+      jsonPath: cfg.jsonPath,
+      cacheKey: cfg.cacheKey,
+      rangeKey: cfg.rangeKey,
+      seriesKey: cfg.seriesKey || null,
+      seriesDefs: cfg.seriesDefs.map((s) => Object.assign({}, s)),
+      zones: cfg.zones || null,
+      defaultRange: cfg.defaultRange,
+      toggleLegend: !!cfg.toggleLegend,
+      asOfKeys: cfg.asOfKeys,
+      rows: [],
+      asOf: {},
+      source: "",
+      fetchedAt: "",
+      range: cfg.defaultRange,
+      hover: null,
+      status: "正在加载图表…",
+      ready: false,
+      refreshing: false,
+      plot: null,
+      fs: false,
+    };
+    try {
+      const saved = localStorage.getItem(st.rangeKey);
+      if (HLD_RANGES.some((t) => t.id === saved)) st.range = saved;
+    } catch (e) {}
+    if (st.seriesKey) {
+      try {
+        const raw = localStorage.getItem(st.seriesKey);
+        if (raw) {
+          const saved = JSON.parse(raw);
+          st.seriesDefs.forEach((s) => {
+            if (Object.prototype.hasOwnProperty.call(saved, s.key)) s.on = !!saved[s.key];
+          });
+        }
+      } catch (e) {}
+    }
+    return st;
+  }
+  const hldPnl = hldMakeState({
+    id: "pnl",
+    jsonPath: "./holders-pnl-chart.json",
+    cacheKey: "crypto-live-hld-pnl-cache",
+    rangeKey: "crypto-live-hld-pnl-range",
+    seriesDefs: HLD_PNL_SERIES,
+    zones: HLD_ZONES,
+    defaultRange: "5y",
+    toggleLegend: false,
+    asOfKeys: ["price", "profitPct", "lossPct", "sthCost", "lthCost"],
+  });
+  const hldVal = hldMakeState({
+    id: "val",
+    jsonPath: "./holders-valuation-chart.json",
+    cacheKey: "crypto-live-hld-val-cache",
+    rangeKey: "crypto-live-hld-val-range",
+    seriesKey: "crypto-live-hld-val-series",
+    seriesDefs: HLD_VAL_SERIES,
+    defaultRange: "all",
+    toggleLegend: true,
+    asOfKeys: ["price", "sma200d", "sma365d", "sma50w", "sma100w", "sma200w", "sma365w", "realized", "tmm", "sthCost", "lthCost"],
+  });
+  const hldCharts = [hldPnl, hldVal];
+  function hldEl(st, suffix) { return $(`hld-${st.id}-${suffix}`); }
+  function hldNum(v) {
+    if (v == null || v === "") return null;
+    const n = +v;
+    return Number.isFinite(n) ? n : null;
+  }
+  function hldParsePayload(data, defs) {
+    if (!data || !Array.isArray(data.rows)) return { rows: [], asOf: {}, source: "", fetchedAt: "" };
+    const rows = [];
+    for (const r of data.rows) {
+      if (!r || !r[0]) continue;
+      const row = { d: r[0] };
+      defs.forEach((s) => { row[s.key] = hldNum(r[s.idx]); });
+      rows.push(row);
+    }
+    rows.sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : 0);
+    return {
+      rows,
+      asOf: data.asOf || hldAsOf(rows, defs),
+      source: data.source || "",
+      fetchedAt: data.fetchedAt || "",
+    };
+  }
+  function hldAsOf(rows, defs) {
+    const asOf = {};
+    defs.forEach((s) => { asOf[s.key] = null; });
+    for (const r of rows) {
+      defs.forEach((s) => { if (r[s.key] != null) asOf[s.key] = r.d; });
+    }
+    return asOf;
+  }
+  function hldRowsToTuples(rows, defs) {
+    const maxIdx = Math.max.apply(null, defs.map((s) => s.idx));
+    return rows.map((r) => {
+      const t = new Array(maxIdx + 1);
+      t[0] = r.d;
+      defs.forEach((s) => { t[s.idx] = r[s.key]; });
+      return t;
+    });
+  }
+  function hldApplyPayload(st, parsed) {
+    st.rows = parsed.rows;
+    st.asOf = parsed.asOf || hldAsOf(parsed.rows, st.seriesDefs);
+    st.source = parsed.source || st.source;
+    st.fetchedAt = parsed.fetchedAt || st.fetchedAt;
+    st.ready = parsed.rows.length > 0;
+  }
+  function hldSerialize(st) {
+    return {
+      source: st.source,
+      asOf: st.asOf,
+      fetchedAt: st.fetchedAt,
+      rows: hldRowsToTuples(st.rows, st.seriesDefs),
+    };
+  }
+  function hldSaveCache(st) {
+    try { localStorage.setItem(st.cacheKey, JSON.stringify(hldSerialize(st))); } catch (e) {}
+  }
+  function hldLoadCache(st) {
+    try {
+      const raw = localStorage.getItem(st.cacheKey);
+      if (!raw) return null;
+      const parsed = hldParsePayload(JSON.parse(raw), st.seriesDefs);
+      return parsed.rows.length ? parsed : null;
+    } catch (e) { return null; }
+  }
+  function hldCacheNewer(cache, bundled, keys) {
+    if (!cache || !bundled) return false;
+    const ca = cache.asOf || {}, ba = bundled.asOf || {};
+    if ((keys || []).some((k) => (ca[k] || "") > (ba[k] || ""))) return true;
+    const ct = Date.parse(cache.fetchedAt || "");
+    const bt = Date.parse(bundled.fetchedAt || "");
+    return Number.isFinite(ct) && Number.isFinite(bt) && ct > bt;
+  }
+  function hldRangeSpec(st) {
+    return HLD_RANGES.find((t) => t.id === st.range) || HLD_RANGES[2];
+  }
+  function hldVisibleRows(st) {
+    const rows = st.rows;
+    if (!rows.length) return [];
+    const spec = hldRangeSpec(st);
+    if (!spec.years) return rows;
+    const end = rows[rows.length - 1].d;
+    const start = addYearsISO(end, -spec.years);
+    let i = 0;
+    while (i < rows.length && rows[i].d < start) i++;
+    return rows.slice(i);
+  }
+  function hldLast(rows, key) {
+    for (let i = rows.length - 1; i >= 0; i--) {
+      if (rows[i][key] != null) return rows[i];
+    }
+    return null;
+  }
+  function fmtHldPrice(x) {
+    if (x == null) return "—";
+    const n = +x;
+    if (n >= 100) return n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (n >= 1) return n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 4 });
+  }
+  function fmtHldAxisPrice(v) {
+    if (!(v > 0)) return "";
+    if (v >= 1000) {
+      const k = v / 1000;
+      if (k >= 100) return "$" + Math.round(k) + "k";
+      const r = Math.round(k * 10) / 10;
+      return "$" + (Math.abs(r - Math.round(r)) < 0.05 ? Math.round(r) : r.toFixed(1)) + "k";
+    }
+    if (v >= 100) return "$" + Math.round(v);
+    if (v >= 10) return "$" + (Math.round(v * 10) / 10);
+    if (v >= 1) return "$" + v.toFixed(1);
+    return "$" + v.toFixed(2);
+  }
+  function hldPctZone(pct) {
+    if (pct == null) return null;
+    if (pct < 50) return HLD_ZONES[0];
+    if (pct < 60) return HLD_ZONES[1];
+    if (pct < 75) return HLD_ZONES[2];
+    if (pct < 90) return HLD_ZONES[3];
+    return HLD_ZONES[4];
+  }
+  function hldStatusBase(st) {
+    const a = st.asOf || {};
+    const bits = [];
+    if (a.price) bits.push("价格截至 " + a.price);
+    if (st.id === "pnl") {
+      if (a.profitPct) bits.push("盈利供应截至 " + a.profitPct);
+      if (a.sthCost) bits.push("STH成本截至 " + a.sthCost);
+      if (a.lthCost) bits.push("LTH成本截至 " + a.lthCost);
+    } else {
+      if (a.sma200w) bits.push("周均线截至 " + a.sma200w);
+      if (a.realized) bits.push("实现价格截至 " + a.realized);
+      if (a.tmm) bits.push("真实市场均价截至 " + a.tmm);
+      if (a.sthCost) bits.push("STH成本截至 " + a.sthCost);
+      if (a.lthCost) bits.push("LTH成本截至 " + a.lthCost);
+    }
+    return bits.length ? bits.join("，") : "等待数据";
+  }
+  function setHldStatus(st, extra) {
+    const base = st.ready ? hldStatusBase(st) : (st.status || "正在加载图表…");
+    st.status = extra ? extra + (base && st.ready ? "。" + base : "") : base;
+    const el = hldEl(st, "status");
+    if (el) el.textContent = st.status;
+  }
+  function syncHldTabs(st) {
+    document.querySelectorAll(`#hld-${st.id}-tabs [data-hld-${st.id}-range]`).forEach((btn) => {
+      const on = btn.getAttribute(`data-hld-${st.id}-range`) === st.range;
+      btn.classList.toggle("on", on);
+      btn.setAttribute("aria-selected", on ? "true" : "false");
+    });
+  }
+  function hldSaveSeries(st) {
+    if (!st.seriesKey) return;
+    const o = {};
+    st.seriesDefs.forEach((s) => { o[s.key] = !!s.on; });
+    try { localStorage.setItem(st.seriesKey, JSON.stringify(o)); } catch (e) {}
+  }
+  function renderHldLegend(st) {
+    const el = hldEl(st, "legend");
+    if (!el) return;
+    el.innerHTML = st.seriesDefs.map((s) => {
+      const sw = `<i class="hld-swatch" style="background:${s.color}"></i>`;
+      if (st.toggleLegend) {
+        return `<button type="button" class="hld-leg${s.on ? "" : " off"}" data-hld-ser="${s.key}" aria-pressed="${s.on ? "true" : "false"}">${sw}${escapeHtml(s.label)}</button>`;
+      }
+      return `<span>${sw}${escapeHtml(s.label)}</span>`;
+    }).join("");
+    if (st.zones) {
+      const zel = hldEl(st, "zones");
+      if (zel) {
+        zel.innerHTML = st.zones.map((z) =>
+          `<span><i class="hld-zone-chip" style="background:${z.chip}"></i>${escapeHtml(z.name)} ${escapeHtml(z.range)}</span>`
+        ).join("");
+      }
+    }
+  }
+  function updateHldReadout(st, view) {
+    const el = hldEl(st, "readout");
+    if (!el) return;
+    const src = view && view.length ? view : st.rows;
+    const parts = [];
+    st.seriesDefs.forEach((s) => {
+      if (!s.on) return;
+      const last = hldLast(src, s.key);
+      const v = last ? last[s.key] : null;
+      const txt = s.axis === "pct" ? fmtSthPct(v) : fmtHldPrice(v);
+      parts.push(`${escapeHtml(s.label)} <b>${escapeHtml(txt)}</b>`);
+    });
+    if (st.id === "pnl") {
+      const g = hldLast(src, "profit");
+      const z = g ? hldPctZone(g.profit) : null;
+      if (z) parts.push(`分区 <b>${escapeHtml(z.name)}</b>`);
+    }
+    el.innerHTML = parts.join("　");
+  }
+  function hldLogRange(vals) {
+    const pos = vals.filter((v) => v != null && v > 0);
+    if (!pos.length) return null;
+    let lo = Math.min(...pos), hi = Math.max(...pos);
+    if (lo === hi) { lo *= 0.8; hi *= 1.25; }
+    if (!(lo > 0 && hi > lo)) return null;
+    const pad = Math.pow(hi / lo, 0.06);
+    return { min: lo / pad, max: hi * pad };
+  }
+  function hldActiveFs() {
+    return hldCharts.find((s) => s.fs) || null;
+  }
+  function hldFsRotated() {
+    return !!(hldActiveFs() && window.matchMedia && window.matchMedia("(orientation: portrait)").matches);
+  }
+  function hldEventLocal(el, ev) {
+    const r = el.getBoundingClientRect();
+    if (hldFsRotated() && r.width > 0 && r.height > 0) {
+      return {
+        x: (ev.clientY - r.top) * (el.clientWidth / r.height),
+        y: (r.right - ev.clientX) * (el.clientHeight / r.width)
+      };
+    }
+    return { x: ev.clientX - r.left, y: ev.clientY - r.top };
+  }
+  function hideHldTip(st) {
+    st.hover = null;
+    const tip = hldEl(st, "tip");
+    if (tip) tip.hidden = true;
+    if (st.ready) drawHldChart(st);
+  }
+  async function enterHldFullscreen(st) {
+    if (st.fs) return;
+    if (typeof sthState !== "undefined" && sthState.fs) {
+      try { await exitSthFullscreen(); } catch (e) {}
+    }
+    for (const other of hldCharts) {
+      if (other !== st && other.fs) {
+        try { await exitHldFullscreen(other); } catch (e) {}
+      }
+    }
+    st.fs = true;
+    const block = $("hld-" + st.id + "-block");
+    const exitBtn = hldEl(st, "fs-exit");
+    const openBtn = hldEl(st, "fs");
+    const stage = $("sth-stage");
+    document.documentElement.classList.add("hld-fs-on");
+    if (stage) stage.classList.add("hld-stage-full");
+    if (block) block.classList.add("hld-full");
+    if (exitBtn) exitBtn.hidden = false;
+    if (openBtn) openBtn.setAttribute("aria-expanded", "true");
+    try {
+      const root = document.documentElement;
+      if (root.requestFullscreen) await root.requestFullscreen();
+      else if (root.webkitRequestFullscreen) root.webkitRequestFullscreen();
+    } catch (e) {}
+    try {
+      if (screen.orientation && screen.orientation.lock) await screen.orientation.lock("landscape");
+    } catch (e) {}
+    hideHldTip(st);
+    requestAnimationFrame(() => drawHldChart(st));
+    setTimeout(() => { if (st.fs) drawHldChart(st); }, 350);
+  }
+  async function exitHldFullscreen(st) {
+    if (!st.fs) return;
+    st.fs = false;
+    const block = $("hld-" + st.id + "-block");
+    const exitBtn = hldEl(st, "fs-exit");
+    const openBtn = hldEl(st, "fs");
+    if (block) block.classList.remove("hld-full");
+    if (exitBtn) exitBtn.hidden = true;
+    if (openBtn) openBtn.setAttribute("aria-expanded", "false");
+    if (!hldActiveFs()) {
+      document.documentElement.classList.remove("hld-fs-on");
+      const stage = $("sth-stage");
+      if (stage) stage.classList.remove("hld-stage-full");
+    }
+    try { if (document.fullscreenElement || document.webkitFullscreenElement) await (document.exitFullscreen ? document.exitFullscreen() : document.webkitExitFullscreen()); } catch (e) {}
+    try { if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock(); } catch (e) {}
+    hideHldTip(st);
+    requestAnimationFrame(() => drawHldChart(st));
+  }
+  function placeHldTip(st, ev) {
+    const wrap = hldEl(st, "wrap"), tip = hldEl(st, "tip");
+    if (!wrap || !tip || tip.hidden || !ev) return;
+    const loc = hldEventLocal(wrap, ev);
+    const x = loc.x, y = loc.y;
+    const wrW = wrap.clientWidth, wrH = wrap.clientHeight;
+    const tw = tip.offsetWidth, th = tip.offsetHeight;
+    let left = x + 12;
+    if (left + tw > wrW - 4) left = x - tw - 12;
+    left = Math.max(4, Math.min(left, wrW - tw - 4));
+    let top = y - th - 10;
+    if (top < 4) top = y + 14;
+    top = Math.max(4, Math.min(top, wrH - th - 4));
+    tip.style.left = left + "px";
+    tip.style.top = top + "px";
+  }
+  function showHldTip(st, row, ev) {
+    const tip = hldEl(st, "tip");
+    if (!tip || !row) return;
+    const lines = [`<div class="d">${escapeHtml(row.d)}</div>`];
+    st.seriesDefs.forEach((s) => {
+      if (!s.on) return;
+      const txt = s.axis === "pct" ? fmtSthPct(row[s.key]) : fmtHldPrice(row[s.key]);
+      lines.push(`<div class="r"><span class="k">${escapeHtml(s.label)}</span><span>${escapeHtml(txt)}</span></div>`);
+    });
+    if (st.id === "pnl") {
+      const z = hldPctZone(row.profit);
+      if (z) lines.push(`<div class="r"><span class="k">分区</span><span>${escapeHtml(z.name)}</span></div>`);
+    }
+    tip.innerHTML = lines.join("");
+    tip.hidden = false;
+    placeHldTip(st, ev);
+  }
+  function hldHoverAt(st, ev) {
+    const plot = st.plot;
+    const canvas = hldEl(st, "canvas");
+    if (!plot || !canvas || !plot.rows.length) return;
+    const x = hldEventLocal(canvas, ev).x;
+    const n = plot.rows.length;
+    const t = n <= 1 ? 0 : (x - plot.x) / plot.w;
+    const i = clamp(Math.round(t * (n - 1)), 0, n - 1);
+    st.hover = i;
+    drawHldChart(st);
+    showHldTip(st, plot.rows[i], ev);
+  }
+  function strokeHldSeries(ctx, rows, key, xAt, yAt, color, width) {
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+    let drawing = false;
+    for (let i = 0; i < rows.length; i++) {
+      const v = rows[i][key];
+      if (v == null || !Number.isFinite(v) || (yAt.needsPos && !(v > 0))) { drawing = false; continue; }
+      const x = xAt(i), y = yAt(v);
+      if (!drawing) { ctx.moveTo(x, y); drawing = true; }
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+  function drawHldChart(st) {
+    const canvas = hldEl(st, "canvas");
+    if (!canvas) return;
+    const wrap = hldEl(st, "wrap");
+    const cssW = Math.max(1, (wrap && wrap.clientWidth) || canvas.clientWidth || 300);
+    const cssH = Math.max(1, (wrap && wrap.clientHeight) || 280);
+    const dpr = Math.max(1, window.devicePixelRatio || 1);
+    const bw = Math.round(cssW * dpr), bh = Math.round(cssH * dpr);
+    if (canvas.width !== bw || canvas.height !== bh) {
+      canvas.width = bw;
+      canvas.height = bh;
+    }
+    const ctx = canvas.getContext("2d");
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, cssW, cssH);
+
+    const view = hldVisibleRows(st);
+    updateHldReadout(st, view);
+    if (!view.length) {
+      st.plot = { x: 0, y: 0, w: cssW, h: cssH, rows: [] };
+      ctx.fillStyle = HLD_AXIS;
+      ctx.font = "12px -apple-system, BlinkMacSystemFont, sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(st.ready ? "该区间暂无数据" : "正在加载图表…", cssW / 2, cssH / 2);
+      return;
+    }
+    const onSeries = st.seriesDefs.filter((s) => s.on);
+    if (!onSeries.length) {
+      st.plot = { x: 0, y: 0, w: cssW, h: cssH, rows: view };
+      ctx.fillStyle = HLD_AXIS;
+      ctx.font = "12px -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText("请在图例中打开至少一条序列", cssW / 2, cssH / 2);
+      return;
+    }
+
+    const hasPct = onSeries.some((s) => s.axis === "pct") || !!st.zones;
+    const hasPx = onSeries.some((s) => s.axis === "px");
+    const left = hasPct ? 38 : 12;
+    const right = hasPx ? 48 : 12;
+    const top = 10, bottom = 22;
+    const plot = { x: left, y: top, w: Math.max(10, cssW - left - right), h: Math.max(10, cssH - top - bottom), rows: view };
+    st.plot = plot;
+    const n = view.length;
+    const xAt = (i) => plot.x + (n <= 1 ? plot.w / 2 : i * plot.w / (n - 1));
+    const yPct = (p) => plot.y + plot.h * (1 - p / 100);
+    const pxVals = [];
+    for (const r of view) {
+      onSeries.forEach((s) => {
+        if (s.axis !== "px") return;
+        const v = r[s.key];
+        if (v != null && v > 0) pxVals.push(v);
+      });
+    }
+    const yr = hasPx ? hldLogRange(pxVals) : null;
+    const yPx = (p) => {
+      if (!yr) return plot.y + plot.h;
+      const t = (Math.log(p) - Math.log(yr.min)) / (Math.log(yr.max) - Math.log(yr.min));
+      return plot.y + plot.h * (1 - t);
+    };
+    yPx.needsPos = true;
+
+    if (st.zones && hasPct) {
+      st.zones.forEach((z) => {
+        const y0 = yPct(z.max), y1 = yPct(z.min);
+        ctx.fillStyle = z.fill;
+        ctx.fillRect(plot.x, y0, plot.w, Math.max(0, y1 - y0));
+      });
+    }
+
+    ctx.font = "11px -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif";
+    ctx.lineWidth = 1;
+    if (hasPct) {
+      for (let i = 0; i <= 5; i++) {
+        const pct = i * 20;
+        const y = Math.round(yPct(pct)) + 0.5;
+        ctx.strokeStyle = HLD_GRID;
+        ctx.beginPath();
+        ctx.moveTo(plot.x, y);
+        ctx.lineTo(plot.x + plot.w, y);
+        ctx.stroke();
+        ctx.fillStyle = HLD_AXIS;
+        ctx.textAlign = "right";
+        ctx.textBaseline = "middle";
+        ctx.fillText(pct + "%", plot.x - 6, y);
+      }
+    } else if (yr) {
+      for (let i = 0; i <= 4; i++) {
+        const t = i / 4;
+        const v = Math.exp(Math.log(yr.min) + t * (Math.log(yr.max) - Math.log(yr.min)));
+        const y = Math.round(yPx(v)) + 0.5;
+        ctx.strokeStyle = HLD_GRID;
+        ctx.beginPath();
+        ctx.moveTo(plot.x, y);
+        ctx.lineTo(plot.x + plot.w, y);
+        ctx.stroke();
+      }
+    }
+    if (yr) {
+      ctx.textAlign = "left";
+      ctx.textBaseline = "middle";
+      ctx.fillStyle = HLD_AXIS;
+      for (let i = 0; i <= 4; i++) {
+        const t = i / 4;
+        const v = Math.exp(Math.log(yr.min) + t * (Math.log(yr.max) - Math.log(yr.min)));
+        const y = Math.round(yPx(v)) + 0.5;
+        ctx.fillText(fmtHldAxisPrice(v), plot.x + plot.w + 6, y);
+      }
+    }
+    const labelN = Math.max(3, Math.min(6, Math.floor(plot.w / 56)));
+    ctx.textBaseline = "top";
+    ctx.fillStyle = HLD_AXIS;
+    let lastLabel = "";
+    for (let i = 0; i < labelN; i++) {
+      const idx = labelN === 1 ? 0 : Math.round(i * (n - 1) / (labelN - 1));
+      const label = fmtSthAxisDate(view[idx].d);
+      if (label === lastLabel) continue;
+      lastLabel = label;
+      const x = xAt(idx);
+      ctx.textAlign = i === 0 ? "left" : i === labelN - 1 ? "right" : "center";
+      ctx.fillText(label, x, plot.y + plot.h + 6);
+    }
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(plot.x, plot.y, plot.w, plot.h);
+    ctx.clip();
+    const yAtFor = (s) => (s.axis === "pct" ? yPct : yPx);
+    onSeries.forEach((s) => {
+      if (s.axis === "px" && !yr) return;
+      strokeHldSeries(ctx, view, s.key, xAt, yAtFor(s), s.color, s.width);
+    });
+    const markLast = (s) => {
+      const last = hldLast(view, s.key);
+      if (!last) return;
+      const i = view.lastIndexOf(last);
+      const v = last[s.key];
+      if (v == null || (s.axis === "px" && !(v > 0))) return;
+      ctx.beginPath();
+      ctx.fillStyle = s.color;
+      ctx.arc(xAt(i), yAtFor(s)(v), 2.4, 0, Math.PI * 2);
+      ctx.fill();
+    };
+    onSeries.forEach((s) => {
+      if (s.axis === "px" && !yr) return;
+      markLast(s);
+    });
+    if (st.hover != null && st.hover >= 0 && st.hover < n) {
+      const i = st.hover;
+      const row = view[i];
+      const x = Math.round(xAt(i)) + 0.5;
+      ctx.strokeStyle = HLD_HAIR;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(x, plot.y);
+      ctx.lineTo(x, plot.y + plot.h);
+      ctx.stroke();
+      onSeries.forEach((s) => {
+        const v = row[s.key];
+        if (v == null || !Number.isFinite(v) || (s.axis === "px" && !(v > 0))) return;
+        if (s.axis === "px" && !yr) return;
+        ctx.beginPath();
+        ctx.fillStyle = s.color;
+        ctx.arc(xAt(i), yAtFor(s)(v), 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.strokeStyle = "#0B0E14";
+        ctx.lineWidth = 1;
+        ctx.arc(xAt(i), yAtFor(s)(v), 3, 0, Math.PI * 2);
+        ctx.stroke();
+      });
+    }
+    ctx.restore();
+  }
+  function drawHldCharts() {
+    hldCharts.forEach((st) => { try { drawHldChart(st); } catch (e) { console.warn(e); } });
+  }
+  function hldRowsMap(st) {
+    const map = new Map();
+    for (const r of st.rows) {
+      const copy = { d: r.d };
+      st.seriesDefs.forEach((s) => { copy[s.key] = r[s.key]; });
+      map.set(r.d, copy);
+    }
+    return map;
+  }
+  function hldCommitMap(st, map) {
+    const rows = [...map.values()].sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : 0);
+    st.rows = rows;
+    st.asOf = Object.assign({}, st.asOf || {}, hldAsOf(rows, st.seriesDefs));
+    // Keep on-chain / SMA asOf from payload if the merged rows no longer carry a later value.
+    st.fetchedAt = new Date().toISOString();
+    st.ready = rows.length > 0;
+  }
+  async function fetchHldBinanceCloses() {
+    const url = "https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=1000";
+    const batch = await fetchJson(url);
+    if (!batch || !batch.length) return { dates: [], prices: [] };
+    const now = Date.now();
+    const dates = [], prices = [];
+    const seen = new Set();
+    for (const k of batch) {
+      const openMs = +k[0];
+      if (!Number.isFinite(openMs)) continue;
+      if (now < openMs + 24 * 60 * 60 * 1000) continue;
+      const d = utcDateFromMs(openMs);
+      const p = hldNum(k[4]);
+      if (!d || p == null || seen.has(d)) continue;
+      seen.add(d);
+      dates.push(d);
+      prices.push(p);
+    }
+    return { dates, prices };
+  }
+  async function refreshHldChart(st) {
+    if (st.refreshing) return;
+    st.refreshing = true;
+    const btn = hldEl(st, "refresh");
+    if (btn) btn.disabled = true;
+    setHldStatus(st, "正在刷新");
+    let priceOk = false;
+    try {
+      const px = await fetchHldBinanceCloses();
+      if (px.dates.length) {
+        const map = hldRowsMap(st);
+        const prevPriceAsOf = (st.asOf && st.asOf.price) || "";
+        for (let i = 0; i < px.dates.length; i++) {
+          const d = px.dates[i], v = px.prices[i];
+          let row = map.get(d);
+          if (!row) {
+            row = { d };
+            st.seriesDefs.forEach((s) => { row[s.key] = null; });
+            map.set(d, row);
+          }
+          row.price = v;
+        }
+        hldCommitMap(st, map);
+        if (st.asOf) st.asOf.price = hldLast(st.rows, "price") ? hldLast(st.rows, "price").d : prevPriceAsOf;
+        priceOk = true;
+      }
+    } catch (e) { console.warn(e); }
+    if (priceOk) hldSaveCache(st);
+    drawHldChart(st);
+    if (priceOk) setHldStatus(st, "价格已更新，链上数据与均线沿用本地快照");
+    else setHldStatus(st, "刷新失败，仍显示本地数据");
+    st.refreshing = false;
+    if (btn) btn.disabled = false;
+    reviewTabStamp("sth");
+  }
+  function bindHldChart(st) {
+    syncHldTabs(st);
+    renderHldLegend(st);
+    const tabs = hldEl(st, "tabs");
+    if (tabs) {
+      tabs.addEventListener("click", (ev) => {
+        const btn = ev.target.closest(`[data-hld-${st.id}-range]`);
+        if (!btn || !tabs.contains(btn)) return;
+        const id = btn.getAttribute(`data-hld-${st.id}-range`);
+        if (!HLD_RANGES.some((t) => t.id === id) || id === st.range) return;
+        st.range = id;
+        st.hover = null;
+        const tip = hldEl(st, "tip");
+        if (tip) tip.hidden = true;
+        try { localStorage.setItem(st.rangeKey, id); } catch (e) {}
+        syncHldTabs(st);
+        drawHldChart(st);
+      });
+    }
+    const refresh = hldEl(st, "refresh");
+    if (refresh) refresh.addEventListener("click", () => { refreshHldChart(st); });
+    const fsBtn = hldEl(st, "fs");
+    if (fsBtn) fsBtn.addEventListener("click", () => { enterHldFullscreen(st); });
+    const fsExit = hldEl(st, "fs-exit");
+    if (fsExit) fsExit.addEventListener("click", () => { exitHldFullscreen(st); });
+    const legend = hldEl(st, "legend");
+    if (legend && st.toggleLegend) {
+      legend.addEventListener("click", (ev) => {
+        const btn = ev.target.closest("[data-hld-ser]");
+        if (!btn || !legend.contains(btn)) return;
+        const key = btn.getAttribute("data-hld-ser");
+        const ser = st.seriesDefs.find((s) => s.key === key);
+        if (!ser) return;
+        ser.on = !ser.on;
+        hldSaveSeries(st);
+        renderHldLegend(st);
+        const tip = hldEl(st, "tip");
+        if (tip) tip.hidden = true;
+        st.hover = null;
+        drawHldChart(st);
+      });
+    }
+    const canvas = hldEl(st, "canvas");
+    if (canvas) {
+      canvas.addEventListener("pointerdown", (ev) => {
+        try { canvas.setPointerCapture(ev.pointerId); } catch (e) {}
+        hldHoverAt(st, ev);
+      });
+      canvas.addEventListener("pointermove", (ev) => {
+        if (ev.pointerType === "mouse" || ev.buttons || (typeof ev.pressure === "number" && ev.pressure > 0) || canvas.hasPointerCapture(ev.pointerId)) {
+          hldHoverAt(st, ev);
+        } else if (ev.pointerType === "mouse") {
+          hldHoverAt(st, ev);
+        }
+      });
+      canvas.addEventListener("pointerup", (ev) => {
+        const loc = hldEventLocal(canvas, ev);
+        const outside = loc.x < 0 || loc.x > canvas.clientWidth || loc.y < 0 || loc.y > canvas.clientHeight;
+        if (outside) hideHldTip(st);
+      });
+      canvas.addEventListener("pointercancel", () => hideHldTip(st));
+      canvas.addEventListener("pointerleave", (ev) => {
+        if (ev.pointerType === "mouse") hideHldTip(st);
+      });
+    }
+    const wrap = hldEl(st, "wrap");
+    if (wrap && typeof ResizeObserver !== "undefined") {
+      const ro = new ResizeObserver(() => { if (st.ready || hldEl(st, "canvas")) drawHldChart(st); });
+      ro.observe(wrap);
+    } else {
+      window.addEventListener("resize", () => drawHldChart(st));
+    }
+  }
+  async function loadHldChart(st) {
+    try {
+      const bundled = hldParsePayload(await fetchJson(st.jsonPath), st.seriesDefs);
+      if (!bundled.rows.length) throw new Error("empty " + st.jsonPath);
+      hldApplyPayload(st, bundled);
+      setHldStatus(st, "");
+      drawHldChart(st);
+      const cache = hldLoadCache(st);
+      if (hldCacheNewer(cache, bundled, st.asOfKeys)) {
+        hldApplyPayload(st, cache);
+        setHldStatus(st, "");
+        drawHldChart(st);
+      }
+    } catch (e) {
+      console.warn(e);
+      const cache = hldLoadCache(st);
+      if (cache) {
+        hldApplyPayload(st, cache);
+        setHldStatus(st, "本地快照加载失败，已改用上次缓存");
+        drawHldChart(st);
+      } else {
+        st.status = "图表数据加载失败";
+        setHldStatus(st, "图表数据加载失败");
+        drawHldChart(st);
+      }
+    }
+  }
+  async function initHldCharts() {
+    hldCharts.forEach(bindHldChart);
+    document.addEventListener("keydown", (ev) => {
+      if (ev.key !== "Escape") return;
+      const active = hldActiveFs();
+      if (active) exitHldFullscreen(active);
+    });
+    window.addEventListener("orientationchange", () => {
+      const active = hldActiveFs();
+      if (active) requestAnimationFrame(() => drawHldChart(active));
+    });
+    await Promise.all(hldCharts.map((st) => loadHldChart(st)));
+  }
+
   function crisTone(level) {
     const n = Math.max(1, Math.min(10, Math.round(+level || 0)));
     if (n <= 3) return "low";
@@ -6566,6 +7536,8 @@
       bust(location.pathname || "./"),
       bust("./index.html"),
       bust("./sth-chart.json"),
+      bust("./holders-pnl-chart.json"),
+      bust("./holders-valuation-chart.json"),
       bust("./events-board.json"),
       bust("./crisis-watch.json"),
       bust("./us-stocks.json"),
@@ -6640,7 +7612,7 @@
     });
   }
 
-  initSthChart();
+  Promise.all([initSthChart(), initHldCharts()]).finally(() => { try { reviewTabStamp("sth"); } catch (e) {} });
   initCrisisWatch();
   initEventsBoard();
   initialLoad().finally(() => { startSocket(); startPolling(); });
