@@ -5104,7 +5104,8 @@
     accounts.forEach((a) => { accBy[a.id] = a; });
     let posts = (data.posts || []).slice();
     if (tab !== "all") posts = posts.filter((p) => p.accountId === tab);
-    posts = posts.slice(0, tab === "all" ? 18 : 8);
+    posts.sort((a, b) => (Date.parse(b.createdAt) || 0) - (Date.parse(a.createdAt) || 0));
+    posts = posts.slice(0, tab === "all" ? 20 : 7);
     const cards = posts.map((p) => {
       const acc = accBy[p.accountId] || {};
       const kind = xKindLabel(p.kind, p.repostOf);
@@ -5135,7 +5136,7 @@
     root.innerHTML = `<div class="tf-tabs x-tabs" role="tablist">${tabs}</div>
       <p class="x-asof">快照截至 ${escapeHtml(asOf)}</p>
       ${cards}
-      <p class="cycle-note">关注 ${who} 的公开帖。正文为中文译文，点开卡片可查看原文。这是页面发布时的快照，不是 X 的即时推送。内容由发帖人发布，仅供观察，不是投资建议。${digest ? escapeHtml(digest) : ""}</p>`;
+      <p class="cycle-note">关注 ${who} 的公开帖。各账号最多显示 7 条，「全部」最多显示最新 20 条，超出的自动去掉。正文为中文译文，点开卡片可查看原文。这是页面发布时的快照，不是 X 的即时推送。内容由发帖人发布，仅供观察，不是投资建议。${digest ? escapeHtml(digest) : ""}</p>`;
   }
   async function loadXFeed() {
     try {
