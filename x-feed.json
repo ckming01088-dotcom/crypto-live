@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-19T19:04:42+08:00",
+  "asOf": "2026-11-20T08:09:09+08:00",
   "source": "X 公开帖快照（含中文译文）",
   "accounts": [
     {
@@ -66,6 +66,21 @@
   ],
   "posts": [
     {
+      "id": "2123475464043786417",
+      "accountId": "elonmusk",
+      "name": "Elon Musk",
+      "zh": "马斯克",
+      "username": "elonmusk",
+      "text": "You can create an entire company made of Grok Bots! https://t.co/qLl5REpV2h",
+      "createdAt": "2026-11-19T17:56:17.000Z",
+      "url": "https://x.com/elonmusk/status/2123475464043786417",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 13086,
+      "reposts": 1202,
+      "textZh": "你可以打造一家完全由 Grok Bots 组成的公司！\nhttps://t.co/qLl5REpV2h"
+    },
+    {
       "id": "2123337655731826810",
       "accountId": "elonmusk",
       "name": "Elon Musk",
@@ -76,8 +91,8 @@
       "url": "https://x.com/elonmusk/status/2123337655731826810",
       "kind": "quote",
       "repostOf": null,
-      "likes": 3043,
-      "reposts": 432,
+      "likes": 9476,
+      "reposts": 1313,
       "textZh": "将意识延伸到星辰\nhttps://t.co/vRKCpiPqyV"
     },
     {
@@ -91,8 +106,8 @@
       "url": "https://x.com/elonmusk/status/2123333341932052749",
       "kind": "quote",
       "repostOf": null,
-      "likes": 2749,
-      "reposts": 415,
+      "likes": 9085,
+      "reposts": 1269,
       "textZh": "Starlink 始于西雅图的一场演讲\nhttps://t.co/y8QLexDwnu"
     },
     {
@@ -106,8 +121,8 @@
       "url": "https://x.com/elonmusk/status/2123320336544649485",
       "kind": "quote",
       "repostOf": null,
-      "likes": 3218,
-      "reposts": 390,
+      "likes": 7670,
+      "reposts": 886,
       "textZh": "记得投出你的特斯拉选票！\nhttps://t.co/41fHEGryzP"
     },
     {
@@ -121,8 +136,8 @@
       "url": "https://x.com/elonmusk/status/2123319956381339961",
       "kind": "quote",
       "repostOf": null,
-      "likes": 6908,
-      "reposts": 744,
+      "likes": 27214,
+      "reposts": 2528,
       "textZh": "正在将所有文字对话改为加密，以保障用户隐私\nhttps://t.co/6Qbz2gmqPp"
     },
     {
@@ -136,114 +151,99 @@
       "url": "https://x.com/elonmusk/status/2123317934747746611",
       "kind": "quote",
       "repostOf": null,
-      "likes": 4551,
-      "reposts": 636,
+      "likes": 10982,
+      "reposts": 1528,
       "textZh": "𝕏 Money 正在快速增长\nhttps://t.co/ZB5kTS6V3p"
     },
     {
-      "id": "2123298515573207075",
-      "accountId": "elonmusk",
-      "name": "Elon Musk",
-      "zh": "马斯克",
-      "username": "elonmusk",
-      "text": "Yes. \n\nOnly questions are how fast the singularity will grow and to what size. https://t.co/48ZVNOT6cn",
-      "createdAt": "2026-11-19T06:13:09.000Z",
-      "url": "https://x.com/elonmusk/status/2123298515573207075",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 8846,
-      "reposts": 986,
-      "textZh": "是的。\n\n唯一的问题是奇点会以多快的速度成长，以及会成长到多大。\nhttps://t.co/48ZVNOT6cn"
-    },
-    {
-      "id": "2123263179199537339",
+      "id": "2123550289957658970",
       "accountId": "cz_binance",
       "name": "CZ",
       "zh": "赵长鹏",
       "username": "cz_binance",
-      "text": "Japan's Personal Information Protection Commission issued a notice urging rental car operators to promptly delete images of driver's licenses and other photo IDs after identity verification, following a data leak from unauthorized access.\n\nNoting no legal requirement exists to retain ID images post-rental despite keeping license numbers for two years.\n\nPublic replies express frustration that the measure remains a non-mandatory caution without penalties, highlighting concerns over insufficient enforcement to prevent identity misuse.",
-      "createdAt": "2026-11-19T03:52:44.000Z",
-      "url": "https://x.com/cz_binance/status/2123263179199537339",
+      "text": "Forbes: \"Apparently, the most pressing unanswered question about the $8 billion FTX fraud is whether SBF ever really loved Caroline Ellison. At least, that's the impression you might get from watching Netflix's new series\n...\nOne of the most colorful of those creative imaginings https://t.co/V7H04W11oE https://t.co/KcsyMsh7Dk",
+      "createdAt": "2026-11-19T22:53:37.000Z",
+      "url": "https://x.com/cz_binance/status/2123550289957658970",
       "kind": "quote",
       "repostOf": null,
-      "likes": 867,
-      "reposts": 87,
-      "textZh": "日本个人信息保护委员会发布通知，敦促租车运营商在完成身份核验后及时删除驾照及其他带照片身份证件的影像，此前发生了因未授权访问导致的数据泄露。\n\n通知指出，尽管证件号码需保留两年，但租期结束后并无法律要求保留证件影像。\n\n公众回复对该措施仍只是没有处罚的非强制提醒表示不满，并强调对执法不足、难以防止身份盗用的担忧。"
+      "likes": 460,
+      "reposts": 38,
+      "textZh": "福布斯：“显然，关于这起 80 亿美元 FTX 欺诈案，最紧迫、尚未解答的问题是，SBF 是否真的爱过 Caroline Ellison。至少，看完 Netflix 的新剧，你可能会得到这种印象。\n...\n那些富有创意的想象中，最五彩斑斓的之一是……”\nhttps://t.co/V7H04W11oE https://t.co/KcsyMsh7Dk"
     },
     {
-      "id": "2123173810333421717",
+      "id": "2123479017785618463",
       "accountId": "cz_binance",
       "name": "CZ",
       "zh": "赵长鹏",
       "username": "cz_binance",
-      "text": "Tokenized ANT will be live on @BNBCHAIN on Day 1 of its IPO, via bStocks, Ondo, and xStocks: https://t.co/X9Q3mzFygE",
-      "createdAt": "2026-11-18T21:57:37.000Z",
-      "url": "https://x.com/cz_binance/status/2123173810333421717",
+      "text": "Inflation will follow 👇. \n\nNot financial advice, but might be good to hold assets with limited supply. https://t.co/NTD6qo2mtd",
+      "createdAt": "2026-11-19T18:10:24.000Z",
+      "url": "https://x.com/cz_binance/status/2123479017785618463",
       "kind": "quote",
       "repostOf": null,
-      "likes": 1463,
-      "reposts": 105,
-      "textZh": "代币化的 ANT 将在 IPO 首日通过 bStocks、Ondo 和 xStocks 在 @BNBCHAIN 上线：\nhttps://t.co/X9Q3mzFygE"
+      "likes": 3795,
+      "reposts": 275,
+      "textZh": "通胀将会随之而来 👇。\n\n并非投资建议，但持有供给有限的资产或许是个好主意。\nhttps://t.co/NTD6qo2mtd"
     },
     {
-      "id": "2122830089276756302",
+      "id": "2123476300203807021",
       "accountId": "cz_binance",
       "name": "CZ",
       "zh": "赵长鹏",
       "username": "cz_binance",
-      "text": "Zach is really good. https://t.co/KZMmykBjRx",
-      "createdAt": "2026-11-17T23:11:48.000Z",
-      "url": "https://x.com/cz_binance/status/2122830089276756302",
+      "text": "Also, quite a number of Japanese banks reported data leaks recently. Many other banks probably just not reporting/admitting/knowing.\n\nThere will be lots of highly targeted phishing attempts. They know your bank name, account balances, maybe even spending history, etc. https://t.co/lVFnGtehO7",
+      "createdAt": "2026-11-19T17:59:36.000Z",
+      "url": "https://x.com/cz_binance/status/2123476300203807021",
       "kind": "quote",
       "repostOf": null,
-      "likes": 4618,
-      "reposts": 236,
-      "textZh": "Zach 真的很优秀。\nhttps://t.co/KZMmykBjRx"
+      "likes": 1261,
+      "reposts": 128,
+      "textZh": "此外，近期也有不少日本银行报告了数据泄露。很多其他银行可能只是没有报告、不愿承认，或者根本不知情。\n\n接下来会有大量高度定向的钓鱼攻击。他们知道你的银行名称、账户余额，甚至可能包括消费记录等。\nhttps://t.co/lVFnGtehO7"
     },
     {
-      "id": "2122674971151577363",
+      "id": "2123469470027133011",
       "accountId": "cz_binance",
       "name": "CZ",
       "zh": "赵长鹏",
       "username": "cz_binance",
-      "text": "这两张假照片在过去两天流传得很广。\n\n为什么黑子会用这么明显的假图片呢？因为他们想筛选和针对那些没有独立思考能力的人们。\n\n如果你看不出来这图片是假的，建议你远离社交媒体。\n\n（没有交易所会用微信做内部沟通。） https://t.co/esIzxouXYj",
-      "createdAt": "2026-11-17T12:55:25.000Z",
-      "url": "https://x.com/cz_binance/status/2122674971151577363",
-      "kind": "post",
+      "text": "Bloomberg's report on Netflix. https://t.co/t5fq6iK3FN https://t.co/e9wuLPZcPv",
+      "createdAt": "2026-11-19T17:32:28.000Z",
+      "url": "https://x.com/cz_binance/status/2123469470027133011",
+      "kind": "quote",
       "repostOf": null,
-      "likes": 2735,
-      "reposts": 184,
-      "textZh": "这两张假照片在过去两天流传得很广。\n\n为什么黑子会用这么明显的假图片呢？因为他们想筛选和针对那些没有独立思考能力的人们。\n\n如果你看不出来这图片是假的，建议你远离社交媒体。\n\n（没有交易所会用微信做内部沟通。） https://t.co/esIzxouXYj"
+      "likes": 624,
+      "reposts": 44,
+      "textZh": "彭博对 Netflix 的报道。\nhttps://t.co/t5fq6iK3FN https://t.co/e9wuLPZcPv"
     },
     {
-      "id": "2122087339669541321",
+      "id": "2123468710245519732",
       "accountId": "cz_binance",
       "name": "CZ",
       "zh": "赵长鹏",
       "username": "cz_binance",
-      "text": "How others see you isn’t you, how you see yourself isn’t you, how you see others is the real you. - Sartre\n\n1/2 👇 https://t.co/JOpZ2Y7JSk",
-      "createdAt": "2026-11-15T22:00:22.000Z",
-      "url": "https://x.com/cz_binance/status/2122087339669541321",
+      "text": "😂 https://t.co/6cMBkz6Of8",
+      "createdAt": "2026-11-19T17:29:27.000Z",
+      "url": "https://x.com/cz_binance/status/2123468710245519732",
       "kind": "quote",
       "repostOf": null,
-      "likes": 3462,
-      "reposts": 366,
-      "textZh": "别人眼中的你不是你，你眼中的自己不是你，你眼中的别人才是真正的你。——萨特\n\n1/2 👇\nhttps://t.co/JOpZ2Y7JSk"
+      "likes": 558,
+      "reposts": 30,
+      "textZh": "😂\nhttps://t.co/6cMBkz6Of8"
     },
     {
-      "id": "2122000010992824627",
+      "id": "2123468610169675796",
       "accountId": "cz_binance",
       "name": "CZ",
       "zh": "赵长鹏",
       "username": "cz_binance",
-      "text": "Why are crypto prices down?\n\nNo one knows for sure. Correlation does not prove causation. Here are some potential reasons.\n\nMoney shifting to the Anthropic IPO: https://t.co/4WXOMfH9Th\n\nETF outflows: U.S. spot Bitcoin ETFs saw about $1.9 billion in outflows over seven trading sessions through November 13. Ether funds also saw withdrawals. https://t.co/RxhYaaOMAU\n\nSecurity fears: the Binance hack, iPhone-linked crypto wallets drained, Chrome exploit, Microsoft down. These security incidents could make some people less willing to keep funds in crypto.\n\nHot U.S. inflation has raised expectations of another Fed rate hike. Higher yields and a stronger dollar can weigh on \"riskier assets\" such as crypto.\n\nPolitical uncertainty: Midterm results have raised concerns about potentially stricter U.S. crypto policy.\n\nNo, Binance did not sell crypto.\n\nI bought crypto in the past few days, as I got some stablecoins recently. (maybe this is the cause 🤣)\n\nMid-long term, crypto will continue to grow.\n\nViews are my own. Not financial advice. \n\nFor future reference, price of BTC hit a low of $62,006 today.",
-      "createdAt": "2026-11-15T16:13:22.000Z",
-      "url": "https://x.com/cz_binance/status/2122000010992824627",
+      "text": "Cancelling Netflix 🤣 https://t.co/qL32ISZl9E",
+      "createdAt": "2026-11-19T17:29:03.000Z",
+      "url": "https://x.com/cz_binance/status/2123468610169675796",
       "kind": "quote",
       "repostOf": null,
-      "likes": 14015,
-      "reposts": 1687,
-      "textZh": "为什么加密货币价格在下跌？\n\n没有人确切知道。相关性并不等于因果关系。以下是一些可能的原因。\n\n资金转向 Anthropic 的 IPO：https://t.co/4WXOMfH9Th\n\nETF 资金流出：截至 11 月 13 日，美国现货比特币 ETF 在七个交易日内流出约 19 亿美元。以太坊基金也出现了赎回。https://t.co/RxhYaaOMAU\n\n安全担忧：币安遭黑客攻击、与 iPhone 关联的加密钱包被抽空、Chrome 漏洞、微软宕机。这些安全事件可能让一些人更不愿意把资金留在加密货币里。\n\n美国通胀偏热，提高了美联储再次加息的预期。更高的收益率和更强的美元可能压制加密货币这类“风险资产”。\n\n政治不确定性：中期选举结果引发了人们对美国加密政策可能收紧的担忧。\n\n不，币安没有抛售加密货币。\n\n我过去几天买了加密货币，因为最近拿到了一些稳定币。（也许这就是原因 🤣）\n\n中长期来看，加密货币将继续增长。\n\n以上仅为我个人观点，不构成财务建议。\n\n供日后参考：比特币价格今天最低触及 $62,006。"
+      "likes": 2291,
+      "reposts": 86,
+      "textZh": "取消 Netflix 了 🤣\nhttps://t.co/qL32ISZl9E"
     },
     {
       "id": "2117719664008851609",
@@ -257,7 +257,7 @@
       "kind": "repost",
       "repostOf": "realDonaldTrump",
       "likes": 0,
-      "reposts": 2838,
+      "reposts": 2835,
       "textZh": "致亚拉巴马的伟大人民，请走出来为这些伟大的爱国者投票！他们得到我完全、彻底的背书，绝不会让你们失望！唐纳德·J·特朗普总统\nhttps://t.co/CKrjCmURKi https://t.co/du0sEtyWU7"
     },
     {
@@ -271,8 +271,8 @@
       "url": "https://x.com/justinsuntron/status/2123359517325062354",
       "kind": "quote",
       "repostOf": null,
-      "likes": 26,
-      "reposts": 1,
+      "likes": 94,
+      "reposts": 5,
       "textZh": "AI 是懂行的！ https://t.co/5lAgpryMTZ"
     },
     {
@@ -286,8 +286,8 @@
       "url": "https://x.com/justinsuntron/status/2123359363901616560",
       "kind": "post",
       "repostOf": null,
-      "likes": 49,
-      "reposts": 9,
+      "likes": 260,
+      "reposts": 39,
       "textZh": "TRON 在曼谷 🇹🇭 tron:native\nhttps://t.co/VTlcceFEEo"
     },
     {
@@ -301,8 +301,8 @@
       "url": "https://x.com/justinsuntron/status/2123353948979691564",
       "kind": "quote",
       "repostOf": null,
-      "likes": 52,
-      "reposts": 2,
+      "likes": 119,
+      "reposts": 7,
       "textZh": "24/7 支付是正确的目标。\n\nTRON 上的稳定币从不休息。🔻\nhttps://t.co/GWKy0JCCc8"
     },
     {
@@ -316,8 +316,8 @@
       "url": "https://x.com/justinsuntron/status/2123293044145545277",
       "kind": "quote",
       "repostOf": null,
-      "likes": 112,
-      "reposts": 8,
+      "likes": 166,
+      "reposts": 9,
       "textZh": "来火币都市感受一下！ https://t.co/zCAxxSPJg5"
     },
     {
@@ -331,8 +331,8 @@
       "url": "https://x.com/justinsuntron/status/2123292667471970764",
       "kind": "quote",
       "repostOf": null,
-      "likes": 78,
-      "reposts": 8,
+      "likes": 138,
+      "reposts": 11,
       "textZh": "币圈长江电力 https://t.co/0i1QLAHsVP"
     },
     {
@@ -346,9 +346,24 @@
       "url": "https://x.com/justinsuntron/status/2123292561154646062",
       "kind": "quote",
       "repostOf": null,
-      "likes": 36,
-      "reposts": 5,
+      "likes": 55,
+      "reposts": 6,
       "textZh": "JST确实硬，小TRX名不虚传 https://t.co/e3toeK75fX"
+    },
+    {
+      "id": "2123420518967591217",
+      "accountId": "saylor",
+      "name": "Michael Saylor",
+      "zh": "Saylor",
+      "username": "saylor",
+      "text": "$STRC traded over $600M yesterday, the only one of 456 U.S.-listed income preferreds to do so this year. We intend to keep buying below $100. Repurchases facilitate liquidity and lower dividend obligations. We believe they strengthen the credit and benefit common shareholders.",
+      "createdAt": "2026-11-19T14:17:57.000Z",
+      "url": "https://x.com/saylor/status/2123420518967591217",
+      "kind": "post",
+      "repostOf": null,
+      "likes": 5165,
+      "reposts": 376,
+      "textZh": "$STRC 昨日成交额超过 6 亿美元，是今年 456 只美国上市收益优先股中唯一达到这一水平的。我们打算在 100 美元以下继续买入。回购有助于提升流动性并降低股息负担。我们相信，这会增强信用，并惠及普通股股东。"
     },
     {
       "id": "2123098624204710141",
@@ -361,8 +376,8 @@
       "url": "https://x.com/saylor/status/2123098624204710141",
       "kind": "post",
       "repostOf": null,
-      "likes": 21095,
-      "reposts": 1478,
+      "likes": 23427,
+      "reposts": 1610,
       "textZh": "卖方耗尽会远早于 Saylor 的耗尽。"
     },
     {
@@ -376,8 +391,8 @@
       "url": "https://x.com/saylor/status/2122761335834624196",
       "kind": "quote",
       "repostOf": null,
-      "likes": 3914,
-      "reposts": 238,
+      "likes": 3989,
+      "reposts": 246,
       "textZh": "照这个速度，每个人都会聪明到去买比特币。\nhttps://t.co/iFzaN6KLMS"
     },
     {
@@ -391,8 +406,8 @@
       "url": "https://x.com/saylor/status/2122685864421843248",
       "kind": "post",
       "repostOf": null,
-      "likes": 5819,
-      "reposts": 613,
+      "likes": 5865,
+      "reposts": 620,
       "textZh": "银行正在把比特币带给客户。富国银行（Wells Fargo）报告，截至 9 月 30 日持有 4958 万份贝莱德比特币 ETF 份额，较 6 月增加 103%。这些份额价值 23.5 亿美元。\nhttps://t.co/ABCmSP4dsm"
     },
     {
@@ -406,8 +421,8 @@
       "url": "https://x.com/saylor/status/2122459084599197886",
       "kind": "post",
       "repostOf": null,
-      "likes": 4129,
-      "reposts": 348,
+      "likes": 4143,
+      "reposts": 352,
       "textZh": "我们在 Strategy 仪表板中新增了“美元实力”指标。按当前利率，我们的美元资产可支付 3.4 年的利息和股息，相当于我们数字信用加权久期的 41%。\nhttps://t.co/RsyMiNESxU https://t.co/XyFVbVCFCM"
     },
     {
@@ -421,24 +436,24 @@
       "url": "https://x.com/saylor/status/2122374878850383918",
       "kind": "post",
       "repostOf": null,
-      "likes": 13881,
-      "reposts": 941,
+      "likes": 13916,
+      "reposts": 954,
       "textZh": "比特币是我的退出方案。\nhttps://t.co/OYqrBlVlA4"
     },
     {
-      "id": "2122315179522429177",
-      "accountId": "saylor",
-      "name": "Michael Saylor",
-      "zh": "Saylor",
-      "username": "saylor",
-      "text": "Strategy has acquired 485 $BTC and repurchased $228M of $STRC. As of 11/15/26, we hold 850,849 BTC and $4.9B of USD Assets. $MSTR https://t.co/cACnaFSMsr",
-      "createdAt": "2026-11-16T13:05:44.000Z",
-      "url": "https://x.com/saylor/status/2122315179522429177",
-      "kind": "post",
+      "id": "2123478102760415642",
+      "accountId": "ColeMacro",
+      "name": "Matt Cole",
+      "zh": "Cole",
+      "username": "ColeMacro",
+      "text": "Did a little Christmas shopping this morning. https://t.co/PVQG9suE71",
+      "createdAt": "2026-11-19T18:06:46.000Z",
+      "url": "https://x.com/ColeMacro/status/2123478102760415642",
+      "kind": "quote",
       "repostOf": null,
-      "likes": 11953,
-      "reposts": 1238,
-      "textZh": "Strategy 已购入 485 枚 $BTC，并回购了 2.28 亿美元的 $STRC。截至 2026 年 11 月 15 日，我们持有 850,849 枚 BTC 以及 49 亿美元的美元资产。$MSTR\nhttps://t.co/cACnaFSMsr"
+      "likes": 143,
+      "reposts": 9,
+      "textZh": "今早稍微做了点圣诞购物。\nhttps://t.co/PVQG9suE71"
     },
     {
       "id": "2123047267607498814",
@@ -451,8 +466,8 @@
       "url": "https://x.com/ColeMacro/status/2123047267607498814",
       "kind": "quote",
       "repostOf": null,
-      "likes": 308,
-      "reposts": 22,
+      "likes": 317,
+      "reposts": 23,
       "textZh": "美国国债是有亏损保证的收益率。\nhttps://t.co/cvTcgWqxMO"
     },
     {
@@ -466,8 +481,8 @@
       "url": "https://x.com/ColeMacro/status/2122910999720440283",
       "kind": "quote",
       "repostOf": null,
-      "likes": 582,
-      "reposts": 56,
+      "likes": 586,
+      "reposts": 57,
       "textZh": "对 @nvidia 来说，最优路径是让 @JensenHuang 重新担任 CEO，并撤掉任何反对的董事会成员或高管。\n\n如果这一步能实现，公司很可能变得比以往任何时候都更强大。\n\n如果做不到，他们大概会缓慢消亡。\nhttps://t.co/ONU1vcRzYI"
     },
     {
@@ -481,8 +496,8 @@
       "url": "https://x.com/ColeMacro/status/2122876916982227166",
       "kind": "post",
       "repostOf": null,
-      "likes": 1907,
-      "reposts": 145,
+      "likes": 1911,
+      "reposts": 143,
       "textZh": "这将是一场较量，也需要时间，但 @JensenHuang 几乎肯定会重新担任 @nvidia 的 CEO。\n\n如有疑问，把这段视频多看几遍。\nhttps://t.co/1oemv5u7PP"
     },
     {
@@ -496,8 +511,8 @@
       "url": "https://x.com/ColeMacro/status/2122842821967372460",
       "kind": "post",
       "repostOf": null,
-      "likes": 2625,
-      "reposts": 300,
+      "likes": 2657,
+      "reposts": 304,
       "textZh": "我妻子今天去美国最大银行之一的网点取现。工作人员告诉她，现金已经取完了，因为很多人出于网络安全担忧在取钱。\n\n我们以前从未遇到过这种情况。这是观察外界恐慌程度的一个有意思窗口。"
     },
     {
@@ -514,21 +529,6 @@
       "likes": 276,
       "reposts": 31,
       "textZh": "我们的国家美国，建立在自由是与生俱来的权利、政府的存在是为了保护这一权利的信念之上。在技术日益强大的时代捍卫这一传统，将成为我们这一代人决定性的政治斗争之一。\n\n货币、言论和智能方面的自由，将塑造美国的下一篇章。比特币、开源 AI 和加密通信可以把非凡的力量交到个人手中，帮助我们建设一个既更自由也更安全的未来。我们欠孩子们的，不仅是我们继承来的自由，还有捍卫这些自由的工具。\n\nFinney Foundation 正在承担这场斗争。它的使命值得我们的资金支持，更重要的是值得我们投入时间和精力。感谢这个团队的工作和领导，也自豪能支持他们。\n\n🇺🇸"
-    },
-    {
-      "id": "2122714491045695663",
-      "accountId": "ColeMacro",
-      "name": "Matt Cole",
-      "zh": "Cole",
-      "username": "ColeMacro",
-      "text": "I joined @natbrunell to discuss Bitcoin’s drawdown, why paying a high fiat yield in perpetuity is the ultimate win-win for our common & preferred shareholders, what needs to happen for Bitcoin to reach $500K to $1M, and more.\n\nTIMESTAMPS\n0:00 - Trailer\n0:59 - Growing Strive’s BTC holdings from 5K to 40K+\n8:47 - What really caused the summer unwind\n14:33 - The fear that wasn’t Bitcoin going to zero\n16:47 - How AI accelerates the debt crisis\n21:06 - Bitcoin’s performance and the test against gold\n27:21 - Why digital credit is an easier sell than Bitcoin\n39:13 - Would Strive ever sell Bitcoin?\n41:49 - Is self-custody harder than the industry admits?\n43:45 - Why I don’t own digital credit\n45:08 - Answering the critics of digital credit\n49:49 - Why DOGE’s failure made us more bullish\n53:40 - What it takes for Bitcoin to reach $500K to $1M\n\n$ASST $SATA $SATS https://t.co/ZltQkIe8TZ",
-      "createdAt": "2026-11-17T15:32:27.000Z",
-      "url": "https://x.com/ColeMacro/status/2122714491045695663",
-      "kind": "post",
-      "repostOf": null,
-      "likes": 438,
-      "reposts": 44,
-      "textZh": "我与 @natbrunell 一起讨论了比特币的回调、为何永久支付高法币收益率对我们的普通股和优先股股东是终极双赢、比特币要达到 50 万美元至 100 万美元需要具备哪些条件，以及更多内容。\n\n时间戳\n0:00 - 预告片\n0:59 - 将 Strive 的 BTC 持仓从 5K 做到 40K+\n8:47 - 夏季解杠杆的真正原因\n14:33 - 那种并非比特币归零的恐惧\n16:47 - AI 如何加速债务危机\n21:06 - 比特币的表现以及与黄金的对比考验\n27:21 - 为什么数字信贷比比特币更好卖\n39:13 - Strive 会不会卖出比特币？\n41:49 - 自托管是否比行业承认的更难？\n43:45 - 为什么我不持有数字信贷\n45:08 - 回应数字信贷的批评者\n49:49 - 为什么 DOGE 的失败让我们更加看好\n53:40 - 比特币要达到 50 万美元至 100 万美元需要什么\n\n$ASST $SATA $SATS\nhttps://t.co/ZltQkIe8TZ"
     }
   ]
 }
