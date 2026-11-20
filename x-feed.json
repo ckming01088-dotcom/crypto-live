@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-20T20:09:00+08:00",
+  "asOf": "2026-11-20T21:04:00+08:00",
   "source": "X 公开帖快照（含中文译文）",
   "accounts": [
     {
@@ -261,6 +261,36 @@
       "textZh": "致亚拉巴马的伟大人民，请走出来为这些伟大的爱国者投票！他们得到我完全、彻底的背书，绝不会让你们失望！唐纳德·J·特朗普总统\nhttps://t.co/CKrjCmURKi https://t.co/du0sEtyWU7"
     },
     {
+      "id": "2123753964378439839",
+      "accountId": "justinsuntron",
+      "name": "Justin Sun",
+      "zh": "孙宇晨",
+      "username": "justinsuntron",
+      "text": "大红果时代的第一颗大结果！ https://t.co/uN28PvP6Q6",
+      "createdAt": "2026-11-20T12:22:57.000Z",
+      "url": "https://x.com/justinsuntron/status/2123753964378439839",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 50,
+      "reposts": 4,
+      "textZh": "大红果时代的第一颗大结果！\nhttps://t.co/uN28PvP6Q6"
+    },
+    {
+      "id": "2123751089707376971",
+      "accountId": "justinsuntron",
+      "name": "Justin Sun",
+      "zh": "孙宇晨",
+      "username": "justinsuntron",
+      "text": "网上爆料一眼假，建议可以多关注下薄肌，黄毛，孙学理论，提升自我修养。",
+      "createdAt": "2026-11-20T12:11:31.000Z",
+      "url": "https://x.com/justinsuntron/status/2123751089707376971",
+      "kind": "post",
+      "repostOf": null,
+      "likes": 264,
+      "reposts": 6,
+      "textZh": "网上爆料一眼假，建议可以多关注下薄肌，黄毛，孙学理论，提升自我修养。"
+    },
+    {
       "id": "2123745420656451812",
       "accountId": "justinsuntron",
       "name": "Justin Sun",
@@ -319,36 +349,6 @@
       "likes": 122,
       "reposts": 9,
       "textZh": "AI 是懂行的！ https://t.co/5lAgpryMTZ"
-    },
-    {
-      "id": "2123359363901616560",
-      "accountId": "justinsuntron",
-      "name": "Justin Sun",
-      "zh": "孙宇晨",
-      "username": "justinsuntron",
-      "text": "TRON in Bangkok 🇹🇭 tron:native https://t.co/VTlcceFEEo",
-      "createdAt": "2026-11-19T10:14:57.000Z",
-      "url": "https://x.com/justinsuntron/status/2123359363901616560",
-      "kind": "post",
-      "repostOf": null,
-      "likes": 315,
-      "reposts": 47,
-      "textZh": "TRON 在曼谷 🇹🇭 tron:native\nhttps://t.co/VTlcceFEEo"
-    },
-    {
-      "id": "2123353948979691564",
-      "accountId": "justinsuntron",
-      "name": "Justin Sun",
-      "zh": "孙宇晨",
-      "username": "justinsuntron",
-      "text": "24/7 payments is the right goal.\n\nStablecoins on TRON never sleeps. 🔻 https://t.co/GWKy0JCCc8",
-      "createdAt": "2026-11-19T09:53:26.000Z",
-      "url": "https://x.com/justinsuntron/status/2123353948979691564",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 141,
-      "reposts": 11,
-      "textZh": "24/7 支付是正确的目标。\n\nTRON 上的稳定币从不休息。🔻\nhttps://t.co/GWKy0JCCc8"
     },
     {
       "id": "2123577768914923974",
