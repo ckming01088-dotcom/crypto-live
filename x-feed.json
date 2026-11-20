@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-20T19:05:00+08:00",
+  "asOf": "2026-11-20T20:09:00+08:00",
   "source": "X 公开帖快照（含中文译文）",
   "accounts": [
     {
@@ -66,6 +66,36 @@
   ],
   "posts": [
     {
+      "id": "2123739064893600056",
+      "accountId": "elonmusk",
+      "name": "Elon Musk",
+      "zh": "马斯克",
+      "username": "elonmusk",
+      "text": "Approvata la guida autonoma di Tesla in Italia: è il primo dei grandi Paesi europei ad approvarla. Complimenti al sindaco di Roma Gualtieri, che per primo l'ha provata in città (ci siamo divertiti!), al ministro Salvini per la decisione lungimirante di approvarla al Presidente",
+      "createdAt": "2026-11-20T11:23:44.000Z",
+      "url": "https://x.com/elonmusk/status/2123739064893600056",
+      "kind": "repost",
+      "repostOf": "andst7",
+      "likes": 0,
+      "reposts": 123,
+      "textZh": "意大利已批准特斯拉自动驾驶：这是首个批准该技术的欧洲大国。祝贺罗马市长 Gualtieri，他率先在市内体验（我们玩得很开心！），也祝贺 Salvini 部长做出富有远见的批准决定，向总统……"
+    },
+    {
+      "id": "2123737976710848580",
+      "accountId": "elonmusk",
+      "name": "Elon Musk",
+      "zh": "马斯克",
+      "username": "elonmusk",
+      "text": "Yes https://t.co/NAk6Emsump",
+      "createdAt": "2026-11-20T11:19:25.000Z",
+      "url": "https://x.com/elonmusk/status/2123737976710848580",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 2623,
+      "reposts": 237,
+      "textZh": "是的\nhttps://t.co/NAk6Emsump"
+    },
+    {
       "id": "2123726569206415815",
       "accountId": "elonmusk",
       "name": "Elon Musk",
@@ -76,8 +106,8 @@
       "url": "https://x.com/elonmusk/status/2123726569206415815",
       "kind": "post",
       "repostOf": null,
-      "likes": 2576,
-      "reposts": 269,
+      "likes": 7775,
+      "reposts": 565,
       "textZh": "特斯拉的 AI，运行在我们那台小小的 AI4 电脑上，现在已经能在 Diablo 中打到 Torment II。"
     },
     {
@@ -91,8 +121,8 @@
       "url": "https://x.com/elonmusk/status/2123695317375992288",
       "kind": "quote",
       "repostOf": null,
-      "likes": 14451,
-      "reposts": 1125,
+      "likes": 20250,
+      "reposts": 1541,
       "textZh": "这不是 AI 😂\nhttps://t.co/7QlYzcVszJ"
     },
     {
@@ -106,8 +136,8 @@
       "url": "https://x.com/elonmusk/status/2123475464043786417",
       "kind": "quote",
       "repostOf": null,
-      "likes": 20421,
-      "reposts": 1848,
+      "likes": 20856,
+      "reposts": 1892,
       "textZh": "你可以打造一家完全由 Grok Bots 组成的公司！\nhttps://t.co/qLl5REpV2h"
     },
     {
@@ -121,39 +151,24 @@
       "url": "https://x.com/elonmusk/status/2123337655731826810",
       "kind": "quote",
       "repostOf": null,
-      "likes": 11431,
-      "reposts": 1580,
+      "likes": 11537,
+      "reposts": 1589,
       "textZh": "将意识延伸到星辰\nhttps://t.co/vRKCpiPqyV"
     },
     {
-      "id": "2123333341932052749",
-      "accountId": "elonmusk",
-      "name": "Elon Musk",
-      "zh": "马斯克",
-      "username": "elonmusk",
-      "text": "Starlink started with a speech in Seattle https://t.co/y8QLexDwnu",
-      "createdAt": "2026-11-19T08:31:32.000Z",
-      "url": "https://x.com/elonmusk/status/2123333341932052749",
+      "id": "2123735923380965851",
+      "accountId": "cz_binance",
+      "name": "CZ",
+      "zh": "赵长鹏",
+      "username": "cz_binance",
+      "text": "Price discovery happens first on chain. https://t.co/GGL8NsrIkP",
+      "createdAt": "2026-11-20T11:11:15.000Z",
+      "url": "https://x.com/cz_binance/status/2123735923380965851",
       "kind": "quote",
       "repostOf": null,
-      "likes": 12448,
-      "reposts": 1640,
-      "textZh": "Starlink 始于西雅图的一场演讲\nhttps://t.co/y8QLexDwnu"
-    },
-    {
-      "id": "2123320336544649485",
-      "accountId": "elonmusk",
-      "name": "Elon Musk",
-      "zh": "马斯克",
-      "username": "elonmusk",
-      "text": "Remember to cast your Tesla votes! https://t.co/41fHEGryzP",
-      "createdAt": "2026-11-19T07:39:52.000Z",
-      "url": "https://x.com/elonmusk/status/2123320336544649485",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 8806,
-      "reposts": 1003,
-      "textZh": "记得投出你的特斯拉选票！\nhttps://t.co/41fHEGryzP"
+      "likes": 503,
+      "reposts": 28,
+      "textZh": "价格发现首先发生在链上。\nhttps://t.co/GGL8NsrIkP"
     },
     {
       "id": "2123727696673026236",
@@ -166,8 +181,8 @@
       "url": "https://x.com/cz_binance/status/2123727696673026236",
       "kind": "quote",
       "repostOf": null,
-      "likes": 298,
-      "reposts": 26,
+      "likes": 854,
+      "reposts": 55,
       "textZh": "有势力在散布负面叙事，背后有大量资金支持。\nhttps://t.co/Ymy4sA0cJd"
     },
     {
@@ -181,8 +196,8 @@
       "url": "https://x.com/cz_binance/status/2123550289957658970",
       "kind": "quote",
       "repostOf": null,
-      "likes": 1257,
-      "reposts": 107,
+      "likes": 1303,
+      "reposts": 111,
       "textZh": "福布斯：“显然，关于这起 80 亿美元 FTX 欺诈案，最紧迫、尚未解答的问题是，SBF 是否真的爱过 Caroline Ellison。至少，看完 Netflix 的新剧，你可能会得到这种印象。\n...\n那些富有创意的想象中，最五彩斑斓的之一，是币安亿万富翁创始人赵长鹏（Terry Chen）被改写成加密世界的邦德式反派：他举办社交活动，唯一目的就是堵住 Bankman-Fried，并施压让他对客户交易进行抢跑。没有任何公开证据表明赵长鹏做过这类事。”\n\nhttps://t.co/aPISTA9h8b\n\n这张 2026 年 3 月的对比 👇 几乎把一切都说尽了……🤣\n\n图片来源：https://t.co/KcsyMsh7Dk"
     },
     {
@@ -196,8 +211,8 @@
       "url": "https://x.com/cz_binance/status/2123479017785618463",
       "kind": "quote",
       "repostOf": null,
-      "likes": 5114,
-      "reposts": 376,
+      "likes": 5179,
+      "reposts": 383,
       "textZh": "通胀将会随之而来 👇。\n\n并非投资建议，但持有供给有限的资产或许是个好主意。\nhttps://t.co/NTD6qo2mtd"
     },
     {
@@ -211,8 +226,8 @@
       "url": "https://x.com/cz_binance/status/2123476300203807021",
       "kind": "quote",
       "repostOf": null,
-      "likes": 2136,
-      "reposts": 240,
+      "likes": 2192,
+      "reposts": 245,
       "textZh": "此外，近期也有不少日本银行报告了数据泄露。很多其他银行可能只是没有报告、不愿承认，或者根本不知情。\n\n接下来会有大量高度定向的钓鱼攻击。他们知道你的银行名称、账户余额，甚至可能包括消费记录等。\nhttps://t.co/lVFnGtehO7"
     },
     {
@@ -226,24 +241,9 @@
       "url": "https://x.com/cz_binance/status/2123469470027133011",
       "kind": "quote",
       "repostOf": null,
-      "likes": 766,
-      "reposts": 51,
+      "likes": 783,
+      "reposts": 55,
       "textZh": "彭博对 Netflix 的报道。\nhttps://t.co/t5fq6iK3FN https://t.co/e9wuLPZcPv"
-    },
-    {
-      "id": "2123468710245519732",
-      "accountId": "cz_binance",
-      "name": "CZ",
-      "zh": "赵长鹏",
-      "username": "cz_binance",
-      "text": "😂 https://t.co/6cMBkz6Of8",
-      "createdAt": "2026-11-19T17:29:27.000Z",
-      "url": "https://x.com/cz_binance/status/2123468710245519732",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 663,
-      "reposts": 40,
-      "textZh": "😂\nhttps://t.co/6cMBkz6Of8"
     },
     {
       "id": "2117719664008851609",
@@ -261,6 +261,21 @@
       "textZh": "致亚拉巴马的伟大人民，请走出来为这些伟大的爱国者投票！他们得到我完全、彻底的背书，绝不会让你们失望！唐纳德·J·特朗普总统\nhttps://t.co/CKrjCmURKi https://t.co/du0sEtyWU7"
     },
     {
+      "id": "2123745420656451812",
+      "accountId": "justinsuntron",
+      "name": "Justin Sun",
+      "zh": "孙宇晨",
+      "username": "justinsuntron",
+      "text": "Erdős #20, the sunflower conjecture. https://t.co/MWkOkfBZIp",
+      "createdAt": "2026-11-20T11:49:00.000Z",
+      "url": "https://x.com/justinsuntron/status/2123745420656451812",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 15,
+      "reposts": 0,
+      "textZh": "Erdős #20，向日葵猜想。\nhttps://t.co/MWkOkfBZIp"
+    },
+    {
       "id": "2123724648651325802",
       "accountId": "justinsuntron",
       "name": "Justin Sun",
@@ -271,8 +286,8 @@
       "url": "https://x.com/justinsuntron/status/2123724648651325802",
       "kind": "quote",
       "repostOf": null,
-      "likes": 163,
-      "reposts": 9,
+      "likes": 590,
+      "reposts": 37,
       "textZh": "有人问为什么我用明末做对比，我带着这个问题问了Claude，回答的很好。\nhttps://t.co/FlLXcGn5VK https://t.co/we6u3r7VTH"
     },
     {
@@ -286,7 +301,7 @@
       "url": "https://x.com/justinsuntron/status/2123681633589149750",
       "kind": "quote",
       "repostOf": null,
-      "likes": 64,
+      "likes": 71,
       "reposts": 4,
       "textZh": "TRON 上的 USDT，现已接入 @PulsarMoneyApp。🔻 https://t.co/kIigXBYBuM"
     },
@@ -301,7 +316,7 @@
       "url": "https://x.com/justinsuntron/status/2123359517325062354",
       "kind": "quote",
       "repostOf": null,
-      "likes": 121,
+      "likes": 122,
       "reposts": 9,
       "textZh": "AI 是懂行的！ https://t.co/5lAgpryMTZ"
     },
@@ -316,7 +331,7 @@
       "url": "https://x.com/justinsuntron/status/2123359363901616560",
       "kind": "post",
       "repostOf": null,
-      "likes": 310,
+      "likes": 315,
       "reposts": 47,
       "textZh": "TRON 在曼谷 🇹🇭 tron:native\nhttps://t.co/VTlcceFEEo"
     },
@@ -336,21 +351,6 @@
       "textZh": "24/7 支付是正确的目标。\n\nTRON 上的稳定币从不休息。🔻\nhttps://t.co/GWKy0JCCc8"
     },
     {
-      "id": "2123293044145545277",
-      "accountId": "justinsuntron",
-      "name": "Justin Sun",
-      "zh": "孙宇晨",
-      "username": "justinsuntron",
-      "text": "来火币都市感受一下！ https://t.co/zCAxxSPJg5",
-      "createdAt": "2026-11-19T05:51:25.000Z",
-      "url": "https://x.com/justinsuntron/status/2123293044145545277",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 179,
-      "reposts": 11,
-      "textZh": "来火币都市感受一下！ https://t.co/zCAxxSPJg5"
-    },
-    {
       "id": "2123577768914923974",
       "accountId": "saylor",
       "name": "Michael Saylor",
@@ -361,8 +361,8 @@
       "url": "https://x.com/saylor/status/2123577768914923974",
       "kind": "post",
       "repostOf": null,
-      "likes": 2158,
-      "reposts": 255,
+      "likes": 2257,
+      "reposts": 265,
       "textZh": "我们如何决定何时买入比特币、何时回购 $STRC？在 Strategy 2026 年三季度投资者问答中，我和 @NatBrunell、@PhongLe 回答了大家关于每股比特币、在下行周期中支付股息，以及为 $MSTR 股东创造长期价值的问题。\n\n02:05 - $MSTR、$STRC、其他优先股和可转债如何融入 Strategy 的资本结构\n08:09 - 在 $BTC 升值之外，如何为 $MSTR 股东创造价值\n11:53 - 我们何时增发股票、买入比特币并回购 $STRC\n24:38 - 每股总比特币和每股净比特币对增值、风险和长期价值说明了什么\n37:18 - $STRC 回购、100 美元目标价以及信贷市场动态\n51:40 - 在保持资产负债表稳健的同时管理放大效应与风险\n53:06 - 在比特币长期下行期间支付股息并履行债务义务\n57:42 - 流动性数字信用如何为 $MSTR 股东创造价值\n01:04:34 - Strategy 在未来 3–7 年扩展数字信用、$STRC 和数字货币的愿景"
     },
     {
@@ -376,8 +376,8 @@
       "url": "https://x.com/saylor/status/2123420518967591217",
       "kind": "post",
       "repostOf": null,
-      "likes": 5963,
-      "reposts": 428,
+      "likes": 6028,
+      "reposts": 432,
       "textZh": "$STRC 昨日成交额超过 6 亿美元，是今年 456 只美国上市收益优先股中唯一达到这一水平的。我们打算在 100 美元以下继续买入。回购有助于提升流动性并降低股息负担。我们相信，这会增强信用，并惠及普通股股东。"
     },
     {
@@ -391,8 +391,8 @@
       "url": "https://x.com/saylor/status/2123098624204710141",
       "kind": "post",
       "repostOf": null,
-      "likes": 24414,
-      "reposts": 1664,
+      "likes": 24497,
+      "reposts": 1670,
       "textZh": "卖方耗尽会远早于 Saylor 的耗尽。"
     },
     {
@@ -451,7 +451,7 @@
       "url": "https://x.com/ColeMacro/status/2123478102760415642",
       "kind": "quote",
       "repostOf": null,
-      "likes": 164,
+      "likes": 166,
       "reposts": 10,
       "textZh": "今早稍微做了点圣诞购物。\nhttps://t.co/PVQG9suE71"
     },
@@ -496,7 +496,7 @@
       "url": "https://x.com/ColeMacro/status/2122876916982227166",
       "kind": "post",
       "repostOf": null,
-      "likes": 1915,
+      "likes": 1914,
       "reposts": 143,
       "textZh": "这将是一场较量，也需要时间，但 @JensenHuang 几乎肯定会重新担任 @nvidia 的 CEO。\n\n如有疑问，把这段视频多看几遍。\nhttps://t.co/1oemv5u7PP"
     },
