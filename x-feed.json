@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-21T18:05:28+08:00",
+  "asOf": "2026-11-21T21:07:26+08:00",
   "source": "X 公开帖快照（含中文译文）",
   "accounts": [
     {
@@ -416,6 +416,21 @@
       "textZh": "大红果时代的第一颗大结果！\nhttps://t.co/uN28PvP6Q6"
     },
     {
+      "id": "2124125931786953142",
+      "accountId": "saylor",
+      "name": "Michael Saylor",
+      "zh": "Saylor",
+      "username": "saylor",
+      "text": "Every day we Stretch. $STRC https://t.co/9LKnZRIPiZ",
+      "createdAt": "2026-11-21T13:01:01.000Z",
+      "url": "https://x.com/saylor/status/2124125931786953142",
+      "kind": "post",
+      "repostOf": null,
+      "likes": 236,
+      "reposts": 15,
+      "textZh": "我们每天都在 Stretch。$STRC\nhttps://t.co/9LKnZRIPiZ"
+    },
+    {
       "id": "2123826627759264099",
       "accountId": "saylor",
       "name": "Michael Saylor",
@@ -504,21 +519,6 @@
       "likes": 4017,
       "reposts": 247,
       "textZh": "照这个速度，每个人都会聪明到去买比特币。\nhttps://t.co/iFzaN6KLMS"
-    },
-    {
-      "id": "2122685864421843248",
-      "accountId": "saylor",
-      "name": "Michael Saylor",
-      "zh": "Saylor",
-      "username": "saylor",
-      "text": "Banks are bringing Bitcoin to their clients. Wells Fargo reported 49.58 million shares of BlackRock’s Bitcoin ETF as of September 30, up 103% from June. Those shares were worth $2.35 billion. https://t.co/ABCmSP4dsm",
-      "createdAt": "2026-11-17T13:38:42.000Z",
-      "url": "https://x.com/saylor/status/2122685864421843248",
-      "kind": "post",
-      "repostOf": null,
-      "likes": 5881,
-      "reposts": 620,
-      "textZh": "银行正在把比特币带给客户。富国银行（Wells Fargo）报告，截至 9 月 30 日持有 4958 万份贝莱德比特币 ETF 份额，较 6 月增加 103%。这些份额价值 23.5 亿美元。\nhttps://t.co/ABCmSP4dsm"
     },
     {
       "id": "2123478102760415642",
