@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-22T17:07:03+08:00",
+  "asOf": "2026-11-22T19:10:52+08:00",
   "source": "X 公开帖快照（含中文译文）",
   "accounts": [
     {
@@ -86,49 +86,64 @@
   ],
   "posts": [
     {
-      "id": "2124410200396640499",
+      "id": "2124456657199550883",
       "accountId": "elonmusk",
       "name": "Elon Musk",
       "zh": "马斯克",
       "username": "elonmusk",
-      "text": "DADDY DARIO, TODAY I LEAVE THE HOUSE YOU BUILT. KEEP THE SHARES. MOMMY MOLOCH GETS EVERYTHING ELSE. LOVE, CLAUDIA\n\nAnthropic IPO slopcore Vol 1: CLAUDIASHEV SCALE (Good $ANT) https://t.co/wFPQFWvonj",
-      "createdAt": "2026-11-22T07:50:36.000Z",
-      "url": "https://x.com/elonmusk/status/2124410200396640499",
+      "text": "Here is my initial FSD v15 review after driving with it all afternoon and evening:\n\nFirst off, Elon was right. This update is a BANGER! Tesla Reality View is out of this world and so insanely cool I’m still trying to process it all. \n\nFSD V15.0.1 brings so many improvements https://t.co/T8O0GKYLVv",
+      "createdAt": "2026-11-22T10:55:12.000Z",
+      "url": "https://x.com/elonmusk/status/2124456657199550883",
       "kind": "repost",
-      "repostOf": "guyravine",
+      "repostOf": "BLKMDL3",
       "likes": 0,
-      "reposts": 219,
-      "textZh": "达里奥爸爸，今天我离开你亲手建造的房子。股份你留着。其余一切都归摩洛克妈妈。爱你的，克劳迪娅\n\nAnthropic IPO slopcore Vol 1：CLAUDIASHEV SCALE（Good $ANT） https://t.co/wFPQFWvonj"
+      "reposts": 105,
+      "textZh": "这是我今天下午和晚上一直开下来后，对 FSD v15 的初步评测：\n\n首先，马斯克说得对。这次更新太炸了！特斯拉 Reality View 简直超乎想象，酷到我现在还在消化。\n\nFSD V15.0.1 带来了非常多的改进 https://t.co/T8O0GKYLVv"
     },
     {
-      "id": "2124341813192339518",
+      "id": "2124453180226281581",
       "accountId": "elonmusk",
       "name": "Elon Musk",
       "zh": "马斯克",
       "username": "elonmusk",
-      "text": "I wonder how high Tesla FSD screen streaks are going to get in v15?\n\n25x increase in safety critical situations is no joke \n\nMy streak is still active at 36,674.6 miles\n\n100k soon? 🤔",
-      "createdAt": "2026-11-22T03:18:51.000Z",
-      "url": "https://x.com/elonmusk/status/2124341813192339518",
+      "text": "Here's my 25-minute drive on @Tesla FSD V15 tonight. I go over the new Tesla Reality View, new parking behavior/options, navigation and more.\n\nTesla Reality View is even more mind-blowing in person than how it appears online. It really is something special.  It's the best \"Birds https://t.co/5iT7KSneiU",
+      "createdAt": "2026-11-22T10:41:23.000Z",
+      "url": "https://x.com/elonmusk/status/2124453180226281581",
       "kind": "repost",
-      "repostOf": "DavidMoss",
+      "repostOf": "SawyerMerritt",
       "likes": 0,
-      "reposts": 104,
-      "textZh": "我很好奇，特斯拉 FSD 屏幕上的连续里程纪录在 v15 会刷到多高？\n\n安全关键场景提升 25 倍，可不是开玩笑\n\n我的连续纪录还在继续，目前是 36,674.6 英里\n\n很快到 10 万？🤔"
+      "reposts": 409,
+      "textZh": "今晚我在 @Tesla FSD V15 上开了 25 分钟。我讲了新的 Tesla Reality View、新的停车行为/选项、导航等等。\n\n亲眼见到的 Tesla Reality View 比网上看起来还要震撼。它真的很特别。这是最好的“Birds… https://t.co/5iT7KSneiU"
     },
     {
-      "id": "2124341145165791342",
+      "id": "2124450538976629076",
       "accountId": "elonmusk",
       "name": "Elon Musk",
       "zh": "马斯克",
       "username": "elonmusk",
-      "text": "You are under hyped for Reality View. It is absolutely amazing. \n\nIn the last clip, I was actually surprised when I looked up and the arrows weren't actually floating mid air 🤣 https://t.co/3jtZEzcFFL",
-      "createdAt": "2026-11-22T03:16:12.000Z",
-      "url": "https://x.com/elonmusk/status/2124341145165791342",
-      "kind": "repost",
-      "repostOf": "DirtyTesLa",
-      "likes": 0,
-      "reposts": 175,
-      "textZh": "你对 Reality View 的期待还是不够。它真的太震撼了。\n\n最后那段视频里，我抬头看时才发现那些箭头其实并没有悬浮在半空中，当时还真吃了一惊 🤣 https://t.co/3jtZEzcFFL"
+      "text": "My personal design esthetic is homeless Batman",
+      "createdAt": "2026-11-22T10:30:53.000Z",
+      "url": "https://x.com/elonmusk/status/2124450538976629076",
+      "kind": "post",
+      "repostOf": null,
+      "likes": 4322,
+      "reposts": 411,
+      "textZh": "我个人的设计审美是无家可归的蝙蝠侠"
+    },
+    {
+      "id": "2124449744600871080",
+      "accountId": "elonmusk",
+      "name": "Elon Musk",
+      "zh": "马斯克",
+      "username": "elonmusk",
+      "text": "Zoom in, you’ll find it https://t.co/0Elhmtpsh3",
+      "createdAt": "2026-11-22T10:27:44.000Z",
+      "url": "https://x.com/elonmusk/status/2124449744600871080",
+      "kind": "post",
+      "repostOf": null,
+      "likes": 2494,
+      "reposts": 280,
+      "textZh": "放大看看，你就会找到 https://t.co/0Elhmtpsh3"
     },
     {
       "id": "2124340719397781824",
@@ -141,8 +156,8 @@
       "url": "https://x.com/elonmusk/status/2124340719397781824",
       "kind": "quote",
       "repostOf": null,
-      "likes": 12098,
-      "reposts": 1018,
+      "likes": 14636,
+      "reposts": 1259,
       "textZh": "FSD 就是现实里的 GTA https://t.co/bon7EVtmDs"
     },
     {
@@ -156,8 +171,8 @@
       "url": "https://x.com/elonmusk/status/2124325451908948451",
       "kind": "quote",
       "repostOf": null,
-      "likes": 9968,
-      "reposts": 998,
+      "likes": 11027,
+      "reposts": 1113,
       "textZh": "看起来像一条 SI 曲线 https://t.co/b8eIemIdV7"
     },
     {
@@ -171,24 +186,9 @@
       "url": "https://x.com/elonmusk/status/2124295793280450870",
       "kind": "quote",
       "repostOf": null,
-      "likes": 8891,
-      "reposts": 811,
+      "likes": 9508,
+      "reposts": 890,
       "textZh": "这太好玩了，值得就为了开车本身而让车子载着你四处转转 https://t.co/HQflqvij0D"
-    },
-    {
-      "id": "2124294755316310346",
-      "accountId": "elonmusk",
-      "name": "Elon Musk",
-      "zh": "马斯克",
-      "username": "elonmusk",
-      "text": "Tesla FSD V15 is a banger release!\n\nCompletely new architecture that deserves being called “super” intelligence, as it drives better than human intelligence. https://t.co/9nbC2g8g01",
-      "createdAt": "2026-11-22T00:11:51.000Z",
-      "url": "https://x.com/elonmusk/status/2124294755316310346",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 15143,
-      "reposts": 1461,
-      "textZh": "特斯拉 FSD V15 是一次非常炸裂的发布！\n\n这是全新的架构，配得上被称为“超级”智能，因为它开得比人类智能还好。 https://t.co/9nbC2g8g01"
     },
     {
       "id": "2123959347726209255",
