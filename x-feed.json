@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-22T09:09:55+08:00",
+  "asOf": "2026-11-22T11:06:42+08:00",
   "source": "X 公开帖快照（含中文译文）",
   "accounts": [
     {
@@ -86,6 +86,21 @@
   ],
   "posts": [
     {
+      "id": "2124325451908948451",
+      "accountId": "elonmusk",
+      "name": "Elon Musk",
+      "zh": "马斯克",
+      "username": "elonmusk",
+      "text": "Looks like an SI curve https://t.co/b8eIemIdV7",
+      "createdAt": "2026-11-22T02:13:50.000Z",
+      "url": "https://x.com/elonmusk/status/2124325451908948451",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 3514,
+      "reposts": 389,
+      "textZh": "看起来像一条 SI 曲线 https://t.co/b8eIemIdV7"
+    },
+    {
       "id": "2124295793280450870",
       "accountId": "elonmusk",
       "name": "Elon Musk",
@@ -96,8 +111,8 @@
       "url": "https://x.com/elonmusk/status/2124295793280450870",
       "kind": "quote",
       "repostOf": null,
-      "likes": 3299,
-      "reposts": 339,
+      "likes": 6117,
+      "reposts": 574,
       "textZh": "这太好玩了，值得就为了开车本身而让车子载着你四处转转 https://t.co/HQflqvij0D"
     },
     {
@@ -111,8 +126,8 @@
       "url": "https://x.com/elonmusk/status/2124294755316310346",
       "kind": "quote",
       "repostOf": null,
-      "likes": 4245,
-      "reposts": 441,
+      "likes": 9329,
+      "reposts": 916,
       "textZh": "特斯拉 FSD V15 是一次非常炸裂的发布！\n\n这是全新的架构，配得上被称为“超级”智能，因为它开得比人类智能还好。 https://t.co/9nbC2g8g01"
     },
     {
@@ -126,8 +141,8 @@
       "url": "https://x.com/elonmusk/status/2124280710747840889",
       "kind": "quote",
       "repostOf": null,
-      "likes": 2172,
-      "reposts": 326,
+      "likes": 2789,
+      "reposts": 393,
       "textZh": "把你最难的任务交给 Grok @Bot https://t.co/KEa57ff3ux"
     },
     {
@@ -141,8 +156,8 @@
       "url": "https://x.com/elonmusk/status/2124270426402836626",
       "kind": "quote",
       "repostOf": null,
-      "likes": 8699,
-      "reposts": 798,
+      "likes": 11189,
+      "reposts": 1018,
       "textZh": "这是实时 AI 视频生成（没有使用游戏引擎！），只用了一块 AI4 TRIP 加速器的一半。好好体会这句话…… https://t.co/ieASMRunOy"
     },
     {
@@ -156,8 +171,8 @@
       "url": "https://x.com/elonmusk/status/2124241570451054609",
       "kind": "post",
       "repostOf": null,
-      "likes": 36330,
-      "reposts": 2293,
+      "likes": 44752,
+      "reposts": 2775,
       "textZh": "是时候再次探测天王星了！\n\n（其实）我们需要好得多的影像。"
     },
     {
@@ -171,24 +186,9 @@
       "url": "https://x.com/elonmusk/status/2124238249686159590",
       "kind": "quote",
       "repostOf": null,
-      "likes": 17711,
-      "reposts": 1284,
+      "likes": 20355,
+      "reposts": 1486,
       "textZh": "就像 GTA https://t.co/H2H9tjTStt"
-    },
-    {
-      "id": "2124238164512714925",
-      "accountId": "elonmusk",
-      "name": "Elon Musk",
-      "zh": "马斯克",
-      "username": "elonmusk",
-      "text": "In FSD V15, the Tesla AI computer re-renders reality with chevrons in the sky for turns like a video game. \n\nYou can tap any point on the reality revisualizer to make your car go there.  https://t.co/A5ZB2yFkd7",
-      "createdAt": "2026-11-21T20:26:59.000Z",
-      "url": "https://x.com/elonmusk/status/2124238164512714925",
-      "kind": "post",
-      "repostOf": null,
-      "likes": 20812,
-      "reposts": 1978,
-      "textZh": "在 FSD V15 中，特斯拉的 AI 计算机会重新渲染现实，转弯时在空中打出人字形箭头，就像电子游戏一样。\n\n你可以点按现实重可视化界面上的任意一点，让车子开到那里。  https://t.co/A5ZB2yFkd7"
     },
     {
       "id": "2123927005863563713",
@@ -201,8 +201,8 @@
       "url": "https://x.com/cz_binance/status/2123927005863563713",
       "kind": "quote",
       "repostOf": null,
-      "likes": 12298,
-      "reposts": 824,
+      "likes": 12468,
+      "reposts": 839,
       "textZh": "哇，这太离谱了，完全是胡说八道。\n\n我猜他们就是这样控制“公众认知”的？\nhttps://t.co/rJvAhFlmmP"
     },
     {
@@ -216,8 +216,8 @@
       "url": "https://x.com/cz_binance/status/2123735923380965851",
       "kind": "quote",
       "repostOf": null,
-      "likes": 1431,
-      "reposts": 103,
+      "likes": 1440,
+      "reposts": 104,
       "textZh": "价格发现首先发生在链上。\nhttps://t.co/GGL8NsrIkP"
     },
     {
@@ -231,8 +231,8 @@
       "url": "https://x.com/cz_binance/status/2123727696673026236",
       "kind": "quote",
       "repostOf": null,
-      "likes": 5055,
-      "reposts": 312,
+      "likes": 5095,
+      "reposts": 314,
       "textZh": "有势力在散布负面叙事，背后有大量资金支持。\nhttps://t.co/Ymy4sA0cJd"
     },
     {
@@ -246,7 +246,7 @@
       "url": "https://x.com/cz_binance/status/2123550289957658970",
       "kind": "quote",
       "repostOf": null,
-      "likes": 1856,
+      "likes": 1860,
       "reposts": 169,
       "textZh": "福布斯：“显然，关于这起 80 亿美元 FTX 欺诈案，最紧迫、尚未解答的问题是，SBF 是否真的爱过 Caroline Ellison。至少，看完 Netflix 的新剧，你可能会得到这种印象。\n...\n那些富有创意的想象中，最五彩斑斓的之一，是币安亿万富翁创始人赵长鹏（Terry Chen）被改写成加密世界的邦德式反派：他举办社交活动，唯一目的就是堵住 Bankman-Fried，并施压让他对客户交易进行抢跑。没有任何公开证据表明赵长鹏做过这类事。”\n\nhttps://t.co/aPISTA9h8b\n\n这张 2026 年 3 月的对比 👇 几乎把一切都说尽了……🤣\n\n图片来源：https://t.co/KcsyMsh7Dk"
     },
@@ -261,7 +261,7 @@
       "url": "https://x.com/cz_binance/status/2123479017785618463",
       "kind": "quote",
       "repostOf": null,
-      "likes": 6101,
+      "likes": 6103,
       "reposts": 456,
       "textZh": "通胀将会随之而来 👇。\n\n并非投资建议，但持有供给有限的资产或许是个好主意。\nhttps://t.co/NTD6qo2mtd"
     },
@@ -276,7 +276,7 @@
       "url": "https://x.com/cz_binance/status/2123476300203807021",
       "kind": "quote",
       "repostOf": null,
-      "likes": 2549,
+      "likes": 2551,
       "reposts": 281,
       "textZh": "此外，近期也有不少日本银行报告了数据泄露。很多其他银行可能只是没有报告、不愿承认，或者根本不知情。\n\n接下来会有大量高度定向的钓鱼攻击。他们知道你的银行名称、账户余额，甚至可能包括消费记录等。\nhttps://t.co/lVFnGtehO7"
     },
@@ -321,8 +321,8 @@
       "url": "https://x.com/justinsuntron/status/2124075117861085388",
       "kind": "quote",
       "repostOf": null,
-      "likes": 227,
-      "reposts": 13,
+      "likes": 243,
+      "reposts": 14,
       "textZh": "孙宇晨奖将为黎曼猜想的两项核心成果颁发 100 万美元奖励！ https://t.co/p3r6C6yhNH"
     },
     {
@@ -336,8 +336,8 @@
       "url": "https://x.com/justinsuntron/status/2124036622987710730",
       "kind": "quote",
       "repostOf": null,
-      "likes": 123,
-      "reposts": 12,
+      "likes": 127,
+      "reposts": 13,
       "textZh": "各 $1M。很荣幸能支持伟大的数学。🧮\nhttps://t.co/sMIFCrcjsM"
     },
     {
@@ -351,8 +351,8 @@
       "url": "https://x.com/justinsuntron/status/2124013687556165828",
       "kind": "post",
       "repostOf": null,
-      "likes": 1510,
-      "reposts": 37,
+      "likes": 1558,
+      "reposts": 38,
       "textZh": "对于近期梦女针对我的持续骚扰和不实信息，通过恶意炒作获取流量，我此前没有过多回应，是希望保留善意，避免占用公共讨论的空间。\n\n但善意和克制，也需要得到基本的尊重。\n\n目前，我已委托律师事务所处理相关事项，并向有关司法机关反映情况。今后也会通过持续的证据保全和必要的法律程序，依法维护自身合法权益，追究相关梦女的民事与刑事责任。\n\n我尊重正常的讨论与批评，也希望大家尊重事实和个人边界。相关问题交由法律处理，不希望引发对立，只希望厘清事实，让正常生活和公共讨论都少一些无谓的打扰。"
     },
     {
@@ -366,7 +366,7 @@
       "url": "https://x.com/justinsuntron/status/2123811434320871659",
       "kind": "post",
       "repostOf": null,
-      "likes": 522,
+      "likes": 523,
       "reposts": 34,
       "textZh": "黎曼猜想已被解决。@JustinSunPrize\n\nhttps://t.co/NErQ9ASUXT"
     },
@@ -411,7 +411,7 @@
       "url": "https://x.com/justinsuntron/status/2123753964378439839",
       "kind": "quote",
       "repostOf": null,
-      "likes": 364,
+      "likes": 369,
       "reposts": 23,
       "textZh": "大红果时代的第一颗大结果！\nhttps://t.co/uN28PvP6Q6"
     },
@@ -426,8 +426,8 @@
       "url": "https://x.com/saylor/status/2124125931786953142",
       "kind": "post",
       "repostOf": null,
-      "likes": 4068,
-      "reposts": 358,
+      "likes": 4199,
+      "reposts": 373,
       "textZh": "我们每天都在 Stretch。$STRC\nhttps://t.co/9LKnZRIPiZ"
     },
     {
@@ -441,8 +441,8 @@
       "url": "https://x.com/saylor/status/2123826627759264099",
       "kind": "post",
       "repostOf": null,
-      "likes": 16687,
-      "reposts": 1582,
+      "likes": 16771,
+      "reposts": 1596,
       "textZh": "记住你当初为什么 ₿ought。\nhttps://t.co/UxYdpFJutx"
     },
     {
@@ -456,8 +456,8 @@
       "url": "https://x.com/saylor/status/2123781672705360055",
       "kind": "post",
       "repostOf": null,
-      "likes": 12087,
-      "reposts": 855,
+      "likes": 12147,
+      "reposts": 859,
       "textZh": "比特币是我们在 Strategy 所做一切的基础。它让各地的人、公司和智能体都有能力持有、转移和编程资本。它的供应不随需求变化，终端通胀率为零，经济半衰期是无限的。"
     },
     {
@@ -471,7 +471,7 @@
       "url": "https://x.com/saylor/status/2123577768914923974",
       "kind": "post",
       "repostOf": null,
-      "likes": 3101,
+      "likes": 3103,
       "reposts": 370,
       "textZh": "我们如何决定何时买入比特币、何时回购 $STRC？在 Strategy 2026 年三季度投资者问答中，我和 @NatBrunell、@PhongLe 回答了大家关于每股比特币、在下行周期中支付股息，以及为 $MSTR 股东创造长期价值的问题。\n\n02:05 - $MSTR、$STRC、其他优先股和可转债如何融入 Strategy 的资本结构\n08:09 - 在 $BTC 升值之外，如何为 $MSTR 股东创造价值\n11:53 - 我们何时增发股票、买入比特币并回购 $STRC\n24:38 - 每股总比特币和每股净比特币对增值、风险和长期价值说明了什么\n37:18 - $STRC 回购、100 美元目标价以及信贷市场动态\n51:40 - 在保持资产负债表稳健的同时管理放大效应与风险\n53:06 - 在比特币长期下行期间支付股息并履行债务义务\n57:42 - 流动性数字信用如何为 $MSTR 股东创造价值\n01:04:34 - Strategy 在未来 3–7 年扩展数字信用、$STRC 和数字货币的愿景"
     },
@@ -486,7 +486,7 @@
       "url": "https://x.com/saylor/status/2123420518967591217",
       "kind": "post",
       "repostOf": null,
-      "likes": 6415,
+      "likes": 6416,
       "reposts": 457,
       "textZh": "$STRC 昨日成交额超过 6 亿美元，是今年 456 只美国上市收益优先股中唯一达到这一水平的。我们打算在 100 美元以下继续买入。回购有助于提升流动性并降低股息负担。我们相信，这会增强信用，并惠及普通股股东。"
     },
@@ -501,7 +501,7 @@
       "url": "https://x.com/saylor/status/2123098624204710141",
       "kind": "post",
       "repostOf": null,
-      "likes": 25174,
+      "likes": 25172,
       "reposts": 1707,
       "textZh": "卖方耗尽会远早于 Saylor 的耗尽。"
     },
@@ -636,7 +636,7 @@
       "url": "https://x.com/TheMarketMemo/status/2124250422747811898",
       "kind": "post",
       "repostOf": null,
-      "likes": 34,
+      "likes": 59,
       "reposts": 0,
       "textZh": "周末开放式问答：你在投资/交易中遇到的问题，我将尽力回复。"
     },
@@ -651,8 +651,8 @@
       "url": "https://x.com/TheMarketMemo/status/2123982482827551032",
       "kind": "post",
       "repostOf": null,
-      "likes": 772,
-      "reposts": 59,
+      "likes": 882,
+      "reposts": 75,
       "textZh": "如果你无法承受10万美元的账面损失，你就不具备驾驭百万美元财富的能力。 https://t.co/bJj1kiBcre"
     },
     {
@@ -666,7 +666,7 @@
       "url": "https://x.com/TheMarketMemo/status/2123971535463751909",
       "kind": "quote",
       "repostOf": null,
-      "likes": 78,
+      "likes": 80,
       "reposts": 0,
       "textZh": "不懂就问啊，什么叫爹味？可能是我在海外待久了，中文已经看不懂了。\nhttps://t.co/2TlGtXB9U8"
     },
@@ -681,7 +681,7 @@
       "url": "https://x.com/TheMarketMemo/status/2123969745942876389",
       "kind": "quote",
       "repostOf": null,
-      "likes": 305,
+      "likes": 315,
       "reposts": 15,
       "textZh": "抱歉啊， $NVDA 被我乌鸦嘴了🤣\nhttps://t.co/f5KwQiKAAU"
     },
@@ -696,7 +696,7 @@
       "url": "https://x.com/TheMarketMemo/status/2123877598505922980",
       "kind": "quote",
       "repostOf": null,
-      "likes": 424,
+      "likes": 430,
       "reposts": 21,
       "textZh": "VIX 指数已回补了这三个缺口‼️\nhttps://t.co/osKf5GgTer"
     },
@@ -711,7 +711,7 @@
       "url": "https://x.com/TheMarketMemo/status/2123862930072711606",
       "kind": "quote",
       "repostOf": null,
-      "likes": 116,
+      "likes": 117,
       "reposts": 4,
       "textZh": "认不认错？怎样认错？\n是许多人不得不面对的问题。\nhttps://t.co/P1f7YgxgDe"
     },
@@ -726,7 +726,7 @@
       "url": "https://x.com/TheMarketMemo/status/2123854715264053331",
       "kind": "quote",
       "repostOf": null,
-      "likes": 153,
+      "likes": 156,
       "reposts": 3,
       "textZh": "现在再来回顾 $MU 这条贴文你有何感想？\nhttps://t.co/FnPaWp78YS"
     },
@@ -741,7 +741,7 @@
       "url": "https://x.com/Jackyi_ld/status/2123991962927915295",
       "kind": "quote",
       "repostOf": null,
-      "likes": 174,
+      "likes": 175,
       "reposts": 11,
       "textZh": "一周前我们说不再考虑抄底，现在市场和比特币数据层面无关了，属于全球金融风险和流动性危机问题，这么多年从来没见过所有资产短时间内集体直线下跌状况。在美股没有回调完稳住之前，根本不能预设抄底点位。一姐说现货不怕，前提是你有场外收入，否则必须做好极端情况准备，确保没有杠杆和保持现金储备。"
     },
