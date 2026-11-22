@@ -677,6 +677,9 @@
     .sz-votes { margin: 2px 0 0; font-size: 13px; font-variant-numeric: tabular-nums; color: var(--muted); }
     .sz-votes b { color: var(--text); font-weight: 720; }
     .sz-cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .sz-col-stack { display: grid; gap: 6px; min-width: 0; }
+    .sz-mode-tabs { margin: 0; }
+    .sz-mode-tabs .tf-tab { flex: 1 1 calc((100% - 6px) / 2); min-height: 36px; font-size: 13px; font-weight: 700; }
     .sz-bt-title { margin: 12px 0 4px; font-size: 13px; font-weight: 650; color: var(--muted); }
     .sz-window { margin: 0 0 6px; color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
     .sz-ret {
@@ -854,9 +857,9 @@
   </div>
   <div id="panel-sanzuan" class="main-panel" data-main-panel="sanzuan">
   <h2>策略库</h2>
-  <p class="sz-lib-lead">可勾选指标，选定回测周期与起止日期后查看观察状态，并对照一直持有现货。目前收录三选二的三个条件，以后还可在此继续加入其他指标。仅供观察，不是买卖建议。</p>
+  <p class="sz-lib-lead">可在「牛市做多」与「熊市做空」两套独立规则之间切换。各套可勾选指标，选定回测周期与起止日期后查看观察状态并回测；做多对照一直持有现货，做空另对照一直做空。两套条件不同时计入同一次投票。目前每套收录三选二的三个条件。仅供观察，不是买卖建议。</p>
   <section class="block sz-strategy" id="sanzuan">
-    <div class="sz-card-k">策略回测</div>
+    <div class="sz-card-k" id="sz-card-k">策略回测 · 牛市做多</div>
     <div id="sz-controls" class="sz-controls"></div>
     <div id="sz-status" class="sz-status"><p class="cycle-note">正在加载该周期观察…</p></div>
     <div id="sz-results" class="sz-results"><p class="cycle-note">正在加载回测…</p></div>
@@ -969,7 +972,7 @@
   <footer>
     数据来自 Binance、CoinGecko、Alternative.me，时间为香港时间。<br>
     顶底指标（含综合倾向、分项读数与 V 反观察）为常用技术观察，不是买卖建议，也不确认见顶见底；不含自动交易。<br>
-    策略库可多选指标并按周期与日期回测，目前收录三选二的三个条件；杠杆、本金最大亏损比与复利只用于回测观察，主数字不含资金费率、借贷利息和爆仓罚金；仍是观察，不是买卖或加杠杆交易建议。<br>
+    策略库含牛市做多与熊市做空两套独立规则，可多选指标并按周期与日期回测，目前每套收录三选二的三个条件；杠杆、本金最大亏损比与复利只用于回测观察，主数字不含资金费率、借贷利息和爆仓罚金；仍是观察，不是买卖或加杠杆交易建议。<br>
     合约持仓量来自币安 U 本位合约。MVRV Z-Score 来自 BGeometrics，免费数据末值可能延迟约一周。AHR999 按币安 BTCUSDT 日线与九神公开公式计算，0.45、1.2、5 为文献参考带，不是买卖线。<br>
     比特币支撑与压力由币安 BTCUSDT 日线的近期摆动高低点、近30日/90日/一年区间高低，以及 50/200 日与周均线合并去重得出；未收盘的日线不作为已确认摆动点。仅供观察，不是买卖建议。<br>
     短期持有者图表另参考 BGeometrics（bitcoin-data.com）与 Binance。<br>
@@ -1045,6 +1048,16 @@
   const SZ_LEV_KEY = "crypto-live-sz-lev";
   const SZ_MAXLOSS_KEY = "crypto-live-sz-maxloss";
   const SZ_COMPOUND_KEY = "crypto-live-sz-compound";
+  const SZ_MODE_KEY = "crypto-live-sz-mode";
+  const SZ_IND_BEAR_KEY = "crypto-live-sz-ind-bear";
+  const SZ_LEV_BEAR_KEY = "crypto-live-sz-lev-bear";
+  const SZ_MAXLOSS_BEAR_KEY = "crypto-live-sz-maxloss-bear";
+  const SZ_COMPOUND_BEAR_KEY = "crypto-live-sz-compound-bear";
+  const SZ_INDICATORS_BEAR = [
+    { id: "bd", name: "BDCP看空" },
+    { id: "ichi", name: "一目云下" },
+    { id: "ma", name: "200均线下" },
+  ];
   const SZ_LEVS = [
     { id: "1", label: "无杠杆", L: 1 },
     { id: "2", label: "2倍", L: 2 },
@@ -1125,6 +1138,11 @@
     szLev: "1",
     szMaxLoss: "none",
     szCompound: true,
+    szMode: "long",
+    szSelectedBear: ["bd", "ichi", "ma"],
+    szLevBear: "1",
+    szMaxLossBear: "none",
+    szCompoundBear: true,
     live: false,
     status: "正在连接行情…",
   };
@@ -1167,6 +1185,21 @@
     const savedSzCompound = localStorage.getItem(SZ_COMPOUND_KEY);
     if (savedSzCompound === "0") state.szCompound = false;
     else if (savedSzCompound === "1") state.szCompound = true;
+    const savedSzMode = localStorage.getItem(SZ_MODE_KEY);
+    if (savedSzMode === "short" || savedSzMode === "long") state.szMode = savedSzMode;
+    try {
+      const savedSzIndBear = JSON.parse(localStorage.getItem(SZ_IND_BEAR_KEY) || "null");
+      if (Array.isArray(savedSzIndBear)) {
+        state.szSelectedBear = SZ_INDICATORS.map((x) => x.id).filter((id) => savedSzIndBear.indexOf(id) >= 0);
+      }
+    } catch (e3) {}
+    const savedSzLevBear = localStorage.getItem(SZ_LEV_BEAR_KEY);
+    if (SZ_LEVS.some((t) => t.id === savedSzLevBear)) state.szLevBear = savedSzLevBear;
+    const savedSzMaxLossBear = localStorage.getItem(SZ_MAXLOSS_BEAR_KEY);
+    if (SZ_MAXLOSS.some((t) => t.id === savedSzMaxLossBear)) state.szMaxLossBear = savedSzMaxLossBear;
+    const savedSzCompoundBear = localStorage.getItem(SZ_COMPOUND_BEAR_KEY);
+    if (savedSzCompoundBear === "0") state.szCompoundBear = false;
+    else if (savedSzCompoundBear === "1") state.szCompoundBear = true;
   } catch (e) {}
   let lastPrices = {};
   let renderTimer = 0;
@@ -3215,26 +3248,52 @@
   function szIntervalMs(tf) {
     return szTfMeta(tf).ms || 86400000;
   }
+  function szIsShort() {
+    return state.szMode === "short";
+  }
+  function szSide() {
+    return szIsShort() ? "short" : "long";
+  }
   function szSelectedIds() {
-    const set = new Set(state.szSelected || []);
+    const list = szIsShort() ? state.szSelectedBear : state.szSelected;
+    const set = new Set(list || []);
     return SZ_INDICATORS.map((x) => x.id).filter((id) => set.has(id));
   }
+  function szSetSelected(ids) {
+    if (szIsShort()) state.szSelectedBear = ids;
+    else state.szSelected = ids;
+  }
   function szLevId() {
-    return SZ_LEVS.some((t) => t.id === state.szLev) ? state.szLev : "1";
+    const cur = szIsShort() ? state.szLevBear : state.szLev;
+    return SZ_LEVS.some((t) => t.id === cur) ? cur : "1";
+  }
+  function szSetLev(id) {
+    if (szIsShort()) state.szLevBear = id;
+    else state.szLev = id;
   }
   function szLevMult() {
     const row = SZ_LEVS.find((t) => t.id === szLevId());
     return row && row.L ? row.L : 1;
   }
   function szMaxLossId() {
-    return SZ_MAXLOSS.some((t) => t.id === state.szMaxLoss) ? state.szMaxLoss : "none";
+    const cur = szIsShort() ? state.szMaxLossBear : state.szMaxLoss;
+    return SZ_MAXLOSS.some((t) => t.id === cur) ? cur : "none";
+  }
+  function szSetMaxLoss(id) {
+    if (szIsShort()) state.szMaxLossBear = id;
+    else state.szMaxLoss = id;
   }
   function szMaxLossRatio() {
     const row = SZ_MAXLOSS.find((t) => t.id === szMaxLossId());
     return (row && row.x != null) ? row.x : null;
   }
   function szCompoundOn() {
+    if (szIsShort()) return state.szCompoundBear !== false;
     return state.szCompound !== false;
+  }
+  function szSetCompound(on) {
+    if (szIsShort()) state.szCompoundBear = !!on;
+    else state.szCompound = !!on;
   }
   function szBtRuleNote() {
     const lev = SZ_LEVS.find((t) => t.id === szLevId()) || SZ_LEVS[0];
@@ -3244,19 +3303,29 @@
     const cmpTxt = szCompoundOn() ? "复利" : "不复利";
     return levTxt + "，" + lossTxt + "，" + cmpTxt;
   }
-  function szIndName(id, tf) {
-    if (id === "ma") return tf === "1d" ? "200日均线上" : "200周期均线上";
-    const row = SZ_INDICATORS.find((x) => x.id === id);
+  function szIndName(id, tf, short) {
+    const isShort = short == null ? szIsShort() : !!short;
+    if (id === "ma") {
+      if (tf === "1d") return isShort ? "200日均线下" : "200日均线上";
+      return isShort ? "200周期均线下" : "200周期均线上";
+    }
+    const row = (isShort ? SZ_INDICATORS_BEAR : SZ_INDICATORS).find((x) => x.id === id);
     return (row && row.name) || id;
   }
-  function szIndHint(id, tf) {
+  function szIndHint(id, tf, short) {
+    const isShort = short == null ? szIsShort() : !!short;
     if (id === "bd") {
+      if (isShort) {
+        return tf === "1d"
+          ? "典型价5日均线向下，且第一次亮起时日线 DIF<0"
+          : "典型价5周期均线向下，且第一次亮起时 DIF<0";
+      }
       return tf === "1d"
         ? "典型价5日均线向上，且第一次亮起时日线 DIF>0"
         : "典型价5周期均线向上，且第一次亮起时 DIF>0";
     }
-    if (id === "ichi") return "收盘价在云上且转换线>基准线";
-    if (id === "ma") return "收盘价在线上";
+    if (id === "ichi") return isShort ? "收盘价在云下且转换线<基准线" : "收盘价在云上且转换线>基准线";
+    if (id === "ma") return isShort ? "收盘价在线下" : "收盘价在线上";
     return "";
   }
   function szBarClosed(b, tf, now) {
@@ -3277,13 +3346,18 @@
   function szSavePrefs() {
     try {
       localStorage.setItem(SZ_TF_KEY, szTfId());
-      localStorage.setItem(SZ_IND_KEY, JSON.stringify(szSelectedIds()));
+      localStorage.setItem(SZ_MODE_KEY, szIsShort() ? "short" : "long");
+      localStorage.setItem(SZ_IND_KEY, JSON.stringify(state.szSelected || []));
+      localStorage.setItem(SZ_IND_BEAR_KEY, JSON.stringify(state.szSelectedBear || []));
       localStorage.setItem(SZ_START_KEY, state.szStart || "");
       localStorage.setItem(SZ_END_KEY, state.szEnd || "");
       localStorage.setItem(SZ_END_FOLLOW_KEY, state.szEndFollow ? "1" : "0");
-      localStorage.setItem(SZ_LEV_KEY, szLevId());
-      localStorage.setItem(SZ_MAXLOSS_KEY, szMaxLossId());
-      localStorage.setItem(SZ_COMPOUND_KEY, szCompoundOn() ? "1" : "0");
+      localStorage.setItem(SZ_LEV_KEY, SZ_LEVS.some((t) => t.id === state.szLev) ? state.szLev : "1");
+      localStorage.setItem(SZ_LEV_BEAR_KEY, SZ_LEVS.some((t) => t.id === state.szLevBear) ? state.szLevBear : "1");
+      localStorage.setItem(SZ_MAXLOSS_KEY, SZ_MAXLOSS.some((t) => t.id === state.szMaxLoss) ? state.szMaxLoss : "none");
+      localStorage.setItem(SZ_MAXLOSS_BEAR_KEY, SZ_MAXLOSS.some((t) => t.id === state.szMaxLossBear) ? state.szMaxLossBear : "none");
+      localStorage.setItem(SZ_COMPOUND_KEY, state.szCompound !== false ? "1" : "0");
+      localStorage.setItem(SZ_COMPOUND_BEAR_KEY, state.szCompoundBear !== false ? "1" : "0");
     } catch (e) {}
   }
   function szBarsOf(tf) {
@@ -3390,7 +3464,8 @@
     }
     return { trades, note, summary };
   }
-    function szRunEquity(fee, lev, maxLossX, compound, inPos, i0, iEnd, opens, lows, closes, times) {
+  function szRunEquity(fee, lev, maxLossX, compound, inPos, i0, iEnd, opens, extremes, closes, times, side) {
+    const short = side === "short";
     const L = (lev != null && lev >= 1) ? lev : 1;
     const hasCap = maxLossX != null && Number.isFinite(maxLossX) && maxLossX > 0;
     const useCompound = compound !== false;
@@ -3406,10 +3481,12 @@
     }
     function eqAt(px) {
       if (!(entry > 0)) return tradeCap;
+      if (short) return unitsOf() * (2 * entry - px) - entryCash * (L - 1);
       return unitsOf() * px - entryCash * (L - 1);
     }
     function cashAfterExit(px) {
       if (!(entry > 0)) return tradeCap;
+      if (short) return unitsOf() * (2 * entry - px) * (1 - fee) - entryCash * (L - 1);
       return unitsOf() * px * (1 - fee) - entryCash * (L - 1);
     }
     function noteTrade(px, i, markedToEnd) {
@@ -3479,15 +3556,20 @@
         maybeWipe(i);
       }
       if (!wiped && entry > 0) {
-        const lo = Number.isFinite(lows[i]) ? lows[i] : Math.min(opens[i], closes[i]);
+        const ext = Number.isFinite(extremes[i]) ? extremes[i] : (short ? Math.max(opens[i], closes[i]) : Math.min(opens[i], closes[i]));
         const floor = hasCap ? (entryCash * (1 - maxLossX)) : 0;
         const eqOpen = eqAt(opens[i]);
-        const eqLow = eqAt(lo);
-        if (eqOpen <= floor || eqLow <= floor) {
+        const eqExt = eqAt(ext);
+        if (eqOpen <= floor || eqExt <= floor) {
           let px = opens[i];
           if (eqOpen > floor) {
-            const trig = entry * (floor / entryCash - 1 + L) / (L * (1 - fee));
-            px = Math.min(opens[i], Math.max(lo, trig));
+            if (short) {
+              const trig = 2 * entry - entry * (floor / entryCash - 1 + L) / (L * (1 - fee));
+              px = Math.max(opens[i], Math.min(ext, trig));
+            } else {
+              const trig = entry * (floor / entryCash - 1 + L) / (L * (1 - fee));
+              px = Math.min(opens[i], Math.max(ext, trig));
+            }
           }
           const isCap = hasCap && floor > 0;
           noteTrade(px, i, false);
@@ -3656,8 +3738,8 @@
     }
     return jobs;
   }
-  function szRunSuggestJob(job, i0, iEnd, opens, lows, closes, times) {
-    const r = szRunEquity(0, job.L, job.lossX, job.compound, job.inPos, i0, iEnd, opens, lows, closes, times);
+  function szRunSuggestJob(job, i0, iEnd, opens, extremes, closes, times, side) {
+    const r = szRunEquity(0, job.L, job.lossX, job.compound, job.inPos, i0, iEnd, opens, extremes, closes, times, side);
     return {
       inds: job.inds,
       levId: job.levId,
@@ -3707,7 +3789,7 @@
       if (gen !== szSuggestGen) return;
       const end = Math.min(jobs.length, idx + batch);
       for (; idx < end; idx++) {
-        rows.push(szRunSuggestJob(jobs[idx], shared.i0, shared.iEnd, shared.opens, shared.lows, shared.closes, shared.times));
+        rows.push(szRunSuggestJob(jobs[idx], shared.i0, shared.iEnd, shared.opens, shared.side === "short" ? shared.highs : shared.lows, shared.closes, shared.times, shared.side));
       }
       if (idx < jobs.length) {
         setTimeout(pump, 0);
@@ -3740,7 +3822,7 @@
     if (!heavy) {
       const rows = [];
       for (let i = 0; i < jobs.length; i++) {
-        rows.push(szRunSuggestJob(jobs[i], shared.i0, shared.iEnd, shared.opens, shared.lows, shared.closes, shared.times));
+        rows.push(szRunSuggestJob(jobs[i], shared.i0, shared.iEnd, shared.opens, shared.side === "short" ? shared.highs : shared.lows, shared.closes, shared.times, shared.side));
       }
       const ranked = szRankSuggest(rows);
       return Object.assign({ ready: true, pending: false, error: "" }, meta, ranked);
@@ -3749,6 +3831,66 @@
       szScheduleSuggest(gen, key, jobs, shared, meta);
     }, 0);
     return Object.assign({ ready: false, pending: true, error: "" }, meta);
+  }
+  function szComputeIndicators(highs, lows, closes) {
+    const n = closes.length;
+    const typ = new Array(n);
+    for (let i = 0; i < n; i++) typ[i] = (closes[i] + highs[i] + lows[i]) / 3;
+    const e5 = emaSeries(typ, 5);
+    const e12 = emaSeries(closes, 12);
+    const e26 = emaSeries(closes, 26);
+    const bdBull = new Array(n);
+    const bdBear = new Array(n);
+    let bdCurBull = false, bdCurBear = false;
+    for (let i = 0; i < n; i++) {
+      const up = e5[i] != null && i > 0 && e5[i - 1] != null && e5[i] > e5[i - 1];
+      const down = e5[i] != null && i > 0 && e5[i - 1] != null && e5[i] < e5[i - 1];
+      const difPos = e12[i] != null && e26[i] != null && (e12[i] - e26[i] > 0);
+      const difNeg = e12[i] != null && e26[i] != null && (e12[i] - e26[i] < 0);
+      bdCurBull = bdCurBull ? up : (up && difPos);
+      bdCurBear = bdCurBear ? down : (down && difNeg);
+      bdBull[i] = bdCurBull;
+      bdBear[i] = bdCurBear;
+    }
+    const tenkan = new Array(n).fill(null);
+    const kijun = new Array(n).fill(null);
+    const spanA = new Array(n).fill(null);
+    const spanB = new Array(n).fill(null);
+    const ichiBull = new Array(n);
+    const ichiBear = new Array(n);
+    const aboveMa = new Array(n);
+    const belowMa = new Array(n);
+    const ma200s = new Array(n).fill(null);
+    let run = 0;
+    for (let i = 0; i < n; i++) {
+      const h9 = rollExt(highs, 9, i, true), l9 = rollExt(lows, 9, i, false);
+      const h26 = rollExt(highs, 26, i, true), l26 = rollExt(lows, 26, i, false);
+      const h52 = rollExt(highs, 52, i, true), l52 = rollExt(lows, 52, i, false);
+      if (h9 != null) tenkan[i] = (h9 + l9) / 2;
+      if (h26 != null) kijun[i] = (h26 + l26) / 2;
+      if (tenkan[i] != null && kijun[i] != null) spanA[i] = (tenkan[i] + kijun[i]) / 2;
+      if (h52 != null) spanB[i] = (h52 + l52) / 2;
+      let ichiOkBull = false, ichiOkBear = false;
+      if (i >= 25 && spanA[i - 25] != null && spanB[i - 25] != null && tenkan[i] != null && kijun[i] != null) {
+        const cloudTop = Math.max(spanA[i - 25], spanB[i - 25]);
+        const cloudBot = Math.min(spanA[i - 25], spanB[i - 25]);
+        ichiOkBull = closes[i] > cloudTop && tenkan[i] > kijun[i];
+        ichiOkBear = closes[i] < cloudBot && tenkan[i] < kijun[i];
+      }
+      ichiBull[i] = ichiOkBull;
+      ichiBear[i] = ichiOkBear;
+      if (i === 199) {
+        run = 0;
+        for (let j = 0; j <= 199; j++) run += closes[j];
+        ma200s[i] = run / 200;
+      } else if (i > 199) {
+        run += closes[i] - closes[i - 200];
+        ma200s[i] = run / 200;
+      }
+      aboveMa[i] = ma200s[i] != null && closes[i] > ma200s[i];
+      belowMa[i] = ma200s[i] != null && closes[i] < ma200s[i];
+    }
+    return { bdBull, bdBear, ichiBull, ichiBear, aboveMa, belowMa, ma200s };
   }
   function computeSanzuan() {
     const tf = szTfId();
@@ -3796,54 +3938,18 @@
     const closes = closed.map((b) => b.c);
     const times = closed.map((b) => b.t);
     const closeTimes = closed.map((b) => b.ct);
-    const typ = new Array(n);
-    for (let i = 0; i < n; i++) typ[i] = (closes[i] + highs[i] + lows[i]) / 3;
-    const e5 = emaSeries(typ, 5);
-    const e12 = emaSeries(closes, 12);
-    const e26 = emaSeries(closes, 26);
-    const bd = new Array(n);
-    let bdCur = false;
-    for (let i = 0; i < n; i++) {
-      const holding = e5[i] != null && i > 0 && e5[i - 1] != null && e5[i] > e5[i - 1];
-      const difOk = e12[i] != null && e26[i] != null && (e12[i] - e26[i] > 0);
-      bdCur = bdCur ? holding : (holding && difOk);
-      bd[i] = bdCur;
-    }
-    const tenkan = new Array(n).fill(null);
-    const kijun = new Array(n).fill(null);
-    const spanA = new Array(n).fill(null);
-    const spanB = new Array(n).fill(null);
-    const ichi = new Array(n);
-    const aboveMa = new Array(n);
-    const ma200s = new Array(n).fill(null);
+    const short = szIsShort();
+    const side = short ? "short" : "long";
+    const ind = szComputeIndicators(highs, lows, closes);
+    const bd = short ? ind.bdBear : ind.bdBull;
+    const ichi = short ? ind.ichiBear : ind.ichiBull;
+    const maFlag = short ? ind.belowMa : ind.aboveMa;
+    const ma200s = ind.ma200s;
     const votes = new Array(n);
     const inPos = new Array(n);
     const threshold = Math.min(2, selected.length);
-    let run = 0;
     for (let i = 0; i < n; i++) {
-      const h9 = rollExt(highs, 9, i, true), l9 = rollExt(lows, 9, i, false);
-      const h26 = rollExt(highs, 26, i, true), l26 = rollExt(lows, 26, i, false);
-      const h52 = rollExt(highs, 52, i, true), l52 = rollExt(lows, 52, i, false);
-      if (h9 != null) tenkan[i] = (h9 + l9) / 2;
-      if (h26 != null) kijun[i] = (h26 + l26) / 2;
-      if (tenkan[i] != null && kijun[i] != null) spanA[i] = (tenkan[i] + kijun[i]) / 2;
-      if (h52 != null) spanB[i] = (h52 + l52) / 2;
-      let ichiOk = false;
-      if (i >= 25 && spanA[i - 25] != null && spanB[i - 25] != null && tenkan[i] != null && kijun[i] != null) {
-        const cloudTop = Math.max(spanA[i - 25], spanB[i - 25]);
-        ichiOk = closes[i] > cloudTop && tenkan[i] > kijun[i];
-      }
-      ichi[i] = ichiOk;
-      if (i === 199) {
-        run = 0;
-        for (let j = 0; j <= 199; j++) run += closes[j];
-        ma200s[i] = run / 200;
-      } else if (i > 199) {
-        run += closes[i] - closes[i - 200];
-        ma200s[i] = run / 200;
-      }
-      aboveMa[i] = ma200s[i] != null && closes[i] > ma200s[i];
-      const flag = { bd: bd[i], ichi: ichi[i], ma: aboveMa[i] };
+      const flag = { bd: bd[i], ichi: ichi[i], ma: maFlag[i] };
       let v = 0;
       for (let s = 0; s < selected.length; s++) if (flag[selected[s]]) v += 1;
       votes[i] = v;
@@ -3857,7 +3963,7 @@
     }
     const notes = [];
     if (userI0 < 0) {
-      state.sanzuan = { ready: false, tf, selected, error: "起始日期之后没有已收盘 K 线。" };
+      state.sanzuan = { ready: false, tf, selected, error: "起始日期之后没有已收盘 K 线。", mode: side };
       return;
     }
     let i0 = userI0;
@@ -3870,17 +3976,21 @@
       notes.push("该周期可取到的最早已收盘 K 线为 " + hkYmd(times[0]) + "，已用能用的最早起始，未虚构更早数据。");
     }
     if (i0 >= iEnd) {
-      state.sanzuan = { ready: false, tf, selected, error: "该窗口内可用于回测的已收盘 K 线不足（均线等指标需要向前预热）。" };
+      state.sanzuan = { ready: false, tf, selected, error: "该窗口内可用于回测的已收盘 K 线不足（均线等指标需要向前预热）。", mode: side };
       return;
     }
     let backtest = null;
     if (i0 >= 0 && i0 <= iEnd) {
-      function runBh(fee) {
-        const startPx = opens[i0] / (1 - fee);
-        let peak = closes[i0] / startPx, maxdd = 0, peakI = i0, bestPeak = i0, bestTrough = i0;
+      function runBh(fee, asShort) {
+        const startPx = asShort ? opens[i0] * (1 - fee) : opens[i0] / (1 - fee);
+        function eq(px) {
+          if (asShort) return (2 * startPx - px) / startPx;
+          return px / startPx;
+        }
+        let peak = eq(closes[i0]), maxdd = 0, peakI = i0, bestPeak = i0, bestTrough = i0;
         let lastEq = peak;
         for (let i = i0; i <= iEnd; i++) {
-          const equity = closes[i] / startPx;
+          const equity = eq(closes[i]);
           lastEq = equity;
           if (equity >= peak) { peak = equity; peakI = i; }
           const dd = equity / peak - 1;
@@ -3902,10 +4012,13 @@
       const levMult = szLevMult();
       const maxLossX = szMaxLossRatio();
       const compoundOn = szCompoundOn();
-      const st0 = szRunEquity(0, levMult, maxLossX, compoundOn, inPos, i0, iEnd, opens, lows, closes, times);
-      const bh0 = runBh(0);
-      const stFee = szRunEquity(0.001, levMult, maxLossX, compoundOn, inPos, i0, iEnd, opens, lows, closes, times);
-      const bhFee = runBh(0.001);
+      const extremes = short ? highs : lows;
+      const st0 = szRunEquity(0, levMult, maxLossX, compoundOn, inPos, i0, iEnd, opens, extremes, closes, times, side);
+      const bh0 = runBh(0, false);
+      const bhShort0 = runBh(0, true);
+      const stFee = szRunEquity(0.001, levMult, maxLossX, compoundOn, inPos, i0, iEnd, opens, extremes, closes, times, side);
+      const bhFee = runBh(0.001, false);
+      const bhShortFee = runBh(0.001, true);
       backtest = {
         from: hkYmd(times[i0]),
         to: hkYmd(times[iEnd]),
@@ -3915,11 +4028,14 @@
         endClose: closes[iEnd],
         strategy: st0,
         hold: bh0,
+        holdShort: bhShort0,
         strategyFee: stFee,
         holdFee: bhFee,
+        holdShortFee: bhShortFee,
         lev: levMult,
         maxLoss: maxLossX,
         compound: compoundOn,
+        side,
         notes,
       };
     }
@@ -3935,7 +4051,7 @@
       const sugFrom = (sugI0 >= 0 && sugI0 <= iEnd) ? hkYmd(times[sugI0]) : "";
       const sugTo = hkYmd(times[iEnd]);
       const warmupShifted = !!(sugFrom && askedFrom && sugFrom > askedFrom);
-      suggestKey = [tf, askedFrom, capYmd, sugFrom, sugTo, n, times[0], times[iEnd]].join("|");
+      suggestKey = [tf, side, askedFrom, capYmd, sugFrom, sugTo, n, times[0], times[iEnd]].join("|");
       const meta = {
         key: suggestKey,
         from: sugFrom,
@@ -3943,11 +4059,12 @@
         askedFrom,
         askedTo: capYmd,
         warmupShifted,
+        side,
       };
       if (sugI0 >= 0 && sugI0 < iEnd) {
         suggest = szComputeSuggest(
-          { i0: sugI0, iEnd, opens, lows, closes, times },
-          bd, ichi, aboveMa,
+          { i0: sugI0, iEnd, opens, lows, highs, closes, times, side },
+          bd, ichi, maFlag,
           meta
         );
       } else {
@@ -3958,6 +4075,7 @@
       ready: true,
       error: "",
       tf,
+      mode: side,
       selected: selected.slice(),
       threshold,
       asOf: fmtTsHK(asOfMs),
@@ -3966,7 +4084,7 @@
       ma200: ma200s[iEnd],
       bd: bd[iEnd],
       ichi: ichi[iEnd],
-      aboveMa: aboveMa[iEnd],
+      aboveMa: maFlag[iEnd],
       votes: votes[iEnd],
       nSel: selected.length,
       inPos: inPos[iEnd],
@@ -3976,6 +4094,7 @@
       suggestKey,
     };
   }
+
   function parseSanzuanKline(r) {
     return { t: +r[0], o: +r[1], h: +r[2], l: +r[3], c: +r[4], ct: +r[6] };
   }
@@ -4059,16 +4178,25 @@
       }
     }
   }
-  function sanzuanChip(ok) {
+  function sanzuanChip(ok, short) {
+    if (short) {
+      return ok
+        ? `<span class="cyc-chip tone-down">看空</span>`
+        : `<span class="cyc-chip tone-up">看多</span>`;
+    }
     return ok
       ? `<span class="cyc-chip tone-up">看多</span>`
       : `<span class="cyc-chip tone-down">看空</span>`;
   }
-  function sanzuanRow(name, ok, hint) {
+  function sanzuanRow(name, ok, hint, short) {
     return `<div class="sz-row">
-      <div class="sz-row-top"><span class="sz-name">${escapeHtml(name)}</span>${sanzuanChip(ok)}</div>
+      <div class="sz-row-top"><span class="sz-name">${escapeHtml(name)}</span>${sanzuanChip(ok, short)}</div>
       <p class="cyc-sub">${escapeHtml(hint)}</p>
     </div>`;
+  }
+  function szResultIsShort(d) {
+    if (d && (d.mode === "short" || d.mode === "long")) return d.mode === "short";
+    return szIsShort();
   }
   function sanzuanKv(lab, val, span) {
     return `<div class="sz-kv"><span class="lab">${lab}</span><span class="val">${val}${span ? `<span class="sz-span">${span}</span>` : ""}</span></div>`;
@@ -4130,7 +4258,7 @@
     return `<details class="sz-rules" id="sz-rules">
       <summary>详细规则</summary>
       <div class="sz-rules-body">
-        <p class="sz-rules-lead">以下为策略库当前规则，只用于本页观察状态与回测对比。历史回测不代表以后结果，不是买卖、逃顶抄底或加杠杆交易建议。</p>
+        <p class="sz-rules-lead">以下为策略库当前规则，只用于本页观察状态与回测对比。策略库含牛市做多与熊市做空两个独立版本，可在页面中切换。以下第一至十节为牛市做多版规则；第十一节为熊市做空版镜像规则。历史回测不代表以后结果，不是买卖、逃顶抄底或加杠杆交易建议。</p>
         <h3>一、数据与窗口</h3>
         <ol>
           <li>当前回测标的为币安 BTC/USDT 现货 K 线。回测周期可选 2H、4H、6H、12H、1D、1W。</li>
@@ -4190,6 +4318,18 @@
         <ol start="29">
           <li>前N笔回报是该窗口内、按时间先后的前 N 笔多头持仓全部结束后的累计权益减 1。笔的认定与第九节单笔最大盈利相同：在买入当根开盘价开仓（若窗口开始时已处于持有，则在窗口第一根开盘买入），持有至信号卖出（下一根开盘）、盘中止损或本金亏完平仓；若窗口结束时仍持有，则按结束日收盘计价，并计入笔数，结束时间注明持有至结束日收盘。累计权益与回测主数字同一算法：起始本金为 1，已计入杠杆，不含手续费，复利或不复利按该次回测设定处理。只在该列表至少有 N 笔时给出数字，并列出第一笔开仓至第 N 笔平仓的起止时间（按香港时间；周期为 1D、1W 时只列日期，2H、4H、6H、12H 含到分钟）；不足 N 笔时显示为 —，不记为 0。官方观察状态的「完整买卖」笔数仍按原规则，可不含结束时仍持有、仅按收盘计价的这一笔；前 N 笔统计与单笔最大盈利使用同一份含该计价的列表。左侧回测对比与最佳组合建议的第一名列出这四项，第二、三名摘要以紧凑形式列出相应比例；建议中的前 N 笔只按该组合自己的成交计算。右侧一直持有现货对照只有一笔连续持有，不列出这四项。排序仍按整段窗口收益，不因前 N 笔回报改动名次。该数字只用于观察历史回测，不代表以后结果，不是买卖或交易建议。</li>
         </ol>
+        <h3>十一、熊市做空版</h3>
+        <ol start="30">
+          <li>策略库另设「熊市做空」版，与上文牛市做多版相互独立：两套条件不同时计入同一次投票，也不共用持仓状态。周期、起止日期、杠杆、本金最大亏损比与复利的可选项及默认值与做多版相同（默认无杠杆、亏损不限制、复利）。预热要求与做多版相同（200 均线需 index 199，一目均衡需 76，BDCP 需 26）。主对比数字仍不含手续费，附注另给每边 0.1%。</li>
+          <li>熊市版只做空，不做多。可多选三项：BDCP看空、一目云下、200均线下。至少勾选一个，才能给出观察状态与回测。看空票数等于已选指标中当前满足条件的个数。持有空头的条件为票数不少于「2」与「已选个数」中的较小值：只选 1 个时，该条看空即为做空；选 2 个时须两条同时看空；选 3 个时为三选二。</li>
+          <li>BDCP看空：典型价（最高价、最低价与收盘价的平均）的 5 周期均线向下；第一次由不亮变亮时，还要求 DIF（收盘价 12 周期与 26 周期指数均线之差）小于 0。亮起之后，只要该 5 周期均线仍向下，就继续视为看空。均线算法与做多版相同：前 period 根用简单平均作种子，之后按 k=2/(period+1) 递推。</li>
+          <li>一目云下：收盘价低于云层下沿（取前移 26 周期的 spanA 与 spanB 的较小值），且转换线在基准线之下。转换线 9、基准线 26、spanB 52，云层前移 26 周期，自第 26 根（index 25）起才有效，计算方式与做多版相同。</li>
+          <li>200均线下：收盘价低于收盘价的 200 周期简单均线（不是指数均线）。周期为 1D 时，即 200 日均线；周期为 1W 时，即 200 周简单均线。</li>
+          <li>成交规则与做多版对称：信号以当根已收盘确认，成交在下一根开盘。空仓且当根收盘后满足做空条件，则在下一根开盘开空；持有空头且当根收盘后不再满足，则在下一根开盘平仓。若回测窗口开始时，前一根已收盘已处于做空条件，则在窗口第一根开盘开空。</li>
+          <li>做空回测权益按开仓价与当前价的跌幅放大：价格每下跌 1%，空头权益大约上升杠杆倍。止损看对该空头最不利的价（开盘价与该根最高价）：若开盘价已经触及止损线，按开盘价平仓；否则看该根最高价是否触及计算出的触发价，触及则以触发价平仓。止损后，若信号仍为做空且交易本金尚未亏完，则在下一根开盘用剩余交易本金继续开空。不复利时，亏后先补回起始本金的规则与做多版相同。</li>
+          <li>熊市版对照两项：一直持有现货（窗口第一根开盘买入，持有到结束日收盘）；以及一直做空（窗口第一根开盘开空，到结束日收盘平仓）。两项对照都不加杠杆，不套本金最大亏损限制，也不套复利或不复利规则。</li>
+          <li>最佳组合建议、单笔最大盈利与前 5、10、15、20 笔回报的口径与做多版相同，只是持仓方向改为空头，且 770 组枚举只在熊市做空规则内进行，不与做多条件混排。单笔指一笔空头持仓。一直持有现货与一直做空对照都只有一笔连续持仓，故不列出前 N 笔回报。该数字只用于观察历史回测，不代表以后结果，不是买卖或交易建议。</li>
+        </ol>
       </div>
     </details>`;
   }
@@ -4210,7 +4350,10 @@
     const selected = szSelectedIds();
     const loading = !!state.sanzuanLoading;
     const stale = !!(d && d.tf && d.tf !== tf);
-    const lead = "在当前 " + lab + " 周期与所选日期下，按同一实际窗口枚举指标组合、杠杆、本金止损比和是否复利，按不含手续费的窗口收益排序。历史回测不代表以后结果，不是买卖或交易建议。";
+    const short = szResultIsShort(d);
+    const lead = short
+      ? ("在当前 " + lab + " 周期与所选日期下，按熊市做空规则、同一实际窗口枚举指标组合、杠杆、本金止损比和是否复利，按不含手续费的窗口收益排序。不与牛市做多条件混排。历史回测不代表以后结果，不是买卖或交易建议。")
+      : ("在当前 " + lab + " 周期与所选日期下，按同一实际窗口枚举指标组合、杠杆、本金止损比和是否复利，按不含手续费的窗口收益排序。历史回测不代表以后结果，不是买卖或交易建议。");
     function windowHtml(s) {
       if (!s || !s.from || !s.to) return "";
       let line = "实际窗口：" + s.from + " 至 " + s.to;
@@ -4277,10 +4420,10 @@
     const d = state.sanzuan;
     const best = d && d.suggest && d.suggest.best;
     if (!best || !d.suggest.ready || d.suggest.allWiped) return;
-    state.szSelected = best.inds.slice();
-    state.szLev = best.levId;
-    state.szMaxLoss = best.lossId;
-    state.szCompound = !!best.compound;
+    szSetSelected(best.inds.slice());
+    szSetLev(best.levId);
+    szSetMaxLoss(best.lossId);
+    szSetCompound(!!best.compound);
     szSavePrefs();
     computeSanzuan();
     sanzuanBlock();
@@ -4297,7 +4440,7 @@
     const root = $("sanzuan");
     if (!root) return null;
     if (!$("sz-controls") || !$("sz-status") || !$("sz-results")) {
-      root.innerHTML = `<div class="sz-card-k">策略回测</div>
+      root.innerHTML = `<div class="sz-card-k" id="sz-card-k">策略回测 · ${szIsShort() ? "熊市做空" : "牛市做多"}</div>
       <div id="sz-controls" class="sz-controls"></div>
       <div id="sz-status" class="sz-status"><p class="cycle-note">正在加载该周期观察…</p></div>
       <div id="sz-results" class="sz-results"><p class="cycle-note">正在加载回测…</p></div>
@@ -4305,10 +4448,13 @@
     }
     const box = $("sz-controls");
     if (box && !box.dataset.ready) {
+      const short = szIsShort();
       const inds = SZ_INDICATORS.map((ind) => {
-        const on = (state.szSelected || []).indexOf(ind.id) >= 0;
-        return `<label class="sz-ind"><input type="checkbox" data-sz-ind="${ind.id}"${on ? " checked" : ""}>${escapeHtml(ind.name)}</label>`;
+        const on = szSelectedIds().indexOf(ind.id) >= 0;
+        return `<label class="sz-ind"><input type="checkbox" data-sz-ind="${ind.id}"${on ? " checked" : ""}><span class="sz-ind-lab" data-sz-ind-lab="${ind.id}">${escapeHtml(szIndName(ind.id, szTfId(), short))}</span></label>`;
       }).join("");
+      const modes = `<button type="button" class="tf-tab${short ? "" : " on"}" data-sz-mode="long" aria-pressed="${short ? "false" : "true"}">牛市做多</button>`
+        + `<button type="button" class="tf-tab${short ? " on" : ""}" data-sz-mode="short" aria-pressed="${short ? "true" : "false"}">熊市做空</button>`;
       const tfs = SZ_TFS.map((t) => {
         const on = t.id === szTfId();
         return `<button type="button" class="tf-tab${on ? " on" : ""}" data-sz-tf="${t.id}" aria-pressed="${on ? "true" : "false"}">${t.label}</button>`;
@@ -4322,6 +4468,10 @@
         return `<button type="button" class="tf-tab${on ? " on" : ""}" data-sz-maxloss="${t.id}" aria-pressed="${on ? "true" : "false"}">${t.label}</button>`;
       }).join("");
       box.innerHTML = `<div class="sz-field">
+          <span class="sz-lab">版本</span>
+          <div class="tf-tabs sz-mode-tabs" role="tablist" id="sz-mode-tabs">${modes}</div>
+        </div>
+        <div class="sz-field">
           <span class="sz-lab">观察指标</span>
           <div class="sz-inds" id="sz-inds">${inds}</div>
         </div>
@@ -4333,7 +4483,7 @@
           <span class="sz-lab">本金最大亏损比</span>
           <div class="tf-tabs sz-opt-tabs sz-loss-tabs" role="tablist" id="sz-loss-tabs">${losses}</div>
           <label class="sz-ind sz-compound"><input type="checkbox" id="sz-compound" data-sz-compound${szCompoundOn() ? " checked" : ""}>复利</label>
-          <p class="sz-hint">只用于下方回测对比，不改变上方观察状态。杠杆按价格涨跌放大盈亏。本金最大亏损比按每笔开仓时的交易本金计算，触达后平仓，条件再次满足则下一根开盘继续开仓。勾选复利时，止盈后按总余额开仓；不勾选时，超过起始本金的利润不投入下一笔；若止损或亏损后开仓本金低于起始本金，之后的盈利会先补回开仓本金，补到起始本金后再锁定多出的利润。主数字不含资金费率、借贷利息和爆仓罚金。一直持有现货不加杠杆，也不套这条亏损限制或复利。仅供观察，不是买卖或加杠杆交易建议。</p>
+          <p class="sz-hint" id="sz-lev-hint">只用于下方回测对比，不改变上方观察状态。杠杆按价格涨跌放大盈亏。本金最大亏损比按每笔开仓时的交易本金计算，触达后平仓，条件再次满足则下一根开盘继续开仓。勾选复利时，止盈后按总余额开仓；不勾选时，超过起始本金的利润不投入下一笔；若止损或亏损后开仓本金低于起始本金，之后的盈利会先补回开仓本金，补到起始本金后再锁定多出的利润。主数字不含资金费率、借贷利息和爆仓罚金。一直持有现货不加杠杆，也不套这条亏损限制或复利。仅供观察，不是买卖或加杠杆交易建议。</p>
         </div>
         <div class="sz-field">
           <span class="sz-lab">回测周期</span>
@@ -4355,7 +4505,7 @@
         const t = ev.target;
         if (!t) return;
         if (t.getAttribute && t.getAttribute("data-sz-ind") != null) {
-          state.szSelected = Array.from(root.querySelectorAll("input[data-sz-ind]:checked")).map((el) => el.getAttribute("data-sz-ind"));
+          szSetSelected(Array.from(root.querySelectorAll("input[data-sz-ind]:checked")).map((el) => el.getAttribute("data-sz-ind")));
           szSavePrefs();
           computeSanzuan();
           sanzuanBlock();
@@ -4364,7 +4514,7 @@
           return;
         }
         if (t.id === "sz-compound" || (t.getAttribute && t.getAttribute("data-sz-compound") != null)) {
-          state.szCompound = !!t.checked;
+          szSetCompound(!!t.checked);
           szSavePrefs();
           computeSanzuan();
           sanzuanBlock();
@@ -4393,17 +4543,29 @@
         if (levBtn && root.contains(levBtn)) {
           const id = levBtn.getAttribute("data-sz-lev");
           if (!SZ_LEVS.some((x) => x.id === id) || id === szLevId()) return;
-          state.szLev = id;
+          szSetLev(id);
           szSavePrefs();
           computeSanzuan();
           sanzuanBlock();
+          return;
+        }
+        const modeBtn = ev.target.closest("[data-sz-mode]");
+        if (modeBtn && root.contains(modeBtn)) {
+          const id = modeBtn.getAttribute("data-sz-mode");
+          if ((id !== "long" && id !== "short") || (id === "short") === szIsShort()) return;
+          state.szMode = id;
+          szSavePrefs();
+          computeSanzuan();
+          sanzuanBlock();
+          if (state.mainTab === "sanzuan") clearTabDot("sanzuan");
+          else reviewTabStamp("sanzuan");
           return;
         }
         const lossBtn = ev.target.closest("[data-sz-maxloss]");
         if (lossBtn && root.contains(lossBtn)) {
           const id = lossBtn.getAttribute("data-sz-maxloss");
           if (!SZ_MAXLOSS.some((x) => x.id === id) || id === szMaxLossId()) return;
-          state.szMaxLoss = id;
+          szSetMaxLoss(id);
           szSavePrefs();
           computeSanzuan();
           sanzuanBlock();
@@ -4424,6 +4586,31 @@
   function szSyncControls() {
     const root = $("sanzuan");
     if (!root) return;
+    const short = szIsShort();
+    root.classList.toggle("sz-side-short", short);
+    const cardK = $("sz-card-k");
+    if (cardK) {
+      const title = short ? "策略回测 · 熊市做空" : "策略回测 · 牛市做多";
+      if (cardK.textContent !== title) cardK.textContent = title;
+    }
+    root.querySelectorAll("[data-sz-mode]").forEach((btn) => {
+      const on = (btn.getAttribute("data-sz-mode") === "short") === short;
+      btn.classList.toggle("on", on);
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    const tfNow = szTfId();
+    root.querySelectorAll("[data-sz-ind-lab]").forEach((el) => {
+      const id = el.getAttribute("data-sz-ind-lab");
+      const name = szIndName(id, tfNow, short);
+      if (el.textContent !== name) el.textContent = name;
+    });
+    const hint = $("sz-lev-hint");
+    if (hint) {
+      const hintTxt = short
+        ? "只用于下方回测对比，不改变上方观察状态。杠杆按价格涨跌放大盈亏（价格下跌有利于空头）。本金最大亏损比按每笔开仓时的交易本金计算，触达后平仓，条件再次满足则下一根开盘继续开空。勾选复利时，平仓后按总余额开仓；不勾选时，超过起始本金的利润不投入下一笔；若止损或亏损后开仓本金低于起始本金，之后的盈利会先补回开仓本金，补到起始本金后再锁定多出的利润。主数字不含资金费率、借贷利息和爆仓罚金。一直做空与一直持有现货对照都不加杠杆，也不套这条亏损限制或复利。仅供观察，不是买卖或加杠杆交易建议。"
+        : "只用于下方回测对比，不改变上方观察状态。杠杆按价格涨跌放大盈亏。本金最大亏损比按每笔开仓时的交易本金计算，触达后平仓，条件再次满足则下一根开盘继续开仓。勾选复利时，止盈后按总余额开仓；不勾选时，超过起始本金的利润不投入下一笔；若止损或亏损后开仓本金低于起始本金，之后的盈利会先补回开仓本金，补到起始本金后再锁定多出的利润。主数字不含资金费率、借贷利息和爆仓罚金。一直持有现货不加杠杆，也不套这条亏损限制或复利。仅供观察，不是买卖或加杠杆交易建议。";
+      if (hint.textContent !== hintTxt) hint.textContent = hintTxt;
+    }
     const selected = new Set(szSelectedIds());
     root.querySelectorAll("input[data-sz-ind]").forEach((el) => {
       const id = el.getAttribute("data-sz-ind");
@@ -4467,12 +4654,15 @@
     if (startInp && document.activeElement !== startInp && state.szStart && startInp.value !== state.szStart) startInp.value = state.szStart;
     if (endInp && document.activeElement !== endInp && state.szEnd && endInp.value !== state.szEnd) endInp.value = state.szEnd;
   }
-  function szCmpShell(innerLeft, innerRight, title, windowLine, note) {
+  function szCmpShell(innerLeft, innerRight, title, windowLine, note, innerThird) {
+    const right = innerThird
+      ? `<div class="sz-col-stack"><div class="sz-col">${innerRight}</div><div class="sz-col">${innerThird}</div></div>`
+      : `<div class="sz-col">${innerRight}</div>`;
     return `<div class="sz-bt-title">${title}</div>
         ${windowLine ? `<p class="sz-window">${windowLine}</p>` : ""}
         <div class="sz-cmp">
           <div class="sz-col">${innerLeft}</div>
-          <div class="sz-col">${innerRight}</div>
+          ${right}
         </div>
         ${note ? `<p class="cycle-note">${note}</p>` : ""}`;
   }
@@ -4502,50 +4692,61 @@
       statusHtml = `${loadNote}<p class="cycle-note">${escapeHtml((d && d.error) || "暂无法计算观察状态")}</p>`;
     } else {
       const hold = d.inPos;
-      const tone = hold ? "up" : "neutral";
-      const statusLab = hold ? "持有" : "空仓";
+      const short = szResultIsShort(d);
+      const tone = hold ? (short ? "down" : "up") : "neutral";
+      const statusLab = hold ? (short ? "做空" : "持有") : "空仓";
       const threshold = d.threshold != null ? d.threshold : Math.min(2, selected.length);
+      const look = short ? "看空" : "看多";
+      const holdWord = short ? "做空" : "持有";
       const lead = (selected.length === 3 && threshold === 2)
-        ? `BTC ${lab} 三个条件中，至少两个看多则观察为持有，否则为空仓。仅供观察，不是买卖建议。`
+        ? `BTC ${lab} 三个条件中，至少两个${look}则观察为${holdWord}，否则为空仓。仅供观察，不是买卖建议。`
         : (selected.length === 1
-          ? `BTC ${lab} 已选条件看多则观察为持有，否则为空仓。仅供观察，不是买卖建议。`
-          : `BTC ${lab} 已选 ${selected.length} 个条件中，至少 ${threshold} 个看多则观察为持有，否则为空仓。仅供观察，不是买卖建议。`);
+          ? `BTC ${lab} 已选条件${look}则观察为${holdWord}，否则为空仓。仅供观察，不是买卖建议。`
+          : `BTC ${lab} 已选 ${selected.length} 个条件中，至少 ${threshold} 个${look}则观察为${holdWord}，否则为空仓。仅供观察，不是买卖建议。`);
       const flags = { bd: d.bd, ichi: d.ichi, ma: d.aboveMa };
-      const rows = selected.map((id) => sanzuanRow(szIndName(id, tf), !!flags[id], szIndHint(id, tf))).join("");
+      const rows = selected.map((id) => sanzuanRow(szIndName(id, tf, short), !!flags[id], szIndHint(id, tf, short), short)).join("");
       statusHtml = `${loadNote}<p class="sz-lead">${escapeHtml(lead)}</p>
       <div class="sz-overall">
         <div class="cyc-head">
           <div class="cyc-k">观察状态</div>
           <p class="cyc-jud tone-${tone}">${statusLab}</p>
         </div>
-        <p class="sz-votes">看多票数 <b>${d.votes} / ${d.nSel}</b></p>
+        <p class="sz-votes">${look}票数 <b>${d.votes} / ${d.nSel}</b></p>
         <p class="cyc-sub">截至 ${escapeHtml(d.asOf)} 香港时间的已收盘${escapeHtml(lab)}线</p>
       </div>
       <div class="sz-grid">${rows}</div>`;
     }
 
+    const viewShort = szResultIsShort(d) || (!d && szIsShort());
     const placeholderLeft = `<div class="cyc-k">所选规则</div><div class="sz-ret flat">—</div>`;
     const placeholderRight = `<div class="cyc-k">一直持有现货</div><div class="sz-ret flat">—</div>`;
+    const placeholderShort = `<div class="cyc-k">一直做空</div><div class="sz-ret flat">—</div>`;
     let resultsHtml = "";
+    function cmpPlace(msg) {
+      return szCmpShell(placeholderLeft, viewShort ? placeholderShort : placeholderRight, "回测对比", "", msg, viewShort ? placeholderRight : "") + loadNote;
+    }
     if (!selected.length) {
-      resultsHtml = szCmpShell(placeholderLeft, placeholderRight, "回测对比", "", "请先勾选指标后再回测。") + loadNote;
+      resultsHtml = cmpPlace("请先勾选指标后再回测。");
     } else if (loading && (!d || !d.ready || stale || !d.backtest)) {
-      resultsHtml = szCmpShell(placeholderLeft, placeholderRight, "回测对比", "", "") + loadNote;
+      resultsHtml = cmpPlace("");
     } else if (!d || !d.ready) {
-      resultsHtml = szCmpShell(placeholderLeft, placeholderRight, "回测对比", "", escapeHtml((d && d.error) || "回测数据不足。")) + loadNote;
+      resultsHtml = cmpPlace(escapeHtml((d && d.error) || "回测数据不足。"));
     } else if (!(d.backtest && d.backtest.strategy && d.backtest.hold)) {
-      resultsHtml = szCmpShell(placeholderLeft, placeholderRight, "回测对比", "", "回测数据不足。") + loadNote;
+      resultsHtml = cmpPlace("回测数据不足。");
     } else {
       const bt = d.backtest;
-      const st = bt.strategy, hd = bt.hold;
+      const st = bt.strategy, hd = bt.hold, hs = bt.holdShort;
+      const short = szResultIsShort(d);
       const levMult = bt.lev != null ? bt.lev : szLevMult();
       const maxLossX = bt.maxLoss != null ? bt.maxLoss : szMaxLossRatio();
       const feeExtra = levMult > 1 ? "（按仓位名义本金计）" : "";
       const feeNote = (bt.strategyFee && bt.holdFee)
-        ? `若按每边 0.1% 手续费${feeExtra}，策略约 ${fmtSzPctInt(bt.strategyFee.ret)}，一直持有约 ${fmtSzPctInt(bt.holdFee.ret)}。`
+        ? (short && bt.holdShortFee
+          ? `若按每边 0.1% 手续费${feeExtra}，策略约 ${fmtSzPctInt(bt.strategyFee.ret)}，一直做空约 ${fmtSzPctInt(bt.holdShortFee.ret)}，一直持有现货约 ${fmtSzPctInt(bt.holdFee.ret)}。`
+          : `若按每边 0.1% 手续费${feeExtra}，策略约 ${fmtSzPctInt(bt.strategyFee.ret)}，一直持有约 ${fmtSzPctInt(bt.holdFee.ret)}。`)
         : "";
       const classic = selected.length === 3 && (d.threshold == null || d.threshold === 2);
-      const leftName = classic ? "三选二规则" : "所选规则";
+      const leftName = classic ? (short ? "三选二做空规则" : "三选二规则") : "所选规则";
       const ruleNote = escapeHtml(szBtRuleNote());
       let stopNote = "";
       let capKv = "";
@@ -4566,9 +4767,25 @@
         capKv = sanzuanKv("本金亏损限制", "未触达");
       }
       const extra = (bt.notes && bt.notes.length ? bt.notes.join("") : "") + (d.notes && d.notes.length && bt.notes !== d.notes ? d.notes.join("") : "");
-      const note = `币安 BTC/USDT ${lab} 线，信号当根已收盘确认、下一根开盘成交，只做多、不含手续费。杠杆按价格涨跌放大盈亏。本金最大亏损比按每笔开仓时的交易本金计算，触达后平仓，条件再次满足则下一根开盘继续开仓。勾选复利时止盈后按总余额开仓，不勾选则超过起始本金的利润不投入下一笔，本金亏掉后会先用盈利补回。主数字不含资金费率、借贷利息和爆仓罚金。一直持有现货不加杠杆，也不套这条本金亏损限制或复利。窗口按香港日期，含起始日与结束日当天的已收盘 K 线；结束日不超过该周期最后一根已收盘棒。${feeNote}${stopNote}${extra}历史回测不代表以后结果，不是投资建议。`;
+      const note = short
+        ? `币安 BTC/USDT ${lab} 线，信号当根已收盘确认、下一根开盘成交，只做空、不含手续费。杠杆按价格涨跌放大盈亏（价格下跌有利于空头）。本金最大亏损比按每笔开仓时的交易本金计算，触达后平仓，条件再次满足则下一根开盘继续开空。勾选复利时平仓后按总余额开仓，不勾选则超过起始本金的利润不投入下一笔，本金亏掉后会先用盈利补回。止损看对该空头最不利的价（开盘与最高价）。主数字不含资金费率、借贷利息和爆仓罚金。一直做空与一直持有现货对照都不加杠杆，也不套这条本金亏损限制或复利。窗口按香港日期，含起始日与结束日当天的已收盘 K 线；结束日不超过该周期最后一根已收盘棒。${feeNote}${stopNote}${extra}历史回测不代表以后结果，不是投资建议。`
+        : `币安 BTC/USDT ${lab} 线，信号当根已收盘确认、下一根开盘成交，只做多、不含手续费。杠杆按价格涨跌放大盈亏。本金最大亏损比按每笔开仓时的交易本金计算，触达后平仓，条件再次满足则下一根开盘继续开仓。勾选复利时止盈后按总余额开仓，不勾选则超过起始本金的利润不投入下一笔，本金亏掉后会先用盈利补回。主数字不含资金费率、借贷利息和爆仓罚金。一直持有现货不加杠杆，也不套这条本金亏损限制或复利。窗口按香港日期，含起始日与结束日当天的已收盘 K 线；结束日不超过该周期最后一根已收盘棒。${feeNote}${stopNote}${extra}历史回测不代表以后结果，不是投资建议。`;
       const title = "回测对比";
       const windowLine = escapeHtml(bt.from) + " 至 " + escapeHtml(bt.to);
+      const holdCard = `<div class="cyc-k">一直持有现货</div>
+            <p class="sz-bt-sub">无杠杆，不套本金亏损限制</p>
+            <div class="sz-ret ${pctClass(hd.ret)}">${fmtSzPctInt(hd.ret)}</div>
+            ${sanzuanKv("年化", fmtSzPct(hd.cagr, 1))}
+            ${sanzuanKv("最大回撤", fmtSzPct(hd.mdd, 1), hd.mddFrom && hd.mddTo ? (hd.mddFrom + " 至 " + hd.mddTo) : "")}
+            ${szBestTradeKv(hd, tf)}`;
+      const shortHoldCard = hs
+        ? `<div class="cyc-k">一直做空</div>
+            <p class="sz-bt-sub">无杠杆，不套本金亏损限制</p>
+            <div class="sz-ret ${pctClass(hs.ret)}">${fmtSzPctInt(hs.ret)}</div>
+            ${sanzuanKv("年化", fmtSzPct(hs.cagr, 1))}
+            ${sanzuanKv("最大回撤", fmtSzPct(hs.mdd, 1), hs.mddFrom && hs.mddTo ? (hs.mddFrom + " 至 " + hs.mddTo) : "")}
+            ${szBestTradeKv(hs, tf)}`
+        : "";
       resultsHtml = szCmpShell(
         `<div class="cyc-k">${leftName}</div>
             <p class="sz-bt-sub">${ruleNote}</p>
@@ -4580,15 +4797,11 @@
             ${sanzuanKv("完整买卖", String(st.trips) + " 笔")}
             ${sanzuanKv("在场时间", fmtSzPct(st.timeInMkt, 1).replace(/^\+/, ""))}
             ${capKv}`,
-        `<div class="cyc-k">一直持有现货</div>
-            <p class="sz-bt-sub">无杠杆，不套本金亏损限制</p>
-            <div class="sz-ret ${pctClass(hd.ret)}">${fmtSzPctInt(hd.ret)}</div>
-            ${sanzuanKv("年化", fmtSzPct(hd.cagr, 1))}
-            ${sanzuanKv("最大回撤", fmtSzPct(hd.mdd, 1), hd.mddFrom && hd.mddTo ? (hd.mddFrom + " 至 " + hd.mddTo) : "")}
-            ${szBestTradeKv(hd, tf)}`,
+        short ? shortHoldCard : holdCard,
         title,
         windowLine,
-        note
+        note,
+        short ? holdCard : ""
       ) + loadNote;
     }
     szSetHtml(status, statusHtml);
@@ -4881,11 +5094,12 @@
       const d = state.sanzuan;
       if (!d || !d.ready) return "";
       const tf = d.tf || szTfId();
+      const mode = d.mode || (szIsShort() ? "short" : "long");
       const selected = (d.selected && d.selected.length) ? d.selected : szSelectedIds();
       const flags = { bd: d.bd, ichi: d.ichi, ma: d.aboveMa };
       const bits = [d.inPos ? "1" : "0"];
       selected.forEach((id) => bits.push(flags[id] ? "1" : "0"));
-      return [tf, selected.join(",")].concat(bits).join("|");
+      return [mode, tf, selected.join(",")].concat(bits).join("|");
     }
     if (id === "xfeed") {
       const d = state.xFeed;
