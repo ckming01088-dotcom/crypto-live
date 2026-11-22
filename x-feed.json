@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-22T08:03:35+08:00",
+  "asOf": "2026-11-22T09:09:55+08:00",
   "source": "X 公开帖快照（含中文译文）",
   "accounts": [
     {
@@ -86,6 +86,36 @@
   ],
   "posts": [
     {
+      "id": "2124295793280450870",
+      "accountId": "elonmusk",
+      "name": "Elon Musk",
+      "zh": "马斯克",
+      "username": "elonmusk",
+      "text": "This is so fun that it’s worth just having your car drive you around for the sake of driving around https://t.co/HQflqvij0D",
+      "createdAt": "2026-11-22T00:15:59.000Z",
+      "url": "https://x.com/elonmusk/status/2124295793280450870",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 3299,
+      "reposts": 339,
+      "textZh": "这太好玩了，值得就为了开车本身而让车子载着你四处转转 https://t.co/HQflqvij0D"
+    },
+    {
+      "id": "2124294755316310346",
+      "accountId": "elonmusk",
+      "name": "Elon Musk",
+      "zh": "马斯克",
+      "username": "elonmusk",
+      "text": "Tesla FSD V15 is a banger release!\n\nCompletely new architecture that deserves being called “super” intelligence, as it drives better than human intelligence. https://t.co/9nbC2g8g01",
+      "createdAt": "2026-11-22T00:11:51.000Z",
+      "url": "https://x.com/elonmusk/status/2124294755316310346",
+      "kind": "quote",
+      "repostOf": null,
+      "likes": 4245,
+      "reposts": 441,
+      "textZh": "特斯拉 FSD V15 是一次非常炸裂的发布！\n\n这是全新的架构，配得上被称为“超级”智能，因为它开得比人类智能还好。 https://t.co/9nbC2g8g01"
+    },
+    {
       "id": "2124280710747840889",
       "accountId": "elonmusk",
       "name": "Elon Musk",
@@ -96,8 +126,8 @@
       "url": "https://x.com/elonmusk/status/2124280710747840889",
       "kind": "quote",
       "repostOf": null,
-      "likes": 1610,
-      "reposts": 252,
+      "likes": 2172,
+      "reposts": 326,
       "textZh": "把你最难的任务交给 Grok @Bot https://t.co/KEa57ff3ux"
     },
     {
@@ -111,8 +141,8 @@
       "url": "https://x.com/elonmusk/status/2124270426402836626",
       "kind": "quote",
       "repostOf": null,
-      "likes": 6601,
-      "reposts": 637,
+      "likes": 8699,
+      "reposts": 798,
       "textZh": "这是实时 AI 视频生成（没有使用游戏引擎！），只用了一块 AI4 TRIP 加速器的一半。好好体会这句话…… https://t.co/ieASMRunOy"
     },
     {
@@ -126,8 +156,8 @@
       "url": "https://x.com/elonmusk/status/2124241570451054609",
       "kind": "post",
       "repostOf": null,
-      "likes": 30403,
-      "reposts": 1961,
+      "likes": 36330,
+      "reposts": 2293,
       "textZh": "是时候再次探测天王星了！\n\n（其实）我们需要好得多的影像。"
     },
     {
@@ -141,8 +171,8 @@
       "url": "https://x.com/elonmusk/status/2124238249686159590",
       "kind": "quote",
       "repostOf": null,
-      "likes": 15739,
-      "reposts": 1139,
+      "likes": 17711,
+      "reposts": 1284,
       "textZh": "就像 GTA https://t.co/H2H9tjTStt"
     },
     {
@@ -156,39 +186,9 @@
       "url": "https://x.com/elonmusk/status/2124238164512714925",
       "kind": "post",
       "repostOf": null,
-      "likes": 18077,
-      "reposts": 1716,
+      "likes": 20812,
+      "reposts": 1978,
       "textZh": "在 FSD V15 中，特斯拉的 AI 计算机会重新渲染现实，转弯时在空中打出人字形箭头，就像电子游戏一样。\n\n你可以点按现实重可视化界面上的任意一点，让车子开到那里。  https://t.co/A5ZB2yFkd7"
-    },
-    {
-      "id": "2124219646459220296",
-      "accountId": "elonmusk",
-      "name": "Elon Musk",
-      "zh": "马斯克",
-      "username": "elonmusk",
-      "text": "Shortest explanation is just: 🤯 https://t.co/E1RGMMtLLD",
-      "createdAt": "2026-11-21T19:13:24.000Z",
-      "url": "https://x.com/elonmusk/status/2124219646459220296",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 6645,
-      "reposts": 529,
-      "textZh": "最短的解释就是：🤯 https://t.co/E1RGMMtLLD"
-    },
-    {
-      "id": "2124219378489311656",
-      "accountId": "elonmusk",
-      "name": "Elon Musk",
-      "zh": "马斯克",
-      "username": "elonmusk",
-      "text": "Grok understands https://t.co/Z6CN9wjwAL",
-      "createdAt": "2026-11-21T19:12:20.000Z",
-      "url": "https://x.com/elonmusk/status/2124219378489311656",
-      "kind": "quote",
-      "repostOf": null,
-      "likes": 3824,
-      "reposts": 450,
-      "textZh": "Grok 能理解 https://t.co/Z6CN9wjwAL"
     },
     {
       "id": "2123927005863563713",
@@ -201,8 +201,8 @@
       "url": "https://x.com/cz_binance/status/2123927005863563713",
       "kind": "quote",
       "repostOf": null,
-      "likes": 12192,
-      "reposts": 819,
+      "likes": 12298,
+      "reposts": 824,
       "textZh": "哇，这太离谱了，完全是胡说八道。\n\n我猜他们就是这样控制“公众认知”的？\nhttps://t.co/rJvAhFlmmP"
     },
     {
@@ -216,7 +216,7 @@
       "url": "https://x.com/cz_binance/status/2123735923380965851",
       "kind": "quote",
       "repostOf": null,
-      "likes": 1428,
+      "likes": 1431,
       "reposts": 103,
       "textZh": "价格发现首先发生在链上。\nhttps://t.co/GGL8NsrIkP"
     },
@@ -231,8 +231,8 @@
       "url": "https://x.com/cz_binance/status/2123727696673026236",
       "kind": "quote",
       "repostOf": null,
-      "likes": 5025,
-      "reposts": 309,
+      "likes": 5055,
+      "reposts": 312,
       "textZh": "有势力在散布负面叙事，背后有大量资金支持。\nhttps://t.co/Ymy4sA0cJd"
     },
     {
@@ -246,8 +246,8 @@
       "url": "https://x.com/cz_binance/status/2123550289957658970",
       "kind": "quote",
       "repostOf": null,
-      "likes": 1852,
-      "reposts": 168,
+      "likes": 1856,
+      "reposts": 169,
       "textZh": "福布斯：“显然，关于这起 80 亿美元 FTX 欺诈案，最紧迫、尚未解答的问题是，SBF 是否真的爱过 Caroline Ellison。至少，看完 Netflix 的新剧，你可能会得到这种印象。\n...\n那些富有创意的想象中，最五彩斑斓的之一，是币安亿万富翁创始人赵长鹏（Terry Chen）被改写成加密世界的邦德式反派：他举办社交活动，唯一目的就是堵住 Bankman-Fried，并施压让他对客户交易进行抢跑。没有任何公开证据表明赵长鹏做过这类事。”\n\nhttps://t.co/aPISTA9h8b\n\n这张 2026 年 3 月的对比 👇 几乎把一切都说尽了……🤣\n\n图片来源：https://t.co/KcsyMsh7Dk"
     },
     {
@@ -321,7 +321,7 @@
       "url": "https://x.com/justinsuntron/status/2124075117861085388",
       "kind": "quote",
       "repostOf": null,
-      "likes": 215,
+      "likes": 227,
       "reposts": 13,
       "textZh": "孙宇晨奖将为黎曼猜想的两项核心成果颁发 100 万美元奖励！ https://t.co/p3r6C6yhNH"
     },
@@ -346,14 +346,14 @@
       "name": "H.E. Justin Sun 👨‍🚀 🌞",
       "zh": "孙宇晨",
       "username": "justinsuntron",
-      "text": "对于近期梦女针对我的持续骚扰和不实信息，通过恶意炒作获取流量，我此前没有过多回应，是希望保留善意，避免占用公共讨论的空间。\n\n但善意和克制，也需要得到基本的尊重。",
+      "text": "对于近期梦女针对我的持续骚扰和不实信息，通过恶意炒作获取流量，我此前没有过多回应，是希望保留善意，避免占用公共讨论的空间。\n\n但善意和克制，也需要得到基本的尊重。\n\n目前，我已委托律师事务所处理相关事项，并向有关司法机关反映情况。今后也会通过持续的证据保全和必要的法律程序，依法维护自身合法权益，追究相关梦女的民事与刑事责任。\n\n我尊重正常的讨论与批评，也希望大家尊重事实和个人边界。相关问题交由法律处理，不希望引发对立，只希望厘清事实，让正常生活和公共讨论都少一些无谓的打扰。",
       "createdAt": "2026-11-21T05:35:00.000Z",
       "url": "https://x.com/justinsuntron/status/2124013687556165828",
       "kind": "post",
       "repostOf": null,
-      "likes": 1490,
+      "likes": 1510,
       "reposts": 37,
-      "textZh": "对于近期梦女针对我的持续骚扰和不实信息，通过恶意炒作获取流量，我此前没有过多回应，是希望保留善意，避免占用公共讨论的空间。\n\n但善意和克制，也需要得到基本的尊重。"
+      "textZh": "对于近期梦女针对我的持续骚扰和不实信息，通过恶意炒作获取流量，我此前没有过多回应，是希望保留善意，避免占用公共讨论的空间。\n\n但善意和克制，也需要得到基本的尊重。\n\n目前，我已委托律师事务所处理相关事项，并向有关司法机关反映情况。今后也会通过持续的证据保全和必要的法律程序，依法维护自身合法权益，追究相关梦女的民事与刑事责任。\n\n我尊重正常的讨论与批评，也希望大家尊重事实和个人边界。相关问题交由法律处理，不希望引发对立，只希望厘清事实，让正常生活和公共讨论都少一些无谓的打扰。"
     },
     {
       "id": "2123811434320871659",
@@ -366,7 +366,7 @@
       "url": "https://x.com/justinsuntron/status/2123811434320871659",
       "kind": "post",
       "repostOf": null,
-      "likes": 520,
+      "likes": 522,
       "reposts": 34,
       "textZh": "黎曼猜想已被解决。@JustinSunPrize\n\nhttps://t.co/NErQ9ASUXT"
     },
@@ -381,7 +381,7 @@
       "url": "https://x.com/justinsuntron/status/2123803318476808632",
       "kind": "quote",
       "repostOf": null,
-      "likes": 104,
+      "likes": 105,
       "reposts": 10,
       "textZh": "TRX，人称小JST 😂\nhttps://t.co/c9FtzkGi2w"
     },
@@ -411,7 +411,7 @@
       "url": "https://x.com/justinsuntron/status/2123753964378439839",
       "kind": "quote",
       "repostOf": null,
-      "likes": 360,
+      "likes": 364,
       "reposts": 23,
       "textZh": "大红果时代的第一颗大结果！\nhttps://t.co/uN28PvP6Q6"
     },
@@ -426,8 +426,8 @@
       "url": "https://x.com/saylor/status/2124125931786953142",
       "kind": "post",
       "repostOf": null,
-      "likes": 4012,
-      "reposts": 354,
+      "likes": 4068,
+      "reposts": 358,
       "textZh": "我们每天都在 Stretch。$STRC\nhttps://t.co/9LKnZRIPiZ"
     },
     {
@@ -441,8 +441,8 @@
       "url": "https://x.com/saylor/status/2123826627759264099",
       "kind": "post",
       "repostOf": null,
-      "likes": 16640,
-      "reposts": 1576,
+      "likes": 16687,
+      "reposts": 1582,
       "textZh": "记住你当初为什么 ₿ought。\nhttps://t.co/UxYdpFJutx"
     },
     {
@@ -456,8 +456,8 @@
       "url": "https://x.com/saylor/status/2123781672705360055",
       "kind": "post",
       "repostOf": null,
-      "likes": 12049,
-      "reposts": 854,
+      "likes": 12087,
+      "reposts": 855,
       "textZh": "比特币是我们在 Strategy 所做一切的基础。它让各地的人、公司和智能体都有能力持有、转移和编程资本。它的供应不随需求变化，终端通胀率为零，经济半衰期是无限的。"
     },
     {
@@ -471,7 +471,7 @@
       "url": "https://x.com/saylor/status/2123577768914923974",
       "kind": "post",
       "repostOf": null,
-      "likes": 3100,
+      "likes": 3101,
       "reposts": 370,
       "textZh": "我们如何决定何时买入比特币、何时回购 $STRC？在 Strategy 2026 年三季度投资者问答中，我和 @NatBrunell、@PhongLe 回答了大家关于每股比特币、在下行周期中支付股息，以及为 $MSTR 股东创造长期价值的问题。\n\n02:05 - $MSTR、$STRC、其他优先股和可转债如何融入 Strategy 的资本结构\n08:09 - 在 $BTC 升值之外，如何为 $MSTR 股东创造价值\n11:53 - 我们何时增发股票、买入比特币并回购 $STRC\n24:38 - 每股总比特币和每股净比特币对增值、风险和长期价值说明了什么\n37:18 - $STRC 回购、100 美元目标价以及信贷市场动态\n51:40 - 在保持资产负债表稳健的同时管理放大效应与风险\n53:06 - 在比特币长期下行期间支付股息并履行债务义务\n57:42 - 流动性数字信用如何为 $MSTR 股东创造价值\n01:04:34 - Strategy 在未来 3–7 年扩展数字信用、$STRC 和数字货币的愿景"
     },
@@ -501,7 +501,7 @@
       "url": "https://x.com/saylor/status/2123098624204710141",
       "kind": "post",
       "repostOf": null,
-      "likes": 25171,
+      "likes": 25174,
       "reposts": 1707,
       "textZh": "卖方耗尽会远早于 Saylor 的耗尽。"
     },
@@ -636,7 +636,7 @@
       "url": "https://x.com/TheMarketMemo/status/2124250422747811898",
       "kind": "post",
       "repostOf": null,
-      "likes": 22,
+      "likes": 34,
       "reposts": 0,
       "textZh": "周末开放式问答：你在投资/交易中遇到的问题，我将尽力回复。"
     },
@@ -651,8 +651,8 @@
       "url": "https://x.com/TheMarketMemo/status/2123982482827551032",
       "kind": "post",
       "repostOf": null,
-      "likes": 739,
-      "reposts": 55,
+      "likes": 772,
+      "reposts": 59,
       "textZh": "如果你无法承受10万美元的账面损失，你就不具备驾驭百万美元财富的能力。 https://t.co/bJj1kiBcre"
     },
     {
@@ -681,8 +681,8 @@
       "url": "https://x.com/TheMarketMemo/status/2123969745942876389",
       "kind": "quote",
       "repostOf": null,
-      "likes": 299,
-      "reposts": 14,
+      "likes": 305,
+      "reposts": 15,
       "textZh": "抱歉啊， $NVDA 被我乌鸦嘴了🤣\nhttps://t.co/f5KwQiKAAU"
     },
     {
@@ -696,7 +696,7 @@
       "url": "https://x.com/TheMarketMemo/status/2123877598505922980",
       "kind": "quote",
       "repostOf": null,
-      "likes": 419,
+      "likes": 424,
       "reposts": 21,
       "textZh": "VIX 指数已回补了这三个缺口‼️\nhttps://t.co/osKf5GgTer"
     },
