@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-23T08:09:31+08:00",
+  "asOf": "2026-11-23T09:07:56+08:00",
   "source": "X 公开帖快照（含中文译文）",
   "accounts": [
     {
@@ -86,6 +86,21 @@
   ],
   "posts": [
     {
+      "id": "2124657565950984345",
+      "accountId": "elonmusk",
+      "name": "Elon Musk",
+      "zh": "马斯克",
+      "username": "elonmusk",
+      "text": "Jessica Tarlov says when she finally decided to listen to the full audio of Trump's \"Fine People\" comments -- she found out he wasn't talking about Nazis.\n\n\"That was illuminating for me.\"\n\nWow. How big of her to admit it was a lie all these years later...after actually listening to it.\n\nDemocrats still regurgitate this hoax to this day. https://t.co/lWFYM6Hjay",
+      "createdAt": "2026-11-23T00:13:32.000Z",
+      "url": "https://x.com/elonmusk/status/2124657565950984345",
+      "kind": "repost",
+      "repostOf": "WesternLensman",
+      "likes": 0,
+      "reposts": 2275,
+      "textZh": "杰西卡·塔洛夫说，当她终于决定听完特朗普“Fine People”言论的完整音频后，发现他当时并不是在谈论纳粹。\n\n“这对我来说很有启发。”\n\n哇。时隔这么多年，在真正听过之后才承认那是谎言，她可真大度……\n\n民主党人直到今天仍在复读这个骗局。 https://t.co/lWFYM6Hjay"
+    },
+    {
       "id": "2124638778518303124",
       "accountId": "elonmusk",
       "name": "Elon Musk",
@@ -171,20 +186,6 @@
       "likes": 20033,
       "reposts": 1902,
       "textZh": "意识要么是一种幻觉，要么在梯度上普遍存在。\n\n很难论证碳有意识，而硅没有。"
-    },
-    {
-      "id": "2124614639409606954",
-      "accountId": "elonmusk",
-      "name": "Elon Musk",
-      "zh": "马斯克",
-      "username": "elonmusk",
-      "text": "Would this be the wrong note upon which to suggest using Grok Bot? https://t.co/qfYPtHSaRV",
-      "createdAt": "2026-11-22T21:22:58.000Z",
-      "url": "https://x.com/elonmusk/status/2124614639409606954",
-      "kind": "quote",
-      "likes": 7292,
-      "reposts": 488,
-      "textZh": "在这个当口建议使用 Grok Bot，会不会不合时宜？ https://t.co/qfYPtHSaRV"
     },
     {
       "id": "2123959347726209255",
