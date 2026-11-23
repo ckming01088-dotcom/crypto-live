@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-23T13:06:47+08:00",
+  "asOf": "2026-11-23T14:11:27+08:00",
   "source": "X 公开帖快照（含中文译文）",
   "accounts": [
     {
@@ -611,6 +611,20 @@
       "textZh": "如果没有比特币财库公司，$BTC 会不会更高？\n\n不会。在我看来，像 @Strategy [$MSTR] 和 @Strive {$ASST] 这样的 BTC-TC，对比特币的金融化和采用是净正面的。\n\n如果有人好奇为何 $BTC 没有涨得更高，我会先看看还有什么在争夺这笔资本：人工智能。\n\n若以 2023 年 1 月为起点（ChatGPT 上线后的第一个完整日历年年初），到 2026 年 11 月 18 日，我跟踪的一组人工智能股票“指数”里，仅 13 只股票的成交额就达到 $128.09T：\n\n云巨头： $AMZN、$META、$GOOGL、$MSFT — $33.41T\n垂直 AI 整合： $AAPL、$TSLA — $37.36T\n算力 | 架构： $NVDA、$AMD、$AVGO — $43.00T\n存储 | 互连： $MU、$MRVL — $10.11T\n核心技术 | 制造： $ASML、$TSM — $4.20T\n\n（这还不包括 $BTC 矿企、Neoclouds 等）\n\n同一时期，Coin Metrics 覆盖的市场录得 $17.23T 的 $BTC 现货成交。现货 $BTC ETF 再贡献约 $2.26T。合计 $19.49T。\n\n仅 $NVDA 一只股票的成交额就达 $28.99T，大约高出 49%。\n\n资本、杠杆和整体货币周转都会流向那些“大交易”；而从未有过比人工智能更大、更具趋势性的交易。\n\n所以如果问题是“比特币为什么没有更高”，我会先看人工智能交易的体量、以及它在和谁争夺资本，而不是先责怪那些买入 $BTC 的公司。"
     },
     {
+      "id": "2124739159525068904",
+      "accountId": "TheMarketMemo",
+      "name": "LEI",
+      "zh": "市场备忘",
+      "username": "TheMarketMemo",
+      "text": "什麼是熊市特徵？👇 https://t.co/0GVndQUeAh",
+      "createdAt": "2026-11-23T05:37:46.000Z",
+      "url": "https://x.com/TheMarketMemo/status/2124739159525068904",
+      "kind": "quote",
+      "likes": 36,
+      "reposts": 0,
+      "textZh": "什么是熊市特征？👇 https://t.co/0GVndQUeAh"
+    },
+    {
       "id": "2124717812614860985",
       "accountId": "TheMarketMemo",
       "name": "LEI",
@@ -693,20 +707,6 @@
       "likes": 122,
       "reposts": 1,
       "textZh": "周末开放式问答：你在投资/交易中遇到的问题，我将尽力回复。"
-    },
-    {
-      "id": "2123982482827551032",
-      "accountId": "TheMarketMemo",
-      "name": "LEI",
-      "zh": "市场备忘",
-      "username": "TheMarketMemo",
-      "text": "如果你無法承受10萬美元的賬面損失，你就不具備駕馭百萬美元財富的能力。 https://t.co/bJj1kiBcre",
-      "createdAt": "2026-11-21T03:31:00.000Z",
-      "url": "https://x.com/TheMarketMemo/status/2123982482827551032",
-      "kind": "post",
-      "likes": 1544,
-      "reposts": 172,
-      "textZh": "如果你无法承受10万美元的账面损失，你就不具备驾驭百万美元财富的能力。 https://t.co/bJj1kiBcre"
     },
     {
       "id": "2124421232254984321",
