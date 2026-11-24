@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-24T11:10:40+08:00",
+ "asOf": "2026-11-24T12:12:28+08:00",
  "source": "X 公开帖快照（含中文译文）",
  "accounts": [
   {
@@ -590,6 +590,20 @@
    "textZh": "美国国债是保证会亏的收益率。 https://t.co/cvTcgWqxMO"
   },
   {
+   "id": "2125069394808381488",
+   "accountId": "TheMarketMemo",
+   "name": "LEI",
+   "zh": "市场备忘",
+   "username": "TheMarketMemo",
+   "text": "這隻影片我想講兩個內容：\n1. 半導體是強週期行業，週期行業的投資邏輯是「買在估值最高的時候，賣在估值最低的時候」。\n2. 我想聊一個重要的觀點：叫做「沒有趨勢的價值不能投」。在影片的結尾，我也會分享一個觀察趨勢的方法。 https://t.co/lD5ayYJw4m",
+   "createdAt": "2026-11-24T03:30:00.000Z",
+   "url": "https://x.com/TheMarketMemo/status/2125069394808381488",
+   "kind": "post",
+   "likes": 151,
+   "reposts": 14,
+   "textZh": "这只影片我想讲两个内容：\n1. 半导体是强周期行业，周期行业的投资逻辑是「买在估值最高的时候，卖在估值最低的时候」。\n2. 我想聊一个重要的观点：叫做「没有趋势的价值不能投」。在影片的结尾，我也会分享一个观察趋势的方法。 https://t.co/lD5ayYJw4m"
+  },
+  {
    "id": "2125010860037087457",
    "accountId": "TheMarketMemo",
    "name": "LEI",
@@ -672,20 +686,6 @@
    "likes": 105,
    "reposts": 2,
    "textZh": "$SOXL 还是 $TQQQ ？ https://t.co/kyw9rPZ2rH"
-  },
-  {
-   "id": "2124681086018236718",
-   "accountId": "TheMarketMemo",
-   "name": "LEI",
-   "zh": "市场备忘",
-   "username": "TheMarketMemo",
-   "text": "很多台灣網友關心的話題👇 https://t.co/MXuGyEcWMR",
-   "createdAt": "2026-11-23T01:47:00.000Z",
-   "url": "https://x.com/TheMarketMemo/status/2124681086018236718",
-   "kind": "quote",
-   "likes": 131,
-   "reposts": 2,
-   "textZh": "很多台湾网友关心的话题👇 https://t.co/MXuGyEcWMR"
   },
   {
    "id": "2124866526272803247",
