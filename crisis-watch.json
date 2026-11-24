@@ -1,9 +1,9 @@
 {
-  "asOf": "2026-11-23T21:13:00+08:00",
+  "asOf": "2026-11-24T08:08:00+08:00",
   "disclaimer": "1 至 10 级观察读数，10 为最高。由公开市场与宏观序列加权得出，不是买卖建议，也不确认金融危机已经发生。",
-  "level": 5,
+  "level": 4,
   "levelMax": 10,
-  "scoreRaw": 4.5032,
+  "scoreRaw": 4.153,
   "formula": "各分项先按给定折点线性插值得到 0–10 分（超出两端的先外推再裁剪到 0–10；股指/科技回撤在 0% 时为 1 分；10 年实际利率为负时为 1 分；美元指数为 0.4×水平分 + 0.6×近 3 个月/60 个交易日涨跌分；联邦基金与实际利率为 0.5×政策分 + 0.5×10 年实际利率分，政策分为 0.5×当前有效利率分 + 0.5×12 个月变动分；科技与 AI 回撤为 0.6×最大回撤分 + 0.4×相对标普宽度分；收益率曲线若近 12 个月最低值低于 -0.30 且最新值已回到 0 以上，则记 7 分，否则按最新利差插值）。总分为现存分项按权重加权平均，缺项剔除并重标定权重；level = clamp(round(scoreRaw), 1, 10)。",
   "weights": {
     "hyoas": 0.18,
@@ -20,16 +20,16 @@
     {
       "id": "dxy",
       "name": "美元指数",
-      "value": 104.06,
+      "value": 104.32,
       "unit": "点",
       "asOf": "2026-11-23",
-      "score": 6.4,
+      "score": 6.54,
       "weight": 0.1,
       "sourceName": "Yahoo Finance DX-Y.NYB ICE 美元指数，近 3 个月按 60 个交易日涨跌",
       "sourceUrl": "https://finance.yahoo.com/quote/DX-Y.NYB",
-      "valueText": "104.06",
-      "sub": "60 个交易日 +4.4%",
-      "change60d": 4.37,
+      "valueText": "104.32",
+      "sub": "60 个交易日 +4.6%",
+      "change60d": 4.63,
       "change60dFrom": "2026-08-28"
     },
     {
@@ -37,13 +37,13 @@
       "name": "联邦基金与实际利率",
       "value": 3.88,
       "unit": "%",
-      "asOf": "2026-11-20",
-      "score": 5.99,
+      "asOf": "2026-11-23",
+      "score": 6.01,
       "weight": 0.08,
       "sourceName": "纽约联储有效联邦基金利率（EFFR）；美国财政部 10 年期 TIPS 实际收益率",
       "sourceUrl": "https://www.newyorkfed.org/markets/reference-rates/effr",
       "valueText": "3.88%",
-      "sub": "10 年实际利率 2.77%",
+      "sub": "10 年实际利率 2.79%",
       "parts": [
         {
           "id": "fed_effr",
@@ -51,19 +51,19 @@
           "value": 3.88,
           "unit": "%",
           "valueText": "3.88%",
-          "asOf": "2026-11-19",
+          "asOf": "2026-11-20",
           "sourceName": "纽约联储有效联邦基金利率（EFFR）",
           "sourceUrl": "https://www.newyorkfed.org/markets/reference-rates/effr",
           "change12m": 0.0,
-          "change12mFrom": "2025-11-19"
+          "change12mFrom": "2025-11-20"
         },
         {
           "id": "real10y",
           "name": "10年实际利率",
-          "value": 2.77,
+          "value": 2.79,
           "unit": "%",
-          "valueText": "2.77%",
-          "asOf": "2026-11-20",
+          "valueText": "2.79%",
+          "asOf": "2026-11-23",
           "sourceName": "美国财政部 10 年期 TIPS 实际收益率",
           "sourceUrl": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_real_yield_curve&field_tdr_date_value=2026"
         }
@@ -96,21 +96,21 @@
     {
       "id": "vix",
       "name": "波动率 VIX",
-      "value": 31.42,
+      "value": 26.62,
       "unit": "点",
       "asOf": "2026-11-23",
-      "score": 7.28,
+      "score": 6.32,
       "weight": 0.14,
       "sourceName": "Yahoo Finance ^VIX",
       "sourceUrl": "https://finance.yahoo.com/quote/%5EVIX",
-      "valueText": "31.42"
+      "valueText": "26.62"
     },
     {
       "id": "curve",
       "name": "收益率曲线",
       "value": 0.29,
       "unit": "百分点",
-      "asOf": "2026-11-20",
+      "asOf": "2026-11-23",
       "score": 3.28,
       "weight": 0.04,
       "sourceName": "美国财政部每日国债收益率曲线（10 年减 2 年）",
@@ -135,29 +135,29 @@
     {
       "id": "equity_dd",
       "name": "股指回撤",
-      "value": 20.19,
+      "value": 14.72,
       "unit": "%",
-      "asOf": "2026-11-20",
-      "score": 7.02,
+      "asOf": "2026-11-23",
+      "score": 5.89,
       "weight": 0.12,
       "sourceName": "Yahoo Finance ^NDX 与对照指数的 52 周高点回撤，取较大者",
       "sourceUrl": "https://finance.yahoo.com/quote/%5ENDX",
-      "valueText": "20.2%",
-      "sub": "纳指100 20.2%，标普500 11.9%"
+      "valueText": "14.7%",
+      "sub": "纳指100 14.7%，标普500 7.7%"
     },
     {
       "id": "ai_tech",
       "name": "科技与AI回撤",
-      "value": 48.42,
+      "value": 32.18,
       "unit": "%",
-      "asOf": "2026-11-20",
-      "score": 8.84,
+      "asOf": "2026-11-23",
+      "score": 7.64,
       "weight": 0.08,
       "sourceName": "Yahoo NVDA / SMH / QQQ（或 ^NDX）52 周回撤取最大，并与标普500回撤相比",
       "sourceUrl": "https://finance.yahoo.com/quote/NVDA",
-      "valueText": "48.4%",
-      "sub": "NVDA；QQQ相对标普 +8.3 个百分点",
-      "breadth": 8.33,
+      "valueText": "32.2%",
+      "sub": "NVDA；QQQ相对标普 +6.9 个百分点",
+      "breadth": 6.92,
       "worstTicker": "NVDA"
     }
   ]
