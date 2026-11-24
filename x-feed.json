@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-24T12:12:28+08:00",
+ "asOf": "2026-11-24T13:05:47+08:00",
  "source": "X 公开帖快照（含中文译文）",
  "accounts": [
   {
@@ -95,8 +95,8 @@
    "createdAt": "2026-11-23T19:13:35.000Z",
    "url": "https://x.com/elonmusk/status/2124944467119747335",
    "kind": "quote",
-   "likes": 40191,
-   "reposts": 3740,
+   "likes": 45012,
+   "reposts": 4185,
    "textZh": "安德鲁·麦卡锡拍的这张真美 https://t.co/nUJRMXQ9yR"
   },
   {
@@ -109,8 +109,8 @@
    "createdAt": "2026-11-23T19:07:04.000Z",
    "url": "https://x.com/elonmusk/status/2124942828274925651",
    "kind": "quote",
-   "likes": 129028,
-   "reposts": 11225,
+   "likes": 142109,
+   "reposts": 12348,
    "textZh": "我认识的英伟达人都希望黄仁勋回来，现在这一点已经很明显了 https://t.co/JgdlBhD0Yi"
   },
   {
@@ -123,8 +123,8 @@
    "createdAt": "2026-11-23T17:30:38.000Z",
    "url": "https://x.com/elonmusk/status/2124918561617694750",
    "kind": "quote",
-   "likes": 9382,
-   "reposts": 845,
+   "likes": 10439,
+   "reposts": 933,
    "textZh": "确实如此 https://t.co/8jbmsDPCRi"
   },
   {
@@ -137,8 +137,8 @@
    "createdAt": "2026-11-23T17:28:06.000Z",
    "url": "https://x.com/elonmusk/status/2124917923391443211",
    "kind": "quote",
-   "likes": 42464,
-   "reposts": 5274,
+   "likes": 46365,
+   "reposts": 5738,
    "textZh": "在本平台违法的人将被起诉，无论他们身在世界何处。 https://t.co/OmFAlwsmh4"
   },
   {
@@ -151,8 +151,8 @@
    "createdAt": "2026-11-23T14:46:29.000Z",
    "url": "https://x.com/elonmusk/status/2124877252412281142",
    "kind": "quote",
-   "likes": 7527,
-   "reposts": 801,
+   "likes": 7782,
+   "reposts": 829,
    "textZh": "Grok Bot 可以帮你找黑色星期五优惠 https://t.co/0AnY1ZA5uo"
   },
   {
@@ -165,8 +165,8 @@
    "createdAt": "2026-11-23T14:41:16.000Z",
    "url": "https://x.com/elonmusk/status/2124875939133751684",
    "kind": "quote",
-   "likes": 247996,
-   "reposts": 20526,
+   "likes": 255979,
+   "reposts": 21094,
    "textZh": "这个错误已经纠正 https://t.co/UKvEng9rCD"
   },
   {
@@ -179,9 +179,37 @@
    "createdAt": "2026-11-23T14:28:16.000Z",
    "url": "https://x.com/elonmusk/status/2124872664938602736",
    "kind": "post",
-   "likes": 236019,
-   "reposts": 13495,
+   "likes": 242859,
+   "reposts": 13932,
    "textZh": "已经完成了"
+  },
+  {
+   "id": "2125087128606425372",
+   "accountId": "cz_binance",
+   "name": "CZ 🔶 BNB",
+   "zh": "赵长鹏",
+   "username": "cz_binance",
+   "text": "Even Laura Shin (who usually portraits me negatively) can't stand it anymore. 🤣🙏 https://t.co/6s7MwxLjxu",
+   "createdAt": "2026-11-24T04:40:28.000Z",
+   "url": "https://x.com/cz_binance/status/2125087128606425372",
+   "kind": "quote",
+   "likes": 379,
+   "reposts": 19,
+   "textZh": "就连 Laura Shin（通常把我描绘得很负面）也看不下去了。🤣🙏 https://t.co/6s7MwxLjxu"
+  },
+  {
+   "id": "2125085599388545151",
+   "accountId": "cz_binance",
+   "name": "CZ 🔶 BNB",
+   "zh": "赵长鹏",
+   "username": "cz_binance",
+   "text": "🙏 https://t.co/lsFBz9JJH0",
+   "createdAt": "2026-11-24T04:34:23.000Z",
+   "url": "https://x.com/cz_binance/status/2125085599388545151",
+   "kind": "quote",
+   "likes": 479,
+   "reposts": 17,
+   "textZh": "🙏 https://t.co/lsFBz9JJH0"
   },
   {
    "id": "2124897123296481428",
@@ -193,8 +221,8 @@
    "createdAt": "2026-11-23T16:05:27.000Z",
    "url": "https://x.com/cz_binance/status/2124897123296481428",
    "kind": "quote",
-   "likes": 15518,
-   "reposts": 722,
+   "likes": 16152,
+   "reposts": 758,
    "textZh": "很高兴看到 @JensenHuang 回来了。👏 https://t.co/WrUjvmEyVi"
   },
   {
@@ -207,8 +235,8 @@
    "createdAt": "2026-11-23T02:56:56.000Z",
    "url": "https://x.com/cz_binance/status/2124698685116383430",
    "kind": "post",
-   "likes": 8463,
-   "reposts": 312,
+   "likes": 8540,
+   "reposts": 315,
    "textZh": "我用 Grok Bot 清理了关注列表里不活跃和辱骂性的账号。让它保留建设性批评。不知道效果怎么样。“AI 干的。” 🤷‍♂️ 🤣"
   },
   {
@@ -221,8 +249,8 @@
    "createdAt": "2026-11-23T02:29:04.000Z",
    "url": "https://x.com/cz_binance/status/2124691673058070800",
    "kind": "quote",
-   "likes": 3664,
-   "reposts": 258,
+   "likes": 3680,
+   "reposts": 260,
    "textZh": "🤣 或者也许会反过来，也就是说，FUD 会被一根大阳线（大体上）止住。 https://t.co/e71ruhdZ0f"
   },
   {
@@ -235,7 +263,7 @@
    "createdAt": "2026-11-20T23:50:33.000Z",
    "url": "https://x.com/cz_binance/status/2123927005863563713",
    "kind": "quote",
-   "likes": 13936,
+   "likes": 13942,
    "reposts": 948,
    "textZh": "哇，这太离谱了，完全是胡说八道。\n\n我猜他们就是这样控制“公众观感”的？ https://t.co/rJvAhFlmmP"
   },
@@ -249,37 +277,9 @@
    "createdAt": "2026-11-20T11:11:15.000Z",
    "url": "https://x.com/cz_binance/status/2123735923380965851",
    "kind": "quote",
-   "likes": 1545,
+   "likes": 1546,
    "reposts": 111,
    "textZh": "价格发现首先发生在链上。 https://t.co/GGL8NsrIkP"
-  },
-  {
-   "id": "2123727696673026236",
-   "accountId": "cz_binance",
-   "name": "CZ 🔶 BNB",
-   "zh": "赵长鹏",
-   "username": "cz_binance",
-   "text": "There are forces spreading negative narratives, with massive amounts of funding behind it. https://t.co/Ymy4sA0cJd",
-   "createdAt": "2026-11-20T10:38:34.000Z",
-   "url": "https://x.com/cz_binance/status/2123727696673026236",
-   "kind": "quote",
-   "likes": 5281,
-   "reposts": 321,
-   "textZh": "有些势力在散布负面叙事，背后有大量资金支持。 https://t.co/Ymy4sA0cJd"
-  },
-  {
-   "id": "2123550289957658970",
-   "accountId": "cz_binance",
-   "name": "CZ 🔶 BNB",
-   "zh": "赵长鹏",
-   "username": "cz_binance",
-   "text": "Forbes: \"Apparently, the most pressing unanswered question about the $8 billion FTX fraud is whether SBF ever really loved Caroline Ellison. At least, that's the impression you might get from watching Netflix's new series\n...\nOne of the most colorful of those creative imaginings is Binance’s billionaire founder Changpeng Zhao (Terry Chen), recast as a crypto Bond villain, who stages networking events for the sole purpose of cornering Bankman-Fried and leaning on him to front-run customer trades. There is no public evidence Zhao did anything of the sort.\"\n\nhttps://t.co/aPISTA9h8b\n\nThis comparison 👇 from March 2026 pretty much said it all... 🤣\n\nPic source: https://t.co/KcsyMsh7Dk",
-   "createdAt": "2026-11-19T22:53:37.000Z",
-   "url": "https://x.com/cz_binance/status/2123550289957658970",
-   "kind": "quote",
-   "likes": 1913,
-   "reposts": 172,
-   "textZh": "福布斯：“显然，关于这起 80 亿美元 FTX 欺诈案最紧迫、尚未回答的问题，是 SBF 是否真的爱过 Caroline Ellison。至少，看完 Netflix 这部新剧，你可能会得到这种印象。\n...\n那些富有想象力的虚构中，最精彩的之一，是把币安亿万富豪创始人赵长鹏（Terry Chen）改写成加密圈的邦德式反派：他举办社交活动，唯一目的就是把 Bankman-Fried 逼到角落，施压他抢先交易客户订单。目前没有公开证据表明赵长鹏做过此类事情。”\n\nhttps://t.co/aPISTA9h8b\n\n2026 年 3 月的这个对比 👇 几乎把一切都说清了……🤣\n\n图片来源：https://t.co/KcsyMsh7Dk"
   },
   {
    "id": "2117719664008851609",
@@ -305,8 +305,8 @@
    "createdAt": "2026-11-24T03:02:14.000Z",
    "url": "https://x.com/justinsuntron/status/2125062408024805752",
    "kind": "quote",
-   "likes": 20,
-   "reposts": 3,
+   "likes": 74,
+   "reposts": 18,
    "textZh": "TRON 在 🇹🇭 https://t.co/jsbbAlDJh0"
   },
   {
@@ -319,8 +319,8 @@
    "createdAt": "2026-11-24T01:21:49.000Z",
    "url": "https://x.com/justinsuntron/status/2125037136802107486",
    "kind": "quote",
-   "likes": 50,
-   "reposts": 4,
+   "likes": 72,
+   "reposts": 6,
    "textZh": "很少 https://t.co/LgnLgWknJP"
   },
   {
@@ -333,8 +333,8 @@
    "createdAt": "2026-11-23T14:20:41.000Z",
    "url": "https://x.com/justinsuntron/status/2124870759147606082",
    "kind": "quote",
-   "likes": 2648,
-   "reposts": 95,
+   "likes": 2687,
+   "reposts": 99,
    "textZh": "欢迎回来！ https://t.co/ppJydcfvYj"
   },
   {
@@ -347,7 +347,7 @@
    "createdAt": "2026-11-23T07:37:03.000Z",
    "url": "https://x.com/justinsuntron/status/2124769179052196211",
    "kind": "quote",
-   "likes": 162,
+   "likes": 164,
    "reposts": 23,
    "textZh": "很少 https://t.co/Y8w98RoIFX"
   },
@@ -361,7 +361,7 @@
    "createdAt": "2026-11-23T04:12:38.000Z",
    "url": "https://x.com/justinsuntron/status/2124717736693830006",
    "kind": "quote",
-   "likes": 272,
+   "likes": 277,
    "reposts": 25,
    "textZh": "同意 @elonmusk。超级智能现在已经在做高深数学了。\n\n黎曼奖已经开放。下一个是谁？👇\nhttps://t.co/CmjxzLYqRN https://t.co/SGPbgbOadR"
   },
@@ -375,7 +375,7 @@
    "createdAt": "2026-11-22T07:33:13.000Z",
    "url": "https://x.com/justinsuntron/status/2124405826018500745",
    "kind": "quote",
-   "likes": 111,
+   "likes": 112,
    "reposts": 18,
    "textZh": "经证明，即告解决。 https://t.co/HVKeqEXwIZ"
   },
@@ -389,7 +389,7 @@
    "createdAt": "2026-11-22T06:17:09.000Z",
    "url": "https://x.com/justinsuntron/status/2124386686188900504",
    "kind": "post",
-   "likes": 1121,
+   "likes": 1129,
    "reposts": 47,
    "textZh": "体重有没有超标，可以参考 BMI；注意力有没有被算法拿走，我发明了一个“孙氏检测法”：你有没有听过《疯狂水世界》的游戏广告？听到“海水过滤器”，脑子里是不是已经自动播放画面了？如果是，按孙氏标准，已经“确诊”了！但一个你根本没打算玩的游戏，广告却牢牢记在脑子里，确实值得想想：我们的注意力，到底是谁在安排？"
   },
@@ -403,8 +403,8 @@
    "createdAt": "2026-11-23T19:07:21.000Z",
    "url": "https://x.com/saylor/status/2124942899356082554",
    "kind": "post",
-   "likes": 2980,
-   "reposts": 220,
+   "likes": 3184,
+   "reposts": 235,
    "textZh": "我们不需要 ₿ailout。 https://t.co/0bu5b64nmu"
   },
   {
@@ -417,8 +417,8 @@
    "createdAt": "2026-11-23T17:02:03.000Z",
    "url": "https://x.com/saylor/status/2124911367786295660",
    "kind": "post",
-   "likes": 3214,
-   "reposts": 244,
+   "likes": 3341,
+   "reposts": 255,
    "textZh": "过去 13 周，我们的 $STRC 回购及相关资本市场操作，已将年度利息与股息（Annual Int + Div）减少了 2.96 亿美元，并为净储备（Net Reserve）增加了 18.1 亿美元。现在是让我们的堡垒式资产负债表发挥作用的时候了。 https://t.co/P3yPkbADbN"
   },
   {
@@ -431,8 +431,8 @@
    "createdAt": "2026-11-23T15:09:35.000Z",
    "url": "https://x.com/saylor/status/2124883063096164450",
    "kind": "post",
-   "likes": 2403,
-   "reposts": 186,
+   "likes": 2460,
+   "reposts": 190,
    "textZh": "我们的交易在过去 13 周里每周都增厚了净 BPS。累计来看，净 BPS 增加了每股 584 sats，并在优先股股息之前产生了 2,505 BTC 或 1.99 亿美元的净比特币收益（Net BTC Gain），按每周固定的 $BTC 价格计算。 https://t.co/AnYXq9R9VZ"
   },
   {
@@ -445,8 +445,8 @@
    "createdAt": "2026-11-23T13:02:23.000Z",
    "url": "https://x.com/saylor/status/2124851054814883872",
    "kind": "post",
-   "likes": 10235,
-   "reposts": 1041,
+   "likes": 10406,
+   "reposts": 1058,
    "textZh": "Strategy 已购入 457 枚 $BTC，并回购了 2.12 亿美元的 $STRC。我们将数字信贷证券回购计划额度提高了 10 亿美元，并把 10 亿美元从美元储备调配至美元现金。截至 11/22/26，我们持有 851,305 枚 BTC 以及 48 亿美元的美元资产。$MSTR https://t.co/Wklom6dzrm"
   },
   {
@@ -459,7 +459,7 @@
    "createdAt": "2026-11-23T02:07:36.000Z",
    "url": "https://x.com/saylor/status/2124686272673595686",
    "kind": "post",
-   "likes": 2470,
+   "likes": 2474,
    "reposts": 226,
    "textZh": "Strategy 通过设计波动性，为股票、衍生品、商品和信贷投资者打造一系列金融产品。 https://t.co/YMZjvO2xc9"
   },
@@ -473,8 +473,8 @@
    "createdAt": "2026-11-22T22:17:51.000Z",
    "url": "https://x.com/saylor/status/2124628454540759493",
    "kind": "post",
-   "likes": 2314,
-   "reposts": 211,
+   "likes": 2319,
+   "reposts": 213,
    "textZh": "数字股权建立在数字资本之上。在比特币标准时代，$MSTR 实现了 34% 的年化回报，超过了比特币和图中所示的传统资产基准。 https://t.co/owgCwg6lJ4"
   },
   {
@@ -487,7 +487,7 @@
    "createdAt": "2026-11-22T19:09:34.000Z",
    "url": "https://x.com/saylor/status/2124581068053631407",
    "kind": "post",
-   "likes": 3001,
+   "likes": 3005,
    "reposts": 289,
    "textZh": "在比特币标准时代，数字资本的表现超过了图中所示的股权、金属、房地产和债务资本基准。 https://t.co/d1AuR3IQ0P"
   },
@@ -501,8 +501,8 @@
    "createdAt": "2026-11-24T00:59:18.000Z",
    "url": "https://x.com/ColeMacro/status/2125031471249498608",
    "kind": "quote",
-   "likes": 249,
-   "reposts": 32,
+   "likes": 295,
+   "reposts": 34,
    "textZh": "Strive 以我们认为能最大化 $ASST 股东长期价值的原则为指引。我们的做法反映了自身的具体情况，包括资产负债表的规模，以及我们证券所具有的充裕流动性。这使我们能够把放大比率保持在高位，按公允市场水平支付优先股收益以支持这一杠杆，并在我们认为普通股被低估时尽量减少普通股发行。\n\n我与 @TylerCompiler 一起做客 @BTCtreasuries，讨论了这一思路背后的考虑以及更多内容。如果你持有 $ASST、$SATA 或 $SATS，我想你会觉得这次交流很有价值。"
   },
   {
@@ -515,7 +515,7 @@
    "createdAt": "2026-11-23T16:30:49.000Z",
    "url": "https://x.com/ColeMacro/status/2124903506897428607",
    "kind": "quote",
-   "likes": 180,
+   "likes": 182,
    "reposts": 10,
    "textZh": "我们会把一些问答作为 Hurdle Rate 的每周内容来处理。\n\n如果你有问题，请在下面的帖子里提出，并为你认为最重要的问题点赞。 https://t.co/544MfQkWwe"
   },
@@ -529,7 +529,7 @@
    "createdAt": "2026-11-23T15:45:52.000Z",
    "url": "https://x.com/ColeMacro/status/2124892194188509431",
    "kind": "quote",
-   "likes": 884,
+   "likes": 900,
    "reposts": 49,
    "textZh": "这话说得还真准。 https://t.co/3hIhXIGSzv"
   },
@@ -543,7 +543,7 @@
    "createdAt": "2026-11-23T14:13:16.000Z",
    "url": "https://x.com/ColeMacro/status/2124868889985368234",
    "kind": "post",
-   "likes": 837,
+   "likes": 849,
    "reposts": 62,
    "textZh": "很高兴看到英伟达董事会恢复 @JensenHuang 的 CEO 职务。$NVDA 是 Strive Asset Management 客户最大的单一持仓，通过我们的 ETF 投资了近 1 亿美元。\n\nStrive 原本准备提交股东提案，并正式要求在明日开盘前就黄仁勋回归进行咨询性股东投票。很高兴董事会在我们需要采取行动之前就做出了决定。\n\n回归正事。开始吧。🚀"
   },
@@ -557,7 +557,7 @@
    "createdAt": "2026-11-23T13:01:50.000Z",
    "url": "https://x.com/ColeMacro/status/2124850913663951101",
    "kind": "post",
-   "likes": 1003,
+   "likes": 1016,
    "reposts": 98,
    "textZh": "Strive 继续持有 ₿43,404，价值 25.3 亿美元。\n\n- 上周未发行 $ASST、$SATA 或 $SATS 股份\n- 放大比率：79.8%\n- 当前优先股股息覆盖：132 个月\n\n$ASST $SATA $SATS https://t.co/cVHEkBtvPg"
   },
@@ -590,6 +590,20 @@
    "textZh": "美国国债是保证会亏的收益率。 https://t.co/cvTcgWqxMO"
   },
   {
+   "id": "2125081111109968256",
+   "accountId": "TheMarketMemo",
+   "name": "LEI",
+   "zh": "市场备忘",
+   "username": "TheMarketMemo",
+   "text": "I agree to investigate Trump and Jensen Huang. https://t.co/kcVTT480vt",
+   "createdAt": "2026-11-24T04:16:33.000Z",
+   "url": "https://x.com/TheMarketMemo/status/2125081111109968256",
+   "kind": "quote",
+   "likes": 34,
+   "reposts": 3,
+   "textZh": "我同意调查特朗普和黄仁勋。 https://t.co/kcVTT480vt"
+  },
+  {
    "id": "2125069394808381488",
    "accountId": "TheMarketMemo",
    "name": "LEI",
@@ -599,8 +613,8 @@
    "createdAt": "2026-11-24T03:30:00.000Z",
    "url": "https://x.com/TheMarketMemo/status/2125069394808381488",
    "kind": "post",
-   "likes": 151,
-   "reposts": 14,
+   "likes": 241,
+   "reposts": 23,
    "textZh": "这只影片我想讲两个内容：\n1. 半导体是强周期行业，周期行业的投资逻辑是「买在估值最高的时候，卖在估值最低的时候」。\n2. 我想聊一个重要的观点：叫做「没有趋势的价值不能投」。在影片的结尾，我也会分享一个观察趋势的方法。 https://t.co/lD5ayYJw4m"
   },
   {
@@ -613,8 +627,8 @@
    "createdAt": "2026-11-23T23:37:24.000Z",
    "url": "https://x.com/TheMarketMemo/status/2125010860037087457",
    "kind": "post",
-   "likes": 671,
-   "reposts": 17,
+   "likes": 806,
+   "reposts": 21,
    "textZh": "今天这种大涨，除了黄仁勋和川普身边的人之外，其他人都赚不到钱，这是典型的市场操控——但是他们操纵不了连续100根、1000根K线——我们普通投资者还是应该把注意力放在趋势上，而不是波动。"
   },
   {
@@ -627,7 +641,7 @@
    "createdAt": "2026-11-23T15:49:22.000Z",
    "url": "https://x.com/TheMarketMemo/status/2124893074707087465",
    "kind": "quote",
-   "likes": 311,
+   "likes": 320,
    "reposts": 13,
    "textZh": "黄仁勋回归 $NVDA ，这显然对整个 AI 产业链是最大的利多，但是一天的暴涨行情不会改变趋势，继续观察。\n\n以下是下行趋势转为上行趋势的一系列动作，走一步做一步即可👇 https://t.co/xNCjAeODn8"
   },
@@ -641,7 +655,7 @@
    "createdAt": "2026-11-23T05:37:46.000Z",
    "url": "https://x.com/TheMarketMemo/status/2124739159525068904",
    "kind": "quote",
-   "likes": 209,
+   "likes": 214,
    "reposts": 8,
    "textZh": "什么是熊市特征？👇 https://t.co/0GVndQUeAh"
   },
@@ -655,7 +669,7 @@
    "createdAt": "2026-11-23T04:12:56.000Z",
    "url": "https://x.com/TheMarketMemo/status/2124717812614860985",
    "kind": "quote",
-   "likes": 321,
+   "likes": 328,
    "reposts": 15,
    "textZh": "不要辜负了市场给你的机会‼️ https://t.co/r0OqDJw9BO https://t.co/1vrawNNbHF"
   },
@@ -669,23 +683,23 @@
    "createdAt": "2026-11-23T03:49:37.000Z",
    "url": "https://x.com/TheMarketMemo/status/2124711945022676993",
    "kind": "post",
-   "likes": 88,
+   "likes": 89,
    "reposts": 9,
    "textZh": "我把过往的【周末开放式问答】放在精选内容里，方便大家查找。这些问答都非常精彩：https://t.co/yrSUG6QmpI"
   },
   {
-   "id": "2124681337525477404",
-   "accountId": "TheMarketMemo",
-   "name": "LEI",
-   "zh": "市场备忘",
-   "username": "TheMarketMemo",
-   "text": "$SOXL 還是 $TQQQ ？ https://t.co/kyw9rPZ2rH",
-   "createdAt": "2026-11-23T01:48:00.000Z",
-   "url": "https://x.com/TheMarketMemo/status/2124681337525477404",
-   "kind": "quote",
-   "likes": 105,
-   "reposts": 2,
-   "textZh": "$SOXL 还是 $TQQQ ？ https://t.co/kyw9rPZ2rH"
+   "id": "2125090250343289330",
+   "accountId": "Jackyi_ld",
+   "name": "JackYi",
+   "zh": "JackYi",
+   "username": "Jackyi_ld",
+   "text": "虽然黄仁勋回来了短线迅速反弹，但我们还是坚持观点，就是中期趋势没有逆转。首先大环境处于加息周期，其次是金融风险没有解除，最后去杠杆和挤泡沫，短时间不会结束。尤其是民主党1月正式上台后，整个斗争才刚开始。今年很残酷，明年可能更凶险，再次说注意不要有杠杆，保留充分现金，对危机心存敬畏。",
+   "createdAt": "2026-11-24T04:52:52.000Z",
+   "url": "https://x.com/Jackyi_ld/status/2125090250343289330",
+   "kind": "post",
+   "likes": 17,
+   "reposts": 0,
+   "textZh": "虽然黄仁勋回来了短线迅速反弹，但我们还是坚持观点，就是中期趋势没有逆转。首先大环境处于加息周期，其次是金融风险没有解除，最后去杠杆和挤泡沫，短时间不会结束。尤其是民主党1月正式上台后，整个斗争才刚开始。今年很残酷，明年可能更凶险，再次说注意不要有杠杆，保留充分现金，对危机心存敬畏。"
   },
   {
    "id": "2124866526272803247",
@@ -697,7 +711,7 @@
    "createdAt": "2026-11-23T14:03:52.000Z",
    "url": "https://x.com/Jackyi_ld/status/2124866526272803247",
    "kind": "post",
-   "likes": 130,
+   "likes": 134,
    "reposts": 1,
    "textZh": "恭喜黄仁勋回归，AI股和加密迎来最佳利好"
   },
@@ -711,7 +725,7 @@
    "createdAt": "2026-11-23T13:58:31.000Z",
    "url": "https://x.com/Jackyi_ld/status/2124865180706504982",
    "kind": "post",
-   "likes": 95,
+   "likes": 102,
    "reposts": 2,
    "textZh": "其实整个故事特别简单，一个发币归零诈骗犯，以及迪拜XD犯，没钱了想要直播求流量搞大哥打赏，找了币圈几个最有流量的硬蹭，问题是我跟她根本不认识(仅有微信，还是23年她来舔问BTC行情，我没回)，没有任何私人见过面，更没有任何业务往来，更离谱的是从始至终，我更没有做市商业务，有投资过一家在18年因为团队分歧退出了。凡事讲究证据，为了自己诈骗币跑路找理由甩锅。后续一切交给法律处理，法律讲究证据。民事诉讼已经立案，刑事诉讼正在启动中。"
   },
@@ -725,7 +739,7 @@
    "createdAt": "2026-11-23T13:11:41.000Z",
    "url": "https://x.com/Jackyi_ld/status/2124853395106439619",
    "kind": "post",
-   "likes": 112,
+   "likes": 116,
    "reposts": 2,
    "textZh": "我们前几天说的跌多了就会反弹，但是目前行情全看美股，不像之前正常逻辑下，能分析出比特币84和86回调点位。如果美股没有回调完成，我们依旧认为加密中期趋势没有逆转。加密资产这几年和大A一样是失落的，甚至加密投资已死，ETH价格和十年前高点一样，BTC和4年前高点一样。加密行业只剩下一个核心技能: 交易。如果你不会交易，基本在加密行业很难再获取超收益。自从CRS和安全问题以来，我们紧密关注Coinbase合作，CB正在从期权交易，预测市场，AI Trading和RWA稳定币等4方面打造成为一个完整的金融市场，最近不断推出线上交易大赛，适合亚洲交易大神们的需求。"
   },
@@ -739,7 +753,7 @@
    "createdAt": "2026-11-22T08:34:26.000Z",
    "url": "https://x.com/Jackyi_ld/status/2124421232254984321",
    "kind": "post",
-   "likes": 86,
+   "likes": 87,
    "reposts": 2,
    "textZh": "近期遭他人持续诽谤、骚扰，蓄意编造虚假信息恶意炒作博取流量。本人已委托律师正式提起诉讼。\n\n对方企图借推特规避ZG法律，但网络不是法外之地。全部证据已固定取证，民事诉讼已启动，并保留进一步追究刑事责任的全部权利。\n\n我始终专注投资与交易，欢迎理性交流探讨，希望与各位专业同仁互相鞭策、共同进步。推特之上无意关注私人事件，尊重每一位关注者的时间。\n\n对于恶意造谣、无端抹黑的行为，我们拒绝任何和解，一切交由证据与法律还原真相。此后不再对此事作出任何额外回应。闹剧既肤浅，也实在低俗。"
   },
@@ -770,20 +784,6 @@
    "likes": 81,
    "reposts": 2,
    "textZh": "Semafor的记者预测黄仁勋筹集500亿美金创办一家新的半导体公司，这个我们之前的建议很类似，黄仁勋事件加速了AI股回调，如果纳指继续回调，总超过30%就定义为金融危机了。这真的属于整个金融系统性风险，无论你买的是比特币，还是股票，或者其他大宗资产。既然英伟达董事会一意孤行，再次强烈建议黄仁勋创办新的半导体公司，相信他的个人能力和信任，很快吸引全球顶级资本，人才和产业支持，这不仅仅是黄仁勋个人问题，更是AI产业和金融问题。但是同时大家做好伟大的抄底准备，真正的暴风雨来临，活到最后准备迎接的人，会迎来历史性的投资机会。"
-  },
-  {
-   "id": "2123400973326688684",
-   "accountId": "Jackyi_ld",
-   "name": "JackYi",
-   "zh": "JackYi",
-   "username": "Jackyi_ld",
-   "text": "资本市场正常来说就是只有极少数人能持续挣钱，以前大家习惯了牛市躺赢，2017年的加密行业，二级在疯涨，一级闭眼投，那个情况本来就不是正常的。现在没有了破天的牛市，回归了残酷甚至下行市场，首要任务是保证不亏钱，自以为的高手都死于抄底。其次是下跌也不可能是一根直线，跌多了就有反弹，波动性就是投资和交易机会。最后是资产安全，熊市被盗被Rug增多，不要轻易把资产放在不可靠的地方。我们合作伙伴GCSA是一家大型安全企业，开发了数十款网络安全产品，涵盖工具、全网威胁情报、资产映射、人工智能审计、边缘防护和完整的基础设施堆栈。",
-   "createdAt": "2026-11-19T13:00:17.000Z",
-   "url": "https://x.com/Jackyi_ld/status/2123400973326688684",
-   "kind": "quote",
-   "likes": 54,
-   "reposts": 5,
-   "textZh": "资本市场正常来说就是只有极少数人能持续挣钱，以前大家习惯了牛市躺赢，2017年的加密行业，二级在疯涨，一级闭眼投，那个情况本来就不是正常的。现在没有了破天的牛市，回归了残酷甚至下行市场，首要任务是保证不亏钱，自以为的高手都死于抄底。其次是下跌也不可能是一根直线，跌多了就有反弹，波动性就是投资和交易机会。最后是资产安全，熊市被盗被Rug增多，不要轻易把资产放在不可靠的地方。我们合作伙伴GCSA是一家大型安全企业，开发了数十款网络安全产品，涵盖工具、全网威胁情报、资产映射、人工智能审计、边缘防护和完整的基础设施堆栈。"
   }
  ]
 }
