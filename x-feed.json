@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-25T08:05:45+08:00",
+ "asOf": "2026-11-25T09:08:14+08:00",
  "source": "X 公开帖快照（含中文译文）",
  "accounts": [
   {
@@ -86,6 +86,48 @@
  ],
  "posts": [
   {
+   "id": "2125383859592479201",
+   "accountId": "elonmusk",
+   "name": "Elon Musk",
+   "zh": "马斯克",
+   "username": "elonmusk",
+   "text": "Starlink is now approved in 30 of 54 countries in Africa! https://t.co/nTJTFLUD53",
+   "createdAt": "2026-11-25T00:19:34.000Z",
+   "url": "https://x.com/elonmusk/status/2125383859592479201",
+   "kind": "quote",
+   "likes": 2987,
+   "reposts": 336,
+   "textZh": "星链现已在非洲 54 个国家中的 30 个获批！https://t.co/nTJTFLUD53"
+  },
+  {
+   "id": "2125383610266157090",
+   "accountId": "elonmusk",
+   "name": "Elon Musk",
+   "zh": "马斯克",
+   "username": "elonmusk",
+   "text": "Don’t mess with 𝕏 https://t.co/FNYSyWB7iv",
+   "createdAt": "2026-11-25T00:18:35.000Z",
+   "url": "https://x.com/elonmusk/status/2125383610266157090",
+   "kind": "quote",
+   "likes": 4079,
+   "reposts": 478,
+   "textZh": "别惹 𝕏 https://t.co/FNYSyWB7iv"
+  },
+  {
+   "id": "2125381945672761599",
+   "accountId": "elonmusk",
+   "name": "Elon Musk",
+   "zh": "马斯克",
+   "username": "elonmusk",
+   "text": "The news is accurate https://t.co/FLI7HDhXCf",
+   "createdAt": "2026-11-25T00:11:58.000Z",
+   "url": "https://x.com/elonmusk/status/2125381945672761599",
+   "kind": "quote",
+   "likes": 9563,
+   "reposts": 914,
+   "textZh": "这则消息是准确的 https://t.co/FLI7HDhXCf"
+  },
+  {
    "id": "2125363942977597554",
    "accountId": "elonmusk",
    "name": "Elon Musk",
@@ -95,51 +137,9 @@
    "createdAt": "2026-11-24T23:00:26.000Z",
    "url": "https://x.com/elonmusk/status/2125363942977597554",
    "kind": "quote",
-   "likes": 7205,
-   "reposts": 777,
+   "likes": 12947,
+   "reposts": 1325,
    "textZh": "星链 https://t.co/wMW5Hy970K"
-  },
-  {
-   "id": "2125363875189252425",
-   "accountId": "elonmusk",
-   "name": "Elon Musk",
-   "zh": "马斯克",
-   "username": "elonmusk",
-   "text": "SpaceX has agreed to forgo $738 million in U.S. federal broadband subsidies and instead provide free @Starlink hardware to eligible American households.\n\nNTIA: \"To ensure that no consumer at a Covered BSL is left behind, the provider (SpaceX) will serve the covered BSLs as this agreement provides. This includes providing customer premises equipment at no cost to new subscribers, so that households at covered BSL do not face the upfront equipment costs. Additionally, the provider’s broadband service will be subject to the same delivery timelines and performance testing requirements applicable to all recipients of BEAD funds.\"\n\nUnder the new agreement, SpaceX would:\n• Provide free Starlink hardware to eligible households.\n• Guarantee minimum download speeds of 100 Mbps and upload speeds of 20 Mbps.\n• Offer a low-cost monthly internet plan.\n• Commit to providing service for 10 years.\n• Continue to comply with federal performance testing requirements.\n\nThe agreement will save American taxpayers hundreds of millions of dollars while accelerating high-speed internet access in underserved rural communities.\n\nIn exchange, SpaceX would be exempt from most BEAD-related financial audits, procurement requirements and administrative reporting, while remaining subject to network performance testing.",
-   "createdAt": "2026-11-24T23:00:09.000Z",
-   "url": "https://x.com/elonmusk/status/2125363875189252425",
-   "kind": "repost",
-   "likes": 0,
-   "reposts": 553,
-   "textZh": "SpaceX 已同意放弃 7.38 亿美元的美国联邦宽带补贴，改为向符合条件的美国家庭免费提供 @Starlink 硬件。\n\nNTIA：“为确保覆盖范围内的广播服务地点（Covered BSL）没有用户被落下，供应商（SpaceX）将按本协议为这些覆盖 BSL 提供服务。这包括向新用户免费提供用户驻地设备，使覆盖 BSL 的家庭不必承担前期设备费用。此外，该供应商的宽带服务须遵守适用于所有 BEAD 资金获得者的相同交付时限和性能测试要求。”\n\n根据新协议，SpaceX 将：\n• 向符合条件的家庭免费提供 Starlink 硬件。\n• 保证最低下载速度 100 Mbps、上传速度 20 Mbps。\n• 提供低价月度互联网套餐。\n• 承诺提供服务 10 年。\n• 继续遵守联邦性能测试要求。\n\n该协议将为美国纳税人节省数亿美元，同时加快服务不足的农村社区获得高速互联网。\n\n作为交换，SpaceX 将免于大多数与 BEAD 相关的财务审计、采购要求和行政报告，但仍须接受网络性能测试。"
-  },
-  {
-   "id": "2125263096432255145",
-   "accountId": "elonmusk",
-   "name": "Elon Musk",
-   "zh": "马斯克",
-   "username": "elonmusk",
-   "text": "just added my work experience \ni love my very professional job https://t.co/AEOHoIde4s https://t.co/czR5E2Im7C",
-   "createdAt": "2026-11-24T16:19:42.000Z",
-   "url": "https://x.com/elonmusk/status/2125263096432255145",
-   "kind": "repost",
-   "likes": 0,
-   "reposts": 107,
-   "textZh": "刚加上了我的工作经历\n我爱我这份非常专业的工作 https://t.co/AEOHoIde4s https://t.co/czR5E2Im7C"
-  },
-  {
-   "id": "2125262848159006858",
-   "accountId": "elonmusk",
-   "name": "Elon Musk",
-   "zh": "马斯克",
-   "username": "elonmusk",
-   "text": "Watch Falcon 9 launch the USSF-266 mission from pad 4E in California https://t.co/4fplvapUs8",
-   "createdAt": "2026-11-24T16:18:43.000Z",
-   "url": "https://x.com/elonmusk/status/2125262848159006858",
-   "kind": "repost",
-   "likes": 0,
-   "reposts": 1485,
-   "textZh": "观看 Falcon 9 从加利福尼亚 4E 发射台发射 USSF-266 任务 https://t.co/4fplvapUs8"
   },
   {
    "id": "2125178828943184363",
@@ -151,8 +151,8 @@
    "createdAt": "2026-11-24T10:44:51.000Z",
    "url": "https://x.com/elonmusk/status/2125178828943184363",
    "kind": "quote",
-   "likes": 19905,
-   "reposts": 1812,
+   "likes": 20477,
+   "reposts": 1861,
    "textZh": "正中靶心 https://t.co/69ar1yur6u"
   },
   {
@@ -165,8 +165,8 @@
    "createdAt": "2026-11-23T19:13:35.000Z",
    "url": "https://x.com/elonmusk/status/2124944467119747335",
    "kind": "quote",
-   "likes": 71377,
-   "reposts": 6785,
+   "likes": 72207,
+   "reposts": 6892,
    "textZh": "安德鲁·麦卡锡拍的这张真美 https://t.co/nUJRMXQ9yR"
   },
   {
@@ -179,8 +179,8 @@
    "createdAt": "2026-11-23T19:07:04.000Z",
    "url": "https://x.com/elonmusk/status/2124942828274925651",
    "kind": "quote",
-   "likes": 192244,
-   "reposts": 17045,
+   "likes": 193046,
+   "reposts": 17123,
    "textZh": "我认识的英伟达人都希望黄仁勋回来，现在这一点已经很明显了 https://t.co/JgdlBhD0Yi"
   },
   {
@@ -193,8 +193,8 @@
    "createdAt": "2026-11-24T21:17:25.000Z",
    "url": "https://x.com/cz_binance/status/2125338022094983414",
    "kind": "quote",
-   "likes": 743,
-   "reposts": 48,
+   "likes": 803,
+   "reposts": 51,
    "textZh": "我的演讲也许会比较无聊，但场地非常出色。2026 年 12 月 3 日和 4 日，阿布扎比卢浮宫见。 https://t.co/fGI262dsc0"
   },
   {
@@ -207,8 +207,8 @@
    "createdAt": "2026-11-24T13:31:32.000Z",
    "url": "https://x.com/cz_binance/status/2125220776316133514",
    "kind": "quote",
-   "likes": 1651,
-   "reposts": 99,
+   "likes": 1705,
+   "reposts": 105,
    "textZh": "哇……\n\n“你知道币安的 $SPCX 永续合约在 11 月 23 日成交了 19.57 亿 USDT，但我打赌你不知道，这已经占到 SpaceX 标的股票交易量的 14.9%..” —— danny 👇\n\n@grok 这是真的吗？ https://t.co/fi984KmLEc https://t.co/t5m8b0sM3q"
   },
   {
@@ -221,8 +221,8 @@
    "createdAt": "2026-11-24T13:17:39.000Z",
    "url": "https://x.com/cz_binance/status/2125217281349472651",
    "kind": "quote",
-   "likes": 2956,
-   "reposts": 196,
+   "likes": 3025,
+   "reposts": 203,
    "textZh": "👇 这段话来自一个不太喜欢我的人 😂，但他绝对是知情的。\n\nWei 当时是币安的 CFO，负责并推动了对 FTX 的投资。他知道我和 SBF 见过的次数有多么少。\n\nWei 后来不愉快地离开了币安。他和几位同样不满的前币安同事成立了 “Binance Avangers” 小组。他们最爱做的事就是贬低币安。这个小组的大多数人后来把加密资产转到了 FTX。\n\nWei 后来收购了 Coins PH，然后利用自己的影响力阻止币安进入菲律宾。\n\nWei 在我 2023 年的 DOJ 案件中是对我不利的证人。\n\n就连他也看不下去 Netflix 这部颠倒黑白的虚构剧本。🤷‍♂️\n\n（我已经好几年没和 Wei 联系了，当然更不会在这条帖子之前联系。）"
   },
   {
@@ -235,8 +235,8 @@
    "createdAt": "2026-11-24T04:40:28.000Z",
    "url": "https://x.com/cz_binance/status/2125087128606425372",
    "kind": "quote",
-   "likes": 2298,
-   "reposts": 91,
+   "likes": 2311,
+   "reposts": 90,
    "textZh": "就连 Laura Shin（通常把我描绘得很负面）也看不下去了。🤣🙏 https://t.co/6s7MwxLjxu"
   },
   {
@@ -249,8 +249,8 @@
    "createdAt": "2026-11-24T04:34:23.000Z",
    "url": "https://x.com/cz_binance/status/2125085599388545151",
    "kind": "quote",
-   "likes": 1805,
-   "reposts": 100,
+   "likes": 1819,
+   "reposts": 101,
    "textZh": "🙏 https://t.co/lsFBz9JJH0"
   },
   {
@@ -263,7 +263,7 @@
    "createdAt": "2026-11-23T16:05:27.000Z",
    "url": "https://x.com/cz_binance/status/2124897123296481428",
    "kind": "quote",
-   "likes": 19037,
+   "likes": 19069,
    "reposts": 870,
    "textZh": "很高兴看到 @JensenHuang 回来了。👏 https://t.co/WrUjvmEyVi"
   },
@@ -277,7 +277,7 @@
    "createdAt": "2026-11-23T02:56:56.000Z",
    "url": "https://x.com/cz_binance/status/2124698685116383430",
    "kind": "post",
-   "likes": 8896,
+   "likes": 8903,
    "reposts": 332,
    "textZh": "我用 Grok Bot 清理了关注列表里不活跃和辱骂性的账号。让它保留建设性批评。不知道效果怎么样。“AI 干的。” 🤷‍♂️ 🤣"
   },
@@ -292,7 +292,7 @@
    "url": "https://x.com/realDonaldTrump/status/2117719664008851609",
    "kind": "repost",
    "likes": 0,
-   "reposts": 2832,
+   "reposts": 2833,
    "textZh": "致亚拉巴马的伟大人民，请走出来为这些伟大的爱国者投票！他们得到我完全、彻底的背书，绝不会让你们失望！唐纳德·J·特朗普总统\nhttps://t.co/CKrjCmURKi https://t.co/du0sEtyWU7"
   },
   {
@@ -305,7 +305,7 @@
    "createdAt": "2026-11-24T17:11:11.000Z",
    "url": "https://x.com/justinsuntron/status/2125276052964753727",
    "kind": "quote",
-   "likes": 131,
+   "likes": 142,
    "reposts": 8,
    "textZh": "巴菲特说的好，短期是选美赛，长期是称重机，TRX是最美的称重机😄 https://t.co/lCytqppjb7"
   },
@@ -319,7 +319,7 @@
    "createdAt": "2026-11-24T13:41:52.000Z",
    "url": "https://x.com/justinsuntron/status/2125223375438323902",
    "kind": "quote",
-   "likes": 71,
+   "likes": 72,
    "reposts": 6,
    "textZh": "期待与 @StaniKulechov 一起讨论金融的未来。\n\n回头见。👋 https://t.co/pLkvjNW3ve"
   },
@@ -333,7 +333,7 @@
    "createdAt": "2026-11-24T13:38:50.000Z",
    "url": "https://x.com/justinsuntron/status/2125222613006049647",
    "kind": "quote",
-   "likes": 57,
+   "likes": 58,
    "reposts": 9,
    "textZh": "将与 @ucblockchain 讨论稳定币和 #JustinSunPrize。 https://t.co/oaeSIqHJGE"
   },
@@ -389,9 +389,23 @@
    "createdAt": "2026-11-24T05:15:00.000Z",
    "url": "https://x.com/justinsuntron/status/2125095818654892319",
    "kind": "quote",
-   "likes": 73,
+   "likes": 74,
    "reposts": 7,
    "textZh": "解决它。证明它。提交它。 👉 https://t.co/XltLa5foTY"
+  },
+  {
+   "id": "2125390580305846369",
+   "accountId": "saylor",
+   "name": "Michael Saylor",
+   "zh": "Saylor",
+   "username": "saylor",
+   "text": "Stretch ($STRC) led the asset benchmarks shown on risk-adjusted returns over the past year. Its Sharpe ratio was +0.57, ahead of the S&P 500 ETF at +0.47 and Bitcoin at −0.77. https://t.co/fCsoKxM1U5",
+   "createdAt": "2026-11-25T00:46:16.000Z",
+   "url": "https://x.com/saylor/status/2125390580305846369",
+   "kind": "post",
+   "likes": 400,
+   "reposts": 32,
+   "textZh": "过去一年，Stretch（$STRC）在所示资产基准的风险调整后回报中领先。它的夏普比率为 +0.57，高于标普 500 ETF 的 +0.47 和比特币的 −0.77。https://t.co/fCsoKxM1U5"
   },
   {
    "id": "2125341642756354145",
@@ -403,8 +417,8 @@
    "createdAt": "2026-11-24T21:31:49.000Z",
    "url": "https://x.com/saylor/status/2125341642756354145",
    "kind": "post",
-   "likes": 1071,
-   "reposts": 103,
+   "likes": 1168,
+   "reposts": 113,
    "textZh": "过去一年，Stretch（$STRC）在这项固定收益的风险调整后回报比较中领先。它的夏普比率为 +0.57，而全部七只 ETF 都低于零。 https://t.co/30Kiyh1DNR"
   },
   {
@@ -417,8 +431,8 @@
    "createdAt": "2026-11-24T14:01:30.000Z",
    "url": "https://x.com/saylor/status/2125228316986646901",
    "kind": "quote",
-   "likes": 4512,
-   "reposts": 446,
+   "likes": 4606,
+   "reposts": 454,
    "textZh": "比特币是数字资本。CFTC 工作人员现已认可，美国衍生品交易所和清算所可以将比特币计入运营准备金，但须经过折减。采用的下一阶段，是让比特币真正发挥作用。 https://t.co/kquPJ8KW5r"
   },
   {
@@ -431,8 +445,8 @@
    "createdAt": "2026-11-23T19:07:21.000Z",
    "url": "https://x.com/saylor/status/2124942899356082554",
    "kind": "post",
-   "likes": 4354,
-   "reposts": 364,
+   "likes": 4384,
+   "reposts": 368,
    "textZh": "我们不需要 ₿ailout。 https://t.co/0bu5b64nmu"
   },
   {
@@ -445,8 +459,8 @@
    "createdAt": "2026-11-23T17:02:03.000Z",
    "url": "https://x.com/saylor/status/2124911367786295660",
    "kind": "post",
-   "likes": 4118,
-   "reposts": 330,
+   "likes": 4133,
+   "reposts": 333,
    "textZh": "过去 13 周，我们的 $STRC 回购及相关资本市场操作，已将年度利息与股息（Annual Int + Div）减少了 2.96 亿美元，并为净储备（Net Reserve）增加了 18.1 亿美元。现在是让我们的堡垒式资产负债表发挥作用的时候了。 https://t.co/P3yPkbADbN"
   },
   {
@@ -459,7 +473,7 @@
    "createdAt": "2026-11-23T15:09:35.000Z",
    "url": "https://x.com/saylor/status/2124883063096164450",
    "kind": "post",
-   "likes": 2865,
+   "likes": 2867,
    "reposts": 228,
    "textZh": "我们的交易在过去 13 周里每周都增厚了净 BPS。累计来看，净 BPS 增加了每股 584 sats，并在优先股股息之前产生了 2,505 BTC 或 1.99 亿美元的净比特币收益（Net BTC Gain），按每周固定的 $BTC 价格计算。 https://t.co/AnYXq9R9VZ"
   },
@@ -473,23 +487,9 @@
    "createdAt": "2026-11-23T13:02:23.000Z",
    "url": "https://x.com/saylor/status/2124851054814883872",
    "kind": "post",
-   "likes": 11413,
-   "reposts": 1157,
+   "likes": 11442,
+   "reposts": 1163,
    "textZh": "Strategy 已购入 457 枚 $BTC，并回购了 2.12 亿美元的 $STRC。我们将数字信贷证券回购计划额度提高了 10 亿美元，并把 10 亿美元从美元储备调配至美元现金。截至 11/22/26，我们持有 851,305 枚 BTC 以及 48 亿美元的美元资产。$MSTR https://t.co/Wklom6dzrm"
-  },
-  {
-   "id": "2124686272673595686",
-   "accountId": "saylor",
-   "name": "Michael Saylor",
-   "zh": "Saylor",
-   "username": "saylor",
-   "text": "Strategy engineers volatility to create a spectrum of financial products for equity, derivatives, commodity, and credit investors. https://t.co/YMZjvO2xc9",
-   "createdAt": "2026-11-23T02:07:36.000Z",
-   "url": "https://x.com/saylor/status/2124686272673595686",
-   "kind": "post",
-   "likes": 2548,
-   "reposts": 231,
-   "textZh": "Strategy 通过设计波动性，为股票、衍生品、商品和信贷投资者打造一系列金融产品。 https://t.co/YMZjvO2xc9"
   },
   {
    "id": "2125031471249498608",
@@ -501,7 +501,7 @@
    "createdAt": "2026-11-24T00:59:18.000Z",
    "url": "https://x.com/ColeMacro/status/2125031471249498608",
    "kind": "quote",
-   "likes": 486,
+   "likes": 490,
    "reposts": 51,
    "textZh": "Strive 以我们认为能最大化 $ASST 股东长期价值的原则为指引。我们的做法反映了自身的具体情况，包括资产负债表的规模，以及我们证券所具有的充裕流动性。这使我们能够把放大比率保持在高位，按公允市场水平支付优先股收益以支持这一杠杆，并在我们认为普通股被低估时尽量减少普通股发行。\n\n我与 @TylerCompiler 一起做客 @BTCtreasuries，讨论了这一思路背后的考虑以及更多内容。如果你持有 $ASST、$SATA 或 $SATS，我想你会觉得这次交流很有价值。"
   },
@@ -543,7 +543,7 @@
    "createdAt": "2026-11-23T14:13:16.000Z",
    "url": "https://x.com/ColeMacro/status/2124868889985368234",
    "kind": "post",
-   "likes": 890,
+   "likes": 891,
    "reposts": 66,
    "textZh": "很高兴看到英伟达董事会恢复 @JensenHuang 的 CEO 职务。$NVDA 是 Strive Asset Management 客户最大的单一持仓，通过我们的 ETF 投资了近 1 亿美元。\n\nStrive 原本准备提交股东提案，并正式要求在明日开盘前就黄仁勋回归进行咨询性股东投票。很高兴董事会在我们需要采取行动之前就做出了决定。\n\n回归正事。开始吧。🚀"
   },
@@ -557,7 +557,7 @@
    "createdAt": "2026-11-23T13:01:50.000Z",
    "url": "https://x.com/ColeMacro/status/2124850913663951101",
    "kind": "post",
-   "likes": 1100,
+   "likes": 1101,
    "reposts": 108,
    "textZh": "Strive 继续持有 ₿43,404，价值 25.3 亿美元。\n\n- 上周未发行 $ASST、$SATA 或 $SATS 股份\n- 放大比率：79.8%\n- 当前优先股股息覆盖：132 个月\n\n$ASST $SATA $SATS https://t.co/cVHEkBtvPg"
   },
@@ -599,8 +599,8 @@
    "createdAt": "2026-11-24T23:20:36.000Z",
    "url": "https://x.com/TheMarketMemo/status/2125369020853731809",
    "kind": "post",
-   "likes": 57,
-   "reposts": 6,
+   "likes": 123,
+   "reposts": 12,
    "textZh": "$QQQ 单日大涨>6%分布 https://t.co/5E2wNvCyMZ"
   },
   {
@@ -613,7 +613,7 @@
    "createdAt": "2026-11-24T06:58:55.000Z",
    "url": "https://x.com/TheMarketMemo/status/2125121972229333120",
    "kind": "post",
-   "likes": 445,
+   "likes": 453,
    "reposts": 15,
    "textZh": "我非常理解，很多人投资资本不多，买了几只股票，既不了解基本面、也看不懂图形，全靠信仰撑着。他们中间会有极少数人能实现财富梦想，但绝大多数人，最终会沦为市场的流动性。"
   },
@@ -641,7 +641,7 @@
    "createdAt": "2026-11-24T03:30:00.000Z",
    "url": "https://x.com/TheMarketMemo/status/2125069394808381488",
    "kind": "post",
-   "likes": 641,
+   "likes": 649,
    "reposts": 59,
    "textZh": "这只影片我想讲两个内容：\n1. 半导体是强周期行业，周期行业的投资逻辑是「买在估值最高的时候，卖在估值最低的时候」。\n2. 我想聊一个重要的观点：叫做「没有趋势的价值不能投」。在影片的结尾，我也会分享一个观察趋势的方法。 https://t.co/lD5ayYJw4m"
   },
@@ -655,7 +655,7 @@
    "createdAt": "2026-11-23T23:37:24.000Z",
    "url": "https://x.com/TheMarketMemo/status/2125010860037087457",
    "kind": "post",
-   "likes": 1153,
+   "likes": 1157,
    "reposts": 31,
    "textZh": "今天这种大涨，除了黄仁勋和川普身边的人之外，其他人都赚不到钱，这是典型的市场操控——但是他们操纵不了连续100根、1000根K线——我们普通投资者还是应该把注意力放在趋势上，而不是波动。"
   },
@@ -711,7 +711,7 @@
    "createdAt": "2026-11-24T04:52:52.000Z",
    "url": "https://x.com/Jackyi_ld/status/2125090250343289330",
    "kind": "post",
-   "likes": 160,
+   "likes": 163,
    "reposts": 7,
    "textZh": "虽然黄仁勋回来了短线迅速反弹，但我们还是坚持观点，就是中期趋势没有逆转。首先大环境处于加息周期，其次是金融风险没有解除，最后去杠杆和挤泡沫，短时间不会结束。尤其是民主党1月正式上台后，整个斗争才刚开始。今年很残酷，明年可能更凶险，再次说注意不要有杠杆，保留充分现金，对危机心存敬畏。"
   },
