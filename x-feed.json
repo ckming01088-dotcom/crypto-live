@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-26T14:06:02+08:00",
+ "asOf": "2026-11-26T16:11:42+08:00",
  "source": "X 公开帖快照（含中文译文）",
  "accounts": [
   {
@@ -86,6 +86,20 @@
  ],
  "posts": [
   {
+   "id": "2125858270296285463",
+   "accountId": "elonmusk",
+   "name": "Elon Musk",
+   "zh": "马斯克",
+   "username": "elonmusk",
+   "text": "Hard to believe this finally happened https://t.co/427CZqEEZY",
+   "createdAt": "2026-11-26T07:44:42.000Z",
+   "url": "https://x.com/elonmusk/status/2125858270296285463",
+   "kind": "post",
+   "likes": 5608,
+   "reposts": 607,
+   "textZh": "很难相信这终于发生了 https://t.co/427CZqEEZY"
+  },
+  {
    "id": "2125797463047258119",
    "accountId": "elonmusk",
    "name": "Elon Musk",
@@ -95,8 +109,8 @@
    "createdAt": "2026-11-26T03:43:05.000Z",
    "url": "https://x.com/elonmusk/status/2125797463047258119",
    "kind": "post",
-   "likes": 13229,
-   "reposts": 1641,
+   "likes": 182717,
+   "reposts": 17776,
    "textZh": "美国的每个孩子都将获得两股 SpaceX 股份，一股来自公司，一股来自我个人"
   },
   {
@@ -109,8 +123,8 @@
    "createdAt": "2026-11-25T19:17:24.000Z",
    "url": "https://x.com/elonmusk/status/2125670205456257409",
    "kind": "quote",
-   "likes": 33867,
-   "reposts": 3001,
+   "likes": 41081,
+   "reposts": 3638,
    "textZh": "谢谢 Ron ❤️\n\n我最大的荣幸，是能够与 SpaceX、Tesla、Neuralink 和 Boring Company 里那些才华横溢的人一起工作，没有他们，我将一事无成。 https://t.co/WsGDz84zlN"
   },
   {
@@ -123,8 +137,8 @@
    "createdAt": "2026-11-25T19:12:53.000Z",
    "url": "https://x.com/elonmusk/status/2125669066388209784",
    "kind": "quote",
-   "likes": 16809,
-   "reposts": 1123,
+   "likes": 20197,
+   "reposts": 1326,
    "textZh": "有意思 https://t.co/vywPrUlXEc"
   },
   {
@@ -137,8 +151,8 @@
    "createdAt": "2026-11-25T19:07:42.000Z",
    "url": "https://x.com/elonmusk/status/2125667762324541673",
    "kind": "quote",
-   "likes": 33757,
-   "reposts": 3282,
+   "likes": 40689,
+   "reposts": 4001,
    "textZh": "SpaceX Colossus 3 将极大惠及亚利桑那社区 https://t.co/l6KW6RkleF"
   },
   {
@@ -151,8 +165,8 @@
    "createdAt": "2026-11-25T13:06:51.000Z",
    "url": "https://x.com/elonmusk/status/2125576951364731018",
    "kind": "quote",
-   "likes": 15211,
-   "reposts": 2924,
+   "likes": 16549,
+   "reposts": 3209,
    "textZh": "嗯 https://t.co/ng0CBjY6DU"
   },
   {
@@ -165,23 +179,9 @@
    "createdAt": "2026-11-25T13:03:43.000Z",
    "url": "https://x.com/elonmusk/status/2125576163720642762",
    "kind": "quote",
-   "likes": 21454,
-   "reposts": 3904,
+   "likes": 24093,
+   "reposts": 4351,
    "textZh": "是的 https://t.co/fwFN4qiOI8"
-  },
-  {
-   "id": "2125516563277328690",
-   "accountId": "elonmusk",
-   "name": "Elon Musk",
-   "zh": "马斯克",
-   "username": "elonmusk",
-   "text": "Starlink https://t.co/pN3jnQEpWE",
-   "createdAt": "2026-11-25T09:06:53.000Z",
-   "url": "https://x.com/elonmusk/status/2125516563277328690",
-   "kind": "quote",
-   "likes": 10202,
-   "reposts": 1128,
-   "textZh": "Starlink https://t.co/pN3jnQEpWE"
   },
   {
    "id": "2125775937405137135",
@@ -193,8 +193,8 @@
    "createdAt": "2026-11-26T02:17:33.000Z",
    "url": "https://x.com/cz_binance/status/2125775937405137135",
    "kind": "quote",
-   "likes": 622,
-   "reposts": 73,
+   "likes": 2537,
+   "reposts": 306,
    "textZh": "如果你使用 1Password，建议你改掉所有密码。这很麻烦，但有必要。 https://t.co/p5XpheMwVv"
   },
   {
@@ -207,8 +207,8 @@
    "createdAt": "2026-11-24T21:17:25.000Z",
    "url": "https://x.com/cz_binance/status/2125338022094983414",
    "kind": "quote",
-   "likes": 1527,
-   "reposts": 108,
+   "likes": 1559,
+   "reposts": 112,
    "textZh": "我的演讲也许会比较无聊，但场地非常出色。2026 年 12 月 3 日和 4 日，阿布扎比卢浮宫见。 https://t.co/fGI262dsc0"
   },
   {
@@ -221,7 +221,7 @@
    "createdAt": "2026-11-24T13:31:32.000Z",
    "url": "https://x.com/cz_binance/status/2125220776316133514",
    "kind": "quote",
-   "likes": 2045,
+   "likes": 2060,
    "reposts": 137,
    "textZh": "哇……\n\n“你知道币安的 $SPCX 永续合约在 11 月 23 日成交了 19.57 亿 USDT，但我打赌你不知道，这已经占到 SpaceX 标的股票交易量的 14.9%..” —— danny 👇\n\n@grok 这是真的吗？ https://t.co/fi984KmLEc https://t.co/t5m8b0sM3q"
   },
@@ -235,8 +235,8 @@
    "createdAt": "2026-11-24T13:17:39.000Z",
    "url": "https://x.com/cz_binance/status/2125217281349472651",
    "kind": "quote",
-   "likes": 4012,
-   "reposts": 294,
+   "likes": 4029,
+   "reposts": 295,
    "textZh": "👇 这段话来自一个不太喜欢我的人 😂，但他绝对是知情的。\n\nWei 当时是币安的 CFO，负责并推动了对 FTX 的投资。他知道我和 SBF 见过的次数有多么少。\n\nWei 后来不愉快地离开了币安。他和几位同样不满的前币安同事成立了 “Binance Avangers” 小组。他们最爱做的事就是贬低币安。这个小组的大多数人后来把加密资产转到了 FTX。\n\nWei 后来收购了 Coins PH，然后利用自己的影响力阻止币安进入菲律宾。\n\nWei 在我 2023 年的 DOJ 案件中是对我不利的证人。\n\n就连他也看不下去 Netflix 这部颠倒黑白的虚构剧本。🤷‍♂️\n\n（我已经好几年没和 Wei 联系了，当然更不会在这条帖子之前联系。）"
   },
   {
@@ -249,7 +249,7 @@
    "createdAt": "2026-11-24T04:40:28.000Z",
    "url": "https://x.com/cz_binance/status/2125087128606425372",
    "kind": "quote",
-   "likes": 2442,
+   "likes": 2445,
    "reposts": 93,
    "textZh": "就连 Laura Shin（通常把我描绘得很负面）也看不下去了。🤣🙏 https://t.co/6s7MwxLjxu"
   },
@@ -263,8 +263,8 @@
    "createdAt": "2026-11-24T04:34:23.000Z",
    "url": "https://x.com/cz_binance/status/2125085599388545151",
    "kind": "quote",
-   "likes": 1949,
-   "reposts": 116,
+   "likes": 1955,
+   "reposts": 117,
    "textZh": "🙏 https://t.co/lsFBz9JJH0"
   },
   {
@@ -277,7 +277,7 @@
    "createdAt": "2026-11-23T16:05:27.000Z",
    "url": "https://x.com/cz_binance/status/2124897123296481428",
    "kind": "quote",
-   "likes": 19414,
+   "likes": 19418,
    "reposts": 889,
    "textZh": "很高兴看到 @JensenHuang 回来了。👏 https://t.co/WrUjvmEyVi"
   },
@@ -296,6 +296,20 @@
    "textZh": "RT @realDonaldTrump: TO THE GREAT PEOPLE OF ALABAMA, GET OUT AND VOTE for these Great Patriots! They have my Complete and Total Endorsement…"
   },
   {
+   "id": "2125847026265149474",
+   "accountId": "justinsuntron",
+   "name": "H.E. Justin Sun 👨‍🚀 🌞",
+   "zh": "孙宇晨",
+   "username": "justinsuntron",
+   "text": "Sunday on the Main Stage. See you in Bangkok. 🇹🇭 https://t.co/x5xI3Yo3xV",
+   "createdAt": "2026-11-26T07:00:02.000Z",
+   "url": "https://x.com/justinsuntron/status/2125847026265149474",
+   "kind": "quote",
+   "likes": 16,
+   "reposts": 0,
+   "textZh": "周日在主舞台。曼谷见。🇹🇭 https://t.co/x5xI3Yo3xV"
+  },
+  {
    "id": "2125804747852857401",
    "accountId": "justinsuntron",
    "name": "H.E. Justin Sun 👨‍🚀 🌞",
@@ -305,8 +319,8 @@
    "createdAt": "2026-11-26T04:12:02.000Z",
    "url": "https://x.com/justinsuntron/status/2125804747852857401",
    "kind": "quote",
-   "likes": 40,
-   "reposts": 9,
+   "likes": 68,
+   "reposts": 12,
    "textZh": "TRON 的日常使用是机构可以借以构建的基础。https://t.co/uYIlfFPfZy"
   },
   {
@@ -319,8 +333,8 @@
    "createdAt": "2026-11-25T12:31:02.000Z",
    "url": "https://x.com/justinsuntron/status/2125567940821156177",
    "kind": "quote",
-   "likes": 437,
-   "reposts": 28,
+   "likes": 503,
+   "reposts": 32,
    "textZh": "挺写实的 https://t.co/SV4fSjK9yP"
   },
   {
@@ -333,7 +347,7 @@
    "createdAt": "2026-11-25T10:36:23.000Z",
    "url": "https://x.com/justinsuntron/status/2125539088250163564",
    "kind": "quote",
-   "likes": 79,
+   "likes": 84,
    "reposts": 9,
    "textZh": "火币HTX美股版图版图越来越完整了！ https://t.co/Jfvx7H5p7f"
   },
@@ -347,7 +361,7 @@
    "createdAt": "2026-11-25T08:41:34.000Z",
    "url": "https://x.com/justinsuntron/status/2125510194071543872",
    "kind": "quote",
-   "likes": 72,
+   "likes": 75,
    "reposts": 10,
    "textZh": "📢 MiniMax H3 图像系列现已在 https://t.co/Id9VsXTy4C Chat 上线 https://t.co/aEzMirdsAh"
   },
@@ -361,8 +375,8 @@
    "createdAt": "2026-11-24T17:11:11.000Z",
    "url": "https://x.com/justinsuntron/status/2125276052964753727",
    "kind": "quote",
-   "likes": 308,
-   "reposts": 41,
+   "likes": 315,
+   "reposts": 43,
    "textZh": "巴菲特说的好，短期是选美赛，长期是称重机，TRX是最美的称重机😄 https://t.co/lCytqppjb7"
   },
   {
@@ -380,20 +394,6 @@
    "textZh": "期待与 @StaniKulechov 一起讨论金融的未来。\n\n回头见。👋 https://t.co/pLkvjNW3ve"
   },
   {
-   "id": "2125222613006049647",
-   "accountId": "justinsuntron",
-   "name": "H.E. Justin Sun 👨‍🚀 🌞",
-   "zh": "孙宇晨",
-   "username": "justinsuntron",
-   "text": "Stablecoins and #JustinSunPrize on the agenda with @ucblockchain. https://t.co/oaeSIqHJGE",
-   "createdAt": "2026-11-24T13:38:50.000Z",
-   "url": "https://x.com/justinsuntron/status/2125222613006049647",
-   "kind": "quote",
-   "likes": 74,
-   "reposts": 13,
-   "textZh": "将与 @ucblockchain 讨论稳定币和 #JustinSunPrize。 https://t.co/oaeSIqHJGE"
-  },
-  {
    "id": "2125603699204497670",
    "accountId": "saylor",
    "name": "Michael Saylor",
@@ -403,8 +403,8 @@
    "createdAt": "2026-11-25T14:53:08.000Z",
    "url": "https://x.com/saylor/status/2125603699204497670",
    "kind": "post",
-   "likes": 1985,
-   "reposts": 197,
+   "likes": 2171,
+   "reposts": 216,
    "textZh": "Stretch（$STRC）过去一年回报率为 13.24%，在本次对比中胜过全部七只固定收益 ETF。最接近的是短期国债，回报率为 3.67%。所有回报均包含分红。 https://t.co/5aLFmek8ah"
   },
   {
@@ -417,8 +417,8 @@
    "createdAt": "2026-11-25T12:57:21.000Z",
    "url": "https://x.com/saylor/status/2125574561735520444",
    "kind": "original",
-   "likes": 2717,
-   "reposts": 216,
+   "likes": 2852,
+   "reposts": 228,
    "textZh": "过去一年，Stretch（$STRC）回报率为 13%，在所示的六个基准中领先。标普 500 ETF 上涨了 9%，而比特币下跌了 32%。https://t.co/e7eSGCJUWk"
   },
   {
@@ -431,8 +431,8 @@
    "createdAt": "2026-11-25T00:46:16.000Z",
    "url": "https://x.com/saylor/status/2125390580305846369",
    "kind": "post",
-   "likes": 1790,
-   "reposts": 173,
+   "likes": 1809,
+   "reposts": 176,
    "textZh": "过去一年，Stretch（$STRC）在所示资产基准的风险调整后回报中领先。它的夏普比率为 +0.57，高于标普 500 ETF 的 +0.47 和比特币的 −0.77。https://t.co/fCsoKxM1U5"
   },
   {
@@ -445,7 +445,7 @@
    "createdAt": "2026-11-24T21:31:49.000Z",
    "url": "https://x.com/saylor/status/2125341642756354145",
    "kind": "post",
-   "likes": 1754,
+   "likes": 1773,
    "reposts": 173,
    "textZh": "过去一年，Stretch（$STRC）在这项固定收益的风险调整后回报比较中领先。它的夏普比率为 +0.57，而全部七只 ETF 都低于零。 https://t.co/30Kiyh1DNR"
   },
@@ -459,8 +459,8 @@
    "createdAt": "2026-11-24T14:01:30.000Z",
    "url": "https://x.com/saylor/status/2125228316986646901",
    "kind": "quote",
-   "likes": 5764,
-   "reposts": 564,
+   "likes": 5814,
+   "reposts": 569,
    "textZh": "比特币是数字资本。CFTC 工作人员现已认可，美国衍生品交易所和清算所可以将比特币计入运营准备金，但须经过折减。采用的下一阶段，是让比特币真正发挥作用。 https://t.co/kquPJ8KW5r"
   },
   {
@@ -473,8 +473,8 @@
    "createdAt": "2026-11-23T19:07:21.000Z",
    "url": "https://x.com/saylor/status/2124942899356082554",
    "kind": "post",
-   "likes": 4777,
-   "reposts": 404,
+   "likes": 4780,
+   "reposts": 405,
    "textZh": "我们不需要 ₿ailout。 https://t.co/0bu5b64nmu"
   },
   {
@@ -487,8 +487,8 @@
    "createdAt": "2026-11-23T17:02:03.000Z",
    "url": "https://x.com/saylor/status/2124911367786295660",
    "kind": "post",
-   "likes": 4313,
-   "reposts": 342,
+   "likes": 4314,
+   "reposts": 341,
    "textZh": "过去 13 周，我们的 $STRC 回购及相关资本市场操作，已将年度利息与股息（Annual Int + Div）减少了 2.96 亿美元，并为净储备（Net Reserve）增加了 18.1 亿美元。现在是让我们的堡垒式资产负债表发挥作用的时候了。 https://t.co/P3yPkbADbN"
   },
   {
@@ -501,8 +501,8 @@
    "createdAt": "2026-11-25T18:40:17.000Z",
    "url": "https://x.com/ColeMacro/status/2125660862216372239",
    "kind": "quote",
-   "likes": 454,
-   "reposts": 32,
+   "likes": 495,
+   "reposts": 36,
    "textZh": "流动性紧缩越深，我越预期比特币在未来几年会涨得更高。我们有意把 $ASST 的结构做成能够应对这样的时刻。\n\n美联储 @federalreserve 和财政部 @USTreasury 越快纠正政策错误，对美元越有利。比特币无论如何都会赢，但在出现我们现在看到的这类政策错误时，实际上会赢得更快。\n\n系好安全带，享受这把弹弓正在积蓄的张力。 https://t.co/dRFN7a8PTR"
   },
   {
@@ -515,7 +515,7 @@
    "createdAt": "2026-11-25T18:18:44.000Z",
    "url": "https://x.com/ColeMacro/status/2125655438943457527",
    "kind": "quote",
-   "likes": 105,
+   "likes": 109,
    "reposts": 8,
    "textZh": "老派：Schoolhouse Rock！\n\n新派：Schoolhouse Block！ https://t.co/ceR6QORva2"
   },
@@ -529,8 +529,8 @@
    "createdAt": "2026-11-25T15:42:22.000Z",
    "url": "https://x.com/ColeMacro/status/2125616091565314099",
    "kind": "post",
-   "likes": 172,
-   "reposts": 24,
+   "likes": 182,
+   "reposts": 25,
    "textZh": "我上了 @MoneyLevelsShow，讨论美国债务危机、什么可能迫使美联储采取行动、Strive 的比特币策略、量子风险，以及为何机构对比特币的采用仍处于更早阶段，并且进展比多数投资者以为的更积极。\n\n时间戳\n0:00 - 我在 CalPERS 的背景\n1:47 - 我为何开始担忧债务危机\n4:05 - 美国国债的需求是否充足？\n6:49 - 什么可能迫使美联储介入？\n8:16 - 什么会触发新一轮政策回应？\n11:13 - 美联储是否在为政策失误做铺垫？\n13:07 - 在如此高的债务水平下，健全货币政策能否奏效？\n16:04 - AI 可能如何影响政府财政\n19:27 - AI 是否又是一场互联网泡沫？\n23:24 - Strive 的比特币储备模式如何运作\n25:49 - Strive 为何使用优先股\n29:17 - Strive 如何为其优先股股息筹资\n31:42 - 量子计算是否对比特币构成威胁？\n35:10 - AI、黑客攻击与比特币安全\n40:12 - 比特币采用的现状\n41:37 - 为何机构采用可能仍处于早期\n45:25 - 代币化、黄金与资本市场的未来\n\n$ASST $SATA $SATS https://t.co/LU8yW9WQwq"
   },
   {
@@ -590,6 +590,20 @@
    "textZh": "很高兴看到英伟达董事会恢复 @JensenHuang 的 CEO 职务。$NVDA 是 Strive Asset Management 客户最大的单一持仓，通过我们的 ETF 投资了近 1 亿美元。\n\nStrive 原本准备提交股东提案，并正式要求在明日开盘前就黄仁勋回归进行咨询性股东投票。很高兴董事会在我们需要采取行动之前就做出了决定。\n\n回归正事。开始吧。🚀"
   },
   {
+   "id": "2125844120560427380",
+   "accountId": "TheMarketMemo",
+   "name": "LEI",
+   "zh": "市场备忘",
+   "username": "TheMarketMemo",
+   "text": "感謝各位網友的支持，祝感恩節快樂！",
+   "createdAt": "2026-11-26T06:48:29.000Z",
+   "url": "https://x.com/TheMarketMemo/status/2125844120560427380",
+   "kind": "post",
+   "likes": 78,
+   "reposts": 0,
+   "textZh": "感谢各位网友的支持，祝感恩节快乐！"
+  },
+  {
    "id": "2125794170216264185",
    "accountId": "TheMarketMemo",
    "name": "LEI",
@@ -599,8 +613,8 @@
    "createdAt": "2026-11-26T03:30:00.000Z",
    "url": "https://x.com/TheMarketMemo/status/2125794170216264185",
    "kind": "post",
-   "likes": 40,
-   "reposts": 2,
+   "likes": 109,
+   "reposts": 4,
    "textZh": "很多移民到海外的華人，越有錢越保守。他們自身可能對投資了解不多，也不敢直接投資美股，於是把錢交給私人銀行去打理。結果做下來發現，不僅沒避開風險，連大盤指數都跑不贏。這個問題怎麼解？ https://t.co/XWzjMUnrwk"
   },
   {
@@ -613,8 +627,8 @@
    "createdAt": "2026-11-25T17:46:13.000Z",
    "url": "https://x.com/TheMarketMemo/status/2125647256141660647",
    "kind": "quote",
-   "likes": 58,
-   "reposts": 3,
+   "likes": 78,
+   "reposts": 4,
    "textZh": "散户投资者作为一个群体，总是会被宏大叙事所吸引。一方面，他们缺乏深入研究细节的工具和能力。另一方面，归根结底是懒：相信一个故事，远比核实每一个事实要容易。 https://t.co/gPlB9Mc9tH"
   },
   {
@@ -627,8 +641,8 @@
    "createdAt": "2026-11-25T17:33:08.000Z",
    "url": "https://x.com/TheMarketMemo/status/2125643966217613738",
    "kind": "quote",
-   "likes": 204,
-   "reposts": 13,
+   "likes": 239,
+   "reposts": 15,
    "textZh": "半导体指数 $SOXX 自 6 月高点以来已腰斩。在目前缺口附近观察是否出现抵抗的迹象。如果有，半导体类股可能会迎来一个小反弹，不过我认为反弹依然是出清的机会。如果这个位置挡不住下跌，再往下还有一波腰斩行情。 https://t.co/zYgckIsMrv https://t.co/T62oL0T3vu"
   },
   {
@@ -641,8 +655,8 @@
    "createdAt": "2026-11-25T16:05:34.000Z",
    "url": "https://x.com/TheMarketMemo/status/2125621928576844157",
    "kind": "post",
-   "likes": 176,
-   "reposts": 1,
+   "likes": 192,
+   "reposts": 2,
    "textZh": "11月23日的笔记，截取一部分给大家看看。重要的是观察方法，而不是结论。 https://t.co/pu1UJinVVv"
   },
   {
@@ -655,8 +669,8 @@
    "createdAt": "2026-11-25T15:58:43.000Z",
    "url": "https://x.com/TheMarketMemo/status/2125620203161841707",
    "kind": "post",
-   "likes": 220,
-   "reposts": 13,
+   "likes": 236,
+   "reposts": 15,
    "textZh": "在我 20 多年的投资经历中，见过太多不成功的投资者。他们都有一个共同特点：做投资或交易时依据的是观点和立场，而不是事实和逻辑推理。"
   },
   {
@@ -669,23 +683,9 @@
    "createdAt": "2026-11-25T15:35:22.000Z",
    "url": "https://x.com/TheMarketMemo/status/2125614329655685414",
    "kind": "quote",
-   "likes": 151,
+   "likes": 167,
    "reposts": 2,
    "textZh": "你走了吗？ https://t.co/YwvCN9oHL3"
-  },
-  {
-   "id": "2125469925036953744",
-   "accountId": "TheMarketMemo",
-   "name": "LEI",
-   "zh": "市场备忘",
-   "username": "TheMarketMemo",
-   "text": "X 的翻譯功能現在越來越強大了，很好。我打算經常寫一些英文的觀點，練一練英文，希望不會影響大家閱讀。",
-   "createdAt": "2026-11-25T06:01:34.000Z",
-   "url": "https://x.com/TheMarketMemo/status/2125469925036953744",
-   "kind": "post",
-   "likes": 252,
-   "reposts": 0,
-   "textZh": "X 的翻译功能现在越来越强大了，很好。我打算经常写一些英文的观点，练一练英文，希望不会影响大家阅读。"
   },
   {
    "id": "2125766444256461201",
@@ -697,8 +697,8 @@
    "createdAt": "2026-11-26T01:39:49.000Z",
    "url": "https://x.com/Jackyi_ld/status/2125766444256461201",
    "kind": "post",
-   "likes": 60,
-   "reposts": 1,
+   "likes": 156,
+   "reposts": 5,
    "textZh": "我出身在一个偏远农村和文盲家庭，多次高考失利，大学靠端盘子，发传单等养活自己，毕业找不到工作只能创业，煎熬了很久挣到第一桶金，省吃俭用来学习和参与科技投资，后来进入加密行业赶上大牛市，其实在加密领域也是挫折不断，得罪发币集团被抹黑，熊市卖掉BTC进股市，被同事卷钱跑路和被交易团队爆仓，一级投资大溃败，而且这些都是自己的钱。但不管起点多低，遇到多少困难，都要持续努力提升认知，保持乐观主义心态，耐心等待新的机会。这次金融风险和流动性危机可能比较长，但是保持正确的现金管理和心态，就意味着有更大的机会。风浪越大，鱼越贵。 https://t.co/CdtFnw5cAu"
   },
   {
@@ -711,7 +711,7 @@
    "createdAt": "2026-11-25T14:24:27.000Z",
    "url": "https://x.com/Jackyi_ld/status/2125596481520603324",
    "kind": "quote",
-   "likes": 35,
+   "likes": 38,
    "reposts": 3,
    "textZh": "下降趋势只有一次机会买在最低点，其他任何时刻买入都是亏钱。同时就像我们一周前劝大家的，此刻你以为的割肉低点说不定就是以后的高点逃点。美股其实在很早之前就应该有一次超级回调，没想到AI把这个危机延长加大续命。对于美股也是，没有永远一根直线上涨的市场，活下来才是下行市场里第一原则。熊市中资产安全也是关注核心，最近GCSA观察到COLDCARD种子漏洞，关联约 1779 BTC、8600+ 地址被盗。虽然钱包一切正常，但固件多年悄悄用了软件随机数。升级固件不能救已经生成的弱种子，必须换新种子、转移资产。"
   },
@@ -753,7 +753,7 @@
    "createdAt": "2026-11-24T04:52:52.000Z",
    "url": "https://x.com/Jackyi_ld/status/2125090250343289330",
    "kind": "post",
-   "likes": 229,
+   "likes": 230,
    "reposts": 39,
    "textZh": "虽然黄仁勋回来了短线迅速反弹，但我们还是坚持观点，就是中期趋势没有逆转。首先大环境处于加息周期，其次是金融风险没有解除，最后去杠杆和挤泡沫，短时间不会结束。尤其是民主党1月正式上台后，整个斗争才刚开始。今年很残酷，明年可能更凶险，再次说注意不要有杠杆，保留充分现金，对危机心存敬畏。"
   },
@@ -781,7 +781,7 @@
    "createdAt": "2026-11-23T13:58:31.000Z",
    "url": "https://x.com/Jackyi_ld/status/2124865180706504982",
    "kind": "post",
-   "likes": 124,
+   "likes": 125,
    "reposts": 2,
    "textZh": "其实整个故事特别简单，一个发币归零诈骗犯，以及迪拜XD犯，没钱了想要直播求流量搞大哥打赏，找了币圈几个最有流量的硬蹭，问题是我跟她根本不认识(仅有微信，还是23年她来舔问BTC行情，我没回)，没有任何私人见过面，更没有任何业务往来，更离谱的是从始至终，我更没有做市商业务，有投资过一家在18年因为团队分歧退出了。凡事讲究证据，为了自己诈骗币跑路找理由甩锅。后续一切交给法律处理，法律讲究证据。民事诉讼已经立案，刑事诉讼正在启动中。"
   }
