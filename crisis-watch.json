@@ -1,9 +1,9 @@
 {
-  "asOf": "2026-11-26T08:07:00+08:00",
+  "asOf": "2026-11-26T21:11:00+08:00",
   "disclaimer": "1 至 10 级观察读数，10 为最高。由公开市场与宏观序列加权得出，不是买卖建议，也不确认金融危机已经发生。",
   "level": 4,
   "levelMax": 10,
-  "scoreRaw": 4.2934,
+  "scoreRaw": 4.2598,
   "formula": "各分项先按给定折点线性插值得到 0–10 分（超出两端的先外推再裁剪到 0–10；股指/科技回撤在 0% 时为 1 分；10 年实际利率为负时为 1 分；美元指数为 0.4×水平分 + 0.6×近 3 个月/60 个交易日涨跌分；联邦基金与实际利率为 0.5×政策分 + 0.5×10 年实际利率分，政策分为 0.5×当前有效利率分 + 0.5×12 个月变动分；科技与 AI 回撤为 0.6×最大回撤分 + 0.4×相对标普宽度分；收益率曲线若近 12 个月最低值低于 -0.30 且最新值已回到 0 以上，则记 7 分，否则按最新利差插值）。总分为现存分项按权重加权平均，缺项剔除并重标定权重；level = clamp(round(scoreRaw), 1, 10)。",
   "weights": {
     "hyoas": 0.18,
@@ -20,17 +20,17 @@
     {
       "id": "dxy",
       "name": "美元指数",
-      "value": 103.7,
+      "value": 103.73,
       "unit": "点",
-      "asOf": "2026-11-25",
-      "score": 6.21,
+      "asOf": "2026-11-26",
+      "score": 6.27,
       "weight": 0.1,
       "sourceName": "Yahoo Finance DX-Y.NYB ICE 美元指数，近 3 个月按 60 个交易日涨跌",
       "sourceUrl": "https://finance.yahoo.com/quote/DX-Y.NYB",
-      "valueText": "103.70",
-      "sub": "60 个交易日 +4.0%",
-      "change60d": 4.04,
-      "change60dFrom": "2026-09-01"
+      "valueText": "103.73",
+      "sub": "60 个交易日 +4.2%",
+      "change60d": 4.19,
+      "change60dFrom": "2026-09-02"
     },
     {
       "id": "fed_real",
@@ -96,14 +96,14 @@
     {
       "id": "vix",
       "name": "波动率 VIX",
-      "value": 28.29,
+      "value": 26.86,
       "unit": "点",
-      "asOf": "2026-11-25",
-      "score": 6.66,
+      "asOf": "2026-11-26",
+      "score": 6.37,
       "weight": 0.14,
       "sourceName": "Yahoo Finance ^VIX",
       "sourceUrl": "https://finance.yahoo.com/quote/%5EVIX",
-      "valueText": "28.29"
+      "valueText": "26.86"
     },
     {
       "id": "curve",
