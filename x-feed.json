@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-26T11:07:59+08:00",
+ "asOf": "2026-11-26T12:04:38+08:00",
  "source": "X 公开帖快照（含中文译文）",
  "accounts": [
   {
@@ -86,6 +86,20 @@
  ],
  "posts": [
   {
+   "id": "2125797463047258119",
+   "accountId": "elonmusk",
+   "name": "Elon Musk",
+   "zh": "马斯克",
+   "username": "elonmusk",
+   "text": "Every child in America will receive two SpaceX shares, one from the company and one from me personally",
+   "createdAt": "2026-11-26T03:43:05.000Z",
+   "url": "https://x.com/elonmusk/status/2125797463047258119",
+   "kind": "post",
+   "likes": 13229,
+   "reposts": 1641,
+   "textZh": "美国的每个孩子都将获得两股 SpaceX 股份，一股来自公司，一股来自我个人"
+  },
+  {
    "id": "2125670205456257409",
    "accountId": "elonmusk",
    "name": "Elon Musk",
@@ -168,20 +182,6 @@
    "likes": 10202,
    "reposts": 1128,
    "textZh": "Starlink https://t.co/pN3jnQEpWE"
-  },
-  {
-   "id": "2125516475712844116",
-   "accountId": "elonmusk",
-   "name": "Elon Musk",
-   "zh": "马斯克",
-   "username": "elonmusk",
-   "text": "Grok is so much fun on Tesla road trips! https://t.co/blv92Ajncr",
-   "createdAt": "2026-11-25T09:06:32.000Z",
-   "url": "https://x.com/elonmusk/status/2125516475712844116",
-   "kind": "quote",
-   "likes": 13212,
-   "reposts": 965,
-   "textZh": "Grok 在 Tesla 公路旅行中太好玩了！https://t.co/blv92Ajncr"
   },
   {
    "id": "2125775937405137135",
@@ -590,6 +590,20 @@
    "textZh": "很高兴看到英伟达董事会恢复 @JensenHuang 的 CEO 职务。$NVDA 是 Strive Asset Management 客户最大的单一持仓，通过我们的 ETF 投资了近 1 亿美元。\n\nStrive 原本准备提交股东提案，并正式要求在明日开盘前就黄仁勋回归进行咨询性股东投票。很高兴董事会在我们需要采取行动之前就做出了决定。\n\n回归正事。开始吧。🚀"
   },
   {
+   "id": "2125794170216264185",
+   "accountId": "TheMarketMemo",
+   "name": "LEI",
+   "zh": "市场备忘",
+   "username": "TheMarketMemo",
+   "text": "很多移民到海外的華人，越有錢越保守。他們自身可能對投資了解不多，也不敢直接投資美股，於是把錢交給私人銀行去打理。結果做下來發現，不僅沒避開風險，連大盤指數都跑不贏。這個問題怎麼解？ https://t.co/XWzjMUnrwk",
+   "createdAt": "2026-11-26T03:30:00.000Z",
+   "url": "https://x.com/TheMarketMemo/status/2125794170216264185",
+   "kind": "post",
+   "likes": 40,
+   "reposts": 2,
+   "textZh": "很多移民到海外的華人，越有錢越保守。他們自身可能對投資了解不多，也不敢直接投資美股，於是把錢交給私人銀行去打理。結果做下來發現，不僅沒避開風險，連大盤指數都跑不贏。這個問題怎麼解？ https://t.co/XWzjMUnrwk"
+  },
+  {
    "id": "2125647256141660647",
    "accountId": "TheMarketMemo",
    "name": "LEI",
@@ -672,20 +686,6 @@
    "likes": 252,
    "reposts": 0,
    "textZh": "X 的翻译功能现在越来越强大了，很好。我打算经常写一些英文的观点，练一练英文，希望不会影响大家阅读。"
-  },
-  {
-   "id": "2125468499887931526",
-   "accountId": "TheMarketMemo",
-   "name": "LEI",
-   "zh": "市场备忘",
-   "username": "TheMarketMemo",
-   "text": "Every generation faces its share of crises: market crashes, wars, recessions, inflation, political upheaval, and endless negative news. Yet the stock market always trends upward over the long run.\n\nIf you are always waiting for the perfect moment to invest when there is world peace, economic prosperity, and absolute stability, you will either wait forever or end up buying right at the market peak. There are always crises, and there are always reasons to worry. \n\nMarket downturns are simply the entry ticket to long-term growth. If you want to succeed in the long run, you have to endure the journey. History shows that investors who keep putting money in while others are fearful consistently outperform those who wait on the sidelines and never pull the trigger. \n\nSuccessful investors reap rewards not by timing the market perfectly, but through patience and discipline.\n\n- LEI",
-   "createdAt": "2026-11-25T05:55:54.000Z",
-   "url": "https://x.com/TheMarketMemo/status/2125468499887931526",
-   "kind": "post",
-   "likes": 462,
-   "reposts": 27,
-   "textZh": "每一代人都要面对属于自己的危机：市场崩盘、战争、衰退、通胀、政治动荡，以及没完没了的负面新闻。但长期来看，股市总是向上的。\n\n如果你总是在等待世界和平、经济繁荣、绝对稳定的完美投资时机，你要么会永远等下去，要么最终会买在市场顶点。危机总是存在，担心的理由也总是有。\n\n市场下跌不过是通往长期增长的入场券。如果你想取得长期成功，就必须走完这段旅程。历史表明，在他人恐惧时坚持投入的投资者，会持续跑赢那些在场边观望、迟迟不下手的人。\n\n成功的投资者收获回报，靠的不是完美择时，而是耐心与纪律。\n\n- LEI"
   },
   {
    "id": "2125766444256461201",
