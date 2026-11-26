@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-26T12:04:38+08:00",
+ "asOf": "2026-11-26T13:08:24+08:00",
  "source": "X 公开帖快照（含中文译文）",
  "accounts": [
   {
@@ -296,6 +296,20 @@
    "textZh": "RT @realDonaldTrump: TO THE GREAT PEOPLE OF ALABAMA, GET OUT AND VOTE for these Great Patriots! They have my Complete and Total Endorsement…"
   },
   {
+   "id": "2125804747852857401",
+   "accountId": "justinsuntron",
+   "name": "H.E. Justin Sun 👨‍🚀 🌞",
+   "zh": "孙宇晨",
+   "username": "justinsuntron",
+   "text": "TRON’s everyday use is a foundation institutions can build on. https://t.co/uYIlfFPfZy",
+   "createdAt": "2026-11-26T04:12:02.000Z",
+   "url": "https://x.com/justinsuntron/status/2125804747852857401",
+   "kind": "quote",
+   "likes": 40,
+   "reposts": 9,
+   "textZh": "TRON 的日常使用是机构可以借以构建的基础。https://t.co/uYIlfFPfZy"
+  },
+  {
    "id": "2125567940821156177",
    "accountId": "justinsuntron",
    "name": "H.E. Justin Sun 👨‍🚀 🌞",
@@ -378,20 +392,6 @@
    "likes": 74,
    "reposts": 13,
    "textZh": "将与 @ucblockchain 讨论稳定币和 #JustinSunPrize。 https://t.co/oaeSIqHJGE"
-  },
-  {
-   "id": "2125197283977510996",
-   "accountId": "justinsuntron",
-   "name": "H.E. Justin Sun 👨‍🚀 🌞",
-   "zh": "孙宇晨",
-   "username": "justinsuntron",
-   "text": "Feel free to mint your ETH and BTC to stablecoin via USDD protocol https://t.co/X3MAAXRcah",
-   "createdAt": "2026-11-24T11:58:11.000Z",
-   "url": "https://x.com/justinsuntron/status/2125197283977510996",
-   "kind": "quote",
-   "likes": 81,
-   "reposts": 11,
-   "textZh": "可以随时通过 USDD 协议将你的 ETH 和 BTC 铸成稳定币 https://t.co/X3MAAXRcah"
   },
   {
    "id": "2125603699204497670",
