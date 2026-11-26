@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-26T19:04:32+08:00",
+ "asOf": "2026-11-26T20:08:05+08:00",
  "source": "X 公开帖快照（含中文译文）",
  "accounts": [
   {
@@ -296,6 +296,34 @@
    "textZh": "RT @realDonaldTrump: TO THE GREAT PEOPLE OF ALABAMA, GET OUT AND VOTE for these Great Patriots! They have my Complete and Total Endorsement…"
   },
   {
+   "id": "2125919748391334067",
+   "accountId": "justinsuntron",
+   "name": "H.E. Justin Sun 👨‍🚀 🌞",
+   "zh": "孙宇晨",
+   "username": "justinsuntron",
+   "text": "看到小红书上有人质疑我的财富量级。就这么说吧：昨天我写代码做任务，敢让Claude Fable 5.2 Ultracode 跑了 11 个小时。\n\n开的是 API，按量计费。",
+   "createdAt": "2026-11-26T11:49:00.000Z",
+   "url": "https://x.com/justinsuntron/status/2125919748391334067",
+   "kind": "post",
+   "likes": 82,
+   "reposts": 3,
+   "textZh": "看到小红书上有人质疑我的财富量级。就这么说吧：昨天我写代码做任务，敢让Claude Fable 5.2 Ultracode 跑了 11 个小时。\n\n开的是 API，按量计费。"
+  },
+  {
+   "id": "2125914970835788118",
+   "accountId": "justinsuntron",
+   "name": "H.E. Justin Sun 👨‍🚀 🌞",
+   "zh": "孙宇晨",
+   "username": "justinsuntron",
+   "text": "Good to see @allscaleio adding support for USDT on TRON. 🔻 https://t.co/oeGjEoxfmU",
+   "createdAt": "2026-11-26T11:30:01.000Z",
+   "url": "https://x.com/justinsuntron/status/2125914970835788118",
+   "kind": "quote",
+   "likes": 40,
+   "reposts": 3,
+   "textZh": "很高兴看到 @allscaleio 增加了对 TRON 上 USDT 的支持。🔻 https://t.co/oeGjEoxfmU"
+  },
+  {
    "id": "2125897661983375480",
    "accountId": "justinsuntron",
    "name": "H.E. Justin Sun 👨‍🚀 🌞",
@@ -364,34 +392,6 @@
    "likes": 87,
    "reposts": 9,
    "textZh": "火币HTX美股版图版图越来越完整了！ https://t.co/Jfvx7H5p7f"
-  },
-  {
-   "id": "2125510194071543872",
-   "accountId": "justinsuntron",
-   "name": "H.E. Justin Sun 👨‍🚀 🌞",
-   "zh": "孙宇晨",
-   "username": "justinsuntron",
-   "text": "📢 MiniMax H3 Image Series is Now Live on https://t.co/Id9VsXTy4C Chat https://t.co/aEzMirdsAh",
-   "createdAt": "2026-11-25T08:41:34.000Z",
-   "url": "https://x.com/justinsuntron/status/2125510194071543872",
-   "kind": "quote",
-   "likes": 78,
-   "reposts": 10,
-   "textZh": "📢 MiniMax H3 图像系列现已在 https://t.co/Id9VsXTy4C Chat 上线 https://t.co/aEzMirdsAh"
-  },
-  {
-   "id": "2125276052964753727",
-   "accountId": "justinsuntron",
-   "name": "H.E. Justin Sun 👨‍🚀 🌞",
-   "zh": "孙宇晨",
-   "username": "justinsuntron",
-   "text": "巴菲特说的好，短期是选美赛，长期是称重机，TRX是最美的称重机😄 https://t.co/lCytqppjb7",
-   "createdAt": "2026-11-24T17:11:11.000Z",
-   "url": "https://x.com/justinsuntron/status/2125276052964753727",
-   "kind": "quote",
-   "likes": 317,
-   "reposts": 43,
-   "textZh": "巴菲特说的好，短期是选美赛，长期是称重机，TRX是最美的称重机😄 https://t.co/lCytqppjb7"
   },
   {
    "id": "2125603699204497670",
