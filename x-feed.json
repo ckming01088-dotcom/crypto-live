@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-26T16:11:42+08:00",
+ "asOf": "2026-11-26T17:11:00+08:00",
  "source": "X 公开帖快照（含中文译文）",
  "accounts": [
   {
@@ -86,6 +86,48 @@
  ],
  "posts": [
   {
+   "id": "2125877031816630636",
+   "accountId": "elonmusk",
+   "name": "Elon Musk",
+   "zh": "马斯克",
+   "username": "elonmusk",
+   "text": "Boring Co has built a lot of tunnels under Vegas https://t.co/X8LkpfibIb",
+   "createdAt": "2026-11-26T08:59:15.000Z",
+   "url": "https://x.com/elonmusk/status/2125877031816630636",
+   "kind": "quote",
+   "likes": 649,
+   "reposts": 96,
+   "textZh": "Boring Co 已在拉斯维加斯地下修建了大量隧道 https://t.co/X8LkpfibIb"
+  },
+  {
+   "id": "2125867631546712066",
+   "accountId": "elonmusk",
+   "name": "Elon Musk",
+   "zh": "马斯克",
+   "username": "elonmusk",
+   "text": "Teslas have superhuman vision https://t.co/6UigftjZTu",
+   "createdAt": "2026-11-26T08:21:54.000Z",
+   "url": "https://x.com/elonmusk/status/2125867631546712066",
+   "kind": "quote",
+   "likes": 3192,
+   "reposts": 409,
+   "textZh": "特斯拉拥有超人般的视觉 https://t.co/6UigftjZTu"
+  },
+  {
+   "id": "2125864501019070680",
+   "accountId": "elonmusk",
+   "name": "Elon Musk",
+   "zh": "马斯克",
+   "username": "elonmusk",
+   "text": "Community Notes just saved a lot of guys from thinking their wiener is too small https://t.co/g38XSNeQxM",
+   "createdAt": "2026-11-26T08:09:28.000Z",
+   "url": "https://x.com/elonmusk/status/2125864501019070680",
+   "kind": "quote",
+   "likes": 4590,
+   "reposts": 394,
+   "textZh": "社区笔记刚刚让很多男性免于以为自己的那话儿太小 https://t.co/g38XSNeQxM"
+  },
+  {
    "id": "2125858270296285463",
    "accountId": "elonmusk",
    "name": "Elon Musk",
@@ -95,8 +137,8 @@
    "createdAt": "2026-11-26T07:44:42.000Z",
    "url": "https://x.com/elonmusk/status/2125858270296285463",
    "kind": "post",
-   "likes": 5608,
-   "reposts": 607,
+   "likes": 14142,
+   "reposts": 1302,
    "textZh": "很难相信这终于发生了 https://t.co/427CZqEEZY"
   },
   {
@@ -109,8 +151,8 @@
    "createdAt": "2026-11-26T03:43:05.000Z",
    "url": "https://x.com/elonmusk/status/2125797463047258119",
    "kind": "post",
-   "likes": 182717,
-   "reposts": 17776,
+   "likes": 240695,
+   "reposts": 23060,
    "textZh": "美国的每个孩子都将获得两股 SpaceX 股份，一股来自公司，一股来自我个人"
   },
   {
@@ -123,8 +165,8 @@
    "createdAt": "2026-11-25T19:17:24.000Z",
    "url": "https://x.com/elonmusk/status/2125670205456257409",
    "kind": "quote",
-   "likes": 41081,
-   "reposts": 3638,
+   "likes": 43237,
+   "reposts": 3853,
    "textZh": "谢谢 Ron ❤️\n\n我最大的荣幸，是能够与 SpaceX、Tesla、Neuralink 和 Boring Company 里那些才华横溢的人一起工作，没有他们，我将一事无成。 https://t.co/WsGDz84zlN"
   },
   {
@@ -137,51 +179,9 @@
    "createdAt": "2026-11-25T19:12:53.000Z",
    "url": "https://x.com/elonmusk/status/2125669066388209784",
    "kind": "quote",
-   "likes": 20197,
-   "reposts": 1326,
+   "likes": 21290,
+   "reposts": 1405,
    "textZh": "有意思 https://t.co/vywPrUlXEc"
-  },
-  {
-   "id": "2125667762324541673",
-   "accountId": "elonmusk",
-   "name": "Elon Musk",
-   "zh": "马斯克",
-   "username": "elonmusk",
-   "text": "SpaceX Colossus 3 will greatly benefit the Arizona community https://t.co/l6KW6RkleF",
-   "createdAt": "2026-11-25T19:07:42.000Z",
-   "url": "https://x.com/elonmusk/status/2125667762324541673",
-   "kind": "quote",
-   "likes": 40689,
-   "reposts": 4001,
-   "textZh": "SpaceX Colossus 3 将极大惠及亚利桑那社区 https://t.co/l6KW6RkleF"
-  },
-  {
-   "id": "2125576951364731018",
-   "accountId": "elonmusk",
-   "name": "Elon Musk",
-   "zh": "马斯克",
-   "username": "elonmusk",
-   "text": "Hmm https://t.co/ng0CBjY6DU",
-   "createdAt": "2026-11-25T13:06:51.000Z",
-   "url": "https://x.com/elonmusk/status/2125576951364731018",
-   "kind": "quote",
-   "likes": 16549,
-   "reposts": 3209,
-   "textZh": "嗯 https://t.co/ng0CBjY6DU"
-  },
-  {
-   "id": "2125576163720642762",
-   "accountId": "elonmusk",
-   "name": "Elon Musk",
-   "zh": "马斯克",
-   "username": "elonmusk",
-   "text": "Yes https://t.co/fwFN4qiOI8",
-   "createdAt": "2026-11-25T13:03:43.000Z",
-   "url": "https://x.com/elonmusk/status/2125576163720642762",
-   "kind": "quote",
-   "likes": 24093,
-   "reposts": 4351,
-   "textZh": "是的 https://t.co/fwFN4qiOI8"
   },
   {
    "id": "2125775937405137135",
