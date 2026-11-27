@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-26T21:05:52+08:00",
+ "asOf": "2026-11-27T08:08:49+08:00",
  "source": "X 公开帖快照（含中文译文）",
  "accounts": [
   {
@@ -86,6 +86,34 @@
  ],
  "posts": [
   {
+   "id": "2126064330022265197",
+   "accountId": "elonmusk",
+   "name": "Elon Musk",
+   "zh": "马斯克",
+   "username": "elonmusk",
+   "text": "Super appreciate your support. Tesla wouldn’t be where it is without our awesome customers. https://t.co/XWgsthy0wO",
+   "createdAt": "2026-11-26T21:23:31.000Z",
+   "url": "https://x.com/elonmusk/status/2126064330022265197",
+   "kind": "quote",
+   "likes": 22840,
+   "reposts": 1329,
+   "textZh": "非常感谢你们的支持。没有我们出色的客户，特斯拉不会有今天的成就。https://t.co/XWgsthy0wO"
+  },
+  {
+   "id": "2126045116624216127",
+   "accountId": "elonmusk",
+   "name": "Elon Musk",
+   "zh": "马斯克",
+   "username": "elonmusk",
+   "text": "❤️❤️ Happy Thanksgiving! ❤️❤️",
+   "createdAt": "2026-11-26T20:07:10.000Z",
+   "url": "https://x.com/elonmusk/status/2126045116624216127",
+   "kind": "post",
+   "likes": 112100,
+   "reposts": 7280,
+   "textZh": "❤️❤️ 感恩节快乐！❤️❤️"
+  },
+  {
    "id": "2125877031816630636",
    "accountId": "elonmusk",
    "name": "Elon Musk",
@@ -154,34 +182,6 @@
    "likes": 283862,
    "reposts": 26976,
    "textZh": "美国的每个孩子都将获得两股 SpaceX 股份，一股来自公司，一股来自我个人"
-  },
-  {
-   "id": "2125670205456257409",
-   "accountId": "elonmusk",
-   "name": "Elon Musk",
-   "zh": "马斯克",
-   "username": "elonmusk",
-   "text": "Thanks Ron ❤️\n\nMy greatest privilege is being able to work with the incredibly talented people of SpaceX, Tesla, Neuralink and Boring Company, without whom I would be able to accomplish nothing. https://t.co/WsGDz84zlN",
-   "createdAt": "2026-11-25T19:17:24.000Z",
-   "url": "https://x.com/elonmusk/status/2125670205456257409",
-   "kind": "quote",
-   "likes": 44676,
-   "reposts": 4004,
-   "textZh": "谢谢 Ron ❤️\n\n我最大的荣幸，是能够与 SpaceX、Tesla、Neuralink 和 Boring Company 里那些才华横溢的人一起工作，没有他们，我将一事无成。 https://t.co/WsGDz84zlN"
-  },
-  {
-   "id": "2125669066388209784",
-   "accountId": "elonmusk",
-   "name": "Elon Musk",
-   "zh": "马斯克",
-   "username": "elonmusk",
-   "text": "Interesting https://t.co/vywPrUlXEc",
-   "createdAt": "2026-11-25T19:12:53.000Z",
-   "url": "https://x.com/elonmusk/status/2125669066388209784",
-   "kind": "quote",
-   "likes": 22051,
-   "reposts": 1453,
-   "textZh": "有意思 https://t.co/vywPrUlXEc"
   },
   {
    "id": "2125930030572437822",
@@ -394,6 +394,34 @@
    "textZh": "火币HTX美股版图版图越来越完整了！ https://t.co/Jfvx7H5p7f"
   },
   {
+   "id": "2126008963850518995",
+   "accountId": "saylor",
+   "name": "Michael Saylor",
+   "zh": "Saylor",
+   "username": "saylor",
+   "text": "Fix the Money, Fix the World https://t.co/oDMci9tM6D",
+   "createdAt": "2026-11-26T17:43:30.000Z",
+   "url": "https://x.com/saylor/status/2126008963850518995",
+   "kind": "post",
+   "likes": 2109,
+   "reposts": 274,
+   "textZh": "修好货币，修好世界 https://t.co/oDMci9tM6D"
+  },
+  {
+   "id": "2125941406128607460",
+   "accountId": "saylor",
+   "name": "Michael Saylor",
+   "zh": "Saylor",
+   "username": "saylor",
+   "text": "Relative to market cap, $MSTR had 4.4× the options open interest of Tesla, the leader among the Magnificent Seven. Open contracts on $MSTR represented 61.2% of its market cap, versus 13.8% for $TSLA. https://t.co/AKT2A9nCAs",
+   "createdAt": "2026-11-26T13:15:03.000Z",
+   "url": "https://x.com/saylor/status/2125941406128607460",
+   "kind": "post",
+   "likes": 2589,
+   "reposts": 243,
+   "textZh": "以市值衡量，$MSTR 的期权未平仓合约是七巨头中领先的特斯拉的 4.4 倍。$MSTR 的未平仓合约相当于其市值的 61.2%，而 $TSLA 为 13.8%。https://t.co/AKT2A9nCAs"
+  },
+  {
    "id": "2125603699204497670",
    "accountId": "saylor",
    "name": "Michael Saylor",
@@ -464,32 +492,18 @@
    "textZh": "比特币是数字资本。CFTC 工作人员现已认可，美国衍生品交易所和清算所可以将比特币计入运营准备金，但须经过折减。采用的下一阶段，是让比特币真正发挥作用。 https://t.co/kquPJ8KW5r"
   },
   {
-   "id": "2124942899356082554",
-   "accountId": "saylor",
-   "name": "Michael Saylor",
-   "zh": "Saylor",
-   "username": "saylor",
-   "text": "We don't need a ₿ailout. https://t.co/0bu5b64nmu",
-   "createdAt": "2026-11-23T19:07:21.000Z",
-   "url": "https://x.com/saylor/status/2124942899356082554",
+   "id": "2126038390466580614",
+   "accountId": "ColeMacro",
+   "name": "Matt Cole",
+   "zh": "Cole",
+   "username": "ColeMacro",
+   "text": "GEORGE WASHINGTON’S THANKSGIVING PROCLAMATION\nOctober 3, 1789\n\nBy the President of the United States of America. A Proclamation.\n\nWhereas it is the duty of all Nations to acknowledge the providence of Almighty God, to obey his will, to be grateful for his benefits, and humbly to",
+   "createdAt": "2026-11-26T19:40:26.000Z",
+   "url": "https://x.com/ColeMacro/status/2126038390466580614",
    "kind": "post",
-   "likes": 4781,
-   "reposts": 405,
-   "textZh": "我们不需要 ₿ailout。 https://t.co/0bu5b64nmu"
-  },
-  {
-   "id": "2124911367786295660",
-   "accountId": "saylor",
-   "name": "Michael Saylor",
-   "zh": "Saylor",
-   "username": "saylor",
-   "text": "Over the past 13 weeks, our $STRC buybacks and related capital markets activity have reduced our Annual Int + Div by $296M and added $1.81B to our Net Reserve. It is time to put our fortress balance sheet to work. https://t.co/P3yPkbADbN",
-   "createdAt": "2026-11-23T17:02:03.000Z",
-   "url": "https://x.com/saylor/status/2124911367786295660",
-   "kind": "post",
-   "likes": 4312,
-   "reposts": 341,
-   "textZh": "过去 13 周，我们的 $STRC 回购及相关资本市场操作，已将年度利息与股息（Annual Int + Div）减少了 2.96 亿美元，并为净储备（Net Reserve）增加了 18.1 亿美元。现在是让我们的堡垒式资产负债表发挥作用的时候了。 https://t.co/P3yPkbADbN"
+   "likes": 133,
+   "reposts": 18,
+   "textZh": "乔治·华盛顿的感恩节公告\n1789年10月3日\n\n美利坚合众国总统公告。\n\n鉴于所有国家都有责任承认全能上帝的庇佑，遵从他的旨意，感恩他的恩惠，并谦卑地……"
   },
   {
    "id": "2125660862216372239",
@@ -574,20 +588,6 @@
    "likes": 975,
    "reposts": 53,
    "textZh": "这话说得还真准。 https://t.co/3hIhXIGSzv"
-  },
-  {
-   "id": "2124868889985368234",
-   "accountId": "ColeMacro",
-   "name": "Matt Cole",
-   "zh": "Cole",
-   "username": "ColeMacro",
-   "text": "Glad to see NVIDIA’s Board reinstate @JensenHuang as CEO. $NVDA is the largest single holding for Strive Asset Management’s clients, with nearly $100M invested through our ETFs.\n\nStrive was set to submit a shareholder proposal and formally request an advisory shareholder vote on Huang’s return before tomorrow’s market open. Glad the Board acted before we needed to.\n\nBack to business. Let’s go. 🚀",
-   "createdAt": "2026-11-23T14:13:16.000Z",
-   "url": "https://x.com/ColeMacro/status/2124868889985368234",
-   "kind": "post",
-   "likes": 895,
-   "reposts": 66,
-   "textZh": "很高兴看到英伟达董事会恢复 @JensenHuang 的 CEO 职务。$NVDA 是 Strive Asset Management 客户最大的单一持仓，通过我们的 ETF 投资了近 1 亿美元。\n\nStrive 原本准备提交股东提案，并正式要求在明日开盘前就黄仁勋回归进行咨询性股东投票。很高兴董事会在我们需要采取行动之前就做出了决定。\n\n回归正事。开始吧。🚀"
   },
   {
    "id": "2125844120560427380",
