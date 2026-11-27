@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-27T09:12:49+08:00",
+ "asOf": "2026-11-27T11:07:32+08:00",
  "source": "X 公开帖快照（含中文译文）",
  "accounts": [
   {
@@ -184,6 +184,20 @@
    "textZh": "很难相信这终于发生了 https://t.co/427CZqEEZY"
   },
   {
+   "id": "2126142072491245817",
+   "accountId": "cz_binance",
+   "name": "CZ 🔶 BNB",
+   "zh": "赵长鹏",
+   "username": "cz_binance",
+   "text": "Happy Thanksgiving! 🦃",
+   "createdAt": "2026-11-27T02:32:26.000Z",
+   "url": "https://x.com/cz_binance/status/2126142072491245817",
+   "kind": "post",
+   "likes": 1100,
+   "reposts": 80,
+   "textZh": "感恩节快乐！🦃"
+  },
+  {
    "id": "2125930030572437822",
    "accountId": "cz_binance",
    "name": "CZ 🔶 BNB",
@@ -268,20 +282,6 @@
    "textZh": "就连 Laura Shin（通常把我描绘得很负面）也看不下去了。🤣🙏 https://t.co/6s7MwxLjxu"
   },
   {
-   "id": "2125085599388545151",
-   "accountId": "cz_binance",
-   "name": "CZ 🔶 BNB",
-   "zh": "赵长鹏",
-   "username": "cz_binance",
-   "text": "🙏 https://t.co/lsFBz9JJH0",
-   "createdAt": "2026-11-24T04:34:23.000Z",
-   "url": "https://x.com/cz_binance/status/2125085599388545151",
-   "kind": "quote",
-   "likes": 1958,
-   "reposts": 115,
-   "textZh": "🙏 https://t.co/lsFBz9JJH0"
-  },
-  {
    "id": "2117719664008851609",
    "accountId": "realDonaldTrump",
    "name": "Donald J. Trump",
@@ -294,6 +294,34 @@
    "likes": 0,
    "reposts": 2834,
    "textZh": "RT @realDonaldTrump: TO THE GREAT PEOPLE OF ALABAMA, GET OUT AND VOTE for these Great Patriots! They have my Complete and Total Endorsement…"
+  },
+  {
+   "id": "2126142133526790186",
+   "accountId": "justinsuntron",
+   "name": "H.E. Justin Sun 👨‍🚀 🌞",
+   "zh": "孙宇晨",
+   "username": "justinsuntron",
+   "text": "USDD 启动！ https://t.co/Wek6L61ZO3",
+   "createdAt": "2026-11-27T02:32:41.000Z",
+   "url": "https://x.com/justinsuntron/status/2126142133526790186",
+   "kind": "quote",
+   "likes": 33,
+   "reposts": 4,
+   "textZh": "USDD 启动！ https://t.co/Wek6L61ZO3"
+  },
+  {
+   "id": "2126142027897409678",
+   "accountId": "justinsuntron",
+   "name": "H.E. Justin Sun 👨‍🚀 🌞",
+   "zh": "孙宇晨",
+   "username": "justinsuntron",
+   "text": "来试试 $USDD 的原生抵押借贷吧！ETH WBTC wSTETH 全支持！ https://t.co/vWJo6D2QLj",
+   "createdAt": "2026-11-27T02:32:15.000Z",
+   "url": "https://x.com/justinsuntron/status/2126142027897409678",
+   "kind": "quote",
+   "likes": 19,
+   "reposts": 1,
+   "textZh": "来试试 $USDD 的原生抵押借贷吧！ETH WBTC wSTETH 全支持！ https://t.co/vWJo6D2QLj"
   },
   {
    "id": "2125919748391334067",
@@ -364,34 +392,6 @@
    "likes": 131,
    "reposts": 22,
    "textZh": "TRON 的日常使用是机构可以借以构建的基础。https://t.co/uYIlfFPfZy"
-  },
-  {
-   "id": "2125567940821156177",
-   "accountId": "justinsuntron",
-   "name": "H.E. Justin Sun 👨‍🚀 🌞",
-   "zh": "孙宇晨",
-   "username": "justinsuntron",
-   "text": "挺写实的 https://t.co/SV4fSjK9yP",
-   "createdAt": "2026-11-25T12:31:02.000Z",
-   "url": "https://x.com/justinsuntron/status/2125567940821156177",
-   "kind": "quote",
-   "likes": 569,
-   "reposts": 35,
-   "textZh": "挺写实的 https://t.co/SV4fSjK9yP"
-  },
-  {
-   "id": "2125539088250163564",
-   "accountId": "justinsuntron",
-   "name": "H.E. Justin Sun 👨‍🚀 🌞",
-   "zh": "孙宇晨",
-   "username": "justinsuntron",
-   "text": "火币HTX美股版图版图越来越完整了！ https://t.co/Jfvx7H5p7f",
-   "createdAt": "2026-11-25T10:36:23.000Z",
-   "url": "https://x.com/justinsuntron/status/2125539088250163564",
-   "kind": "quote",
-   "likes": 88,
-   "reposts": 9,
-   "textZh": "火币HTX美股版图版图越来越完整了！ https://t.co/Jfvx7H5p7f"
   },
   {
    "id": "2126008963850518995",
