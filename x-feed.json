@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-27T12:07:43+08:00",
+ "asOf": "2026-11-27T13:12:05+08:00",
  "source": "X 公开帖快照（含中文译文）",
  "accounts": [
   {
@@ -590,6 +590,20 @@
    "textZh": "这话说得还真准。 https://t.co/3hIhXIGSzv"
   },
   {
+   "id": "2126173349848182897",
+   "accountId": "TheMarketMemo",
+   "name": "LEI",
+   "zh": "市场备忘",
+   "username": "TheMarketMemo",
+   "text": "夜盤幾乎所有的品類都在漲，好歡樂啊，但信息混亂。 https://t.co/y6wcwEuDU5",
+   "createdAt": "2026-11-27T04:36:43.000Z",
+   "url": "https://x.com/TheMarketMemo/status/2126173349848182897",
+   "kind": "post",
+   "likes": 56,
+   "reposts": 0,
+   "textZh": "夜盘几乎所有的品类都在涨，好欢乐啊，但信息混乱。 https://t.co/y6wcwEuDU5"
+  },
+  {
    "id": "2125844120560427380",
    "accountId": "TheMarketMemo",
    "name": "LEI",
@@ -672,20 +686,6 @@
    "likes": 265,
    "reposts": 16,
    "textZh": "在我 20 多年的投资经历中，见过太多不成功的投资者。他们都有一个共同特点：做投资或交易时依据的是观点和立场，而不是事实和逻辑推理。"
-  },
-  {
-   "id": "2125614329655685414",
-   "accountId": "TheMarketMemo",
-   "name": "LEI",
-   "zh": "市场备忘",
-   "username": "TheMarketMemo",
-   "text": "你走了嗎？ https://t.co/YwvCN9oHL3",
-   "createdAt": "2026-11-25T15:35:22.000Z",
-   "url": "https://x.com/TheMarketMemo/status/2125614329655685414",
-   "kind": "quote",
-   "likes": 183,
-   "reposts": 2,
-   "textZh": "你走了吗？ https://t.co/YwvCN9oHL3"
   },
   {
    "id": "2126152289971044478",
