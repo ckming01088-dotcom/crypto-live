@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-28T10:08:41+08:00",
+ "asOf": "2026-11-28T11:10:33+08:00",
  "source": "X 公开帖快照（含中文译文）",
  "accounts": [
   {
@@ -86,6 +86,20 @@
  ],
  "posts": [
   {
+   "id": "2126505770988548516",
+   "accountId": "elonmusk",
+   "name": "Elon Musk",
+   "zh": "马斯克",
+   "username": "elonmusk",
+   "text": "❤️ https://t.co/qrRAdB14PN",
+   "createdAt": "2026-11-28T02:37:39.000Z",
+   "url": "https://x.com/elonmusk/status/2126505770988548516",
+   "kind": "quote",
+   "likes": 5050,
+   "reposts": 338,
+   "textZh": "❤️ https://t.co/qrRAdB14PN"
+  },
+  {
    "id": "2126491449722302494",
    "accountId": "elonmusk",
    "name": "Elon Musk",
@@ -95,8 +109,8 @@
    "createdAt": "2026-11-28T01:40:44.000Z",
    "url": "https://x.com/elonmusk/status/2126491449722302494",
    "kind": "quote",
-   "likes": 1598,
-   "reposts": 199,
+   "likes": 3694,
+   "reposts": 448,
    "textZh": "超级智能 AI 会消除任何公司的软件优势 https://t.co/gD0bN5PPi6"
   },
   {
@@ -109,8 +123,8 @@
    "createdAt": "2026-11-28T01:38:05.000Z",
    "url": "https://x.com/elonmusk/status/2126490784296034466",
    "kind": "quote",
-   "likes": 2233,
-   "reposts": 310,
+   "likes": 10544,
+   "reposts": 1253,
    "textZh": "是的 https://t.co/sxNCKIPK50"
   },
   {
@@ -123,8 +137,8 @@
    "createdAt": "2026-11-28T01:34:19.000Z",
    "url": "https://x.com/elonmusk/status/2126489832977473981",
    "kind": "quote",
-   "likes": 3721,
-   "reposts": 542,
+   "likes": 9861,
+   "reposts": 1330,
    "textZh": "没错 https://t.co/ymX1VvUjaf"
   },
   {
@@ -137,8 +151,8 @@
    "createdAt": "2026-11-28T01:17:14.000Z",
    "url": "https://x.com/elonmusk/status/2126485536177045967",
    "kind": "quote",
-   "likes": 4535,
-   "reposts": 590,
+   "likes": 8604,
+   "reposts": 995,
    "textZh": "历史上，各文明的出生率崩溃总是发生在长期繁荣且没有严重外部威胁的时期。\n\n罗马在与迦太基进行存亡之战期间出生率非常高，而在摧毁所有外部威胁并经历数代繁荣之后则非常低。 https://t.co/tFbRP6SvXp"
   },
   {
@@ -151,8 +165,8 @@
    "createdAt": "2026-11-28T00:54:09.000Z",
    "url": "https://x.com/elonmusk/status/2126479727066272164",
    "kind": "quote",
-   "likes": 7115,
-   "reposts": 872,
+   "likes": 13345,
+   "reposts": 1517,
    "textZh": "极其令人担忧 https://t.co/36CuHTvPxY"
   },
   {
@@ -165,23 +179,9 @@
    "createdAt": "2026-11-27T22:10:11.000Z",
    "url": "https://x.com/elonmusk/status/2126438463520350588",
    "kind": "quote",
-   "likes": 3413,
-   "reposts": 398,
+   "likes": 3621,
+   "reposts": 440,
    "textZh": "给每个 Bot 分配一项具体工作，就像公司里的员工一样 https://t.co/BKIliX3HzA"
-  },
-  {
-   "id": "2126438150314631286",
-   "accountId": "elonmusk",
-   "name": "Elon Musk",
-   "zh": "马斯克",
-   "username": "elonmusk",
-   "text": "This is the way https://t.co/VlkdujMi4d",
-   "createdAt": "2026-11-27T22:08:57.000Z",
-   "url": "https://x.com/elonmusk/status/2126438150314631286",
-   "kind": "quote",
-   "likes": 3269,
-   "reposts": 339,
-   "textZh": "这才是正道 https://t.co/VlkdujMi4d"
   },
   {
    "id": "2126269445467422728",
@@ -193,8 +193,8 @@
    "createdAt": "2026-11-27T10:58:34.000Z",
    "url": "https://x.com/cz_binance/status/2126269445467422728",
    "kind": "quote",
-   "likes": 849,
-   "reposts": 73,
+   "likes": 871,
+   "reposts": 78,
    "textZh": "今天第二场 AMA，在美丽的 Stonehill 高尔夫俱乐部。现场都是很有影响力的人。交流很棒。🙏 https://t.co/yh21husud4"
   },
   {
@@ -207,8 +207,8 @@
    "createdAt": "2026-11-27T10:47:27.000Z",
    "url": "https://x.com/cz_binance/status/2126266645476000044",
    "kind": "quote",
-   "likes": 1331,
-   "reposts": 114,
+   "likes": 1354,
+   "reposts": 115,
    "textZh": "今天两场 AMA 中的第一场。得赶去下一个活动，所以没留下来拍照。明天炉边谈话结束后会做签售，再拍一些自拍。 https://t.co/WNbVmjimQO"
   },
   {
@@ -221,8 +221,8 @@
    "createdAt": "2026-11-27T06:01:51.000Z",
    "url": "https://x.com/cz_binance/status/2126194774931857559",
    "kind": "post",
-   "likes": 5430,
-   "reposts": 334,
+   "likes": 5473,
+   "reposts": 335,
    "textZh": "谁在曼谷？"
   },
   {
@@ -235,8 +235,8 @@
    "createdAt": "2026-11-27T02:32:26.000Z",
    "url": "https://x.com/cz_binance/status/2126142072491245817",
    "kind": "post",
-   "likes": 5328,
-   "reposts": 274,
+   "likes": 5362,
+   "reposts": 278,
    "textZh": "感恩节快乐！🦃"
   },
   {
@@ -249,7 +249,7 @@
    "createdAt": "2026-11-26T12:29:51.000Z",
    "url": "https://x.com/cz_binance/status/2125930030572437822",
    "kind": "quote",
-   "likes": 1965,
+   "likes": 1966,
    "reposts": 173,
    "textZh": "继续建设！ https://t.co/HyXXmgwOuv"
   },
@@ -263,7 +263,7 @@
    "createdAt": "2026-11-26T02:17:33.000Z",
    "url": "https://x.com/cz_binance/status/2125775937405137135",
    "kind": "quote",
-   "likes": 3335,
+   "likes": 3339,
    "reposts": 421,
    "textZh": "如果你使用 1Password，建议你改掉所有密码。这很麻烦，但有必要。 https://t.co/p5XpheMwVv"
   },
@@ -305,7 +305,7 @@
    "createdAt": "2026-11-28T01:19:05.000Z",
    "url": "https://x.com/justinsuntron/status/2126486002919494134",
    "kind": "quote",
-   "likes": 34,
+   "likes": 51,
    "reposts": 1,
    "textZh": "很高兴在曼谷拜访 @BitkubOfficial 团队。感谢你们的欢迎。🇹🇭 https://t.co/5N3DqhfVH1"
   },
@@ -319,7 +319,7 @@
    "createdAt": "2026-11-27T15:40:59.000Z",
    "url": "https://x.com/justinsuntron/status/2126340518103961999",
    "kind": "quote",
-   "likes": 196,
+   "likes": 202,
    "reposts": 23,
    "textZh": "曼谷，抬头看。🔻 https://t.co/8FosfWBzee"
   },
@@ -333,7 +333,7 @@
    "createdAt": "2026-11-27T14:47:53.000Z",
    "url": "https://x.com/justinsuntron/status/2126327154397118710",
    "kind": "quote",
-   "likes": 98,
+   "likes": 101,
    "reposts": 15,
    "textZh": "感谢 @BitkubOfficial 在曼谷度过的美好夜晚，也感谢今晚邀请我发言。 https://t.co/0L1yRICm6h"
   },
@@ -347,7 +347,7 @@
    "createdAt": "2026-11-27T06:42:00.000Z",
    "url": "https://x.com/justinsuntron/status/2126204876543627711",
    "kind": "quote",
-   "likes": 49,
+   "likes": 50,
    "reposts": 5,
    "textZh": "按角色致谢：求解者、形式化者，以及阐述者。\n\n#JustinSunPrize https://t.co/rrZWUYX3x8"
   },
@@ -375,7 +375,7 @@
    "createdAt": "2026-11-27T05:29:30.000Z",
    "url": "https://x.com/justinsuntron/status/2126186631023763610",
    "kind": "quote",
-   "likes": 107,
+   "likes": 108,
    "reposts": 17,
    "textZh": "很少。https://t.co/Z1nPxKqVwM"
   },
@@ -403,8 +403,8 @@
    "createdAt": "2026-11-27T14:43:25.000Z",
    "url": "https://x.com/saylor/status/2126326029728063994",
    "kind": "post",
-   "likes": 3671,
-   "reposts": 295,
+   "likes": 3721,
+   "reposts": 301,
    "textZh": "11 月 25 日，作为美元信贷三个月基准的 13 周美国国债（IRX）报价贴现率为 4.16%。Stretch（$STRC）的有效收益率为 12.24%。我们的目标是让 Stretch 成为建立在比特币之上的数字信贷的三个月基准。"
   },
   {
@@ -417,8 +417,8 @@
    "createdAt": "2026-11-26T17:43:30.000Z",
    "url": "https://x.com/saylor/status/2126008963850518995",
    "kind": "post",
-   "likes": 3334,
-   "reposts": 427,
+   "likes": 3351,
+   "reposts": 429,
    "textZh": "修好货币，修好世界 https://t.co/oDMci9tM6D"
   },
   {
@@ -431,8 +431,8 @@
    "createdAt": "2026-11-26T13:15:03.000Z",
    "url": "https://x.com/saylor/status/2125941406128607460",
    "kind": "post",
-   "likes": 3274,
-   "reposts": 332,
+   "likes": 3282,
+   "reposts": 333,
    "textZh": "以市值衡量，$MSTR 的期权未平仓合约是七巨头中领先的特斯拉的 4.4 倍。$MSTR 的未平仓合约相当于其市值的 61.2%，而 $TSLA 为 13.8%。https://t.co/AKT2A9nCAs"
   },
   {
@@ -445,7 +445,7 @@
    "createdAt": "2026-11-25T14:53:08.000Z",
    "url": "https://x.com/saylor/status/2125603699204497670",
    "kind": "post",
-   "likes": 2568,
+   "likes": 2569,
    "reposts": 274,
    "textZh": "Stretch（$STRC）过去一年回报率为 13.24%，在本次对比中胜过全部七只固定收益 ETF。最接近的是短期国债，回报率为 3.67%。所有回报均包含分红。 https://t.co/5aLFmek8ah"
   },
@@ -501,8 +501,8 @@
    "createdAt": "2026-11-27T16:45:53.000Z",
    "url": "https://x.com/ColeMacro/status/2126356850128126323",
    "kind": "quote",
-   "likes": 1207,
-   "reposts": 142,
+   "likes": 1239,
+   "reposts": 144,
    "textZh": "美元最大化主义者们，该认输了。不存在可以无代价贬值的货币。这是你们自找的。你们以为可以花自己没有的钱，把差额印出来，还能让美元永远充当世界储备货币。货币史上没有任何依据支撑这种幻想。 https://t.co/mU9zhPJsD7"
   },
   {
@@ -515,7 +515,7 @@
    "createdAt": "2026-11-26T19:40:26.000Z",
    "url": "https://x.com/ColeMacro/status/2126038390466580614",
    "kind": "post",
-   "likes": 203,
+   "likes": 204,
    "reposts": 22,
    "textZh": "乔治·华盛顿的感恩节公告\n1789年10月3日\n\n美利坚合众国总统公告。\n\n鉴于所有国家都有责任承认全能上帝的庇佑，遵从他的旨意，感恩他的恩惠，并谦卑地祈求他的护佑与恩典；又鉴于国会两院已通过联合委员会请求我“向美国人民推荐一个公共感恩与祈祷日，以感恩之心承认全能上帝的诸多显著恩惠，尤其是使他们得以和平地建立一个保障其安全与幸福的政体。”\n\n因此，我建议并指定即将到来的11月26日星期四，由这些州的人民奉献给那位伟大而荣耀的存在，他是一切曾有、现有和将有之善的仁慈创造者。\n\n愿我们在那一日同心向他献上真诚而谦卑的感谢：感谢他在本国人民成为国家之前给予的亲切看顾与保护；感谢我们在刚刚结束的战争过程与结局中所经历的显著而多方的怜悯，以及他旨意的眷顾干预；感谢此后我们享有的高度安宁、团结与富足；感谢我们得以以和平而理性的方式制定保障安全与幸福的政府宪章，尤其是最近设立的国家宪章；感谢我们所蒙受的公民自由与宗教自由，以及我们得以获取并传播有用知识的途径；并总体感谢他乐于赐予我们的一切伟大而多样的恩惠。\n\n也愿我们在那一日同心最谦卑地向万国的伟大主宰献上祈祷与恳求，求他赦免我们国家的及其他过犯；使我们无论身居公职还是私人身份，都能恰当而准时地履行各自的职责；使我们的国家政府成为全体人民的祝福，始终成为一个由明智、公正且合乎宪法的法律所构成、并被审慎而忠实地执行与遵守的政府；求他保护并引导所有主权者与国家（尤其是那些曾向我们示好的），并赐他们良好的治理、和平与和睦；求他在他们和我们当中促进真宗教与美德的知识与实践，以及科学的增长；并普遍赐予全人类他所独自知道最为适宜的今世繁荣。\n\n于我主1789年10月3日，在纽约市亲笔签署。\n\n乔治·华盛顿\n美利坚合众国首任总统"
   },
@@ -590,6 +590,20 @@
    "textZh": "我们会把一些问答作为 Hurdle Rate 的每周内容来处理。\n\n如果你有问题，请在下面的帖子里提出，并为你认为最重要的问题点赞。 https://t.co/544MfQkWwe"
   },
   {
+   "id": "2126511406073983014",
+   "accountId": "TheMarketMemo",
+   "name": "LEI",
+   "zh": "市场备忘",
+   "username": "TheMarketMemo",
+   "text": "首先我想表達一個觀點：相信一個故事，或者說「用信仰做投資」，本質上是一種懶惰。 https://t.co/Uo8rcsTMdo",
+   "createdAt": "2026-11-28T03:00:02.000Z",
+   "url": "https://x.com/TheMarketMemo/status/2126511406073983014",
+   "kind": "post",
+   "likes": 15,
+   "reposts": 1,
+   "textZh": "首先我想表达一个观点：相信一个故事，或者说「用信仰做投资」，本质上是一种懒惰。 https://t.co/Uo8rcsTMdo"
+  },
+  {
    "id": "2126485381839454607",
    "accountId": "TheMarketMemo",
    "name": "LEI",
@@ -599,7 +613,7 @@
    "createdAt": "2026-11-28T01:16:37.000Z",
    "url": "https://x.com/TheMarketMemo/status/2126485381839454607",
    "kind": "post",
-   "likes": 46,
+   "likes": 73,
    "reposts": 1,
    "textZh": "下周将步入 12 月，是美股传统的圣诞季行情。从 $QQQ 的历史统计数据上看，12 月是所有上涨的月份中，平均涨幅最小的一个月，而平均涨幅最大的两个月是10月和 11 月。很显然，今年这两个月是拖了历史的后腿。 https://t.co/7oCNxfMvYT"
   },
@@ -613,8 +627,8 @@
    "createdAt": "2026-11-27T17:07:15.000Z",
    "url": "https://x.com/TheMarketMemo/status/2126362225187475817",
    "kind": "post",
-   "likes": 180,
-   "reposts": 15,
+   "likes": 199,
+   "reposts": 19,
    "textZh": "2007年，对冲基金经理约翰·保尔森（John Paulson）通过做空次贷获利约 150 亿美元。他在国会作证时指出，这笔交易的核心在于「宽松的信贷审核、过度杠杆，以及对信用风险的根本性错误定价」。当年，信评机构将高风险次级房贷评为投资级，让金融机构得以用极低成本加上超过 30 倍的杠杆。直到 2006 年推出的 ABX 指数为不常交易的次贷债券提供了每日公开报价，市场才看清真实风险——早在多数借款人实际违约之前，资产重估就已摧毁了薄弱的股权缓冲。\n\n如今，AI 基础设施的融资模式如出一辙。大量数据中心缺乏公开市场报价，且多数由 OpenAI、Anthropic 等实验室或新兴云端商使用。由于这些机构无法凭自身信用取得低息融资，科技巨头便出面「出借信用」提供租约担保。在这个链条中，每日交易的五年期信用违约掉期（CDS）成为外部唯一能即时反映真实风险的定价指标，扮演了当年 ABX 指数的角色。\n\n过去一年，AI 供应链与担保方的 CDS 全面飙升。截至 2026 年 11 月中旬，市场通过 CDS 换算出的「市场隐含评级」，平均比信评机构给予的评级低了 5.3 个等级，这与 2007 年 2 月至 7 月华尔街大型券商的差距（4.6 至 6.5 个等级）相当。\n\n若将整体 AI 基础设施建设（约 2.2 兆至 3.5 兆美元的债务、租约与算力承诺）按义务加权计算，整个体系是以单 A 级的利率进行融资，但在信贷市场上却是以双 B 级（高收益债）的风险定价进行交易。\n\nAI 产业的融资建立在一个高度封闭的循环之上：\n* 实验室端：OpenAI 与 Anthropic 通过科技巨头与芯片商主导的融资取得高估值，并借此签署巨额的不可取消算力采购承诺。\n* 巨头端：这些承诺占了 $MSFT $ORCL $AMZN 与 $GOOGL 总积压订单的约 40%。科技巨头利用这些订单支撑自身估值与信用评级，再反过来为实验室的数据中心租约提供担保。\n\n在这个体系中，各方的信用互为担保，缺乏外部基准点。一旦担保方的 CDS 扩大，实验室的融资难度增加、估值承压，进而削弱巨头积压订单的含金量，形成负向循环。 https://t.co/SKxjgRoQWG"
   },
   {
@@ -672,20 +686,6 @@
    "likes": 106,
    "reposts": 5,
    "textZh": "散户投资者作为一个群体，总是会被宏大叙事所吸引。一方面，他们缺乏深入研究细节的工具和能力。另一方面，归根结底是懒：相信一个故事，远比核实每一个事实要容易。 https://t.co/gPlB9Mc9tH"
-  },
-  {
-   "id": "2125643966217613738",
-   "accountId": "TheMarketMemo",
-   "name": "LEI",
-   "zh": "市场备忘",
-   "username": "TheMarketMemo",
-   "text": "半導體指數 $SOXX 自 6 月高點以來已腰斬。在目前缺口附近觀察是否出現抵抗的跡象。如果有，半導體類股可能會迎來一個小反彈，不過我認為反彈依然是出清的機會。如果這個位置擋不住下跌，再往下還有一波腰斬行情。 https://t.co/zYgckIsMrv https://t.co/T62oL0T3vu",
-   "createdAt": "2026-11-25T17:33:08.000Z",
-   "url": "https://x.com/TheMarketMemo/status/2125643966217613738",
-   "kind": "quote",
-   "likes": 283,
-   "reposts": 17,
-   "textZh": "半导体指数 $SOXX 自 6 月高点以来已腰斩。在目前缺口附近观察是否出现抵抗的迹象。如果有，半导体类股可能会迎来一个小反弹，不过我认为反弹依然是出清的机会。如果这个位置挡不住下跌，再往下还有一波腰斩行情。 https://t.co/zYgckIsMrv https://t.co/T62oL0T3vu"
   },
   {
    "id": "2126152289971044478",
@@ -767,8 +767,8 @@
    "createdAt": "2026-11-24T04:52:52.000Z",
    "url": "https://x.com/Jackyi_ld/status/2125090250343289330",
    "kind": "post",
-   "likes": 289,
-   "reposts": 68,
+   "likes": 290,
+   "reposts": 69,
    "textZh": "虽然黄仁勋回来了短线迅速反弹，但我们还是坚持观点，就是中期趋势没有逆转。首先大环境处于加息周期，其次是金融风险没有解除，最后去杠杆和挤泡沫，短时间不会结束。尤其是民主党1月正式上台后，整个斗争才刚开始。今年很残酷，明年可能更凶险，再次说注意不要有杠杆，保留充分现金，对危机心存敬畏。"
   },
   {
